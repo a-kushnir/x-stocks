@@ -1,12 +1,19 @@
-<table>
-  <tr>
-    <th>Symbol</th>
-    <th></th>
-  </tr>
-
-  <% @stocks.each do |stock| %>
+<table class="table table-hover">
+  <thead>
     <tr>
-      <td><%= link_to  stock.symbol, stock_path(stock) %></td>
+      <th>Symbol</th>
     </tr>
-  <% end %>
+  </thead>
+
+  <tbody>
+    <% @stocks.each do |stock| %>
+      <tr>
+        <td><%= link_to  stock.symbol, stock_path(stock) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
+<div>
+  <%= link_to 'New Stock', new_stock_path, class: 'btn btn-success' %>
+</div>

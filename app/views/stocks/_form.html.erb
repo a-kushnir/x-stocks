@@ -6,6 +6,10 @@
 
 <div class="form-group">
   <%= form.label :symbol %>
-  <%= form.text_field :symbol %>
+  <%= form.text_field :symbol, style: 'text-transform: uppercase;' %>
 </div>
-<%= form.submit class: 'btn btn-primary' %>
+
+<div>
+  <%= link_to 'Back', @stock.new_record? ? stocks_path : stock_path(@stock), class: 'btn btn-link' %>
+  <%= form.submit class: 'btn btn-primary' %>
+</div>

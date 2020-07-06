@@ -19,6 +19,14 @@
       <div class="py-5 text-center">
         <h2><%= @page_title %></h2>
       </div>
+
+      <% if flash[:notice] %>
+        <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:error] %>
+        <div class="alert alert-danger" role="alert"><%= flash[:error] %></div>
+      <% end %>
+
       <%= yield %>
     </div>
 

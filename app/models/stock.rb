@@ -3,6 +3,10 @@ class Stock < ApplicationRecord
 
   before_validation :upcase_symbol
 
+  def to_s
+    symbol
+  end
+
   private
 
   def upcase_symbol

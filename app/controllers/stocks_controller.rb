@@ -10,6 +10,8 @@ class StocksController < ApplicationController
 
   def show
     @stock = find_stock
+    not_found && return unless @stock
+
     set_page_title
   end
 
@@ -32,11 +34,14 @@ class StocksController < ApplicationController
 
   def edit
     @stock = find_stock
+    not_found && return unless @stock
+
     set_page_title
   end
 
   def update
     @stock = find_stock
+    not_found && return unless @stock
 
     if @stock.update(stock_params)
       update_stock_info(@stock)
@@ -50,12 +55,10 @@ class StocksController < ApplicationController
 
   def destroy
     @stock = find_stock
+    not_found && return unless @stock
 
-    if @stock
-      @stock.delete
-      flash[:notice] = "#{@stock} stock deleted"
-    end
-
+    @stock.delete
+    flash[:notice] = "#{@stock} stock deleted"
     redirect_to stocks_path
   end
 

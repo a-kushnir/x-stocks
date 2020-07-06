@@ -1,0 +1,13 @@
+<p>
+  <strong>Shares:</strong>
+  <%= number_with_delimiter(@position.shares, delimiter: ',') %>
+</p>
+<p>
+  <strong>Average Cost:</strong>
+  <%= number_to_currency(@position.average_cost) %>
+</p>
+<div>
+  <%= link_to 'Back', positions_path, class: 'btn btn-link' %>
+  <%= link_to 'Edit', edit_position_path(@position), class: 'btn btn-primary' %>
+  <%= link_to 'Delete', position_path(@position), method: :delete, class: 'btn btn-danger', onclick: 'return confirm("Are you sure?");' %>
+</div>

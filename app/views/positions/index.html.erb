@@ -1,0 +1,25 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Company</th>
+      <th class="text-right">Shares</th>
+      <th class="text-right">Average Cost</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @positions.each do |position| %>
+      <tr>
+        <td><%= link_to position.stock.symbol, position_path(position) %></td>
+        <td><%= position.stock.company&.company_name %></td>
+        <td class="text-right"><%= number_with_delimiter(position.shares, delimiter: ',') %></td>
+        <td class="text-right"><%= number_to_currency(position.average_cost) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div>
+  <%= link_to 'New Position', new_position_path, class: 'btn btn-success' %>
+</div>

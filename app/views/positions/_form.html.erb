@@ -1,0 +1,23 @@
+<% @position.errors.full_messages.each do |msg| %>
+<div class="alert alert-danger" role="alert">
+  <%= msg %>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= form.label :stock %>
+  <%= form.select(:stock_id, Stock.all.map { |p| [ p.symbol, p.id ] }, { include_blank: true }) %>
+</div>
+<div class="form-group">
+  <%= form.label :shares %>
+  <%= form.text_field :shares %>
+</div>
+<div class="form-group">
+  <%= form.label :average_cost %>
+  <%= form.text_field :average_cost %>
+</div>
+
+<div>
+  <%= link_to 'Back', @position.new_record? ? positions_path : position_path(@position), class: 'btn btn-link' %>
+  <%= form.submit class: 'btn btn-primary' %>
+</div>

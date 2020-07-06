@@ -16,6 +16,11 @@
       <li class="nav-item">
         <a class="nav-link" href="/stocks">Stocks</a>
       </li>
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <a class="nav-link" href="/positions">My Positions</a>
+        </li>
+      <% end %>
     </ul>
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
@@ -23,11 +28,11 @@
         <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'nav-link' %>
       </li>
       <% else %>
-        <li class="nav-item">
+        <!--li class="nav-item">
           <a class="nav-link" href="<%= new_user_registration_path %>">Sign Up</a>
-        </li>
+        </li-->
         <li class="nav-item">
-          <a class="nav-link" href="<%= user_session_path %>">Login</a>
+          <a class="nav-link" href="<%= user_session_path %>">Sign In</a>
         </li>
       <% end %>
     </ul>

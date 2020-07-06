@@ -55,6 +55,14 @@ class StocksController < ApplicationController
     redirect_to stocks_path
   end
 
+  def test
+    @stock = find_stock
+
+    import = Import::Yahoo.new
+    page = import.retrieve(@stock.symbol)
+    send_data(page, filename: 'page.html', type: 'text/html')
+  end
+
   private
 
   def set_page_title

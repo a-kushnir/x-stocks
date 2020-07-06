@@ -1,7 +1,9 @@
 class Stock < ApplicationRecord
-  validates :symbol, presence: true, uniqueness: true
+
+  has_one :company
 
   before_validation :upcase_symbol
+  validates :symbol, presence: true, uniqueness: true
 
   def to_s
     symbol

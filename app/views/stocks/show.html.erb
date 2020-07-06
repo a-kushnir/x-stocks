@@ -1,7 +1,41 @@
-<p>
-  <strong>Symbol:</strong>
-  <%= @stock.symbol %>
-</p>
+<% company = @stock.company %>
+<% if company %>
+  <p>
+  <% company.tags.each do |tag| %>
+    <span class="badge badge-pill badge-secondary"><%= tag %></span>
+  <% end %>
+  </p>
+
+  <h3>About</h3>
+  <p>
+    <%= company.description %>
+  </p>
+  <p>
+    <strong>Exchange:</strong>
+    <%= company.exchange %>
+  </p>
+  <p>
+    <strong>CEO:</strong>
+    <%= company.ceo %>
+  </p>
+  <p>
+    <strong>Headquarters:</strong>
+    <%= "#{company.country}, #{company.state}" %>
+  </p>
+  <p>
+    <strong>Employees:</strong>
+    <%= number_with_delimiter(company.employees, delimiter: ',') %>
+  </p>
+  <p>
+    <strong>Website:</strong>
+    <%= link_to company.website.sub(/^https?\:\/\/(www.)?/,''), company.website %>
+  </p>
+<% else %>
+  <p>
+    <strong>Symbol:</strong>
+    <%= @stock.symbol %>
+  </p>
+<% end %>
 
 <div>
   <%= link_to 'Back', stocks_path, class: 'btn btn-link' %>
@@ -9,6 +43,6 @@
   <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', onclick: 'return confirm("Are you sure?");' %>
 </div>
 
-<div>
+<!--div>
   <%= link_to 'Test', "/stocks/#{@stock.symbol}/test", class: 'btn btn-link' %>
-</div>
+</div-->

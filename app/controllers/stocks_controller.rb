@@ -19,6 +19,7 @@ class StocksController < ApplicationController
   def create
     @stock = Stock.new(stock_params)
     if @stock.save
+      update_stock_info
       flash[:notice] = "#{@stock} stock created"
       redirect_to stock_path(@stock)
     else
@@ -36,6 +37,7 @@ class StocksController < ApplicationController
     @stock = find_stock
 
     if @stock.update(stock_params)
+      update_stock_info
       flash[:notice] = "#{@stock} stock updated"
       redirect_to stock_path(@stock)
     else
@@ -66,7 +68,14 @@ class StocksController < ApplicationController
   private
 
   def set_page_title
-    @page_title = (@stock.new_record? ? 'New Stock' : @stock.symbol)
+    @page_title =
+      if @stock.new_record?
+        'New Stock'
+      elsif @stock.company
+        "#{@stock.company.company_name} (#{@stock.symbol})"
+      else
+        @stock.symbol
+      end
   end
 
   def find_stock
@@ -75,5 +84,10 @@ class StocksController < ApplicationController
 
   def stock_params
     params.require(:stock).permit(:symbol)
+  end
+
+  def update_stock_info
+    json = Import::Iexapis.new.company(@stock.symbol)
+    Convert::Iexapis::Company.new.process(@stock, json) if json
   end
 end

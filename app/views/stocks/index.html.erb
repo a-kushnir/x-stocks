@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Symbol</th>
+      <th>Company</th>
     </tr>
   </thead>
 
@@ -9,6 +10,7 @@
     <% @stocks.each do |stock| %>
       <tr>
         <td><%= link_to stock.symbol, stock_path(stock) %></td>
+        <td><%= stock.company&.company_name %></td>
       </tr>
     <% end %>
   </tbody>

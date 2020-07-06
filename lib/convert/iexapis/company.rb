@@ -3,6 +3,16 @@ module Convert
     class Company
 
       def process(stock, json)
+        if json
+          add_company(stock, json)
+        else
+          remove_company(stock)
+        end
+      end
+
+      private
+
+      def add_company(stock, json)
         company = stock.company || ::Company.new(stock: stock)
 
         company.company_name = json['companyName']
@@ -36,7 +46,10 @@ module Convert
               .where.not(id: updated_ids)
               .delete_all
         end
+      end
 
+      def remove_company(stock)
+        stock.company&.destroy
       end
 
     end

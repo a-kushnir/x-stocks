@@ -21,7 +21,7 @@ class StocksController < ApplicationController
   def create
     @stock = Stock.new(stock_params)
     if @stock.save
-      update_stock_info
+      update_stock_info(@stock)
       flash[:notice] = "#{@stock} stock created"
       redirect_to stock_path(@stock)
     else
@@ -39,7 +39,7 @@ class StocksController < ApplicationController
     @stock = find_stock
 
     if @stock.update(stock_params)
-      update_stock_info
+      update_stock_info(@stock)
       flash[:notice] = "#{@stock} stock updated"
       redirect_to stock_path(@stock)
     else
@@ -88,8 +88,17 @@ class StocksController < ApplicationController
     params.require(:stock).permit(:symbol)
   end
 
-  def update_stock_info
-    json = Import::Iexapis.new.company(@stock.symbol)
-    Convert::Iexapis::Company.new.process(@stock, json) if json
+  def update_stock_info?(stock)
+    return true if stock.saved_change_to_symbol?
+    return false unless stock.saved_change_to_updated_at?
+    prev_updated_at = stock.saved_change_to_updated_at.first
+    prev_updated_at.nil? || prev_updated_at < 7.days.ago
+  end
+
+  def update_stock_info(stock)
+    if update_stock_info?(stock)
+      json = Import::Iexapis.new.company(stock.symbol)
+      Convert::Iexapis::Company.new.process(stock, json)
+    end
   end
 end

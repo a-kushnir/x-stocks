@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>XStocks</title>
+    <title><%= @page_title %> | xStocks</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="icon" href="/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
   </head>
 
   <body>
-    <%= yield %>
+    <%= render partial: 'layouts/top_menu_bar' %>
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2><%= @page_title %></h2>
+      </div>
+      <%= yield %>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">xStocks</span>
+      </div>
+    </footer>
   </body>
 </html>

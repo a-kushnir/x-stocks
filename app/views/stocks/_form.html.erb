@@ -1,0 +1,11 @@
+<% @stock.errors.full_messages.each do |msg| %>
+<div class="alert alert-danger" role="alert">
+  <%= msg %>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= form.label :symbol %>
+  <%= form.text_field :symbol %>
+</div>
+<%= form.submit class: 'btn btn-primary' %>

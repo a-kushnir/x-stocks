@@ -1,0 +1,10 @@
+<p>
+  <strong>Symbol:</strong>
+  <%= @stock.symbol %>
+</p>
+
+<div>
+  <%= link_to 'Back', stocks_path, class: 'btn btn-link' %>
+  <%= link_to 'Edit', edit_stock_path(@stock), class: 'btn btn-primary' %>
+  <%= link_to 'Delete', edit_stock_path(@stock), class: 'btn btn-danger' %>
+</div>

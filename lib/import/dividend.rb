@@ -1,5 +1,5 @@
 module Import
-  class Dividend
+  class Dividend < Base
 
   end
 end

@@ -1,5 +1,6 @@
 <% company = @stock.company %>
 <% if company %>
+  <img src="<%= company.logo %>" alt="<%= @stock.symbol %> Logo"/>
   <p>
   <% company.tags.each do |tag| %>
     <span class="badge badge-pill badge-secondary"><%= tag %></span>
@@ -28,7 +29,7 @@
   </p>
   <p>
     <strong>Website:</strong>
-    <%= link_to company.website.sub(/^https?\:\/\/(www.)?/,''), company.website %>
+    <%= link_to_website company.website %>
   </p>
 <% else %>
   <p>
@@ -36,6 +37,18 @@
     <%= @stock.symbol %>
   </p>
 <% end %>
+
+<p>
+  <strong>Peers:</strong>
+<% @stock.company_peers.each do |peer| %>
+  <% next if peer.peer_stock_id == @stock.id %>
+  <% if peer.peer_stock_id %>
+      <%= link_to peer.peer_symbol, "/stocks/#{peer.peer_symbol}", class: 'badge badge-pill badge-info' %>
+  <% else %>
+    <span class="badge badge-pill badge-secondary"><%= peer.peer_symbol %></span>
+  <% end %>
+<% end %>
+</p>
 
 <div>
   <%= link_to 'Back', stocks_path, class: 'btn btn-link' %>

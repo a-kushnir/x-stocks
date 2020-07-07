@@ -99,9 +99,16 @@ class StocksController < ApplicationController
   end
 
   def update_stock_info(stock)
-    if update_stock_info?(stock)
-      json = Import::Iexapis.new.company(stock.symbol)
-      Convert::Iexapis::Company.new.process(stock, json)
-    end
+    return unless update_stock_info?(stock)
+
+    json = Import::Iexapis.new.company(stock.symbol)
+    Convert::Iexapis::Company.new.process(stock, json)
+
+    json = Import::Finnhub.new.company(stock.symbol)
+    Convert::Finnhub::Company.new.process(stock, json)
+
+    json = Import::Finnhub.new.peers(stock.symbol)
+    Convert::Finnhub::Peers.new.process(stock, json)
+
   end
 end

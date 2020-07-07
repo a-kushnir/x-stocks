@@ -1,6 +1,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
+      <th style="width: 1px;"></th>
       <th>Symbol</th>
       <th>Company</th>
     </tr>
@@ -9,7 +10,14 @@
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td><%= link_to stock.symbol, stock_path(stock) %></td>
+        <td>
+          <% if stock.company&.logo.present? %>
+            <img src="<%= stock.company.logo %>" alt="<%= stock.symbol %> Logo" style="height: 24px;"/>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to stock.symbol, stock_path(stock) %>
+        </td>
         <td><%= stock.company&.company_name %></td>
       </tr>
     <% end %>

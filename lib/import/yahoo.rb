@@ -1,21 +1,18 @@
 require 'net/http'
 
 module Import
-  class Yahoo
+  class Yahoo < Base
 
     BASE_URL = 'https://finance.yahoo.com'
 
     def retrieve(symbol)
-      response = Net::HTTP.get_response(uri(symbol))
-      if response.is_a?(Net::HTTPSuccess)
-        response.body
-      end
+      load_text(quote_url(symbol))
     end
 
     private
 
-    def uri(symbol)
-      URI("#{BASE_URL}/quote/#{symbol}")
+    def quote_url(symbol)
+      "#{BASE_URL}/quote/#{symbol}"
     end
 
   end

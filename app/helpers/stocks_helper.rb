@@ -7,4 +7,9 @@ module StocksHelper
   def edit_stock_path(stock)
     "/stocks/#{stock.symbol}/edit"
   end
+
+  def link_to_website(url)
+    link_to url.sub(/^https?\:\/\/(www.)?/,''), url if url
+  end
+
 end

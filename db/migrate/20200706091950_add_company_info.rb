@@ -1,7 +1,7 @@
 class AddCompanyInfo < ActiveRecord::Migration[6.0]
   def change
     create_table :companies do |t|
-      t.references :stock
+      t.references :stock, null: false
       t.string :company_name
       t.string :exchange
       t.string :industry
@@ -20,15 +20,26 @@ class AddCompanyInfo < ActiveRecord::Migration[6.0]
       t.string :zip
       t.string :country
       t.string :phone
+      t.date :ipo
+      t.string :logo
+
+      t.datetime :created_at, null: false
+      t.datetime :updated_at, null: false
     end
 
     create_table :tags do |t|
-      t.string :name
+      t.string :name, null: false
+
+      t.datetime :created_at, null: false
+      t.datetime :updated_at, null: false
     end
 
     create_table :companies_tags do |t|
-      t.references :company
-      t.references :tag
+      t.references :company, null: false
+      t.references :tag, null: false
+
+      t.datetime :created_at, null: false
+      t.datetime :updated_at, null: false
     end
   end
 end

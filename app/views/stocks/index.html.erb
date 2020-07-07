@@ -10,9 +10,9 @@
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td>
+        <td class="text-center">
           <% if stock.company&.logo.present? %>
-            <img src="<%= stock.company.logo %>" alt="<%= stock.symbol %> Logo" style="height: 24px;"/>
+            <img src="<%= stock.company.logo %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
         <td>

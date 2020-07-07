@@ -1,6 +1,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
+      <th style="width: 1px;"></th>
       <th>Symbol</th>
       <th>Company</th>
       <th class="text-right">Shares</th>
@@ -11,6 +12,11 @@
   <tbody>
     <% @positions.each do |position| %>
       <tr>
+        <td class="text-center">
+          <% if position.stock.company&.logo.present? %>
+            <img src="<%= position.stock.company.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          <% end %>
+        </td>
         <td><%= link_to position.stock.symbol, position_path(position) %></td>
         <td><%= position.stock.company&.company_name %></td>
         <td class="text-right"><%= number_with_delimiter(position.shares, delimiter: ',') %></td>

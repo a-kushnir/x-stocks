@@ -1,6 +1,8 @@
 <% company = @stock.company %>
 <% if company %>
-  <img src="<%= company.logo %>" alt="<%= @stock.symbol %> Logo"/>
+  <% if company.logo.present? %>
+    <img src="<%= company.logo %>" alt="<%= @stock.symbol %> Logo"/>
+  <% end %>
   <p>
   <% company.tags.each do |tag| %>
     <span class="badge badge-pill badge-secondary"><%= tag %></span>

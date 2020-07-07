@@ -6,10 +6,12 @@
       <th>Company</th>
       <th class="text-right">Shares</th>
       <th class="text-right">Average Cost</th>
+      <th class="text-right">Total Cost</th>
     </tr>
   </thead>
 
   <tbody>
+    <% total_cost = 0 %>
     <% @positions.each do |position| %>
       <tr>
         <td class="text-center">
@@ -19,11 +21,23 @@
         </td>
         <td><%= link_to position.stock.symbol, position_path(position) %></td>
         <td><%= position.stock.company&.company_name %></td>
-        <td class="text-right"><%= number_with_delimiter(position.shares, delimiter: ',') %></td>
+        <td class="text-right"><%= number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
         <td class="text-right"><%= number_to_currency(position.average_cost) %></td>
+        <td class="text-right"><%= number_to_currency(position.shares * position.average_cost) %></td>
       </tr>
+      <% total_cost += position.shares * position.average_cost %>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="text-right"><%= number_to_currency(total_cost) %></td>
+    </tr>
+  </tfoot>
 </table>
 
 <div>

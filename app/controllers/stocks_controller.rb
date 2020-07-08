@@ -76,6 +76,10 @@ class StocksController < ApplicationController
     #send_data(page, filename: 'page.html', type: 'text/html')
   end
 
+  def refresh
+    HourlyUpdateJob.new.perform
+  end
+
   private
 
   def set_page_title

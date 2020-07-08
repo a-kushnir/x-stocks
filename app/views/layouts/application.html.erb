@@ -15,11 +15,11 @@
   <body>
     <%= render partial: 'layouts/top_menu_bar' %>
 
-    <div class="container-fluid">
-      <div class="py-5 text-center">
-        <h2><%= @page_title %></h2>
-      </div>
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+      <h1 class="bd-title"><%= @page_title %></h1>
+    </header>
 
+    <div class="container-fluid">
       <% if flash[:notice] %>
         <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
       <% end %>
@@ -30,7 +30,7 @@
       <%= yield %>
     </div>
 
-    <footer class="footer">
+    <footer class="footer navbar-dark bg-dark">
       <div class="container">
         <span class="text-muted">xStocks</span>
       </div>

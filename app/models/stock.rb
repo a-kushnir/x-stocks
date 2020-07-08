@@ -2,6 +2,7 @@ class Stock < ApplicationRecord
 
   has_one :company, dependent: :destroy
   has_many :company_peers, dependent: :destroy
+  has_one :stock_quote, dependent: :destroy
 
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true

@@ -4,6 +4,9 @@
       <th style="width: 1px;"></th>
       <th>Symbol</th>
       <th>Company</th>
+      <th class="text-right">Price</th>
+      <th class="text-right">Change</th>
+      <th class="text-right">Change %</th>
     </tr>
   </thead>
 
@@ -19,6 +22,15 @@
           <%= link_to stock.symbol, stock_path(stock) %>
         </td>
         <td><%= stock.company&.company_name %></td>
+        <td class="text-right">
+          <%= number_to_currency(stock.stock_quote.current_price) if stock.stock_quote %>
+        </td>
+        <td class="text-right">
+          <%= number_to_currency(stock.stock_quote.price_change) if stock.stock_quote %>
+        </td>
+        <td class="text-right">
+          <%= number_to_percentage(stock.stock_quote.price_change_pct, precision: 2) if stock.stock_quote %>
+        </td>
       </tr>
     <% end %>
   </tbody>

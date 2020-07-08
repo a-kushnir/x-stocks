@@ -12,6 +12,10 @@ module Import
       load_json(peers_url(symbol))
     end
 
+    def quote(symbol)
+      load_json(quote_url(symbol))
+    end
+
     private
 
     def company_url(symbol)
@@ -20,6 +24,10 @@ module Import
 
     def peers_url(symbol)
       "#{BASE_URL}/stock/peers?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+    end
+
+    def quote_url(symbol)
+      "#{BASE_URL}/quote?symbol=#{symbol}&token=#{FINNHUB_KEY}"
     end
 
   end

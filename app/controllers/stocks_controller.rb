@@ -65,9 +65,15 @@ class StocksController < ApplicationController
   def test
     @stock = find_stock
 
-    import = Import::Yahoo.new
-    page = import.retrieve(@stock.symbol)
-    send_data(page, filename: 'page.html', type: 'text/html')
+    json = Import::Finnhub.new.quote(@stock.symbol)
+    Convert::Finnhub::Quote.new.process(@stock, json)
+
+    flash[:notice] = "#{@stock} stock price updated"
+    redirect_to stock_path(@stock)
+
+    #import = Import::Yahoo.new
+    #page = import.retrieve(@stock.symbol)
+    #send_data(page, filename: 'page.html', type: 'text/html')
   end
 
   private

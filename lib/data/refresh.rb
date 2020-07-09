@@ -41,9 +41,5 @@ class Data
       end
     end
 
-    def all_financial_data_updated_at
-      StockQuote.limit(1).pluck(:updated_at).first
-    end
-
   end
 end

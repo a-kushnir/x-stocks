@@ -1,13 +1,8 @@
 <% if Data::Refresh.new.all_financial_data? %>
-  <div id="refresh-div">
-    <p>
-      <i id="refresh-text" class="text-muted">Data Refreshed: Initializing...</i>
-    </p>
-  </div>
-<% else %>
-  <div>
-    <p>
-      <i class="text-muted">Data Refreshed: <%= Data::Refresh.new.all_financial_data_updated_at %></i>
-    </p>
+  <div id="data-refresh-div" class="col text-right align-items-center">
+    <div id="data-refresh-spin" class="spinner-border spinner-border-sm text-light" role="status">
+      <span class="sr-only"></span>
+    </div>
+    <span id="data-refresh-text" class="text-light" style="padding-left: 3px;"></span>
   </div>
 <% end %>

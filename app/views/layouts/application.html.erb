@@ -19,7 +19,7 @@
       <h1 class="bd-title"><%= @page_title %></h1>
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-bottom: 15px;">
       <% if flash[:notice] %>
         <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
       <% end %>
@@ -31,8 +31,13 @@
     </div>
 
     <footer class="footer navbar-dark bg-dark">
-      <div class="container">
-        <span class="text-muted">xStocks</span>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <span class="text-muted">xStocks</span>
+          </div>
+          <%= render partial: '/data/refresh' %>
+        </div>
       </div>
     </footer>
   </body>

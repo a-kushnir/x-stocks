@@ -1,0 +1,13 @@
+<% if Data::Refresh.new.all_financial_data? %>
+  <div id="refresh-div">
+    <p>
+      <i id="refresh-text" class="text-muted">Data Refreshed: Initializing...</i>
+    </p>
+  </div>
+<% else %>
+  <div>
+    <p>
+      <i class="text-muted">Data Refreshed: <%= Data::Refresh.new.all_financial_data_updated_at %></i>
+    </p>
+  </div>
+<% end %>

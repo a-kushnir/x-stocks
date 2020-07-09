@@ -44,28 +44,4 @@
 </div>
 <% end %>
 
-<% if HourlyUpdateJob.new.update_needed? %>
-<div id="refresh-div">
-  <p>
-    <i id="refresh-text" class="text-muted"></i>
-  </p>
-</div>
-
-<script>
-    function refresh_status(text) {
-        $('#refresh-text').html(text);
-    }
-
-    $(document).ready(function() {
-      $.ajax('/stocks/refresh', {method: 'post'})
-          .done(function() {
-            refresh_status("Refreshing page...");
-            window.location.reload();
-          })
-          .fail(function(jqXHR, textStatus, errorThrown) {
-              refresh_status("Error: " + errorThrown);
-          });
-      refresh_status("Updating prices...");
-    })
-</script>
-<% end %>
+<%= render partial: '/data/refresh' %>

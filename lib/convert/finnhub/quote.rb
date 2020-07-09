@@ -18,6 +18,9 @@ module Convert
         quote.day_high_price = json['h']
         quote.timestamp = DateTime.strptime(json['t'].to_s,'%s')
 
+        quote.price_change = (quote.current_price - quote.prev_close_price) rescue nil
+        quote.price_change_pct = (quote.price_change / quote.prev_close_price * 100) rescue nil
+
         quote.save
       end
     end

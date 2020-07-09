@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_08_044414) do
+ActiveRecord::Schema.define(version: 2020_07_09_063744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,21 @@ ActiveRecord::Schema.define(version: 2020_07_08_044414) do
     t.index ["user_id"], name: "index_positions_on_user_id"
   end
 
+  create_table "stock_dividends", force: :cascade do |t|
+    t.bigint "stock_id", null: false
+    t.datetime "ex_date"
+    t.datetime "payment_date"
+    t.datetime "record_date"
+    t.datetime "declared_date"
+    t.decimal "amount", precision: 12, scale: 4
+    t.string "flag"
+    t.string "currency"
+    t.string "description"
+    t.string "frequency"
+    t.datetime "updated_at", null: false
+    t.index ["stock_id"], name: "index_stock_dividends_on_stock_id"
+  end
+
   create_table "stock_quotes", force: :cascade do |t|
     t.bigint "stock_id", null: false
     t.decimal "current_price", precision: 10, scale: 2
@@ -79,6 +94,8 @@ ActiveRecord::Schema.define(version: 2020_07_08_044414) do
     t.decimal "day_high_price", precision: 10, scale: 2
     t.datetime "timestamp"
     t.datetime "updated_at", null: false
+    t.decimal "price_change", precision: 10, scale: 2
+    t.decimal "price_change_pct", precision: 10, scale: 2
     t.index ["stock_id"], name: "index_stock_quotes_on_stock_id"
   end
 

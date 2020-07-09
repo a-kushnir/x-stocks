@@ -18,6 +18,9 @@ class Data
       json = Import::Finnhub.new.peers(stock.symbol)
       Convert::Finnhub::Peers.new.process(stock, json)
 
+      json = Import::Iexapis.new.dividends_5y(stock.symbol)
+      Convert::Iexapis::Dividend.new.process(stock, json)
+
       financial_data!(stock)
     end
 

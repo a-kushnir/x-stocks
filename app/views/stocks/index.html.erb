@@ -14,22 +14,22 @@
     <% @stocks.each do |stock| %>
       <tr>
         <td class="text-center">
-          <% if stock.company&.logo.present? %>
-            <img src="<%= stock.company.logo %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          <% if stock.logo.present? %>
+            <img src="<%= stock.logo %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
         <td>
           <%= link_to stock.symbol, stock_path(stock) %>
         </td>
-        <td><%= stock.company&.company_name %></td>
+        <td><%= stock.company_name %></td>
         <td class="text-right">
-          <%= number_to_currency(stock.stock_quote.current_price) if stock.stock_quote %>
+          <%= number_to_currency(stock.current_price) %>
         </td>
-        <% price_change = stock.stock_quote ? number_to_currency(stock.stock_quote.price_change) : nil %>
+        <% price_change = number_to_currency(stock.price_change) %>
         <td class="text-right <%= delta_class(price_change) %>">
           <%= delta_number(price_change) %>
         </td>
-        <% price_change_pct = stock.stock_quote ? number_to_percentage(stock.stock_quote.price_change_pct, precision: 2) : nil %>
+        <% price_change_pct = number_to_percentage(stock.price_change_pct, precision: 2) %>
         <td class="text-right <%= delta_class(price_change_pct) %>">
           <%= delta_number(price_change_pct) %>
         </td>

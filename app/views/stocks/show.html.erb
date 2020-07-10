@@ -1,53 +1,44 @@
-<% company = @stock.company %>
-<% if company %>
-  <% if company.logo.present? %>
-    <img src="<%= company.logo %>" alt="<%= @stock.symbol %> Logo"/>
+  <% if @stock.logo.present? %>
+    <img src="<%= @stock.logo %>" alt="<%= @stock.symbol %> Logo"/>
   <% end %>
   <p>
-  <% company.tags.each do |tag| %>
+  <% @stock.tags.by_key(:company_tag).each do |tag| %>
     <span class="badge badge-pill badge-secondary"><%= tag %></span>
   <% end %>
   </p>
 
   <h3>About</h3>
   <p>
-    <%= company.description %>
+    <%= @stock.description %>
   </p>
   <p>
     <strong>Exchange:</strong>
-    <%= company.exchange %>
+    <%= @stock.exchange %>
   </p>
   <p>
     <strong>CEO:</strong>
-    <%= company.ceo %>
+    <%= @stock.ceo %>
   </p>
   <p>
     <strong>Headquarters:</strong>
-    <%= "#{company.country}, #{company.state}" %>
+    <%= "#{@stock.country}, #{@stock.state}" %>
   </p>
   <p>
     <strong>Employees:</strong>
-    <%= number_with_delimiter(company.employees, delimiter: ',') %>
+    <%= number_with_delimiter(@stock.employees, delimiter: ',') %>
   </p>
   <p>
     <strong>Website:</strong>
-    <%= link_to_website company.website %>
+    <%= link_to_website @stock.website %>
   </p>
-<% else %>
-  <p>
-    <strong>Symbol:</strong>
-    <%= @stock.symbol %>
-  </p>
-<% end %>
 
 <p>
   <strong>Peers:</strong>
-<% @stock.company_peers.each do |peer| %>
-  <% next if peer.peer_stock_id == @stock.id %>
-  <% if peer.peer_stock_id %>
-      <%= link_to peer.peer_symbol, "/stocks/#{peer.peer_symbol}", class: 'badge badge-pill badge-info' %>
+<% stock_peers.each do |stock_peer| %>
+  <% if stock_peer[:stock] %>
+      <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock]), class: 'badge badge-pill badge-info' %>
   <% else %>
-    <span class="badge badge-pill badge-secondary"><%= peer.peer_symbol %></span>
+    <span class="badge badge-pill badge-secondary"><%= stock_peer[:symbol] %></span>
   <% end %>
 <% end %>
 </p>

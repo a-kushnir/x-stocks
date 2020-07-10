@@ -12,4 +12,12 @@ module StocksHelper
     link_to url.sub(/^https?\:\/\/(www.)?/,''), url if url
   end
 
+  def stock_peers
+    @stock.tags.by_key(:stock_peer).map do |tag|
+      if tag.name != @stock.symbol
+        { symbol: tag.name, stock: ::Stock.find_by(symbol: tag.name) }
+      end
+    end.compact
+  end
+
 end

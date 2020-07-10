@@ -56,7 +56,7 @@ class PositionsController < ApplicationController
     @position = find_position
     not_found && return unless @position
 
-    @position.delete
+    @position.destroy
     flash[:notice] = "#{@position} position deleted"
     redirect_to positions_path
   end
@@ -64,14 +64,7 @@ class PositionsController < ApplicationController
   private
 
   def set_page_title
-    @page_title =
-      if @position.new_record?
-        'New Position'
-      elsif @position.stock.company
-        "#{@position.stock.company.company_name} (#{@position.stock.symbol})"
-      else
-        @position.stock.symbol
-      end
+    @page_title = @position.new_record? ? 'New Position' : @position.to_s
   end
 
   def new_position
@@ -88,6 +81,6 @@ class PositionsController < ApplicationController
   end
 
   def position_params
-    params.require(:position).permit(:stock_id, :shares, :average_cost)
+    params.require(:position).permit(:stock_id, :shares, :average_price)
   end
 end

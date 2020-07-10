@@ -2,7 +2,11 @@ class Stock < ApplicationRecord
 
   belongs_to :exchange, optional: true
   has_many :stocks_tags, dependent: :destroy
-  has_many :tags, through: :stocks_tags
+  has_many :tags, through: :stocks_tags do
+    def by_key(key)
+      where(key: key)
+    end
+  end
 
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true

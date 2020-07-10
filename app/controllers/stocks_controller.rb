@@ -57,7 +57,7 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
-    @stock.delete
+    @stock.destroy
     flash[:notice] = "#{@stock} stock deleted"
     redirect_to stocks_path
   end
@@ -79,14 +79,7 @@ class StocksController < ApplicationController
   private
 
   def set_page_title
-    @page_title =
-      if @stock.new_record?
-        'New Stock'
-      elsif @stock.company
-        "#{@stock.company.company_name} (#{@stock.symbol})"
-      else
-        @stock.symbol
-      end
+    @page_title = @stock.new_record? ? 'New Stock' : @stock.to_s
   end
 
   def find_stock

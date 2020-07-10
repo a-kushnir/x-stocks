@@ -19,25 +19,25 @@
     <% @positions.each do |position| %>
       <tr>
         <td class="text-center">
-          <% if position.stock.company&.logo.present? %>
-            <img src="<%= position.stock.company.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          <% if position.stock.logo.present? %>
+            <img src="<%= position.stock.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
         <td><%= link_to position.stock.symbol, position_path(position) %></td>
-        <td><%= position.stock.company&.company_name %></td>
+        <td><%= position.stock.company_name %></td>
         <td class="text-right"><%= number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
-        <td class="text-right"><%= number_to_currency(position.average_cost) %></td>
-        <td class="text-right"><%= number_to_currency(position.stock.stock_quote&.current_price) %></td>
-        <td class="text-right"><%= number_to_currency(position.shares * position.average_cost) %></td>
-        <td class="text-right"><%= number_to_currency(position.shares * position.stock.stock_quote.current_price) if position.stock.stock_quote %></td>
-        <% gain_loss = position.stock.stock_quote ? number_to_currency(position.shares * (position.stock.stock_quote.current_price - position.average_cost)) : nil %>
+        <td class="text-right"><%= number_to_currency(position.average_price) %></td>
+        <td class="text-right"><%= number_to_currency(position.stock.current_price) %></td>
+        <td class="text-right"><%= number_to_currency(position.shares * position.average_price) %></td>
+        <td class="text-right"><%= number_to_currency(position.shares * position.stock.current_price) %></td>
+        <% gain_loss = number_to_currency(position.shares * (position.stock.current_price - position.average_price)) %>
         <td class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(gain_loss) %></td>
-        <% growth = number_to_percentage((position.stock.stock_quote.current_price - position.average_cost) / position.average_cost * 100, precision: 2) if position.stock.stock_quote %>
+        <% growth = number_to_percentage((position.stock.current_price - position.average_price) / position.average_price * 100, precision: 2) %>
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
       </tr>
-      <% total_cost += position.shares * position.average_cost %>
-      <% market_value += position.shares * position.stock.stock_quote.current_price if position.stock.stock_quote %>
-      <% total_gain_loss += position.shares * (position.stock.stock_quote.current_price - position.average_cost) if position.stock.stock_quote %>
+      <% total_cost += position.shares * position.average_price %>
+      <% market_value += position.shares * position.stock.current_price %>
+      <% total_gain_loss += position.shares * (position.stock.current_price - position.average_price) %>
     <% end %>
   </tbody>
   <tfoot>

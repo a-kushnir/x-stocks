@@ -5,17 +5,16 @@
       <th>Symbol</th>
       <th>Company</th>
       <th class="text-right">Shares</th>
-      <th class="text-right">Average Cost</th>
+      <th class="text-right">Average Price</th>
       <th class="text-right">Market Price</th>
-      <th class="text-right">Cost Basis</th>
+      <th class="text-right">Total Cost</th>
       <th class="text-right">Market Value</th>
       <th class="text-right">Gain/Loss</th>
-      <th class="text-right">Growth</th>
+      <th class="text-right">Gain/Loss %</th>
     </tr>
   </thead>
 
   <tbody>
-    <% total_cost = market_value = total_gain_loss = 0 %>
     <% @positions.each do |position| %>
       <tr>
         <td class="text-center">
@@ -27,27 +26,30 @@
         <td><%= position.stock.company_name %></td>
         <td class="text-right"><%= number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
         <td class="text-right"><%= number_to_currency(position.average_price) %></td>
-        <td class="text-right"><%= number_to_currency(position.stock.current_price) %></td>
-        <td class="text-right"><%= number_to_currency(position.shares * position.average_price) %></td>
-        <td class="text-right"><%= number_to_currency(position.shares * position.stock.current_price) %></td>
-        <% gain_loss = number_to_currency(position.shares * (position.stock.current_price - position.average_price)) %>
+        <td class="text-right"><%= number_to_currency(position.market_price) %></td>
+        <td class="text-right"><%= number_to_currency(position.total_cost) %></td>
+        <td class="text-right"><%= number_to_currency(position.market_value) %></td>
+        <% gain_loss = number_to_currency(position.gain_loss) %>
         <td class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(gain_loss) %></td>
-        <% growth = number_to_percentage((position.stock.current_price - position.average_price) / position.average_price * 100, precision: 2) %>
+        <% growth = number_to_percentage(position.gain_loss_pct, precision: 2) %>
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
       </tr>
-      <% total_cost += position.shares * position.average_price %>
-      <% market_value += position.shares * position.stock.current_price %>
-      <% total_gain_loss += position.shares * (position.stock.current_price - position.average_price) %>
     <% end %>
   </tbody>
   <tfoot>
+    <%
+      positions = Position.where(user: current_user)
+      total_cost = positions.sum(:total_cost)
+      market_value = positions.sum(:market_value)
+      gain_loss = market_value - total_cost
+      gain_loss_pct = total_cost > 0 ? gain_loss / total_cost * 100 : 0
+    %>
     <tr>
       <td colspan="6" class="text-right"><strong>Total</strong></td>
       <td class="text-right"><%= number_to_currency(total_cost) %></td>
       <td class="text-right"><%= number_to_currency(market_value) %></td>
-      <td class="text-right <%= delta_class(total_gain_loss) %>"><%= delta_number(number_to_currency(total_gain_loss)) %></td>
-      <% growth = number_to_percentage(total_cost > 0 ? total_gain_loss / total_cost * 100 : 0, precision: 2) %>
-      <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
+      <td class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></td>
+      <td class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></td>
     </tr>
   </tfoot>
 </table>

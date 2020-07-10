@@ -18,4 +18,20 @@ module StocksHelper
     end.compact
   end
 
+  def yahoo_rec_human(value)
+    if value.nil?
+      nil
+    elsif value <= 1.5
+      'Str. Buy'
+    elsif value <= 2.5
+      'Buy'
+    elsif value < 3.5
+      'Hold'
+    elsif value < 4.5
+      'Sell'
+    else
+      'Str. Sell'
+    end
+  end
+
 end

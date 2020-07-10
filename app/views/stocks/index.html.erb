@@ -9,8 +9,8 @@
       <th class="no-search text-right">Change&nbsp;%</th>
       <th class="no-search text-right">Est. Annual Div</th>
       <th class="no-search text-right">Est. Yield %</th>
-      <th class="no-search text-right">Beta (5Y Monthly)</th>
-      <th class="no-search text-right">Recommendation</th>
+      <th class="no-search text-right">Beta</th>
+      <th class="no-search text-right">Yahoo Rec.</th>
     </tr>
   </thead>
 
@@ -46,8 +46,10 @@
         <td class="text-right">
           <%= number_with_precision(stock.beta, precision: 2) %>
         </td>
-        <td class="text-right">
-          <%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>">
+          <% if stock.yahoo_recommendation %>
+            <small><%= yahoo_rec_human(stock.yahoo_recommendation) %></small> <%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

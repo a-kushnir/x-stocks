@@ -1,8 +1,8 @@
-module Convert
-  module Iexapis
-    class Company
+module Etl
+  module Transform
+    class Iexapis
 
-      def process(stock, json)
+      def company(stock, json)
         json ||= {}
 
         stock.company_name = json['companyName']

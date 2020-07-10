@@ -1,5 +1,5 @@
-class Data
-  class Refresh
+module Etl
+  class DataRefresh
 
     def company_data?(stock)
       return true if stock.saved_change_to_symbol?
@@ -9,14 +9,14 @@ class Data
     end
 
     def company_data!(stock)
-      json = Import::Iexapis.new.company(stock.symbol)
-      Convert::Iexapis::Company.new.process(stock, json)
+      json = Etl::Extract::Iexapis.new.company(stock.symbol)
+      Etl::Transform::Iexapis::new.company(stock, json)
 
-      json = Import::Finnhub.new.company(stock.symbol)
-      Convert::Finnhub::Company.new.process(stock, json)
+      json = Etl::Extract::Finnhub.new.company(stock.symbol)
+      Etl::Transform::Finnhub::new.company(stock, json)
 
-      json = Import::Finnhub.new.peers(stock.symbol)
-      Convert::Finnhub::Peers.new.process(stock, json)
+      json = Etl::Extract::Finnhub.new.peers(stock.symbol)
+      Etl::Transform::Finnhub::new.peers(stock, json)
 
       financial_data!(stock)
     end
@@ -26,13 +26,17 @@ class Data
     end
 
     def financial_data!(stock)
-      json = Import::Finnhub.new.quote(stock.symbol)
-      Convert::Finnhub::Quote.new.process(stock, json)
+      json = Etl::Extract::Finnhub.new.quote(stock.symbol)
+      Etl::Transform::Finnhub::new.quote(stock, json)
     end
 
     def all_financial_data?
       updated_at = Config[:stock_price_updated_at]
       updated_at.nil? || updated_at < 1.hour.ago
+    end
+
+    def all_financial_data
+      all_financial_data! if all_financial_data?
     end
 
     def all_financial_data!

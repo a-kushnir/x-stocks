@@ -23,7 +23,7 @@ class StocksController < ApplicationController
   def create
     @stock = Stock.new(stock_params)
     if @stock.save
-      Data::Refresh.new.company_data(@stock)
+      Etl::DataRefresh.new.company_data(@stock)
       flash[:notice] = "#{@stock} stock created"
       redirect_to stock_path(@stock)
     else
@@ -44,7 +44,7 @@ class StocksController < ApplicationController
     not_found && return unless @stock
 
     if @stock.update(stock_params)
-      Data::Refresh.new.company_data(@stock)
+      Etl::DataRefresh.new.company_data(@stock)
       flash[:notice] = "#{@stock} stock updated"
       redirect_to stock_path(@stock)
     else
@@ -65,8 +65,8 @@ class StocksController < ApplicationController
   def test
     @stock = find_stock
 
-    json = Import::Finnhub.new.quote(@stock.symbol)
-    Convert::Finnhub::Quote.new.process(@stock, json)
+    json = Etl::Extract::Finnhub.new.quote(@stock.symbol)
+    Etl::Transform::Finnhub.new.quote(@stock, json)
 
     flash[:notice] = "#{@stock} stock price updated"
     redirect_to stock_path(@stock)

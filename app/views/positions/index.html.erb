@@ -53,6 +53,7 @@
     </tr>
   </tfoot>
 </table>
+<%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
 
 <div>
   <%= link_to 'New Position', new_position_path, class: 'btn btn-success' %>

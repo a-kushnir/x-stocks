@@ -5,7 +5,7 @@ class StocksController < ApplicationController
 
   def index
     @page_title = 'Stocks'
-    @stocks = Stock.all
+    @pagy, @stocks = pagy(Stock.order(:symbol).all)
   end
 
   def show

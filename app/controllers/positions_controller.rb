@@ -5,7 +5,7 @@ class PositionsController < ApplicationController
 
   def index
     @page_title = 'My Positions'
-    @positions = positions.all
+    @pagy, @positions = pagy(positions.all)
   end
 
   def show

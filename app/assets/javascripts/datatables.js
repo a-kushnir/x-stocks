@@ -29,10 +29,16 @@
 $.extend( $.fn.dataTable.defaults, {
   responsive: true,
   pagingType: 'full',
-  //dom:
-  //  "<'row'<'col-sm-4 text-left'f><'right-action col-sm-8 text-right'<'buttons'B> <'select-info'> >>" +
-  //  "<'row'<'dttb col-12 px-0'tr>>" +
-  //  "<'row'<'col-sm-12 table-footer'lip>>"
+  columnDefs: [{
+    targets: 'no-sort',
+    sortable: false,
+  },{
+    targets: 'no-search',
+    searchable: false,
+  }],
+  dom: "<'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6'l>>" +
+    "<'row'<'col-sm-12'tr>>" +
+    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
 });
 
 

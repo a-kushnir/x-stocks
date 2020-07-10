@@ -14,8 +14,16 @@
 //@import 'datatables/extensions/Scroller/scroller.bootstrap4';
 //@import 'datatables/extensions/Select/select.bootstrap4';
 
-div.dataTables_wrapper div.dataTables_info {
-  padding-top: 0.55em;
+div.dataTables_wrapper {
+  div.dataTables_info {
+    padding-top: 0.55em;
+  }
+  div.dataTables_filter {
+    text-align: left;
+  }
+  div.dataTables_length {
+    text-align: right;
+  }
 }
 
 .table.table-override {

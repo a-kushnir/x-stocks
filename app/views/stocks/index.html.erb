@@ -46,16 +46,7 @@
 
 <script>
   function on_page_load() {
-    $("#data-table").dataTable({
-      columnDefs: [{
-        targets: 'no-sort',
-        sortable: false,
-      },{
-        targets: 'no-search',
-        searchable: false,
-      }],
-      order: [1, 'asc']
-    });
+    $("#data-table").dataTable({order: [1, 'asc']});
   }
 
   function refresh_page() {

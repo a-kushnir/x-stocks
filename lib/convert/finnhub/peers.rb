@@ -3,7 +3,8 @@ module Convert
     class Peers
 
       def process(stock, json)
-        ::StocksTag.batch_update(stock, :stock_peer, json)
+        peers = (json || []).select { |p| p != stock.symbol }
+        ::StocksTag.batch_update(stock, :stock_peer, peers)
       end
 
     end

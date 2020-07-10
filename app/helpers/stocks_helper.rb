@@ -14,9 +14,7 @@ module StocksHelper
 
   def stock_peers
     @stock.tags.by_key(:stock_peer).map do |tag|
-      if tag.name != @stock.symbol
-        { symbol: tag.name, stock: ::Stock.find_by(symbol: tag.name) }
-      end
+      { symbol: tag.name, stock: ::Stock.find_by(symbol: tag.name) }
     end.compact
   end
 

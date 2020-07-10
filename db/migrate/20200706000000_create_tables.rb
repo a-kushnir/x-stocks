@@ -10,7 +10,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
 
     create_table :stocks do |t|
       t.string :symbol, null: false
-      t.references :exchange
+      t.references :exchange, foreign_key: true
 
       t.string :company_name
       t.string :industry
@@ -51,22 +51,18 @@ class CreateTables < ActiveRecord::Migration[6.0]
     end
 
     create_table :tags do |t|
+      t.references :stock, null: false, foreign_key: true
       t.string :key, null: false
       t.string :name, null: false
 
       t.datetime :created_at, null: false
-    end
 
-    create_table :stocks_tags do |t|
-      t.references :stock, null: false
-      t.references :tag, null: false
-
-      t.datetime :created_at, null: false
+      t.index [:key, :name, :stock_id], unique: true
     end
 
     create_table :positions do |t|
-      t.references :user, null: false
-      t.references :stock, null: false
+      t.references :user, null: false, foreign_key: true
+      t.references :stock, null: false, foreign_key: true
 
       t.decimal :shares, precision: 12, scale: 4
       t.decimal :average_price, precision: 10, scale: 2

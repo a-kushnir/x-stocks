@@ -25,7 +25,7 @@ module Etl
         stock.phone = json['phone']
 
         if stock.save
-          ::StocksTag.batch_update(stock, :company_tag, json['tags'])
+          ::Tag.batch_update(stock, :company_tag, json['tags'])
         end
       end
 

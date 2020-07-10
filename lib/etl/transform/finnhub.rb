@@ -10,7 +10,7 @@ module Etl
 
       def peers(stock, json)
         peers = (json || []).select { |p| p != stock.symbol }
-        ::StocksTag.batch_update(stock, :stock_peer, peers)
+        ::Tag.batch_update(stock, :stock_peer, peers)
       end
 
       def quote(stock, json)

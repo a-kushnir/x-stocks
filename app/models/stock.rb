@@ -1,8 +1,7 @@
 class Stock < ApplicationRecord
 
   belongs_to :exchange, optional: true
-  has_many :stocks_tags, dependent: :destroy
-  has_many :tags, through: :stocks_tags do
+  has_many :tags, dependent: :destroy do
     def by_key(key)
       where(key: key)
     end

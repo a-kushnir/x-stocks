@@ -18,6 +18,9 @@ module Etl
       json = Etl::Extract::Finnhub.new.peers(stock.symbol)
       Etl::Transform::Finnhub::new.peers(stock, json)
 
+      json = Etl::Extract::Yahoo.new.statistics(stock.symbol)
+      Etl::Transform::Yahoo::new.statistics(stock, json)
+
       financial_data!(stock)
     end
 

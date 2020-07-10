@@ -7,6 +7,10 @@
       <th class="no-search text-right">Price</th>
       <th class="no-search text-right">Change</th>
       <th class="no-search text-right">Change&nbsp;%</th>
+      <th class="no-search text-right">Est. Annual Div</th>
+      <th class="no-search text-right">Est. Yield %</th>
+      <th class="no-search text-right">Beta (5Y Monthly)</th>
+      <th class="no-search text-right">Recommendation</th>
     </tr>
   </thead>
 
@@ -32,6 +36,18 @@
         <% price_change_pct = number_to_percentage(stock.price_change_pct, precision: 2) %>
         <td class="text-right <%= delta_class(price_change_pct) %>">
           <%= delta_number(price_change_pct) %>
+        </td>
+        <td class="text-right">
+          <%= number_to_currency(stock.est_annual_dividend) %>
+        </td>
+        <td class="text-right">
+          <%= number_to_percentage(stock.est_annual_dividend / stock.current_price * 100, precision: 2) rescue nil %>
+        </td>
+        <td class="text-right">
+          <%= number_with_precision(stock.beta, precision: 2) %>
+        </td>
+        <td class="text-right">
+          <%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>
         </td>
       </tr>
     <% end %>

@@ -14,7 +14,6 @@ module Etl
       def load_json(url)
         response = Net::HTTP.get_response(URI(url))
         if response.is_a?(Net::HTTPSuccess)
-          puts "response.body=#{response.body}"
           JSON.parse(response.body)
         end
       end

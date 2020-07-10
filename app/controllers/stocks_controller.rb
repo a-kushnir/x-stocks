@@ -65,15 +65,16 @@ class StocksController < ApplicationController
   def test
     @stock = find_stock
 
-    json = Etl::Extract::Finnhub.new.quote(@stock.symbol)
-    Etl::Transform::Finnhub.new.quote(@stock, json)
+      #json = Etl::Extract::Finnhub.new.quote(@stock.symbol)
+      #Etl::Transform::Finnhub.new.quote(@stock, json)
 
-    flash[:notice] = "#{@stock} stock price updated"
-    redirect_to stock_path(@stock)
+      #flash[:notice] = "#{@stock} stock price updated"
+      #redirect_to stock_path(@stock)
 
-    #import = Import::Yahoo.new
-    #page = import.retrieve(@stock.symbol)
-    #send_data(page, filename: 'page.html', type: 'text/html')
+    import = Etl::Extract::Yahoo.new
+    json = import.statistics(@stock.symbol)
+      # send_data(page, filename: 'page.html', type: 'text/html')
+    a = 1
   end
 
   private

@@ -44,6 +44,10 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :dividend_amount, precision: 12, scale: 4
       t.decimal :est_annual_dividend, precision: 12, scale: 4
 
+      t.decimal :payout_ratio, precision: 10, scale: 2
+      t.decimal :beta, precision: 10, scale: 6
+      t.decimal :yahoo_recommendation, precision: 5, scale: 2
+
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false
 

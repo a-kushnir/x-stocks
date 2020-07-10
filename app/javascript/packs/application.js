@@ -13,3 +13,8 @@ require("packs/data_refresh");
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+document.addEventListener("turbolinks:load", () => {
+    if (typeof on_page_load === 'function')
+        on_page_load();
+})

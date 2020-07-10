@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, ruby-2.6.6-p146) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.8.3, ruby-2.6.6-p146) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.10.0, ruby-2.6.6-p146) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jquery-datatables (v1.10.20, ruby-2.6.6-p146) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v4.4.0, ruby-2.6.6-p146) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="loofah (v2.6.0, ruby-2.6.6-p146) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.7.1, ruby-2.6.6-p146) [gem]" level="application" />

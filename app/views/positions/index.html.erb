@@ -1,16 +1,16 @@
-<table class="table table-hover">
-  <thead>
+<table id="data-table" class="table table-hover">
+  <thead class="thead-light">
     <tr>
-      <th style="width: 1px;"></th>
+      <th class="no-sort no-search" style="width: 1px;"></th>
       <th>Symbol</th>
       <th>Company</th>
-      <th class="text-right">Shares</th>
-      <th class="text-right">Average Price</th>
-      <th class="text-right">Market Price</th>
-      <th class="text-right">Total Cost</th>
-      <th class="text-right">Market Value</th>
-      <th class="text-right">Gain/Loss</th>
-      <th class="text-right">Gain/Loss %</th>
+      <th class="no-search text-right">Shares</th>
+      <th class="no-search text-right">Average Price</th>
+      <th class="no-search text-right">Market Price</th>
+      <th class="no-search text-right">Total Cost</th>
+      <th class="no-search text-right">Market Value</th>
+      <th class="no-search text-right">Gain/Loss</th>
+      <th class="no-search text-right">Gain/Loss %</th>
     </tr>
   </thead>
 
@@ -36,7 +36,8 @@
       </tr>
     <% end %>
   </tbody>
-  <tfoot>
+
+  <tfoot class="thead-light">
     <%
       positions = Position.where(user: current_user)
       total_cost = positions.sum(:total_cost)
@@ -45,11 +46,11 @@
       gain_loss_pct = total_cost > 0 ? gain_loss / total_cost * 100 : 0
     %>
     <tr>
-      <td colspan="6" class="text-right"><strong>Total</strong></td>
-      <td class="text-right"><%= number_to_currency(total_cost) %></td>
-      <td class="text-right"><%= number_to_currency(market_value) %></td>
-      <td class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></td>
-      <td class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></td>
+      <th colspan="6" class="text-right"><strong>Total</strong></th>
+      <th class="text-right"><%= number_to_currency(total_cost) %></th>
+      <th class="text-right"><%= number_to_currency(market_value) %></th>
+      <th class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></th>
+      <th class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></th>
     </tr>
   </tfoot>
 </table>
@@ -60,7 +61,20 @@
 </div>
 
 <script>
+  function on_page_load() {
+    $("#data-table").dataTable({
+      columnDefs: [{
+        targets: 'no-sort',
+        sortable: false,
+      },{
+        targets: 'no-search',
+        searchable: false,
+      }],
+      order: [1, 'asc']
+    });
+  }
+
   function refresh_page() {
-      window.location.reload();
+    window.location.reload();
   }
 </script>

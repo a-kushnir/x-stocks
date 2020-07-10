@@ -7,6 +7,8 @@ class Stock < ApplicationRecord
     end
   end
 
+  default_scope { order(symbol: :asc) }
+
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true
 

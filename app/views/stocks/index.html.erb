@@ -1,12 +1,12 @@
-<table class="table table-hover">
-  <thead>
+<table id="data-table" class="table table-hover">
+  <thead class="thead-light">
     <tr>
-      <th style="width: 1px;"></th>
+      <th class="no-sort no-search" style="width: 1px;"></th>
       <th>Symbol</th>
       <th>Company</th>
-      <th class="text-right">Price</th>
-      <th class="text-right">Change</th>
-      <th class="text-right">Change&nbsp;%</th>
+      <th class="no-search text-right">Price</th>
+      <th class="no-search text-right">Change</th>
+      <th class="no-search text-right">Change&nbsp;%</th>
     </tr>
   </thead>
 
@@ -38,8 +38,6 @@
   </tbody>
 </table>
 
-<%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
-
 <% if user_signed_in? %>
 <div>
   <%= link_to 'New Stock', new_stock_path, class: 'btn btn-success' %>
@@ -47,7 +45,20 @@
 <% end %>
 
 <script>
-    function refresh_page() {
-        window.location.reload();
-    }
+  function on_page_load() {
+    $("#data-table").dataTable({
+      columnDefs: [{
+        targets: 'no-sort',
+        sortable: false,
+      },{
+        targets: 'no-search',
+        searchable: false,
+      }],
+      order: [1, 'asc']
+    });
+  }
+
+  function refresh_page() {
+    window.location.reload();
+  }
 </script>

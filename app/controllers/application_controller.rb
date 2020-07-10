@@ -1,14 +1,27 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
+  rescue_from Exception, with: :internal_error
+
   private
 
   def not_found
     @page_title = '404 Page not found'
     respond_to do |format|
-      format.html { render :file => "/errors/404", layout: 'application', :status => :not_found }
-      format.xml  { head :not_found }
-      format.any  { head :not_found }
+      format.html { render :file => "/errors/404", layout: 'application', status: 404 }
+      format.xml  { head 404 }
+      format.any  { head 404 }
     end
   end
+
+  def internal_error(error = nil)
+    @page_title = '500 Internal Server Error'
+    @error = error
+    respond_to do |format|
+      format.html { render :file => "/errors/500", layout: 'application', status: 500 }
+      format.xml  { head 500 }
+      format.any  { head 500 }
+    end
+  end
+
 end

@@ -18,10 +18,17 @@ div.dataTables_wrapper div.dataTables_info {
   padding-top: 0.55em;
 }
 
-.table {
+.table.table-override {
   .thead-light {
     th {
       background-color: #f3f5f6;
     }
   }
+  thead
+  {
+    th {
+      border-bottom: 0 solid #dee2e6;
+    }
+  }
+  border-bottom: 1px solid #dee2e6;
 }

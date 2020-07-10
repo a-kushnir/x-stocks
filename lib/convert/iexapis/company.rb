@@ -3,53 +3,30 @@ module Convert
     class Company
 
       def process(stock, json)
-        if json
-          add_company(stock, json)
-        else
-          remove_company(stock)
+        json ||= {}
+
+        stock.company_name = json['companyName']
+        stock.exchange = Exchange.search(json['exchange'])
+        stock.industry = json['industry']
+        stock.website = json['website']
+        stock.description = json['description']
+        stock.ceo = json['CEO']
+        stock.security_name = json['securityName']
+        stock.issue_type = json['issueType']
+        stock.sector = json['sector']
+        stock.primary_sic_code = json['primarySicCode']
+        stock.employees = json['employees']
+        stock.address = json['address']
+        stock.address2 = json['address2']
+        stock.state = json['state']
+        stock.city = json['city']
+        stock.zip = json['zip']
+        stock.country = json['country']
+        stock.phone = json['phone']
+
+        if stock.save
+          ::StocksTag.batch_update(stock, :company_tag, json['tags'])
         end
-      end
-
-      private
-
-      def add_company(stock, json)
-        company = stock.company || ::Company.new(stock: stock)
-
-        company.company_name = json['companyName']
-        company.exchange = json['exchange']
-        company.industry = json['industry']
-        company.website = json['website']
-        company.description = json['description']
-        company.ceo = json['CEO']
-        company.security_name = json['securityName']
-        company.issue_type = json['issueType']
-        company.sector = json['sector']
-        company.primary_sic_code = json['primarySicCode']
-        company.employees = json['employees']
-        company.address = json['address']
-        company.address2 = json['address2']
-        company.state = json['state']
-        company.city = json['city']
-        company.zip = json['zip']
-        company.country = json['country']
-        company.phone = json['phone']
-
-        if company.save
-          updated_ids = []
-          (json['tags'] || []).each do |tag|
-            tag = ::Tag.find_or_create_by(name: tag)
-            updated_ids << ::CompaniesTag.find_or_create_by(company: company, tag: tag).id
-          end
-
-          ::CompaniesTag
-              .where(company_id: company.id)
-              .where.not(id: updated_ids)
-              .delete_all
-        end
-      end
-
-      def remove_company(stock)
-        stock.company&.destroy
       end
 
     end

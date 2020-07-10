@@ -10,15 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_063744) do
+ActiveRecord::Schema.define(version: 2020_07_06_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "companies", force: :cascade do |t|
+  create_table "configs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_configs_on_key", unique: true
+  end
+
+  create_table "exchanges", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "short_name", null: false
+    t.string "region", null: false
+    t.datetime "created_at", null: false
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.bigint "stock_id", null: false
+    t.decimal "shares", precision: 12, scale: 4
+    t.decimal "average_price", precision: 10, scale: 2
+    t.decimal "total_cost", precision: 10, scale: 2
+    t.decimal "market_price", precision: 10, scale: 2
+    t.decimal "market_value", precision: 10, scale: 2
+    t.decimal "gain_loss", precision: 10, scale: 2
+    t.decimal "gain_loss_pct", precision: 10, scale: 2
+    t.decimal "est_annual_dividend", precision: 12, scale: 4
+    t.decimal "est_annual_income", precision: 12, scale: 4
+    t.index ["stock_id"], name: "index_positions_on_stock_id"
+    t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
+    t.index ["user_id"], name: "index_positions_on_user_id"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "symbol", null: false
+    t.bigint "exchange_id"
     t.string "company_name"
-    t.string "exchange"
     t.string "industry"
     t.string "website"
     t.text "description"
@@ -37,78 +69,34 @@ ActiveRecord::Schema.define(version: 2020_07_09_063744) do
     t.string "phone"
     t.date "ipo"
     t.string "logo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stock_id"], name: "index_companies_on_stock_id"
-  end
-
-  create_table "companies_tags", force: :cascade do |t|
-    t.bigint "company_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_companies_tags_on_company_id"
-    t.index ["tag_id"], name: "index_companies_tags_on_tag_id"
-  end
-
-  create_table "company_peers", force: :cascade do |t|
-    t.bigint "stock_id", null: false
-    t.string "peer_symbol", null: false
-    t.bigint "peer_stock_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["peer_stock_id"], name: "index_company_peers_on_peer_stock_id"
-    t.index ["stock_id"], name: "index_company_peers_on_stock_id"
-  end
-
-  create_table "positions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "stock_id", null: false
-    t.decimal "shares", precision: 12, scale: 4
-    t.decimal "average_cost", precision: 12, scale: 4
-    t.index ["stock_id"], name: "index_positions_on_stock_id"
-    t.index ["user_id"], name: "index_positions_on_user_id"
-  end
-
-  create_table "stock_dividends", force: :cascade do |t|
-    t.bigint "stock_id", null: false
-    t.datetime "ex_date"
-    t.datetime "payment_date"
-    t.datetime "record_date"
-    t.datetime "declared_date"
-    t.decimal "amount", precision: 12, scale: 4
-    t.string "flag"
-    t.string "currency"
-    t.string "description"
-    t.string "frequency"
-    t.datetime "updated_at", null: false
-    t.index ["stock_id"], name: "index_stock_dividends_on_stock_id"
-  end
-
-  create_table "stock_quotes", force: :cascade do |t|
-    t.bigint "stock_id", null: false
     t.decimal "current_price", precision: 10, scale: 2
     t.decimal "prev_close_price", precision: 10, scale: 2
     t.decimal "open_price", precision: 10, scale: 2
     t.decimal "day_low_price", precision: 10, scale: 2
     t.decimal "day_high_price", precision: 10, scale: 2
-    t.datetime "timestamp"
-    t.datetime "updated_at", null: false
     t.decimal "price_change", precision: 10, scale: 2
     t.decimal "price_change_pct", precision: 10, scale: 2
-    t.index ["stock_id"], name: "index_stock_quotes_on_stock_id"
-  end
-
-  create_table "stocks", force: :cascade do |t|
-    t.string "symbol", null: false
+    t.integer "dividend_frequency"
+    t.decimal "dividend_amount", precision: 12, scale: 4
+    t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
+    t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
+  end
+
+  create_table "stocks_tags", force: :cascade do |t|
+    t.bigint "stock_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["stock_id"], name: "index_stocks_tags_on_stock_id"
+    t.index ["tag_id"], name: "index_stocks_tags_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
+    t.string "key", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

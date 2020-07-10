@@ -7,4 +7,12 @@ class Exchange < ApplicationRecord
     "#{name} (#{short_name})"
   end
 
+  def self.search(name)
+    name = name.to_s
+    all.detect do |exchange|
+      exchange.name.downcase == name.downcase ||
+      exchange.short_name.downcase == name.downcase
+    end
+  end
+
 end

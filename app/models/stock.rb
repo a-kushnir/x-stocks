@@ -1,18 +1,25 @@
 class Stock < ApplicationRecord
 
-  has_one :company, dependent: :destroy
-  has_many :company_peers, dependent: :destroy
-  has_many :stock_dividends, dependent: :destroy
-  has_one :stock_quote, dependent: :destroy
+  belongs_to :exchange, optional: true
+  has_many :stocks_tags, dependent: :destroy
+  has_many :tags, through: :stocks_tags
 
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true
 
-  after_save :update_company_peer_refs
-  before_destroy :destroy_company_peer_refs
-
   def to_s
-    symbol
+    if company_name.present?
+      "#{company_name} (#{symbol})"
+    else
+      symbol
+    end
+  end
+
+  def update_prices!
+    self.price_change = (current_price - prev_close_price) rescue nil
+    self.price_change_pct = (price_change / prev_close_price * 100) rescue nil
+    ::Position.update_prices!(self)
+    save!
   end
 
   private
@@ -21,18 +28,4 @@ class Stock < ApplicationRecord
     self.symbol = symbol.upcase
   end
 
-  def update_company_peer_refs
-    return unless saved_change_to_symbol?
-
-    destroy_company_peer_refs
-    CompanyPeer.where(peer_symbol: symbol).each do |peer|
-      peer.update(peer_stock_id: id)
-    end
-  end
-
-  def destroy_company_peer_refs
-    CompanyPeer.where(peer_stock_id: id).each do |peer|
-      peer.update(peer_stock_id: nil)
-    end
-  end
 end

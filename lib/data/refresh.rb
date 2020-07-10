@@ -18,9 +18,6 @@ class Data
       json = Import::Finnhub.new.peers(stock.symbol)
       Convert::Finnhub::Peers.new.process(stock, json)
 
-      json = Import::Iexapis.new.dividends_5y(stock.symbol)
-      Convert::Iexapis::Dividend.new.process(stock, json)
-
       financial_data!(stock)
     end
 
@@ -34,7 +31,8 @@ class Data
     end
 
     def all_financial_data?
-      StockQuote.where('updated_at < ?', 1.hour.ago).exists?
+      updated_at = Config[:stock_price_updated_at]
+      updated_at.nil? || updated_at < 1.hour.ago
     end
 
     def all_financial_data!
@@ -42,6 +40,7 @@ class Data
         financial_data!(stock)
         sleep(1.0/30) # Limit up to 30 requests per second
       end
+      Config[:stock_price_updated_at] = DateTime.now
     end
 
   end

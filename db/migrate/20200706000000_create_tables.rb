@@ -1,4 +1,4 @@
-class AddStocksTable < ActiveRecord::Migration[6.0]
+class CreateTables < ActiveRecord::Migration[6.0]
   def change
     create_table :exchanges do |t|
       t.string :name, null: false
@@ -10,7 +10,7 @@ class AddStocksTable < ActiveRecord::Migration[6.0]
 
     create_table :stocks do |t|
       t.string :symbol, null: false
-      t.references :exchange, null: false
+      t.references :exchange
 
       t.string :company_name
       t.string :industry
@@ -40,6 +40,8 @@ class AddStocksTable < ActiveRecord::Migration[6.0]
       t.decimal :price_change, precision: 10, scale: 2
       t.decimal :price_change_pct, precision: 10, scale: 2
 
+      t.integer :dividend_frequency
+      t.decimal :dividend_amount, precision: 12, scale: 4
       t.decimal :est_annual_dividend, precision: 12, scale: 4
 
       t.datetime :created_at, null: false
@@ -49,8 +51,8 @@ class AddStocksTable < ActiveRecord::Migration[6.0]
     end
 
     create_table :tags do |t|
+      t.string :key, null: false
       t.string :name, null: false
-      t.string :type, null: false
 
       t.datetime :created_at, null: false
     end
@@ -91,5 +93,12 @@ class AddStocksTable < ActiveRecord::Migration[6.0]
       t.index :key, unique: true
     end
 
+    reversible do |dir|
+      dir.up do
+        Exchange.create!({name: 'Nasdaq', short_name: 'NASDAQ', region: 'United States'})
+        Exchange.create!({name: 'New York Stock Exchange', short_name: 'NYSE', region: 'United States'})
+        Exchange.create!({name: 'Toronto Stock Exchange', short_name: 'TSX', region: 'Canada'})
+      end
+    end
   end
 end

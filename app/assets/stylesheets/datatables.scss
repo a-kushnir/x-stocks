@@ -40,3 +40,11 @@ div.dataTables_wrapper {
   }
   border-bottom: 1px solid #dee2e6;
 }
+
+.table-hover {
+  tbody tr {
+    @include hover() {
+      background-color: #f3f5f6;
+    }
+  }
+}

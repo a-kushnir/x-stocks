@@ -42,9 +42,7 @@ div.dataTables_wrapper {
 }
 
 .table-hover {
-  tbody tr {
-    @include hover() {
-      background-color: #f3f5f6;
-    }
+  tbody tr:hover {
+    background-color: #f3f5f6;
   }
 }

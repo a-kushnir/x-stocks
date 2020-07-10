@@ -1,8 +1,6 @@
 class StocksController < ApplicationController
   include StocksHelper
 
-  before_action :authenticate_user!, except: [:index, :show]
-
   def index
     @page_title = 'Stocks'
     @stocks = Stock.all

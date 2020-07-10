@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
+  before_action :authenticate_user!
+
   rescue_from Exception, with: :internal_error
 
   private

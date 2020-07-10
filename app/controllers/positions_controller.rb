@@ -1,8 +1,6 @@
 class PositionsController < ApplicationController
   include PositionsHelper
 
-  before_action :authenticate_user!
-
   def index
     @page_title = 'My Positions'
     @pagy, @positions = pagy(positions.all)

@@ -70,11 +70,49 @@
 </div>
 
 <script>
+    <% value = @positions.map {|p| (p.market_value / market_value * 100).round(2) } %>
+    <% labels = @positions.map {|p| p.stock.to_s } %>
+
+    function x() {
+        var data = {
+                datasets: [{
+                    data: <%= JSON.generate(value).html_safe %>,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                  }],
+            labels: <%= JSON.generate(labels).html_safe %>
+        };
+
+        var ctx = document.getElementById('myChart');
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: {}
+        });
+    }
+</script>
+
+<script>
   function on_page_load() {
     $("#data-table").dataTable({order: [1, 'asc']});
+    x();
   }
 
   function refresh_page() {
     window.location.reload();
   }
 </script>
+
+<div class="form-group row">
+  <div class="col-sm-5"></div>
+  <div class="col-sm-2">
+    <canvas id="myChart" width="300" height="300"></canvas>
+  </div>
+  <div class="col-sm-5"></div>
+</div>

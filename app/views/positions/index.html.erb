@@ -26,6 +26,8 @@
         <td class="text-center">
           <% if position.stock.logo.present? %>
             <img src="<%= position.stock.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          <% else %>
+            <img src="/img/no-logo.png" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
         <td><%= link_to position.stock.symbol, position_path(position) %></td>

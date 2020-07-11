@@ -21,6 +21,8 @@
         <td class="text-center">
           <% if stock.logo.present? %>
             <img src="<%= stock.logo %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          <% else %>
+            <img src="/img/no-logo.png" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
         <td>

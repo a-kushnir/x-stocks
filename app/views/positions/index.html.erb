@@ -1,3 +1,7 @@
+<%
+  positions = Position.where(user: current_user)
+  market_value = positions.sum(:market_value)
+%>
 <table id="data-table" class="table table-hover table-override">
   <thead class="thead-light">
     <tr>
@@ -13,9 +17,9 @@
       <th class="no-search text-right">Gain/Loss %</th>
       <th class="no-search text-right">Est. Ann. Dividend</th>
       <th class="no-search text-right">Est. Ann. Income</th>
+      <th class="no-search text-right">Share %</th>
     </tr>
   </thead>
-
   <tbody>
     <% @positions.each do |position| %>
       <tr>
@@ -37,19 +41,17 @@
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
         <td class="text-right"><%= number_to_currency(position.est_annual_dividend) %></td>
         <td class="text-right"><%= number_to_currency(position.est_annual_income) %></td>
+        <td class="text-right"><%= number_to_percentage(position.market_value / market_value * 100, precision: 2) %></td>
       </tr>
     <% end %>
   </tbody>
-
+  <%
+    total_cost = positions.sum(:total_cost)
+    est_annual_income = positions.sum(:est_annual_income)
+    gain_loss = market_value - total_cost
+    gain_loss_pct = total_cost > 0 ? gain_loss / total_cost * 100 : 0
+  %>
   <tfoot class="thead-light">
-    <%
-      positions = Position.where(user: current_user)
-      total_cost = positions.sum(:total_cost)
-      market_value = positions.sum(:market_value)
-      est_annual_income = positions.sum(:est_annual_income)
-      gain_loss = market_value - total_cost
-      gain_loss_pct = total_cost > 0 ? gain_loss / total_cost * 100 : 0
-    %>
     <tr>
       <th colspan="6" class="text-right"><strong>Total</strong></th>
       <th class="text-right"><%= number_to_currency(total_cost) %></th>
@@ -58,6 +60,7 @@
       <th class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></th>
       <th></th>
       <th class="text-right"><%= number_to_currency(est_annual_income) %></th>
+      <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
     </tr>
   </tfoot>
 </table>

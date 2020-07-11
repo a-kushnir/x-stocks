@@ -9,5 +9,5 @@
 <div>
   <%= link_to 'Back', positions_path, class: 'btn btn-link' %>
   <%= link_to 'Edit', edit_position_path(@position), class: 'btn btn-primary' %>
-  <%= link_to 'Delete', position_path(@position), method: :delete, class: 'btn btn-danger', onclick: 'return confirm("Are you sure?");' %>
+  <%= link_to 'Delete', position_path(@position), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@position.to_s}?"} %>
 </div>

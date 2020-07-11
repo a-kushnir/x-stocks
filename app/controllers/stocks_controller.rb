@@ -2,8 +2,10 @@ class StocksController < ApplicationController
   include StocksHelper
 
   def index
-    @page_title = 'Stocks'
     @stocks = Stock.all
+
+    @page_title = 'Stocks'
+    @page_menu_item = :stocks
   end
 
   def show
@@ -79,6 +81,7 @@ class StocksController < ApplicationController
 
   def set_page_title
     @page_title = @stock.new_record? ? 'New Stock' : @stock.to_s
+    @page_menu_item = :stocks
   end
 
   def find_stock

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :positions
+  resources :services, only: [:index, :update]
 
   post '/data/refresh', to: 'data#refresh', as: 'data_refresh_url'
 

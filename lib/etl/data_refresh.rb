@@ -18,9 +18,7 @@ module Etl
       json = Etl::Extract::Finnhub.new.peers(stock.symbol)
       Etl::Transform::Finnhub::new.peers(stock, json)
 
-      json = Etl::Extract::Yahoo.new.statistics(stock.symbol)
-      Etl::Transform::Yahoo::new.statistics(stock, json)
-
+      yahoo_data!(stock)
       financial_data!(stock)
     end
 
@@ -48,6 +46,28 @@ module Etl
         sleep(1.0/30) # Limit up to 30 requests per second
       end
       Config[:stock_price_updated_at] = DateTime.now
+    end
+
+    def all_yahoo_data?
+      updated_at = Config[:yahoo_updated_at]
+      updated_at.nil? || updated_at < 1.day.ago
+    end
+
+    def all_yahoo_data
+      all_yahoo_data! if all_yahoo_data?
+    end
+
+    def all_yahoo_data!
+      Stock.all.each do |stock|
+        yahoo_data!(stock)
+        sleep(1.0) # Limit up to 1 requests per second
+      end
+      Config[:yahoo_updated_at] = DateTime.now
+    end
+
+    def yahoo_data!(stock)
+      json = Etl::Extract::Yahoo.new.statistics(stock.symbol)
+      Etl::Transform::Yahoo::new.statistics(stock, json)
     end
 
   end

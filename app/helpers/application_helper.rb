@@ -21,4 +21,10 @@ module ApplicationHelper
     end
   end
 
+  def nav_menu_link(menu_item, name, url, options = {})
+    content_tag :li, class: @page_menu_item == menu_item ? 'nav-item active' : 'nav-item' do
+      link_to(name, url, {class: 'nav-link'}.merge(options))
+    end
+  end
+
 end

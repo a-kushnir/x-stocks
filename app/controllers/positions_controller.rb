@@ -2,8 +2,10 @@ class PositionsController < ApplicationController
   include PositionsHelper
 
   def index
+    @positions = positions.all
+
     @page_title = 'My Positions'
-    @pagy, @positions = pagy(positions.all)
+    @page_menu_item = :positions
   end
 
   def show
@@ -63,6 +65,7 @@ class PositionsController < ApplicationController
 
   def set_page_title
     @page_title = @position.new_record? ? 'New Position' : @position.to_s
+    @page_menu_item = :positions
   end
 
   def new_position

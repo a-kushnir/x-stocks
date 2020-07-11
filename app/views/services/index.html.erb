@@ -1,0 +1,36 @@
+<table id="data-table" class="table table-hover table-override">
+  <thead class="thead-light">
+  <tr>
+    <th>Service</th>
+    <th>Last start at</th>
+    <th class="no-sort no-search">Arguments</th>
+    <th class="no-sort no-search">Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @services.each do |service_code, service| %>
+    <tr>
+      <td><%= service[:name] %></td>
+      <% prev = service[:prev]&.call %>
+      <td><%= prev ? "#{time_ago_in_words prev} ago" : "" %></td>
+      <td>
+        <%= form_tag(service_path(service_code), method: 'put') do %>
+          <% (service[:args] || []).each do |arg| %>
+            <% if arg == :stock_id %>
+              <%= select_tag(:stock_id, options_for_select(@stocks.map { |p| [ p.symbol, p.id ] })) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </td>
+      <td><%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script>
+    function on_page_load() {
+        $("#data-table").dataTable({order: [0, 'asc']});
+    }
+</script>

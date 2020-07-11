@@ -11,6 +11,8 @@
       <th class="no-search text-right">Market Value</th>
       <th class="no-search text-right">Gain/Loss</th>
       <th class="no-search text-right">Gain/Loss %</th>
+      <th class="no-search text-right">Est. Ann. Dividend</th>
+      <th class="no-search text-right">Est. Ann. Income</th>
     </tr>
   </thead>
 
@@ -33,6 +35,8 @@
         <td class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(gain_loss) %></td>
         <% growth = number_to_percentage(position.gain_loss_pct, precision: 2) %>
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
+        <td class="text-right"><%= number_to_currency(position.est_annual_dividend) %></td>
+        <td class="text-right"><%= number_to_currency(position.est_annual_income) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,6 +46,7 @@
       positions = Position.where(user: current_user)
       total_cost = positions.sum(:total_cost)
       market_value = positions.sum(:market_value)
+      est_annual_income = positions.sum(:est_annual_income)
       gain_loss = market_value - total_cost
       gain_loss_pct = total_cost > 0 ? gain_loss / total_cost * 100 : 0
     %>
@@ -51,6 +56,8 @@
       <th class="text-right"><%= number_to_currency(market_value) %></th>
       <th class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></th>
       <th class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></th>
+      <th></th>
+      <th class="text-right"><%= number_to_currency(est_annual_income) %></th>
     </tr>
   </tfoot>
 </table>

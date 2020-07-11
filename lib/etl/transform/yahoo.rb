@@ -10,7 +10,7 @@ module Etl
         stock.yahoo_recommendation = summary&.dig('financialData', 'recommendationMean', 'raw')
         stock.est_annual_dividend = summary&.dig('summaryDetail', 'dividendRate', 'raw')
 
-        stock.save
+        stock.update_dividends!
       end
 
     end

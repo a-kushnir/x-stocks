@@ -28,6 +28,12 @@ class Stock < ApplicationRecord
     save!
   end
 
+  def update_dividends!
+    ::Position.update_dividends!(self)
+    save!
+  end
+
+
   def destroyable?
     !positions.exists?
   end

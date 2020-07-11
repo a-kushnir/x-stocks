@@ -1,10 +1,12 @@
 class Position < ApplicationRecord
 
   belongs_to :user
-  belongs_to :stock
+  belongs_to :stock, optional: true
 
   validates :user, presence: true
   validates :stock, presence: true, uniqueness: { scope: :user }
+  validates :shares, numericality: true
+  validates :average_price, numericality: true, allow_nil: true
 
   before_save :update_prices, :update_dividends
 

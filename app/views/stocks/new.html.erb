@@ -1,3 +1,7 @@
+<div class="row justify-content-center my-form-row">
+  <div class="col-6">
 <%= form_with scope: :stock, url: stocks_path, local: true do |form| %>
   <%= render partial: 'form', locals: {form: form} %>
 <% end %>
+  </div>
+</div>

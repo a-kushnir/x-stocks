@@ -1,15 +1,30 @@
-<% @stock.errors.full_messages.each do |msg| %>
-<div class="alert alert-danger" role="alert">
-  <%= msg %>
-</div>
+<% if @stock.errors.any? %>
+  <div class="form-group row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <% @stock.errors.full_messages.each do |msg| %>
+        <div class="alert alert-danger" role="alert">
+          <%= msg %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
 <% end %>
 
-<div class="form-group">
-  <%= form.label :symbol %>
-  <%= form.text_field :symbol, style: 'text-transform: uppercase;' %>
+<div class="form-group row">
+  <div class="col-sm-5 text-xl-right text-lg-right text-md-right text-sm-right">
+    <%= form.label :symbol %>
+  </div>
+  <div class="col-sm-7">
+    <%= form.text_field :symbol, style: 'text-transform: uppercase;' %>
+  </div>
 </div>
 
-<div>
-  <%= link_to 'Back', @stock.new_record? ? stocks_path : stock_path(@stock), class: 'btn btn-link' %>
-  <%= form.submit class: 'btn btn-primary' %>
+<div class="form-group row">
+  <div class="col-sm-5"></div>
+  <div class="col-sm-7">
+    <%= form.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', @stock.new_record? ? stocks_path : stock_path(@stock), class: 'btn btn-link' %>
+  </div>
 </div>

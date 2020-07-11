@@ -45,8 +45,7 @@
 
 <div>
   <%= link_to 'Back', stocks_path, class: 'btn btn-link' %>
-<% if user_signed_in? %>
-  <%= link_to 'Edit', edit_stock_path(@stock), class: 'btn btn-primary' %>
-  <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', onclick: 'return confirm("Are you sure?");' %>
-<% end %>
+  <% if @stock.destroyable? %>
+    <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@stock.to_s}?"} %>
+  <% end %>
 </div>

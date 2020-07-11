@@ -32,27 +32,6 @@ class StocksController < ApplicationController
     end
   end
 
-  def edit
-    @stock = find_stock
-    not_found && return unless @stock
-
-    set_page_title
-  end
-
-  def update
-    @stock = find_stock
-    not_found && return unless @stock
-
-    if @stock.update(stock_params)
-      Etl::DataRefresh.new.company_data(@stock)
-      flash[:notice] = "#{@stock} stock updated"
-      redirect_to stock_path(@stock)
-    else
-      set_page_title
-      render action: 'edit'
-    end
-  end
-
   def destroy
     @stock = find_stock
     not_found && return unless @stock

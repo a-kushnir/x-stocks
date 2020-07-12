@@ -1,5 +1,8 @@
 module ApplicationHelper
-  include Pagy::Frontend
+
+  def back_url
+    'javascript:history.back()'
+  end
 
   def delta_class(number)
     number = number.to_s

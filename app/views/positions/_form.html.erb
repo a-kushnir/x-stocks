@@ -41,6 +41,6 @@
   </div>
   <div class="col-sm-7">
     <%= form.submit class: 'btn btn-primary' %>
-    <%= link_to 'Back', @position.new_record? ? positions_path : position_path(@position), class: 'btn btn-link' %>
+    <%= link_to 'Back', back_url, class: 'btn btn-link' %>
   </div>
 </div>

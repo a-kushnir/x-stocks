@@ -44,7 +44,7 @@
 </p>
 
 <div>
-  <%= link_to 'Back', stocks_path, class: 'btn btn-link' %>
+  <%= link_to 'Back', back_url, class: 'btn btn-link' %>
   <% if @stock.destroyable? %>
     <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@stock.to_s}?"} %>
   <% end %>

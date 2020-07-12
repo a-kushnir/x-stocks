@@ -25,6 +25,6 @@
   <div class="col-sm-5"></div>
   <div class="col-sm-7">
     <%= form.submit class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', @stock.new_record? ? stocks_path : stock_path(@stock), class: 'btn btn-link' %>
+    <%= link_to 'Back', back_url, class: 'btn btn-link' %>
   </div>
 </div>

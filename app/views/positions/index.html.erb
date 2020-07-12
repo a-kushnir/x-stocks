@@ -2,7 +2,7 @@
   positions = Position.where(user: current_user)
   market_value = positions.sum(:market_value)
 %>
-<table id="data-table" class="table table-hover table-override">
+<table id="positions-table" class="table table-hover table-override">
   <thead class="thead-light">
     <tr>
       <th class="no-sort no-search" style="width: 1px;"></th>
@@ -102,8 +102,9 @@
 
 <script>
   document.addEventListener("turbolinks:load", () => {
-    if (!$.fn.dataTable.isDataTable("#data-table")) {
-      $("#data-table").dataTable({order: [1, 'asc']});
+    const table = "#positions-table";
+    if ($(table).length > 0 && !$.fn.dataTable.isDataTable(table)) {
+      $(table).dataTable({order: $.fn.dataTable.orderOrSaved([1, 'asc'])});
     }
     x();
   })

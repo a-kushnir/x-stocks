@@ -69,9 +69,11 @@
 <% end %>
 
 <script>
-  function on_page_load() {
-    $("#data-table").dataTable({order: [1, 'asc']});
-  }
+  document.addEventListener("turbolinks:load", () => {
+    if (!$.fn.dataTable.isDataTable("#data-table")) {
+      $("#data-table").dataTable({order: [1, 'asc']});
+    }
+  })
 
   function refresh_page() {
     window.location.reload();

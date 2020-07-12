@@ -8,10 +8,10 @@ global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;
 
 require("bootstrap");
-require("packs/data_refresh");
-
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
 require("chart.js")
+require("packs/data_refresh");
+require("packs/data_table");

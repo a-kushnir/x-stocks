@@ -30,4 +30,8 @@ module ApplicationHelper
     end
   end
 
+  def json(object)
+    JSON.generate(object).html_safe
+  end
+
 end

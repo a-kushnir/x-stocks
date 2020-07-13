@@ -13,5 +13,7 @@ document.addEventListener("turbolinks:load", () => {
 })
 
 require("chart.js")
+require("chartjs-plugin-datalabels")
+
 require("packs/data_refresh");
 require("packs/data_table");

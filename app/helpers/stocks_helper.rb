@@ -18,7 +18,7 @@ module StocksHelper
     end.compact
   end
 
-  def yahoo_rec_human(value)
+  def rec_human(value)
     if value.nil?
       nil
     elsif value <= 1.5
@@ -32,6 +32,34 @@ module StocksHelper
     else
       'Str. Sell'
     end
+  end
+
+  def rec_graph_data(details)
+    {
+      labels: details.keys.map { |date| Date.parse(date).strftime('%b') },
+      datasets:
+        [{
+           label: 'Strong Sell',
+           backgroundColor: '#FF333A',
+           data: details.values.map { |value| value[4] }
+        }, {
+           label: 'Sell',
+           backgroundColor: '#FFA33E',
+           data: details.values.map { |value| value[3] }
+        } , {
+           label: 'Hold',
+           backgroundColor: '#FFDC48',
+           data: details.values.map { |value| value[2] }
+        }, {
+           label: 'Buy',
+           backgroundColor: '#00C073',
+           data: details.values.map { |value| value[1] }
+        }, {
+           label: 'Strong Buy',
+           backgroundColor: '#008F88',
+           data: details.values.map { |value| value[0] }
+        }]
+    }
   end
 
 end

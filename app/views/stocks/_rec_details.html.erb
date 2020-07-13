@@ -1,0 +1,52 @@
+<% if mean.present? || details.present? %>
+<div style="margin-top: 15px;">
+  <h4><%= label %></h4>
+  <% if details.present? %>
+    <div style="width: 300px; height: 200px;">
+      <canvas id="<%= id %>_canvas" width="300" height="200"></canvas>
+    </div>
+  <script>
+      document.addEventListener("turbolinks:load", () => {
+          const canvas = $("#<%= id %>_canvas");
+
+          if (canvas.length === 0)
+              return;
+
+          new Chart(canvas, {
+              type: 'bar',
+              data: <%= json rec_graph_data(details) %>,
+              options: {
+                  scales: {
+                      xAxes: [{
+                          stacked: true
+                      }],
+                      yAxes: [{
+                          stacked: true,
+                      }]
+                  },
+                  legend: {
+                      position: 'right',
+                      reverse: true
+                  },
+                  plugins: {
+                      datalabels: {
+                          display: true,
+                          color: 'white',
+                          font: {
+                              weight: 'bold'
+                          },
+                          formatter: function(value, context) {
+                              return value >= 1 ? Math.round(value) : null;
+                          }
+                      }
+                  }
+              },
+          });
+      })
+  </script>
+  <% end %>
+  <% if mean.present? %>
+  Rating: <%= number_with_precision(mean, precision: 2) %> (<%= rec_human(mean) %>)
+  <% end %>
+</div>
+<% end %>

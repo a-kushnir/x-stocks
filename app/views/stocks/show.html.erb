@@ -56,5 +56,7 @@
   </div>
   <div class="col-sm-4">
     <%= render partial: 'links' %>
+    <%= render partial: 'rec_details', locals: { id: 'finnhub_rec', label: 'Finnhub Recommendation', mean: @stock.finnhub_rec, details: @stock.finnhub_rec_details } %>
+    <%= render partial: 'rec_details', locals: { id: 'yahoo_rec', label: 'Yahoo Recommendation', mean: @stock.yahoo_rec, details: @stock.yahoo_rec_details } %>
   </div>
 </div>

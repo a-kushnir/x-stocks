@@ -81,7 +81,7 @@
 
         var data = {
                 datasets: [{
-                    data: <%= JSON.generate(value).html_safe %>,
+                    data: <%= json value %>,
                     backgroundColor: [
                       'rgba(255, 99, 132, 1)',
                       'rgba(54, 162, 235, 1)',
@@ -91,7 +91,7 @@
                       'rgba(255, 159, 64, 1)'
                     ],
                   }],
-            labels: <%= JSON.generate(labels).html_safe %>
+            labels: <%= json labels %>
         };
 
         var ctx = document.getElementById('myChart');

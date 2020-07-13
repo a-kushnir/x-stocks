@@ -19,6 +19,7 @@ module Etl
       Etl::Transform::Finnhub::new.peers(stock, json)
 
       yahoo_data!(stock)
+      finnhub_data!(stock)
       financial_data!(stock)
     end
 

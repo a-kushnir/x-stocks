@@ -1,3 +1,4 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
-//= link datatables.js
+//= link application.js
+

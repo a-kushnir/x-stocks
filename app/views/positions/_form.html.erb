@@ -14,10 +14,10 @@
 
 <div class="form-group row">
   <div class="col-sm-5 text-xl-right text-lg-right text-md-right text-sm-right">
-    <%= form.label :stock %>
+    <%= form.label :stock, class: 'select-label' %>
   </div>
   <div class="col-sm-7">
-    <%= form.select(:stock_id, Stock.all.map { |p| [ p.symbol, p.id ] }, { include_blank: true }) %>
+    <%= form.select(:stock_id, Stock.all.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }, { include_blank: true }, class: 'selectpicker', data: {live_search: true}) %>
   </div>
 </div>
 <div class="form-group row">

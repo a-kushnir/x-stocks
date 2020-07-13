@@ -51,5 +51,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.5.0'
+gem 'bootstrap-select-rails'
 gem 'jquery-datatables'
 gem 'devise'

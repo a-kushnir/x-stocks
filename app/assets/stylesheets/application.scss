@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import 'bootstrap-select';
 @import "datatables";
 @import "sticky-footer";
 
@@ -17,6 +18,11 @@
  *= require_tree .
  *= require_self
  */
+
+label.select-label {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
 
 .my-form-row {
   margin-top: 20px;

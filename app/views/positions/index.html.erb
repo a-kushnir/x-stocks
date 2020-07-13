@@ -76,6 +76,9 @@
     <% labels = @positions.map {|p| p.stock.to_s } %>
 
     function x() {
+        if ($('#myChart').length === 0)
+            return;
+
         var data = {
                 datasets: [{
                     data: <%= JSON.generate(value).html_safe %>,

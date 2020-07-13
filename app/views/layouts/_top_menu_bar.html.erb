@@ -11,7 +11,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <% if user_signed_in? %>
-        <%#= nav_menu_link(:home, 'Home', stocks_path) %>
+        <%= nav_menu_link(:home, 'Home', stocks_path) %>
         <%= nav_menu_link(:stocks, 'Stocks', stocks_path) %>
         <%= nav_menu_link(:positions, 'My Positions', positions_path) %>
       <% end %>

@@ -17,6 +17,10 @@ module Etl
         load_json(quote_url(symbol))
       end
 
+      def recommendation(symbol)
+        load_json(recommendation_url(symbol))
+      end
+
       private
 
       def company_url(symbol)
@@ -29,6 +33,10 @@ module Etl
 
       def quote_url(symbol)
         "#{BASE_URL}/quote?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+      end
+
+      def recommendation_url(symbol)
+        "#{BASE_URL}/stock/recommendation?symbol=#{symbol}&token=#{FINNHUB_KEY}"
       end
 
     end

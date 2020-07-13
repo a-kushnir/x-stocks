@@ -1,0 +1,12 @@
+<h3></h3>
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="https://finance.yahoo.com/quote/<%= @stock.symbol %>">Yahoo Finance (<%= @stock.symbol %>)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.dividend.com/search?q=<%= @stock.symbol %>">Dividend.com (<%= @stock.symbol %>)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://robinhood.com/stocks/<%= @stock.symbol %>">Robinhood (<%= @stock.symbol %>)</a>
+  </li>
+</ul>

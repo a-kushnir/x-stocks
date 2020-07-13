@@ -43,6 +43,10 @@
 <% end %>
 </p>
 
+  <div class="col-sm-4">
+    <%= render partial: 'links' %>
+  </div>
+
 <div>
   <%= link_to 'Back', back_url, class: 'btn btn-link' %>
   <% if @stock.destroyable? %>

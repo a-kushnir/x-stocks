@@ -81,7 +81,10 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "payout_ratio", precision: 10, scale: 2
     t.decimal "beta", precision: 10, scale: 6
-    t.decimal "yahoo_recommendation", precision: 5, scale: 2
+    t.decimal "yahoo_rec", precision: 5, scale: 2
+    t.string "yahoo_rec_details"
+    t.decimal "finnhub_rec", precision: 5, scale: 2
+    t.string "finnhub_rec_details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"

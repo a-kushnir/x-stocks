@@ -70,5 +70,27 @@ module Etl
       Etl::Transform::Yahoo::new.statistics(stock, json)
     end
 
+    def all_finnhub_data?
+      updated_at = Config[:finnhub_updated_at]
+      updated_at.nil? || updated_at < 1.day.ago
+    end
+
+    def all_finnhub_data
+      all_finnhub_data! if all_finnhub_data?
+    end
+
+    def all_finnhub_data!
+      Stock.all.each do |stock|
+        finnhub_data!(stock)
+        sleep(1.0) # Limit up to 1 requests per second
+      end
+      Config[:finnhub_updated_at] = DateTime.now
+    end
+
+    def finnhub_data!(stock)
+      json = Etl::Extract::Finnhub.new.recommendation(stock.symbol)
+      Etl::Transform::Finnhub::new.recommendation(stock, json)
+    end
+
   end
 end

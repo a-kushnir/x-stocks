@@ -13,6 +13,9 @@ class Stock < ApplicationRecord
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true
 
+  serialize :yahoo_rec_details, JSON
+  serialize :finnhub_rec_details, JSON
+
   def to_s
     if company_name.present?
       "#{company_name} (#{symbol})"

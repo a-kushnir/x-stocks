@@ -56,7 +56,22 @@ class ServicesController < ApplicationController
             stock = Stock.find_by!(id: args[:stock_id])
             Etl::DataRefresh.new.yahoo_data!(stock)
           end
-      }
+      },
+      all_finnhub_data: {
+          name: 'Update stock information [Finnhub] / Auto (Daily)',
+          prev: ->() { Config[:finnhub_updated_at] },
+          proc: ->(args) do
+            Etl::DataRefresh.new.all_finnhub_data!
+          end
+      },
+      one_finnhub_data: {
+          name: 'Update stock information [Finnhub]',
+          args: [:stock_id],
+          proc: ->(args) do
+            stock = Stock.find_by!(id: args[:stock_id])
+            Etl::DataRefresh.new.finnhub_data!(stock)
+          end
+      },
   })
 
 end

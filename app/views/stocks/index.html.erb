@@ -12,6 +12,7 @@
       <th class="no-search text-right">Beta</th>
       <th class="no-search text-right">Payout %</th>
       <th class="no-search text-right">Yahoo Rec.</th>
+      <th class="no-search text-right">Finnhub Rec.</th>
     </tr>
   </thead>
 
@@ -52,9 +53,14 @@
         <td class="text-right">
           <%= number_to_percentage(stock.payout_ratio, precision: 2) if stock.payout_ratio && !stock.payout_ratio.zero? %>
         </td>
-        <td class="text-right" data-sort="<%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>">
-          <% if stock.yahoo_recommendation %>
-            <small><%= yahoo_rec_human(stock.yahoo_recommendation) %></small> <%= number_with_precision(stock.yahoo_recommendation, precision: 2) %>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.yahoo_rec, precision: 2) %>">
+          <% if stock.yahoo_rec %>
+            <small><%= yahoo_rec_human(stock.yahoo_rec) %></small> <%= number_with_precision(stock.yahoo_rec, precision: 2) %>
+          <% end %>
+        </td>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.finnhub_rec, precision: 2) %>">
+          <% if stock.finnhub_rec %>
+            <small><%= yahoo_rec_human(stock.finnhub_rec) %></small> <%= number_with_precision(stock.finnhub_rec, precision: 2) %>
           <% end %>
         </td>
       </tr>

@@ -55,12 +55,12 @@
         </td>
         <td class="text-right" data-sort="<%= number_with_precision(stock.yahoo_rec, precision: 2) %>">
           <% if stock.yahoo_rec %>
-            <small><%= yahoo_rec_human(stock.yahoo_rec) %></small> <%= number_with_precision(stock.yahoo_rec, precision: 2) %>
+            <small><%= rec_human(stock.yahoo_rec) %></small> <%= number_with_precision(stock.yahoo_rec, precision: 2) %>
           <% end %>
         </td>
         <td class="text-right" data-sort="<%= number_with_precision(stock.finnhub_rec, precision: 2) %>">
           <% if stock.finnhub_rec %>
-            <small><%= yahoo_rec_human(stock.finnhub_rec) %></small> <%= number_with_precision(stock.finnhub_rec, precision: 2) %>
+            <small><%= rec_human(stock.finnhub_rec) %></small> <%= number_with_precision(stock.finnhub_rec, precision: 2) %>
           <% end %>
         </td>
       </tr>

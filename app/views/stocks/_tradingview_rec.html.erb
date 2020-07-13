@@ -1,0 +1,22 @@
+<% if @stock.exchange %>
+  <div style="margin-top: 15px;">
+    <h4>TradingView Recommendation</h4>
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+      {
+          "interval": "1D",
+          "width": "300",
+          "isTransparent": false,
+          "height": "370",
+          "symbol": "<%= @stock.exchange.short_name %>:<%= @stock.symbol %>",
+          "showIntervalTabs": true,
+          "locale": "en",
+          "colorTheme": "light"
+      }
+  </script>
+</div>
+<!-- TradingView Widget END -->
+  </div>
+<% end %>

@@ -7,7 +7,7 @@ class DataController < ApplicationController
     Etl::Refresh::Yahoo.new.daily_all_stocks
     Etl::Refresh::Finnhub.new.daily_all_stocks
     Etl::Refresh::Iexapis.new.weekly_all_stocks
-    render json: 'success'
+    render json: {result: 'success'}
   end
 
 end

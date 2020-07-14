@@ -9,8 +9,7 @@ module Etl
       end
 
       def peers(stock, json)
-        peers = (json || []).select { |p| p != stock.symbol }
-        ::Tag.batch_update(stock, :stock_peer, peers)
+        stock.peers = json
       end
 
       def quote(stock, json)
@@ -42,6 +41,50 @@ module Etl
         stock.finnhub_rec_details = hash
         stock.finnhub_rec = recommendation_mean(stock.finnhub_rec_details)
         stock.save
+      end
+
+      def price_target(stock, json)
+        stock.finnhub_price_target =
+          if json.present?
+            {
+              high: json['targetHigh'],
+              low: json['targetLow'],
+              mean: json['targetMean'],
+              median: json['targetMedian'],
+            }
+          else
+            nil
+          end
+
+        stock.save
+      end
+
+      def earnings(stock, json)
+        stock.earnings =
+          if json.present?
+            json.map do |row|
+              row.delete('symbol')
+              row
+            end
+          else
+            nil
+          end
+
+        stock.save
+      end
+
+      def metric(stock, json)
+        data = json['metric']
+        stock.finnhub_beta = data['beta']
+        stock.week_52_high = data['52WeekHigh']
+        stock.week_52_high_date = data['52WeekHighDate']
+        stock.week_52_low = data['52WeekLow']
+        stock.week_52_low_date = data['52WeekLowDate']
+        stock.dividend_growth_5y = data['dividendGrowthRate5Y']
+        stock.eps_growth_3y = data['epsGrowth3Y']
+        stock.eps_growth_5y = data['epsGrowth5Y']
+        stock.eps_ttm = data['epsInclExtraItemsTTM']
+        stock.pe_ratio_ttm = data['peInclExtraTTM']
       end
 
       private

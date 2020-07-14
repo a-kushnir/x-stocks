@@ -12,6 +12,8 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
+    Etc::DataRefresh.financial_data!(@stock) rescue nil
+
     set_page_title
   end
 

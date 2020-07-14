@@ -21,6 +21,18 @@ module Etl
         load_json(recommendation_url(symbol))
       end
 
+      def price_target(symbol)
+        load_json(price_target_url(symbol))
+      end
+
+      def earnings(symbol)
+        load_json(earnings_url(symbol))
+      end
+
+      def metric(symbol)
+        load_json(metric_url(symbol))
+      end
+
       private
 
       def company_url(symbol)
@@ -37,6 +49,18 @@ module Etl
 
       def recommendation_url(symbol)
         "#{BASE_URL}/stock/recommendation?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+      end
+
+      def price_target_url(symbol)
+        "#{BASE_URL}/stock/price-target?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+      end
+
+      def earnings_url(symbol)
+        "#{BASE_URL}/stock/earnings?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+      end
+
+      def metric_url(symbol)
+        "#{BASE_URL}/stock/metric?symbol=#{symbol}&metric=all&token=#{FINNHUB_KEY}"
       end
 
     end

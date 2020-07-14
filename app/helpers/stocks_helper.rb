@@ -13,8 +13,8 @@ module StocksHelper
   end
 
   def stock_peers
-    @stock.tags.by_key(:stock_peer).map do |tag|
-      { symbol: tag.name, stock: ::Stock.find_by(symbol: tag.name) }
+    @stock.peers.map do |peer|
+      @stock.symbol == peer ? nil : { symbol: peer, stock: ::Stock.find_by(symbol: peer) }
     end.compact
   end
 

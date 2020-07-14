@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.string "phone"
     t.date "ipo"
     t.string "logo"
+    t.string "peers"
     t.decimal "current_price", precision: 10, scale: 2
     t.decimal "prev_close_price", precision: 10, scale: 2
     t.decimal "open_price", precision: 10, scale: 2
@@ -76,15 +77,28 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.decimal "day_high_price", precision: 10, scale: 2
     t.decimal "price_change", precision: 10, scale: 2
     t.decimal "price_change_pct", precision: 10, scale: 2
+    t.decimal "week_52_high", precision: 10, scale: 2
+    t.date "week_52_high_date"
+    t.decimal "week_52_low", precision: 10, scale: 2
+    t.date "week_52_low_date"
     t.integer "dividend_frequency"
     t.decimal "dividend_amount", precision: 12, scale: 4
     t.decimal "est_annual_dividend", precision: 12, scale: 4
+    t.decimal "est_annual_dividend_pct", precision: 10, scale: 2
+    t.decimal "dividend_growth_5y", precision: 12, scale: 4
     t.decimal "payout_ratio", precision: 10, scale: 2
-    t.decimal "beta", precision: 10, scale: 6
+    t.decimal "eps_ttm", precision: 12, scale: 4
+    t.decimal "eps_growth_3y", precision: 12, scale: 4
+    t.decimal "eps_growth_5y", precision: 12, scale: 4
+    t.decimal "pe_ratio_ttm", precision: 12, scale: 4
+    t.decimal "yahoo_beta", precision: 10, scale: 6
     t.decimal "yahoo_rec", precision: 5, scale: 2
     t.string "yahoo_rec_details"
+    t.decimal "finnhub_beta", precision: 10, scale: 6
+    t.string "finnhub_price_target"
     t.decimal "finnhub_rec", precision: 5, scale: 2
     t.string "finnhub_rec_details"
+    t.string "earnings"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"

@@ -9,7 +9,6 @@
       <th class="no-search text-right">Change&nbsp;%</th>
       <th class="no-search text-right">Est. Annual Div</th>
       <th class="no-search text-right">Est. Yield %</th>
-      <th class="no-search text-right">Beta</th>
       <th class="no-search text-right">Payout %</th>
       <th class="no-search text-right">Yahoo Rec.</th>
       <th class="no-search text-right">Finnhub Rec.</th>
@@ -45,10 +44,7 @@
           <%= number_to_currency(stock.est_annual_dividend) %>
         </td>
         <td class="text-right">
-          <%= number_to_percentage(stock.est_annual_dividend / stock.current_price * 100, precision: 2) rescue nil %>
-        </td>
-        <td class="text-right">
-          <%= number_with_precision(stock.beta, precision: 2) %>
+          <%= number_to_percentage(stock.est_annual_dividend_pct) rescue nil %>
         </td>
         <td class="text-right">
           <%= number_to_percentage(stock.payout_ratio, precision: 2) if stock.payout_ratio && !stock.payout_ratio.zero? %>

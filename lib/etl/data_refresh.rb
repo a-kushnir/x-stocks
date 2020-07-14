@@ -91,6 +91,15 @@ module Etl
     def finnhub_data!(stock)
       json = Etl::Extract::Finnhub.new.recommendation(stock.symbol)
       Etl::Transform::Finnhub::new.recommendation(stock, json)
+
+      json = Etl::Extract::Finnhub.new.price_target(stock.symbol)
+      Etl::Transform::Finnhub::new.price_target(stock, json)
+
+      json = Etl::Extract::Finnhub.new.earnings(stock.symbol)
+      Etl::Transform::Finnhub::new.earnings(stock, json)
+
+      json = Etl::Extract::Finnhub.new.metric(stock.symbol)
+      Etl::Transform::Finnhub::new.metric(stock, json)
     end
 
   end

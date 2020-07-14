@@ -6,7 +6,7 @@ module Etl
         summary = json&.dig('context', 'dispatcher', 'stores', 'QuoteSummaryStore')
 
         stock.payout_ratio = summary&.dig('summaryDetail', 'payoutRatio', 'raw') * 100 rescue nil
-        stock.beta = summary&.dig('defaultKeyStatistics', 'beta', 'raw')
+        stock.yahoo_beta = summary&.dig('defaultKeyStatistics', 'beta', 'raw')
         stock.yahoo_rec = summary&.dig('financialData', 'recommendationMean', 'raw')
         stock.est_annual_dividend = summary&.dig('summaryDetail', 'dividendRate', 'raw')
 

@@ -15,6 +15,7 @@ module Etl
         Etl::Refresh::Finnhub.new.hourly_one_stock!(stock) rescue nil
         Etl::Refresh::Yahoo.new.daily_one_stock!(stock) rescue nil
         Etl::Refresh::Finnhub.new.daily_one_stock!(stock) rescue nil
+        Etl::Refresh::Iexapis.new.weekly_one_stock!(stock) rescue nil
       end
 
     end

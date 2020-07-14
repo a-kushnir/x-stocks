@@ -49,7 +49,7 @@
           <%= number_to_currency(stock.est_annual_dividend) %>
         </td>
         <td class="text-right">
-          <%= number_to_percentage(stock.est_annual_dividend_pct) rescue nil %>
+          <%= number_to_percentage(stock.est_annual_dividend_pct, precision: 2) rescue nil %>
         </td>
         <td class="text-right">
           <%= number_to_percentage(stock.payout_ratio, precision: 2) if stock.payout_ratio && !stock.payout_ratio.zero? %>

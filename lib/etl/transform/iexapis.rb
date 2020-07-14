@@ -29,6 +29,39 @@ module Etl
         end
       end
 
+      def dividends(stock, json)
+        json = (json || []).map do |row|
+          {
+            'ex_date' => row['exDate'],
+            'payment_date' => row['paymentDate'],
+            'record_date' => row['recordDate'],
+            'declared_date' => row['declaredDate'],
+            'amount' => row['amount'].to_d,
+            'frequency' => row['frequency']
+          }
+        end
+
+        stock.dividend_details ||= []
+        stock.dividend_details += json
+        stock.dividend_details.uniq!
+        stock.dividend_details.sort_by! { |row| row['payment_date'] }
+
+        last_div = stock.dividend_details.last
+        stock.dividend_frequency = last_div['frequency'] rescue nil
+        stock.dividend_amount = last_div['amount'] rescue nil
+
+        num = {
+            'annual' => 1,
+            'semi-annual' => 2,
+            'quarterly' => 4,
+            'monthly' => 12
+        }[(stock.dividend_frequency || '').downcase]
+        stock.dividend_frequency_num = num
+
+        stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
+        stock.update_dividends!
+      end
+
     end
   end
 end

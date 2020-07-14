@@ -18,6 +18,7 @@ class Stock < ApplicationRecord
   serialize :finnhub_rec_details, JSON
   serialize :finnhub_price_target, JSON
   serialize :earnings, JSON
+  serialize :dividend_details, JSON
 
   def to_s
     if company_name.present?
@@ -40,7 +41,6 @@ class Stock < ApplicationRecord
     ::Position.update_dividends!(self)
     save!
   end
-
 
   def destroyable?
     !positions.exists?

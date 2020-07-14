@@ -46,7 +46,9 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :week_52_low, precision: 10, scale: 2
       t.date :week_52_low_date
 
-      t.integer :dividend_frequency
+      t.string :dividend_details
+      t.string :dividend_frequency
+      t.integer :dividend_frequency_num
       t.decimal :dividend_amount, precision: 12, scale: 4
       t.decimal :est_annual_dividend, precision: 12, scale: 4
       t.decimal :est_annual_dividend_pct, precision: 10, scale: 2
@@ -120,6 +122,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
       dir.up do
         Exchange.create!({name: 'Nasdaq', short_name: 'NASDAQ', region: 'United States'})
         Exchange.create!({name: 'New York Stock Exchange', short_name: 'NYSE', region: 'United States'})
+        Exchange.create!({name: 'NYSE Arca', short_name: 'AMEX', region: 'United States'})
         Exchange.create!({name: 'Toronto Stock Exchange', short_name: 'TSX', region: 'Canada'})
       end
     end

@@ -9,8 +9,16 @@ module Etl
         load_json(company_url(symbol))
       end
 
-      def dividends_5y(symbol)
-        load_json(dividends_5y_url(symbol))
+      def dividends(symbol)
+        load_json(dividends_url(symbol))
+      end
+
+      def dividends_3m(symbol)
+        load_json(dividends_3m_url(symbol))
+      end
+
+      def dividends_6m(symbol)
+        load_json(dividends_6m_url(symbol))
       end
 
       def dividends_next(symbol)
@@ -23,8 +31,16 @@ module Etl
         "#{BASE_URL}/stock/#{symbol}/company?token=#{IEXAPIS_KEY}";
       end
 
-      def dividends_5y_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/dividends/5y?token=#{IEXAPIS_KEY}";
+      def dividends_url(symbol)
+        "#{BASE_URL}/stock/#{symbol}/dividends?token=#{IEXAPIS_KEY}";
+      end
+
+      def dividends_3m_url(symbol)
+        "#{BASE_URL}/stock/#{symbol}/dividends/3m?token=#{IEXAPIS_KEY}";
+      end
+
+      def dividends_6m_url(symbol)
+        "#{BASE_URL}/stock/#{symbol}/dividends/6m?token=#{IEXAPIS_KEY}";
       end
 
       def dividends_next_url(symbol)

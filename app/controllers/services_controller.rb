@@ -27,49 +27,71 @@ class ServicesController < ApplicationController
   private
 
   SERVICES = HashWithIndifferentAccess.new({
-      all_finnhub_prices: {
+      hourly_all_finnhub: {
           name: 'Update stock prices [Finnhub] / Auto (Hourly)',
-          prev: ->() { Config[:stock_price_updated_at] },
+          prev: ->() { Etl::Refresh::Finnhub.new.hourly_last_run_at },
           proc: ->(args) do
-            Etl::DataRefresh.new.all_financial_data!
+            Etl::Refresh::Finnhub.new.hourly_all_stocks!
           end
       },
-      one_finnhub_prices: {
+      hourly_one_finnhub: {
           name: 'Update stock prices [Finnhub]',
           args: [:stock_id],
           proc: ->(args) do
-            stock = Stock.find_by!(id: args[:stock_id])
-            Etl::DataRefresh.new.financial_data!(stock)
+            Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)
           end
       },
-      all_yahoo_data: {
+      daily_all_yahoo: {
           name: 'Update stock information [Yahoo] / Auto (Daily)',
-          prev: ->() { Config[:yahoo_updated_at] },
+          prev: ->() { Etl::Refresh::Yahoo.new.daily_last_run_at },
           proc: ->(args) do
-            Etl::DataRefresh.new.all_yahoo_data!
+            Etl::Refresh::Yahoo.new.daily_all_stocks!
           end
       },
-      one_yahoo_data: {
+      daily_one_yahoo: {
           name: 'Update stock information [Yahoo]',
           args: [:stock_id],
           proc: ->(args) do
             stock = Stock.find_by!(id: args[:stock_id])
-            Etl::DataRefresh.new.yahoo_data!(stock)
+            Etl::Refresh::Yahoo.new.daily_one_stock!(stock)
           end
       },
-      all_finnhub_data: {
+      daily_all_finnhub: {
           name: 'Update stock information [Finnhub] / Auto (Daily)',
-          prev: ->() { Config[:finnhub_updated_at] },
+          prev: ->() { Etl::Refresh::Finnhub.new.daily_last_run_at },
           proc: ->(args) do
-            Etl::DataRefresh.new.all_finnhub_data!
+            Etl::Refresh::Finnhub.new.daily_all_stocks!
           end
       },
-      one_finnhub_data: {
+      daily_one_finnhub: {
           name: 'Update stock information [Finnhub]',
           args: [:stock_id],
           proc: ->(args) do
             stock = Stock.find_by!(id: args[:stock_id])
-            Etl::DataRefresh.new.finnhub_data!(stock)
+            Etl::Refresh::Finnhub.new.daily_one_stock!(stock)
+          end
+      },
+      weekly_all_iexapis: {
+          name: 'Update stock dividends [IEX Cloud] / Auto (Weekly)',
+          prev: ->() { Etl::Refresh::Iexapis.new.weekly_last_run_at },
+          proc: ->(args) do
+            Etl::Refresh::Iexapis.new.weekly_all_stocks!
+          end
+      },
+      weekly_one_iexapis: {
+          name: 'Update stock dividends [IEX Cloud]',
+          args: [:stock_id],
+          proc: ->(args) do
+            stock = Stock.find_by!(id: args[:stock_id])
+            Etl::Refresh::Iexapis.new.weekly_one_stock!(stock)
+          end
+      },
+      company_information: {
+          name: 'Load company information [Finnhub] [IEX Cloud] [Yahoo]',
+          args: [:stock_id],
+          proc: ->(args) do
+            stock = Stock.find_by!(id: args[:stock_id])
+            Etl::Refresh::Company.new.one_stock!(stock)
           end
       },
   })

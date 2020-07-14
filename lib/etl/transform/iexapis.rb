@@ -48,8 +48,6 @@ module Etl
 
         last_div = stock.dividend_details.last
         stock.dividend_frequency = last_div['frequency'] rescue nil
-        stock.dividend_amount = last_div['amount'] rescue nil
-
         num = {
             'annual' => 1,
             'semi-annual' => 2,
@@ -58,8 +56,11 @@ module Etl
         }[(stock.dividend_frequency || '').downcase]
         stock.dividend_frequency_num = num
 
-        stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
-        stock.update_dividends!
+        if stock.issue_type == 'et' # Index Stocks only
+          stock.dividend_amount = last_div['amount'] rescue nil
+          stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
+          stock.update_dividends!
+        end
       end
 
     end

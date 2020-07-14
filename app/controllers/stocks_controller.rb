@@ -18,7 +18,7 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
-    Etc::DataRefresh.financial_data!(@stock) rescue nil
+    Etl::Refresh::Finnhub.new.hourly_one_stock!(@stock) rescue nil
 
     set_page_title
   end
@@ -30,8 +30,10 @@ class StocksController < ApplicationController
 
   def create
     @stock = Stock.new(stock_params)
+
     if @stock.save
-      Etl::DataRefresh.new.company_data(@stock)
+      Etl::Refresh::Company.new.one_stock!(@stock)
+
       flash[:notice] = "#{@stock} stock created"
       redirect_to stock_path(@stock)
     else

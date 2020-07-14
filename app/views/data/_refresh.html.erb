@@ -1,4 +1,4 @@
-<% if Etl::DataRefresh.new.all_financial_data? %>
+<% if Etl::Refresh::Finnhub.new.hourly_all_stocks? %>
   <div id="data-refresh-div" class="col text-right align-items-center">
     <div id="data-refresh-spin" class="spinner-border spinner-border-sm text-light" role="status">
       <span class="sr-only"></span>

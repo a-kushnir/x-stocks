@@ -1,9 +1,10 @@
 class DataController < ApplicationController
 
   def refresh
-    Etl::DataRefresh.new.all_financial_data
-    Etl::DataRefresh.new.all_yahoo_data
-    Etl::DataRefresh.new.all_finnhub_data
+    Etl::Refresh.Finnhub.new.hourly_all_stocks
+    Etl::Refresh.Yahoo.new.daily_all_stocks
+    Etl::Refresh.Finnhub.new.daily_all_stocks
+    Etl::Refresh.Iexapis.new.weekly_all_stocks
   end
 
 end

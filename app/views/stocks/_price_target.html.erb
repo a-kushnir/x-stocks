@@ -1,115 +1,128 @@
+<div style="margin-top: 15px; margin-bottom: -10px;">
+  <h4><%= label %></h4>
 
-<div style="display: block; width: 300px; height: 85px; border: 1px solid #730E15;">
-  <canvas id="canvas" width="300" height="85" class="chartjs-render-monitor"></canvas>
+<div style="display: block; width: 300px; height: 85px; margin-top: 15px;">
+  <canvas id="<%= id %>_canvas" width="300" height="85" class="chartjs-render-monitor"></canvas>
 </div>
 
+<%
+  prices = [target_price['low'], target_price['high'], @stock.current_price]
+  min = prices.min
+  max = prices.max
+  offset = (max - min).to_f / 10
+  min -= offset
+  max += offset
+%>
 <script>
     document.addEventListener("turbolinks:load", () => {
-        var scatterChartData = {
+        const canvas = $("#<%= id %>_canvas");
+
+        if (canvas.length === 0)
+            return;
+
+        const scatterChartData = {
             datasets: [{
-                label: 'Low\n$100.00',
+                label: 'Low\n<%= number_to_currency target_price['low'] %>',
                 xAxisID: 'x-axis-1',
                 yAxisID: 'y-axis-1',
                 borderColor: '#111111',
                 backgroundColor: '#111111',
                 data: [{
-                    x: 100,
+                    x: <%= target_price['low'] %>,
                     y: 0,
                 }]
             }, {
-                label: 'High\n$200.00',
+                label: 'High\n<%= number_to_currency target_price['high'] %>',
                 xAxisID: 'x-axis-1',
                 yAxisID: 'y-axis-1',
                 borderColor: '#111111',
                 backgroundColor: '#111111',
                 data: [{
-                    x: 200,
+                    x: <%= target_price['high'] %>,
                     y: 0,
                 }]
             }, {
-                label: 'Average\n$150.00',
+                label: 'Average\n<%= number_to_currency target_price['mean'] %>',
                 xAxisID: 'x-axis-1',
                 yAxisID: 'y-axis-1',
                 borderColor: '#111111',
                 backgroundColor: '#ffffff',
                 data: [{
-                    x: 150,
+                    x: <%= target_price['mean'] %>,
                     y: 0,
                 }]
             }, {
-                label: '$173.00\nCurrent',
+                label: '<%= number_to_currency @stock.current_price %>\nCurrent',
                 xAxisID: 'x-axis-1',
                 yAxisID: 'y-axis-1',
                 borderColor: '#0F69FF',
                 backgroundColor: '#0F69FF',
                 data: [{
-                    x: 173,
+                    x: <%= @stock.current_price %>,
                     y: 0,
                 }]
             }]
         };
 
-        window.onload = function () {
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myScatter = Chart.Scatter(ctx, {
-                data: scatterChartData,
-                options: {
-                    responsive: true,
-                    hoverMode: 'nearest',
-                    intersect: true,
-                    legend: {
-                        display: false,
-                    },
-                    scales: {
-                        xAxes: [{
-                            position: 'bottom',
-                            display: true,
-                            gridLines: {
-                                lineWidth: 0,
-                            },
-                            ticks: {
-                                min: 90,
-                                max: 210,
-                                display: false,
-                            },
-                        }],
-                        yAxes: [{
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            id: 'y-axis-1',
-                            gridLines: {
-                                zeroLineColor: '#888888',
-                                zeroLineWidth: 2,
-                                drawTicks: false,
-                                lineWidth: 0,
-                                drawBorder: false,
-                                drawOnChartArea: true,
-                            },
-                            ticks: {
-                                display: false
-                            }
-                        }],
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: true,
-                            color: function(value) {
-                                return value.dataset.borderColor;
-                            },
-                            align: function(value) {
-                                return value.datasetIndex < 3 ? 'top' : 'bottom';
-                            },
-                            font: {
-                                weight: 'bold'
-                            },
-                            formatter: function(value, context) {
-                                return context.dataset.label;
-                            }
+        window.myScatter = Chart.Scatter(canvas, {
+            data: scatterChartData,
+            options: {
+                responsive: true,
+                hoverMode: 'nearest',
+                intersect: true,
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        position: 'bottom',
+                        display: true,
+                        gridLines: {
+                            lineWidth: 0,
+                        },
+                        ticks: {
+                            min: <%= min %>,
+                            max: <%= max %>,
+                            display: false,
+                        },
+                    }],
+                    yAxes: [{
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        id: 'y-axis-1',
+                        gridLines: {
+                            zeroLineColor: '#888888',
+                            zeroLineWidth: 2,
+                            drawTicks: false,
+                            lineWidth: 0,
+                            drawBorder: false,
+                            drawOnChartArea: true,
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    }],
+                },
+                plugins: {
+                    datalabels: {
+                        display: true,
+                        color: function(value) {
+                            return value.dataset.borderColor;
+                        },
+                        align: function(value) {
+                            return value.datasetIndex < 3 ? 'top' : 'bottom';
+                        },
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value, context) {
+                            return context.dataset.label;
                         }
                     }
                 }
-            });
-        };
+            }
+        });
     })
 </script>
+</div>

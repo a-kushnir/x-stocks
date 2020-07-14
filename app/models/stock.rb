@@ -16,6 +16,7 @@ class Stock < ApplicationRecord
   serialize :peers, JSON
   serialize :yahoo_rec_details, JSON
   serialize :finnhub_rec_details, JSON
+  serialize :finnhub_price_target, JSON
   serialize :earnings, JSON
 
   def to_s

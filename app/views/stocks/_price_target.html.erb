@@ -1,0 +1,115 @@
+
+<div style="display: block; width: 300px; height: 85px; border: 1px solid #730E15;">
+  <canvas id="canvas" width="300" height="85" class="chartjs-render-monitor"></canvas>
+</div>
+
+<script>
+    document.addEventListener("turbolinks:load", () => {
+        var scatterChartData = {
+            datasets: [{
+                label: 'Low\n$100.00',
+                xAxisID: 'x-axis-1',
+                yAxisID: 'y-axis-1',
+                borderColor: '#111111',
+                backgroundColor: '#111111',
+                data: [{
+                    x: 100,
+                    y: 0,
+                }]
+            }, {
+                label: 'High\n$200.00',
+                xAxisID: 'x-axis-1',
+                yAxisID: 'y-axis-1',
+                borderColor: '#111111',
+                backgroundColor: '#111111',
+                data: [{
+                    x: 200,
+                    y: 0,
+                }]
+            }, {
+                label: 'Average\n$150.00',
+                xAxisID: 'x-axis-1',
+                yAxisID: 'y-axis-1',
+                borderColor: '#111111',
+                backgroundColor: '#ffffff',
+                data: [{
+                    x: 150,
+                    y: 0,
+                }]
+            }, {
+                label: '$173.00\nCurrent',
+                xAxisID: 'x-axis-1',
+                yAxisID: 'y-axis-1',
+                borderColor: '#0F69FF',
+                backgroundColor: '#0F69FF',
+                data: [{
+                    x: 173,
+                    y: 0,
+                }]
+            }]
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myScatter = Chart.Scatter(ctx, {
+                data: scatterChartData,
+                options: {
+                    responsive: true,
+                    hoverMode: 'nearest',
+                    intersect: true,
+                    legend: {
+                        display: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            position: 'bottom',
+                            display: true,
+                            gridLines: {
+                                lineWidth: 0,
+                            },
+                            ticks: {
+                                min: 90,
+                                max: 210,
+                                display: false,
+                            },
+                        }],
+                        yAxes: [{
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            id: 'y-axis-1',
+                            gridLines: {
+                                zeroLineColor: '#888888',
+                                zeroLineWidth: 2,
+                                drawTicks: false,
+                                lineWidth: 0,
+                                drawBorder: false,
+                                drawOnChartArea: true,
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }],
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            color: function(value) {
+                                return value.dataset.borderColor;
+                            },
+                            align: function(value) {
+                                return value.datasetIndex < 3 ? 'top' : 'bottom';
+                            },
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function(value, context) {
+                                return context.dataset.label;
+                            }
+                        }
+                    }
+                }
+            });
+        };
+    })
+</script>

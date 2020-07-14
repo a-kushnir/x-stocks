@@ -45,7 +45,9 @@ module Etl
 
       def price_target(stock, json)
         stock.finnhub_price_target =
-          if json.present?
+          if json.present? &&
+              json['targetHigh'] > 0 && json['targetLow'] > 0 &&
+              json['targetMean'] > 0 && json['targetMedian'] > 0
             {
               high: json['targetHigh'],
               low: json['targetLow'],

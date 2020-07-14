@@ -7,7 +7,7 @@ module Etl
       end
 
       def weekly_all_stocks?
-        updated_at = daily_last_run_at
+        updated_at = weekly_last_run_at
         updated_at.nil? || updated_at < 1.day.ago
       end
 
@@ -20,7 +20,7 @@ module Etl
       end
 
       def weekly_all_stocks
-        daily_all_stocks! if daily_all_stocks?
+        weekly_all_stocks! if weekly_all_stocks?
       end
 
       def weekly_one_stock!(stock)

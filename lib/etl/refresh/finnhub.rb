@@ -10,20 +10,20 @@ module Etl
       end
 
       def hourly_all_stocks?
-        updated_at = daily_last_run_at
+        updated_at = hourly_last_run_at
         updated_at.nil? || updated_at < 1.day.ago
       end
 
       def hourly_all_stocks!
         Stock.all.each do |stock|
-          daily_one_stock!(stock)
+          hourly_one_stock!(stock)
           sleep(1.0/30) # Limit up to 30 requests per second
         end
         Config[:stock_price_updated_at] = DateTime.now
       end
 
       def hourly_all_stocks
-        daily_all_stocks! if daily_all_stocks?
+        hourly_all_stocks! if hourly_all_stocks?
       end
 
       def hourly_one_stock!(stock)

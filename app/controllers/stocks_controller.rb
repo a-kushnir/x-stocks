@@ -2,7 +2,13 @@ class StocksController < ApplicationController
   include StocksHelper
 
   def index
-    @stocks = Stock.all
+    @tag = params[:tag]
+    stock_ids = @tag ? Tag.where(name: @tag).pluck(:stock_id) : []
+    @tag = nil unless stock_ids.present?
+
+    @stocks = Stock
+    @stocks = @stocks.where(id: stock_ids) if stock_ids.present?
+    @stocks = @stocks.all
 
     @page_title = 'Stocks'
     @page_menu_item = :stocks

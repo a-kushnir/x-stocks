@@ -12,15 +12,19 @@
 
     <%= render partial: 'tradingview_chart' %>
 
-    <h2 style="margin-top: 15px;"><%= number_to_currency(@stock.current_price) %> <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small></h2>
+    <h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %> <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small></h2>
+
+    <% if @stock.exchange %>
+      <small class="text-muted"><%= @stock.exchange %></small>
+    <% end %>
 
     <table class="table table-sm" style="margin-top: 15px;">
       <tr>
-        <td style="border-top: none;">
+        <td style="border-top: none; width: 48%">
           Previous Close: <strong class="float-right"><%= number_to_currency(@stock.prev_close_price) %></strong>
         </td>
-        <td style="width: 20px; border-top: none;"></td>
-        <td style="border-top: none;">
+        <td style="border-top: none; width: 4%;"></td>
+        <td style="border-top: none; width: 48%;">
           EPS (TTM): <strong class="float-right"><%= number_with_precision(@stock.eps_ttm, precision: 2) %></strong>
         </td>
       </tr>
@@ -70,50 +74,44 @@
       </tr>
     </table>
 
-    <%# if @stock.logo.present? %>
-    <!--img src="<%= @stock.logo %>" alt="<%= @stock.symbol %> Logo"/-->
-  <%# end %>
-  <p>
-  <% @stock.tags.by_key(:company_tag).each do |tag| %>
-    <span class="badge badge-pill badge-secondary"><%= tag %></span>
-  <% end %>
-  </p>
-
+  <% if @stock.description.present? %>
   <h3>About</h3>
   <p>
     <%= @stock.description %>
   </p>
-  <p>
-    <strong>Exchange:</strong>
-    <%= @stock.exchange %>
-  </p>
-  <p>
-    <strong>CEO:</strong>
-    <%= @stock.ceo %>
-  </p>
-  <p>
-    <strong>Headquarters:</strong>
-    <%= "#{@stock.country}, #{@stock.state}" %>
-  </p>
+  <% end %>
+
+  <% if @stock.description.present? %>
   <p>
     <strong>Employees:</strong>
     <%= number_with_delimiter(@stock.employees, delimiter: ',') %>
   </p>
+  <% end %>
+
+  <% if @stock.website.present? %>
   <p>
     <strong>Website:</strong>
     <%= link_to_website @stock.website %>
   </p>
-
-<p>
-  <strong>Peers:</strong>
-<% stock_peers.each do |stock_peer| %>
-  <% if stock_peer[:stock] %>
-      <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock]), class: 'badge badge-pill badge-info' %>
-  <% else %>
-    <span class="badge badge-pill badge-secondary"><%= stock_peer[:symbol] %></span>
   <% end %>
+
+  <p class="align-top">
+    <strong>Related Tags:</strong><br>
+    <% @stock.tags.by_key(:company_tag).each do |tag| %>
+      <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
+    <% end %><br>
+
+<% peers = stock_peers %>
+<% if peers.present? %>
+    <% peers.each do |stock_peer| %>
+      <% if stock_peer[:stock] %>
+          <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock]), class: 'badge badge-pill badge-primary' %>
+      <% else %>
+        <span class="badge badge-pill badge-secondary"><%= stock_peer[:symbol] %></span>
+      <% end %>
+    <% end %>
+  </p>
 <% end %>
-</p>
 
 <div>
   <%= link_to 'Back', back_url, class: 'btn btn-link' %>

@@ -13,7 +13,7 @@ module StocksHelper
   end
 
   def stock_peers
-    @stock.peers.map do |peer|
+    (@stock.peers || []).map do |peer|
       @stock.symbol == peer ? nil : { symbol: peer, stock: ::Stock.find_by(symbol: peer) }
     end.compact
   end

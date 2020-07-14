@@ -2,8 +2,8 @@
 <div style="margin-top: 15px;">
   <h4><%= label %></h4>
   <% if details.present? %>
-    <div style="width: 300px; height: 200px;">
-      <canvas id="<%= id %>_canvas" width="300" height="200"></canvas>
+    <div style="width: 260px; height: 200px;">
+      <canvas id="<%= id %>_canvas" width="260" height="200"></canvas>
     </div>
   <script>
       document.addEventListener("turbolinks:load", () => {
@@ -26,7 +26,10 @@
                   },
                   legend: {
                       position: 'right',
-                      reverse: true
+                      reverse: true,
+                      labels: {
+                          boxWidth: 12
+                      }
                   },
                   plugins: {
                       datalabels: {
@@ -36,7 +39,7 @@
                               weight: 'bold'
                           },
                           formatter: function(value, context) {
-                              return value >= 1 ? Math.round(value) : null;
+                              return value >= <%= rec_min_visible_value(details) %> ? Math.round(value) : null;
                           }
                       }
                   }

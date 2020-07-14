@@ -34,6 +34,10 @@ module StocksHelper
     end
   end
 
+  def rec_min_visible_value(details)
+    details.values.map { |value| value.sum }.max / 10 rescue 1
+  end
+
   def rec_graph_data(details)
     {
       labels: details.keys.map { |date| Date.parse(date).strftime('%b') },

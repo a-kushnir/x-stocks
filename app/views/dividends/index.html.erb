@@ -22,7 +22,7 @@
   <tbody>
   <% estimates.each do |position, est| %>
   <tr>
-    <td>
+    <td class="text-center">
       <% if position.stock.logo.present? %>
         <img src="<%= position.stock.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
       <% else %>

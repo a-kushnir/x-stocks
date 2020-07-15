@@ -4,13 +4,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :stocks, except: [:edit, :update] do
-    member do
-      get :test
-    end
-  end
-
+  resources :stocks, except: [:edit, :update]
   resources :positions
+  resources :dividends, only: [:index]
   resources :services, only: [:index, :update]
 
   post '/data/refresh', to: 'data#refresh', as: 'data_refresh_url'

@@ -55,7 +55,7 @@
   %>
   <tfoot class="thead-light">
     <tr>
-      <th colspan="6" class="text-right"><strong>Total</strong></th>
+      <th colspan="6" class="text-right">Total</th>
       <th class="text-right"><%= number_to_currency(total_cost) %></th>
       <th class="text-right"><%= number_to_currency(market_value) %></th>
       <th class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></th>
@@ -124,38 +124,3 @@
   </div>
   <div class="col-sm-5"></div>
 </div>
-
-<% div = ::Dividend.new %>
-<% estimates = @positions.map { |position| [position, div.estimate(position.stock)] }  %>
-<% months = Array.new(12, 0.to_d)  %>
-<strong>Estimated Dividends</strong>
-<table class="table table-hover table-override">
-  <thead class="thead-light">
-  <tr>
-    <td>Symbol</td>
-    <% div.months.each_with_index do |month, index| %>
-      <td class="text-right" style="width: 8%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></td>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-  <% estimates.each do |pos, est| %>
-  <tr>
-    <td><%= pos.stock %></td>
-    <% div.months.each_with_index do |month, index| %>
-      <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * pos.shares rescue nil %>
-      <% months[index] += amount if amount %>
-      <td class="text-right"><%= number_to_currency amount %></td>
-    <% end %>
-  </tr>
-  <% end %>
-  </tbody>
-  <tfoot class="thead-light">
-    <tr>
-      <td class="text-right"><strong>Total</strong></td>
-      <% months.each do |month| %>
-        <td class="text-right"><%= number_to_currency month %></td>
-      <% end %>
-    </tr>
-  </tfoot>
-</table>

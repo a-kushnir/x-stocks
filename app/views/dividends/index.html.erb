@@ -1,0 +1,52 @@
+<% div = ::Dividend.new %>
+<% estimates = @positions.map { |position| [position, div.estimate(position.stock)] }  %>
+<% months = Array.new(12, 0.to_d)  %>
+<table id="dividends-table" class="table table-hover table-override">
+  <thead class="thead-light">
+  <tr>
+    <th class="no-sort no-search" style="width: 1px;"></th>
+    <th>Symbol</th>
+    <th>Company</th>
+    <% div.months.each_with_index do |month, index| %>
+      <th class="text-right" style="width: 6%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% estimates.each do |position, est| %>
+  <tr>
+    <td>
+      <% if position.stock.logo.present? %>
+        <img src="<%= position.stock.logo %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+      <% else %>
+        <img src="/img/no-logo.png" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+      <% end %>
+    </td>
+    <td><%= link_to position.stock.symbol, position_path(position) %></td>
+    <td><%= position.stock.company_name %></td>
+    <% div.months.each_with_index do |month, index| %>
+      <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
+      <% months[index] += amount if amount %>
+      <td class="text-right"><%= number_to_currency amount %></td>
+    <% end %>
+  </tr>
+  <% end %>
+  </tbody>
+  <tfoot class="thead-light">
+    <tr>
+      <th class="text-right" colspan="3">Total</th>
+      <% months.each do |month| %>
+        <th class="text-right"><%= number_to_currency month %></th>
+      <% end %>
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+    document.addEventListener("turbolinks:load", () => {
+        const table = "#dividends-table";
+        if ($(table).length > 0 && !$.fn.dataTable.isDataTable(table)) {
+            $(table).dataTable({order: $.fn.dataTable.orderOrSaved([1, 'asc'])});
+        }
+    })
+</script>

@@ -17,3 +17,4 @@ require("chartjs-plugin-datalabels")
 
 require("packs/data_refresh");
 require("packs/data_table");
+require("packs/twitter");

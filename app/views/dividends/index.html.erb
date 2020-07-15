@@ -6,11 +6,11 @@
   <tr>
     <th class="no-sort no-search" style="width: 1px;"></th>
     <th>Symbol</th>
-    <th>Company</th>
+    <th class="border-right">Company</th>
     <% div.months.each_with_index do |month, index| %>
       <th class="text-right" style="width: 6%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></th>
     <% end %>
-    <th class="text-right">Total</th>
+    <th class="text-right border-left">Total</th>
   </tr>
   </thead>
   <tbody>
@@ -24,23 +24,23 @@
       <% end %>
     </td>
     <td><%= link_to position.stock.symbol, position_path(position) %></td>
-    <td><%= position.stock.company_name %></td>
+    <td class="border-right"><%= position.stock.company_name %></td>
     <% div.months.each_with_index do |month, index| %>
       <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
       <% months[index] += amount if amount %>
       <td class="text-right"><%= number_to_currency amount %></td>
     <% end %>
-    <td class="text-right"><%= number_to_currency est.map {|e| e[:amount] }.sum * position.shares rescue nil %></td>
+    <td class="text-right border-left"><%= number_to_currency est.map {|e| e[:amount] }.sum * position.shares rescue nil %></td>
   </tr>
   <% end %>
   </tbody>
   <tfoot class="thead-light">
     <tr>
-      <th class="text-right" colspan="3">Total</th>
+      <th class="text-right border-right" colspan="3">Total</th>
       <% months.each do |month| %>
         <th class="text-right"><%= number_to_currency month %></th>
       <% end %>
-      <th class="text-right"><%= number_to_currency months.sum %></th>
+      <th class="text-right border-left"><%= number_to_currency months.sum %></th>
     </tr>
   </tfoot>
 </table>

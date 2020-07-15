@@ -10,6 +10,7 @@
     <% div.months.each_with_index do |month, index| %>
       <th class="text-right" style="width: 6%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></th>
     <% end %>
+    <th class="text-right">Total</th>
   </tr>
   </thead>
   <tbody>
@@ -29,6 +30,7 @@
       <% months[index] += amount if amount %>
       <td class="text-right"><%= number_to_currency amount %></td>
     <% end %>
+    <td class="text-right"><%= number_to_currency est.map {|e| e[:amount] }.sum * position.shares rescue nil %></td>
   </tr>
   <% end %>
   </tbody>
@@ -38,6 +40,7 @@
       <% months.each do |month| %>
         <th class="text-right"><%= number_to_currency month %></th>
       <% end %>
+      <th class="text-right"><%= number_to_currency months.sum %></th>
     </tr>
   </tfoot>
 </table>

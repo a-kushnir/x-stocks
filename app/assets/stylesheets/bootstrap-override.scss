@@ -19,3 +19,7 @@
   -o-transition: height 0.6s ease;
   transition: height 0.6s ease;
 }
+
+.dropdown.bootstrap-select.form-control {
+  height: auto;
+}

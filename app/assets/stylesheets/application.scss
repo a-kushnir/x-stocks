@@ -20,11 +20,25 @@
  *= require_self
  */
 
-label.select-label {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
 .my-form-row {
   margin-top: 20px;
+}
+
+.my-form {
+  width: 300px;
+}
+
+.my-button-group {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.my-button-group a,
+.my-button-group input[type=button] {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.navbar-nav form input[type=search] {
+  background-color: #F3F5F6;
 }

@@ -2,42 +2,27 @@
 <div class="row justify-content-center my-form-row">
   <div class="col-6">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-group row">
-    <div class="col-sm-5 text-xl-right text-lg-right text-md-right text-sm-right">
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'my-form mx-auto'}) do |f| %>
+
+  <div class="form-group">
     <%= f.label :email, class: 'col-form-label' %>
-    </div>
-    <div class="col-sm-7">
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email' %>
-    </div>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email', class: 'form-control' %>
   </div>
 
-  <div class="form-group row">
-    <div class="col-sm-5 text-xl-right text-lg-right text-md-right text-sm-right">
-      <%= f.label :password, class: 'col-form-label' %>
-    </div>
-    <div class="col-sm-7">
-      <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Password' %>
-    </div>
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Password', class: 'form-control' %>
   </div>
 
   <% if devise_mapping.rememberable? %>
-    <div class="form-group row">
-      <div class="col-sm-5"></div>
-      <div class="col-sm-7">
-        <div class="form-check">
-          <%= f.check_box :remember_me, class: 'form-check-input' %>
-          <%= f.label :remember_me, class: 'form-check-label' %>
-        </div>
-      </div>
+    <div class="form-group form-check">
+      <%= f.check_box :remember_me, class: 'form-check-input' %>
+      <%= f.label :remember_me, class: 'form-check-label' %>
     </div>
   <% end %>
 
-  <div class="form-group row">
-    <div class="col-sm-5"></div>
-    <div class="col-sm-7">
-      <%= f.submit "Sign in", class: 'btn btn-primary' %>
-    </div>
+  <div class="my-button-group">
+    <%= f.submit "Sign in", class: 'btn btn-primary' %>
   </div>
 <% end %>
 

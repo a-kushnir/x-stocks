@@ -6,6 +6,28 @@
   <strong>Average Cost:</strong>
   <%= number_to_currency(@position.average_price) %>
 </p>
+
+<% div = ::Dividend.new %>
+<% est = div.estimate(@position.stock) %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <td>Stock</td>
+      <% div.months.each do |month| %>
+        <td class="text-right"><%= month.strftime('%b') %></td>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><%= @position.stock %></td>
+    <% div.months.each do |month| %>
+      <td class="text-right"><%= number_to_currency est.detect {|e| e[:month] == month}&.dig(:amount) %></td>
+    <% end %>
+  </tr>
+  </tbody>
+</table>
+
 <div>
   <%= link_to 'Back', back_url, class: 'btn btn-link' %>
   <%= link_to 'Edit', edit_position_path(@position), class: 'btn btn-primary' %>

@@ -1,0 +1,21 @@
+<% div = ::Dividend.new %>
+<% est = div.estimate(@stock) %>
+<% if est %>
+<strong>Estimated Dividends</strong>
+<table class="table table-sm">
+  <thead>
+  <tr>
+    <% div.months.each_with_index do |month, index| %>
+      <td class="text-right" style="width: 8%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <% div.months.each do |month| %>
+      <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency est.detect {|e| e[:month] == month}&.dig(:amount) %></td>
+    <% end %>
+  </tr>
+  </tbody>
+</table>
+<% end %>

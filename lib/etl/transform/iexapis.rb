@@ -59,8 +59,9 @@ module Etl
         if stock.issue_type == 'et' # Index Stocks only
           stock.dividend_amount = last_div['amount'] rescue nil
           stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
-          stock.update_dividends!
         end
+
+        stock.update_dividends!
       end
 
     end

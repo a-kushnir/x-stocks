@@ -74,6 +74,8 @@
       </tr>
     </table>
 
+    <%= render partial: 'dividends' %>
+
   <% if @stock.description.present? %>
   <h3>About</h3>
   <p>
@@ -95,23 +97,7 @@
   </p>
   <% end %>
 
-  <p class="align-top">
-    <strong>Related Tags:</strong><br>
-    <% @stock.tags.by_key(:company_tag).each do |tag| %>
-      <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
-    <% end %><br>
-
-<% peers = stock_peers %>
-<% if peers.present? %>
-    <% peers.each do |stock_peer| %>
-      <% if stock_peer[:stock] %>
-          <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock]), class: 'badge badge-pill badge-primary' %>
-      <% else %>
-        <span class="badge badge-pill badge-secondary"><%= stock_peer[:symbol] %></span>
-      <% end %>
-    <% end %>
-  </p>
-<% end %>
+  <%= render partial: 'tags' %>
 
 <div>
   <%= link_to 'Back', back_url, class: 'btn btn-link' %>

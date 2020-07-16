@@ -11,7 +11,7 @@ module Etl
 
       def hourly_all_stocks?
         updated_at = hourly_last_run_at
-        updated_at.nil? || updated_at < 1.day.ago
+        updated_at.nil? || updated_at < 1.hour.ago
       end
 
       def hourly_all_stocks!

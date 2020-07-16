@@ -5,8 +5,8 @@
   <thead class="thead-light">
   <tr>
     <th class="no-sort no-search" style="width: 1px;"></th>
-    <th>Symbol</th>
-    <th class="border-right">Company</th>
+    <th class="border-right">Symbol</th>
+    <!--th class="border-right">Company</th-->
     <%
       month_names = []
        div.months.each_with_index do |month, index|
@@ -14,7 +14,7 @@
        end
     %>
     <% month_names.each do |month_name| %>
-      <th class="text-right" style="width: 6%"><%= month_name %></th>
+      <th class="text-right" style="width: 7%"><%= month_name %></th>
     <% end %>
     <th class="text-right border-left">Total</th>
   </tr>
@@ -29,8 +29,8 @@
         <img src="/img/no-logo.png" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
       <% end %>
     </td>
-    <td><%= link_to position.stock.symbol, position_path(position) %></td>
-    <td class="border-right"><%= position.stock.company_name %></td>
+    <td class="border-right"><%= link_to position.stock.symbol, stock_path(position.stock) %></td>
+    <!--td class="border-right"><%#= position.stock.company_name %></td-->
     <% div.months.each_with_index do |month, index| %>
       <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
       <% months[index] += amount if amount %>
@@ -42,7 +42,7 @@
   </tbody>
   <tfoot class="thead-light">
     <tr>
-      <th class="text-right border-right" colspan="3">Total</th>
+      <th class="text-right border-right" colspan="2">Total</th>
       <% months.each do |month| %>
         <th class="text-right"><%= number_to_currency month %></th>
       <% end %>

@@ -19,6 +19,7 @@ class StocksController < ApplicationController
     not_found && return unless @stock
 
     Etl::Refresh::Finnhub.new.hourly_one_stock!(@stock) rescue nil
+    @position = Position.find_or_initialize_by(stock: @stock, user: current_user)
 
     set_page_title
   end

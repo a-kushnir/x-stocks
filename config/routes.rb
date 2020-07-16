@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :stocks, except: [:edit, :update]
-  resources :positions
+  resources :positions, only: [:index, :update]
   resources :dividends, only: [:index]
   resources :services, only: [:index, :update]
 

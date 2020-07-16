@@ -1,87 +1,31 @@
 class PositionsController < ApplicationController
-  include PositionsHelper
-
   def index
-    @positions = positions.all
+    @positions = Position.where(user: current_user).all
 
     @page_title = 'My Positions'
     @page_menu_item = :positions
   end
 
-  def show
-    @position = find_position
-    not_found && return unless @position
-
-    set_page_title
-  end
-
-  def new
-    @position = new_position
-    set_page_title
-  end
-
-  def create
-    @position = new_position
-    @position.update(position_params)
-    if @position.save
-      flash[:notice] = "#{@position} position created"
-      redirect_to position_path(@position)
-    else
-      set_page_title
-      render action: 'new'
-    end
-  end
-
-  def edit
-    @position = find_position
-    not_found && return unless @position
-
-    set_page_title
-  end
-
   def update
     @position = find_position
     not_found && return unless @position
+    # TODO Destroy
 
     if @position.update(position_params)
-      flash[:notice] = "#{@position} position updated"
-      redirect_to position_path(@position)
+      render action: 'show', layout: nil
     else
-      set_page_title
-      render action: 'edit'
+      render action: 'edit', layout: nil
     end
-  end
-
-  def destroy
-    @position = find_position
-    not_found && return unless @position
-
-    @position.destroy
-    flash[:notice] = "#{@position} position deleted"
-    redirect_to positions_path
   end
 
   private
 
-  def set_page_title
-    @page_title = @position.new_record? ? 'New Position' : @position.to_s
-    @page_menu_item = :positions
-  end
-
-  def new_position
-    Position.new(user_id: current_user.id)
-  end
-
-  def positions
-    Position.where(user_id: current_user.id)
-  end
-
   def find_position
     stock = Stock.find_by(symbol: params[:id])
-    positions.find_by(stock_id: stock.id) if stock
+    Position.find_or_initialize_by(user: current_user, stock: stock) if stock
   end
 
   def position_params
-    params.require(:position).permit(:stock_id, :shares, :average_price)
+    params.require(:position).permit(:shares, :average_price, :note)
   end
 end

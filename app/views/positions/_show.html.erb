@@ -1,0 +1,53 @@
+<div id="my_position_readonly" style="margin-bottom: 15px;">
+  <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+    <tbody>
+      <tr>
+        <td style="border-top: none;">
+          Shares:
+          <strong class="float-right"><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
+        </td>
+      </tr>
+      <% if @position.average_price %>
+      <tr>
+        <td>
+          Average Price:
+          <strong class="float-right"><%= number_to_currency(@position.average_price) %></strong>
+        </td>
+      </tr>
+      <% end %>
+      <% if @position.gain_loss %>
+      <tr>
+        <td>
+          Total Cost:
+          <strong class="float-right"><%= number_to_currency(@position.total_cost) %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Gain/Loss:
+          <strong class="float-right <%= delta_class(@position.gain_loss) %>"><%= delta_number(number_to_currency(@position.gain_loss)) %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Gain/Loss %:
+          <strong class="float-right <%= delta_class(@position.gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.gain_loss_pct, precision: 2)) %></strong>
+        </td>
+      </tr>
+      <% end %>
+      <% if @position.est_annual_income %>
+      <tr>
+        <td>
+          Est. Ann. Income:
+          <strong class="float-right"><%= number_to_currency(@position.est_annual_income) %></strong>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Edit', '#', class: 'btn btn-outline-dark', onclick: '$("#my_position_readonly").hide(); $("#my_position_writable").show(); return false;' %>
+</div>
+<div id="my_position_writable" style="display: none;" style="margin-bottom: 15px;">
+  <%= render partial: 'positions/edit' %>
+</div>

@@ -114,6 +114,8 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :est_annual_dividend, precision: 12, scale: 4
       t.decimal :est_annual_income, precision: 12, scale: 4
 
+      t.string :note
+
       t.index [:user_id, :stock_id], unique: true
     end
 

@@ -6,10 +6,10 @@
   <thead class="thead-light">
     <tr>
       <th class="no-sort no-search" style="width: 1px;"></th>
-      <th style="width: 1px;">Symbol</th>
-      <th>Company</th>
+      <th class="border-right" style="width: 1px;">Symbol</th>
+      <!--th>Company</th-->
       <th class="no-search text-right">Shares</th>
-      <th class="no-search text-right">Average Price</th>
+      <th class="no-search text-right border-right">Average Price</th>
       <th class="no-search text-right">Market Price</th>
       <th class="no-search text-right">Total Cost</th>
       <th class="no-search text-right">Market Value</th>
@@ -30,10 +30,10 @@
             <img src="/img/no-logo.png" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           <% end %>
         </td>
-        <td><%= link_to position.stock.symbol, position_path(position) %></td>
-        <td><%= position.stock.company_name %></td>
+        <td class="border-right"><%= link_to position.stock.symbol, stock_path(position.stock) %></td>
+        <!--td><%#= position.stock.company_name %></td-->
         <td class="text-right"><%= number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
-        <td class="text-right"><%= number_to_currency(position.average_price) %></td>
+        <td class="text-right border-right"><%= number_to_currency(position.average_price) %></td>
         <td class="text-right"><%= number_to_currency(position.market_price) %></td>
         <td class="text-right"><%= number_to_currency(position.total_cost) %></td>
         <td class="text-right"><%= number_to_currency(position.market_value) %></td>
@@ -55,7 +55,9 @@
   %>
   <tfoot class="thead-light">
     <tr>
-      <th colspan="6" class="text-right">Total</th>
+      <th colspan="2" class="border-right"></th>
+      <th colspan="2" class="border-right"></th>
+      <th colspan="1" class="text-right">Total</th>
       <th class="text-right"><%= number_to_currency(total_cost) %></th>
       <th class="text-right"><%= number_to_currency(market_value) %></th>
       <th class="text-right <%= delta_class(gain_loss) %>"><%= delta_number(number_to_currency(gain_loss)) %></th>
@@ -66,10 +68,6 @@
     </tr>
   </tfoot>
 </table>
-
-<div>
-  <%= link_to 'New Position', new_position_path, class: 'btn btn-success' %>
-</div>
 
 <script>
     <% value = @positions.map {|p| (p.market_value / market_value * 100).round(2) } %>

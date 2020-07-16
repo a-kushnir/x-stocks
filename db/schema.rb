@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.decimal "gain_loss_pct", precision: 10, scale: 2
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "est_annual_income", precision: 12, scale: 4
+    t.string "note"
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
     t.index ["user_id"], name: "index_positions_on_user_id"

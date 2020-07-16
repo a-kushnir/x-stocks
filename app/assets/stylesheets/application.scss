@@ -30,15 +30,25 @@
 
 .my-button-group {
   margin-top: 20px;
+}
+
+.my-button-group-centered {
+  margin-top: 20px;
   text-align: center;
 }
 
 .my-button-group a,
-.my-button-group input[type=button] {
+.my-button-group input[type=button],
+.my-button-group-centered  a,
+.my-button-group-centered  input[type=button] {
   margin-left: 8px;
   margin-right: 8px;
 }
 
 .navbar-nav form input[type=search] {
   background-color: #F3F5F6;
+}
+
+.my-side-panel {
+  max-width: 300px;
 }

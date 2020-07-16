@@ -6,8 +6,7 @@
 <table id="stocks-table" class="table table-hover table-override">
   <thead class="thead-light">
     <tr>
-      <th class="no-sort no-search" style="width: 1px;"></th>
-      <th style="width: 1px;">Symbol</th>
+      <th class="text-center">Symbol</th>
       <th>Company</th>
       <th class="no-search text-right">Price</th>
       <th class="no-search text-right">Change</th>
@@ -23,14 +22,10 @@
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td class="text-center">
-          <% if stock.logo.present? %>
-            <img src="<%= stock.logo %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
-          <% else %>
-            <img src="/img/no-logo.png" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
-          <% end %>
-        </td>
-        <td>
+        <td class="text-nowrap" data-search="<%= stock.symbol %>">
+          <div class="text-center" style="width: 48px; display: inline-block">
+            <img src="<%= stock.logo.present? ? stock.logo : '/img/no-logo.png' %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
+          </div>
           <%= link_to stock.symbol, stock_path(stock) %>
         </td>
         <td><%= stock.company_name %></td>

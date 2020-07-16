@@ -58,3 +58,11 @@ document.addEventListener("turbolinks:load", () => {
         return result;
     };
 });
+
+window.dataTable = function(table, options = {}) {
+    table = $(table);
+    if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
+        options['order'] = $.fn.dataTable.orderOrSaved(options['order'])
+        table.dataTable(options);
+    }
+}

@@ -5,7 +5,6 @@
   <thead class="thead-light">
   <tr>
     <th class="text-center border-right">Symbol</th>
-    <!--th class="border-right">Company</th-->
     <%
       month_names = []
        div.months.each_with_index do |month, index|
@@ -27,7 +26,6 @@
       </div>
       <%= link_to position.stock.symbol, stock_path(position.stock) %>
     </td>
-    <!--td class="border-right"><%#= position.stock.company_name %></td-->
     <% div.months.each_with_index do |month, index| %>
       <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
       <% months[index] += amount if amount %>
@@ -55,68 +53,16 @@
 </div>
 
 <script>
-    function x2() {
-        const canvas = $('#monthly-divs-canvas');
-        if (canvas.length === 0) return;
-
-        const data = {
-            labels: <%= json month_names %>,
-            datasets: [{
-                data: <%= json months %>,
-                borderColor: <%= json Array.new(12, 'rgb(45,137,239)') %>,
-                borderWidth: 1,
-                backgroundColor: <%= json Array.new(12, 'rgb(45,137,239,0.5)') %>
-            }]
-        }
-
-        new Chart(canvas, {
-            type: 'horizontalBar',
-            data: data,
-            options: {
-                legend: {
-                    display: false,
-                },
-                tooltips: {
-                    enabled: false
-                },
-                scales: {
-                    yAxes: [{
-                        gridLines: {
-                            lineWidth: 0,
-                        },
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            callback: function(value, index, values) {
-                                return '$' + value;
-                            }
-                        },
-                    }]
-                },
-                plugins: {
-                    datalabels: {
-                        anchor: 'start',
-                        align: 'end',
-                        color: '#111111',
-                        //offset: 10,
-                        /*font: {
-                            weight: 'bold'
-                        },*/
-                        formatter: function(value, context) {
-                            return value > 0 ? formatCurrency(value) : null;
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    document.addEventListener("turbolinks:load", () => {
-        const table = "#dividends-table";
-        if ($(table).length > 0 && !$.fn.dataTable.isDataTable(table)) {
-            $(table).dataTable({order: $.fn.dataTable.orderOrSaved([1, 'asc'])});
-        }
-        x2();
+  document.addEventListener("turbolinks:load", () => {
+    dataTable("#dividends-table", {order: [1, 'asc']});
+    dividends_month_chart('#monthly-divs-canvas', {
+      labels: <%= json month_names %>,
+      datasets: [{
+        data: <%= json months %>,
+        borderColor: <%= json Array.new(12, 'rgb(45,137,239)') %>,
+        borderWidth: 1,
+        backgroundColor: <%= json Array.new(12, 'rgb(45,137,239,0.5)') %>
+      }]
     })
+  })
 </script>

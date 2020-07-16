@@ -3,7 +3,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-var jQuery = require("jquery");
+const jQuery = require("jquery");
 global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;
 
@@ -18,3 +18,4 @@ require("chartjs-plugin-datalabels")
 require("packs/data_refresh");
 require("packs/data_table");
 require("packs/twitter");
+require("packs/charts");

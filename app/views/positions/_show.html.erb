@@ -1,6 +1,7 @@
 <div id="my_position_readonly" style="margin-bottom: 15px;">
   <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
     <tbody>
+      <% if @position.shares %>
       <tr>
         <td style="border-top: none;">
           Shares:
@@ -43,6 +44,7 @@
         </td>
       </tr>
       <% end %>
+    <% end %>
     </tbody>
   </table>
 

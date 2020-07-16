@@ -1,6 +1,9 @@
 class PositionsController < ApplicationController
   def index
-    @positions = Position.where(user: current_user).all
+    @positions = Position
+      .where(user: current_user)
+      .where.not(shares: nil)
+      .all
 
     @page_title = 'My Positions'
     @page_menu_item = :positions
@@ -9,12 +12,12 @@ class PositionsController < ApplicationController
   def update
     @position = find_position
     not_found && return unless @position
-    # TODO Destroy
 
     if @position.update(position_params)
-      render action: 'show', layout: nil
+      @position.destroy if @position.shares.blank? && @position.note.blank?
+      render partial: 'show', layout: nil
     else
-      render action: 'edit', layout: nil
+      render partial: 'edit', layout: nil
     end
   end
 

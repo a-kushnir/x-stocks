@@ -21,7 +21,7 @@
   <% estimates.each do |position, est| %>
   <tr>
     <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>">
-      <div class="text-center" style="width: 48px; display: inline-block">
+      <div class="text-center" style="width: 48px; display: inline-block; margin-right: 10px;">
         <img src="<%= position.stock.logo.present? ? position.stock.logo : '/img/no-logo.png' %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
       </div>
       <%= link_to position.stock.symbol, stock_path(position.stock) %>

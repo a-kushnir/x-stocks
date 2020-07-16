@@ -25,7 +25,10 @@ module Etl
 
       def weekly_one_stock!(stock)
         json = Etl::Extract::Iexapis.new.dividends(stock.symbol)
-        json = Etl::Extract::Iexapis.new.dividends_6m(stock.symbol) if json.blank?
+        Etl::Transform::Iexapis::new.dividends(stock, json)
+        json = Etl::Extract::Iexapis.new.dividends_3m(stock.symbol)
+        Etl::Transform::Iexapis::new.dividends(stock, json)
+        json = Etl::Extract::Iexapis.new.dividends_6m(stock.symbol)
         Etl::Transform::Iexapis::new.dividends(stock, json)
       end
 

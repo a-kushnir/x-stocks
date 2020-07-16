@@ -31,22 +31,22 @@ class Dividend
 
     case stock.dividend_frequency
     when 'annual'
-      1.times do
+      (2*1).times do
         payment_date = payment_date >> 12
         results << { payment_date: payment_date, amount: amount }
       end
     when 'semi-annual'
-      2.times do
+      (2*2).times do
         payment_date = payment_date >> 6
         results << { payment_date: payment_date, amount: amount }
       end
     when 'quarterly'
-      4.times do
+      (2*4).times do
         payment_date = payment_date >> 3
         results << { payment_date: payment_date, amount: amount }
       end
     when 'monthly'
-      12.times do
+      (2*12).times do
         payment_date = payment_date >> 1
         results << { payment_date: payment_date, amount: amount }
       end

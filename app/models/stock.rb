@@ -33,6 +33,7 @@ class Stock < ApplicationRecord
     self.price_change = (current_price - prev_close_price) rescue nil
     self.price_change_pct = (price_change / prev_close_price * 100) rescue nil
     self.est_annual_dividend_pct = est_annual_dividend / current_price * 100 rescue nil
+    self.market_capitalization = outstanding_shares * current_price rescue nil
     ::Position.update_prices!(self)
     save!
   end

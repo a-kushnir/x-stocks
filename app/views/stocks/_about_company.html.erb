@@ -1,0 +1,20 @@
+<% if @stock.description.present? %>
+  <h3>About</h3>
+  <p>
+    <%= @stock.description %>
+  </p>
+<% end %>
+
+<% if @stock.description.present? %>
+  <p>
+    <strong>Employees:</strong>
+    <%= number_with_delimiter(@stock.employees, delimiter: ',') %>
+  </p>
+<% end %>
+
+<% if @stock.website.present? %>
+  <p>
+    <strong>Website:</strong>
+    <%= link_to_website @stock.website %>
+  </p>
+<% end %>

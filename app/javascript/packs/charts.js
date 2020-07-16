@@ -97,7 +97,7 @@ window.price_target_chart = function(canvas, data) {
         }]
     };
 
-    Chart.Scatter(canvas, {
+    const chart = Chart.Scatter(canvas, {
         data: dat,
         options: {
             responsive: true,
@@ -156,6 +156,15 @@ window.price_target_chart = function(canvas, data) {
             }
         }
     });
+
+    if (data['mean'] === data['low'] ||
+        data['mean'] === data['high']) {
+        if (data['mean'] === data['low'])
+            chart.getDatasetMeta(0).hidden = true;
+        if (data['mean'] === data['high'])
+            chart.getDatasetMeta(1).hidden = true;
+        chart.update();
+    }
 }
 
 window.recommendation_details_chart = function(canvas, data, min) {

@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.date "ipo"
     t.string "logo"
     t.string "peers"
+    t.decimal "outstanding_shares", precision: 16
+    t.decimal "market_capitalization", precision: 20
     t.decimal "current_price", precision: 10, scale: 2
     t.decimal "prev_close_price", precision: 10, scale: 2
     t.decimal "open_price", precision: 10, scale: 2
@@ -100,7 +102,10 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.string "finnhub_price_target"
     t.decimal "finnhub_rec", precision: 5, scale: 2
     t.string "finnhub_rec_details"
+    t.decimal "dividend_rating", precision: 5, scale: 2
     t.string "earnings"
+    t.integer "metascore"
+    t.string "metascore_details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"

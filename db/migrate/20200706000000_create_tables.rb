@@ -33,6 +33,9 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.string :logo
       t.string :peers
 
+      t.decimal :outstanding_shares, precision: 16, scale: 0
+      t.decimal :market_capitalization, precision: 20, scale: 0
+
       t.decimal :current_price, precision: 10, scale: 2
       t.decimal :prev_close_price, precision: 10, scale: 2
       t.decimal :open_price, precision: 10, scale: 2
@@ -71,7 +74,13 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :finnhub_rec, precision: 5, scale: 2
       t.string :finnhub_rec_details
 
+      # Dividend.com
+      t.decimal :dividend_rating, precision: 5, scale: 2
+
       t.string :earnings
+
+      t.integer :metascore
+      t.string :metascore_details
 
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false

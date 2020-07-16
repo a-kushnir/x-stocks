@@ -1,4 +1,8 @@
-<h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %> <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small></h2>
+<h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
+  <% if @stock.price_change %>
+    <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
+  <% end %>
+</h2>
 
 <% if @stock.exchange %>
   <small class="text-muted"><%= @stock.exchange %></small>
@@ -25,15 +29,17 @@
   </tr>
   <tr>
     <td>
-      Day's Range: <strong class="float-right"><%= number_to_currency(@stock.day_low_price) %> - <%= number_to_currency(@stock.day_high_price) %></strong>
+      Day's Range:
+      <% if @stock.day_low_price && @stock.day_high_price %>
+        <strong class="float-right"><%= number_to_currency(@stock.day_low_price) %> - <%= number_to_currency(@stock.day_high_price) %></strong>
+      <% end %>
     </td>
     <td></td>
     <td>
-      Forward Dividend & Yield: <strong class="float-right">
+      Forward Dividend & Yield:
       <% if @stock.est_annual_dividend %>
-        <%= number_to_currency(@stock.est_annual_dividend) %> (<%= number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) %>)
+        <strong class="float-right"><%= number_to_currency(@stock.est_annual_dividend) %> (<%= number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) %>)</strong>
       <% end %>
-    </strong>
     </td>
   </tr>
   <tr>

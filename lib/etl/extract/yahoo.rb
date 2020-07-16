@@ -19,11 +19,11 @@ module Etl
       private
 
       def test_url(symbol)
-        "#{BASE_URL}/quote/#{symbol}"
+        "#{BASE_URL}/quote/#{esc(symbol)}"
       end
 
       def statistics_url(symbol)
-        "#{BASE_URL}/quote/#{symbol}/key-statistics?p=#{symbol}"
+        "#{BASE_URL}/quote/#{esc(symbol)}/key-statistics?p=#{esc(symbol)}"
       end
 
     end

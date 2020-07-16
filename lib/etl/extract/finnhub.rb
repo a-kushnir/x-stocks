@@ -36,31 +36,31 @@ module Etl
       private
 
       def company_url(symbol)
-        "#{BASE_URL}/stock/profile2?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/profile2?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def peers_url(symbol)
-        "#{BASE_URL}/stock/peers?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/peers?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def quote_url(symbol)
-        "#{BASE_URL}/quote?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/quote?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def recommendation_url(symbol)
-        "#{BASE_URL}/stock/recommendation?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/recommendation?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def price_target_url(symbol)
-        "#{BASE_URL}/stock/price-target?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/price-target?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def earnings_url(symbol)
-        "#{BASE_URL}/stock/earnings?symbol=#{symbol}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/earnings?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
       end
 
       def metric_url(symbol)
-        "#{BASE_URL}/stock/metric?symbol=#{symbol}&metric=all&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/metric?symbol=#{esc(symbol)}&metric=all&token=#{FINNHUB_KEY}"
       end
 
     end

@@ -28,23 +28,23 @@ module Etl
       private
 
       def company_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/company?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/company?token=#{IEXAPIS_KEY}";
       end
 
       def dividends_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/dividends?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends?token=#{IEXAPIS_KEY}";
       end
 
       def dividends_3m_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/dividends/3m?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/3m?token=#{IEXAPIS_KEY}";
       end
 
       def dividends_6m_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/dividends/6m?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/6m?token=#{IEXAPIS_KEY}";
       end
 
       def dividends_next_url(symbol)
-        "#{BASE_URL}/stock/#{symbol}/dividends/next?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/next?token=#{IEXAPIS_KEY}";
       end
 
     end

@@ -18,6 +18,10 @@ module Etl
         end
       end
 
+      def esc(value)
+        URI.escape(value)
+      end
+
     end
   end
 end

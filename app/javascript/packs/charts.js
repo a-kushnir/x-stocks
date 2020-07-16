@@ -157,3 +157,171 @@ window.price_target_chart = function(canvas, data) {
         }
     });
 }
+
+window.recommendation_details_chart = function(canvas, data, min) {
+    canvas = $(canvas);
+    if (canvas.length === 0) return;
+
+    new Chart(canvas, {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true,
+                }]
+            },
+            legend: {
+                position: 'right',
+                reverse: true,
+                labels: {
+                    boxWidth: 12
+                }
+            },
+            plugins: {
+                datalabels: {
+                    display: true,
+                    color: 'white',
+                    font: {
+                        weight: 'bold'
+                    },
+                    formatter: function(value, context) {
+                        return value >= min ? Math.round(value) : null;
+                    }
+                }
+            }
+        },
+    });
+}
+
+window.recommendation_mean_chart = function(canvas, value) {
+    canvas = $(canvas);
+    if (canvas.length === 0) return;
+
+    const data = {
+        datasets: [{
+            label: value,
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#0F69FF',
+            backgroundColor: '#0F69FF',
+            data: [{
+                x: value,
+                y: 0,
+            }]
+        }, {
+            label: 'Strong\n  Buy',
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#111111',
+            backgroundColor: '#ffffff',
+            data: [{
+                x: 1,
+                y: 0,
+            }]
+        }, {
+            label: 'Buy',
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#111111',
+            backgroundColor: '#ffffff',
+            data: [{
+                x: 2,
+                y: 0,
+            }]
+        }, {
+            label: 'Hold',
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#111111',
+            backgroundColor: '#ffffff',
+            data: [{
+                x: 3,
+                y: 0,
+            }]
+        }, {
+            label: 'Sell',
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#111111',
+            backgroundColor: '#ffffff',
+            data: [{
+                x: 4,
+                y: 0,
+            }]
+        }, {
+            label: 'Strong\n  Sell',
+            xAxisID: 'x-axis-1',
+            yAxisID: 'y-axis-1',
+            borderColor: '#111111',
+            backgroundColor: '#ffffff',
+            data: [{
+                x: 5,
+                y: 0,
+            }]
+        }]
+    };
+
+    Chart.Scatter(canvas, {
+        data: data,
+        options: {
+            responsive: true,
+            hoverMode: 'nearest',
+            intersect: true,
+            legend: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    position: 'bottom',
+                    display: true,
+                    gridLines: {
+                        lineWidth: 0,
+                    },
+                    ticks: {
+                        min: 0.5,
+                        max: 5.5,
+                        display: false,
+                    },
+                }],
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                    gridLines: {
+                        zeroLineColor: '#888888',
+                        zeroLineWidth: 2,
+                        drawTicks: false,
+                        lineWidth: 0,
+                        drawBorder: false,
+                        drawOnChartArea: true,
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }],
+            },
+            plugins: {
+                datalabels: {
+                    display: true,
+                    color: function(value) {
+                        return value.dataset.borderColor;
+                    },
+                    align: function(value) {
+                        return value.datasetIndex < 1 ? 'top' : 'bottom';
+                    },
+                    font: {
+                        weight: 'bold'
+                    },
+                    formatter: function(value, context) {
+                        return context.dataset.label;
+                    }
+                }
+            }
+        }
+    });
+}

@@ -3,189 +3,28 @@
   <h4><%= label %></h4>
   <% if details.present? %>
     <div style="width: 260px; height: 200px;">
-      <canvas id="<%= id %>_canvas" width="260" height="200"></canvas>
+      <canvas id="<%= id %>_details_canvas" width="260" height="200"></canvas>
     </div>
-  <script>
+    <script>
       document.addEventListener("turbolinks:load", () => {
-          const canvas = $("#<%= id %>_canvas");
-
-          if (canvas.length === 0)
-              return;
-
-          new Chart(canvas, {
-              type: 'bar',
-              data: <%= json rec_graph_data(details) %>,
-              options: {
-                  scales: {
-                      xAxes: [{
-                          stacked: true
-                      }],
-                      yAxes: [{
-                          stacked: true,
-                      }]
-                  },
-                  legend: {
-                      position: 'right',
-                      reverse: true,
-                      labels: {
-                          boxWidth: 12
-                      }
-                  },
-                  plugins: {
-                      datalabels: {
-                          display: true,
-                          color: 'white',
-                          font: {
-                              weight: 'bold'
-                          },
-                          formatter: function(value, context) {
-                              return value >= <%= rec_min_visible_value(details) %> ? Math.round(value) : null;
-                          }
-                      }
-                  }
-              },
-          });
+        recommendation_details_chart($("#<%= id %>_details_canvas"),
+          <%= json rec_graph_data(details) %>,
+          <%= rec_min_visible_value(details) %>
+        );
       })
-  </script>
+    </script>
   <% end %>
   <% if mean.present? %>
     <div style="display: block; width: 280px; height: 85px; margin-top: -5px;">
       <canvas id="<%= id %>_mean_canvas" width="280" height="85" class="chartjs-render-monitor"></canvas>
     </div>
-
     <script>
-        document.addEventListener("turbolinks:load", () => {
-            const canvas = $("#<%= id %>_mean_canvas");
-
-            if (canvas.length === 0)
-                return;
-
-            const scatterChartData = {
-                datasets: [{
-                    label: '<%= number_with_precision(mean, precision: 2) %>',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#0F69FF',
-                    backgroundColor: '#0F69FF',
-                    data: [{
-                        x: <%= number_with_precision(mean, precision: 2) %>,
-                        y: 0,
-                    }]
-                }, {
-                    label: 'Strong\n  Buy',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#111111',
-                    backgroundColor: '#ffffff',
-                    data: [{
-                        x: 1,
-                        y: 0,
-                    }]
-                }, {
-                    label: 'Buy',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#111111',
-                    backgroundColor: '#ffffff',
-                    data: [{
-                        x: 2,
-                        y: 0,
-                    }]
-                }, {
-                    label: 'Hold',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#111111',
-                    backgroundColor: '#ffffff',
-                    data: [{
-                        x: 3,
-                        y: 0,
-                    }]
-                }, {
-                    label: 'Sell',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#111111',
-                    backgroundColor: '#ffffff',
-                    data: [{
-                        x: 4,
-                        y: 0,
-                    }]
-                }, {
-                    label: 'Strong\n  Sell',
-                    xAxisID: 'x-axis-1',
-                    yAxisID: 'y-axis-1',
-                    borderColor: '#111111',
-                    backgroundColor: '#ffffff',
-                    data: [{
-                        x: 5,
-                        y: 0,
-                    }]
-                }]
-            };
-
-            window.myScatter = Chart.Scatter(canvas, {
-                data: scatterChartData,
-                options: {
-                    responsive: true,
-                    hoverMode: 'nearest',
-                    intersect: true,
-                    legend: {
-                        display: false,
-                    },
-                    scales: {
-                        xAxes: [{
-                            position: 'bottom',
-                            display: true,
-                            gridLines: {
-                                lineWidth: 0,
-                            },
-                            ticks: {
-                                min: 0.5,
-                                max: 5.5,
-                                display: false,
-                            },
-                        }],
-                        yAxes: [{
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            id: 'y-axis-1',
-                            gridLines: {
-                                zeroLineColor: '#888888',
-                                zeroLineWidth: 2,
-                                drawTicks: false,
-                                lineWidth: 0,
-                                drawBorder: false,
-                                drawOnChartArea: true,
-                            },
-                            ticks: {
-                                display: false
-                            }
-                        }],
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: true,
-                            color: function(value) {
-                                return value.dataset.borderColor;
-                            },
-                            align: function(value) {
-                                return value.datasetIndex < 1 ? 'top' : 'bottom';
-                            },
-                            font: {
-                                weight: 'bold'
-                            },
-                            formatter: function(value, context) {
-                                return context.dataset.label;
-                            }
-                        }
-                    }
-                }
-            });
-        })
+      document.addEventListener("turbolinks:load", () => {
+        recommendation_mean_chart($("#<%= id %>_mean_canvas"),
+          '<%= number_with_precision(mean, precision: 2) %>',
+        )
+      })
     </script>
-
   <% end %>
 </div>
 <% end %>

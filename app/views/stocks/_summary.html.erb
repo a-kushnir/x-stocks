@@ -65,7 +65,7 @@
     </td>
     <td></td>
     <td>
-      Market Cap: <strong class="float-right"><%= number_to_currency(@stock.outstanding_shares, strip_insignificant_zeros: true) %></strong>
+      Market Cap: <strong class="float-right"><%= number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true) %></strong>
     </td>
   </tr>
   <% end %>

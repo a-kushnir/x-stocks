@@ -72,10 +72,7 @@
 
 <script>
   document.addEventListener("turbolinks:load", () => {
-    const table = "#stocks-table";
-    if ($(table).length > 0 && !$.fn.dataTable.isDataTable(table)) {
-      $(table).dataTable({order: $.fn.dataTable.orderOrSaved([1, 'asc'])});
-    }
+    dataTable("#stocks-table", {order: [1, 'asc']});
   })
 
   function refresh_page() {

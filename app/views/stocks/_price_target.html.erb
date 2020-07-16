@@ -6,125 +6,15 @@
   <canvas id="<%= id %>_canvas" width="280" height="85" class="chartjs-render-monitor"></canvas>
 </div>
 
-<%
-  prices = [target_price['low'], target_price['high'], @stock.current_price]
-  min = prices.min
-  max = prices.max
-  offset = (max - min).to_f / 10
-  min -= offset
-  max += offset
-%>
-<script>
+  <script>
     document.addEventListener("turbolinks:load", () => {
-        const canvas = $("#<%= id %>_canvas");
-
-        if (canvas.length === 0)
-            return;
-
-        const scatterChartData = {
-            datasets: [{
-                label: 'Low\n<%= number_to_currency target_price['low'] %>',
-                xAxisID: 'x-axis-1',
-                yAxisID: 'y-axis-1',
-                borderColor: '#111111',
-                backgroundColor: '#111111',
-                data: [{
-                    x: <%= target_price['low'] %>,
-                    y: 0,
-                }]
-            }, {
-                label: 'High\n<%= number_to_currency target_price['high'] %>',
-                xAxisID: 'x-axis-1',
-                yAxisID: 'y-axis-1',
-                borderColor: '#111111',
-                backgroundColor: '#111111',
-                data: [{
-                    x: <%= target_price['high'] %>,
-                    y: 0,
-                }]
-            }, {
-                label: 'Average\n<%= number_to_currency target_price['mean'] %>',
-                xAxisID: 'x-axis-1',
-                yAxisID: 'y-axis-1',
-                borderColor: '#111111',
-                backgroundColor: '#ffffff',
-                data: [{
-                    x: <%= target_price['mean'] %>,
-                    y: 0,
-                }]
-            }, {
-                label: '<%= number_to_currency @stock.current_price %>\nCurrent',
-                xAxisID: 'x-axis-1',
-                yAxisID: 'y-axis-1',
-                borderColor: '#0F69FF',
-                backgroundColor: '#0F69FF',
-                data: [{
-                    x: <%= @stock.current_price %>,
-                    y: 0,
-                }]
-            }]
-        };
-
-        window.myScatter = Chart.Scatter(canvas, {
-            data: scatterChartData,
-            options: {
-                responsive: true,
-                hoverMode: 'nearest',
-                intersect: true,
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [{
-                        position: 'bottom',
-                        display: true,
-                        gridLines: {
-                            lineWidth: 0,
-                        },
-                        ticks: {
-                            min: <%= min %>,
-                            max: <%= max %>,
-                            display: false,
-                        },
-                    }],
-                    yAxes: [{
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        id: 'y-axis-1',
-                        gridLines: {
-                            zeroLineColor: '#888888',
-                            zeroLineWidth: 2,
-                            drawTicks: false,
-                            lineWidth: 0,
-                            drawBorder: false,
-                            drawOnChartArea: true,
-                        },
-                        ticks: {
-                            display: false
-                        }
-                    }],
-                },
-                plugins: {
-                    datalabels: {
-                        display: true,
-                        color: function(value) {
-                            return value.dataset.borderColor;
-                        },
-                        align: function(value) {
-                            return value.datasetIndex < 3 ? 'top' : 'bottom';
-                        },
-                        font: {
-                            weight: 'bold'
-                        },
-                        formatter: function(value, context) {
-                            return context.dataset.label;
-                        }
-                    }
-                }
-            }
-        });
-    })
-</script>
+      price_target_chart($("#<%= id %>_canvas"), <%= json({
+        low: target_price['low'],
+        high: target_price['high'],
+        mean: target_price['mean'],
+        current: @stock.current_price.to_f
+      }) %>)
+    });
+  </script>
 </div>
 <% end %>

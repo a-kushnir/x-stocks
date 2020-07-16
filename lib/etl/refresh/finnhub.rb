@@ -6,7 +6,7 @@ module Etl
       # Hourly #
 
       def hourly_last_run_at
-        Config[:stock_price_updated_at]
+        DateTime.parse(Config[:stock_price_updated_at]) rescue nil
       end
 
       def hourly_all_stocks?
@@ -35,7 +35,7 @@ module Etl
       # Daily #
 
       def daily_last_run_at
-        Config[:daily_finnhub_updated_at]
+        DateTime.parse(Config[:daily_finnhub_updated_at]) rescue nil
       end
 
       def daily_all_stocks?

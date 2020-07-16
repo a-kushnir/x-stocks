@@ -3,7 +3,7 @@ module Etl
     class Iexapis
 
       def weekly_last_run_at
-        Config[:weekly_iexapis_updated_at]
+        DateTime.parse(Config[:weekly_iexapis_updated_at]) rescue nil
       end
 
       def weekly_all_stocks?

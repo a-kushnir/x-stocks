@@ -3,7 +3,7 @@ module Etl
     class Yahoo
 
       def daily_last_run_at
-        Config[:daily_yahoo_updated_at]
+        DateTime.parse(Config[:daily_yahoo_updated_at]) rescue nil
       end
 
       def daily_all_stocks?

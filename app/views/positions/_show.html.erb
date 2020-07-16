@@ -25,6 +25,12 @@
       </tr>
       <tr>
         <td>
+          Market Value:
+          <strong class="float-right"><%= number_to_currency(@position.market_value) %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
           Gain/Loss:
           <strong class="float-right <%= delta_class(@position.gain_loss) %>"><%= delta_number(number_to_currency(@position.gain_loss)) %></strong>
         </td>

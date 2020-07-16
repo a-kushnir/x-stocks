@@ -189,7 +189,7 @@ window.recommendation_details_chart = function(canvas, data, min) {
                         weight: 'bold'
                     },
                     formatter: function(value, context) {
-                        return value >= min ? Math.round(value) : null;
+                        return value >= min && value > 0 ? Math.round(value) : null;
                     }
                 }
             }

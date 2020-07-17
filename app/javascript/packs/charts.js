@@ -10,11 +10,21 @@ window.chart_office_colors = [
     '#A2B9E2', '#F6BE98', '#D2D2D2', '#FFDF7F', '#ADCDEA', '#B7D8A1',
 ]
 
+window.destroy_all_charts = function () {
+    for (const key in Chart.instances) {
+        Chart.instances[key].destroy()
+    }
+}
+
+document.addEventListener("turbolinks:load", () => {
+    destroy_all_charts();
+})
+
 window.dividends_month_chart = function(canvas, data) {
     canvas = $(canvas);
     if (canvas.length === 0) return;
 
-    new Chart(canvas, {
+    const chart = new Chart(canvas, {
         type: 'horizontalBar',
         data: data,
         options: {
@@ -51,6 +61,7 @@ window.dividends_month_chart = function(canvas, data) {
             }
         }
     });
+    canvas.data('chart', chart);
 }
 
 // data = { low: 10, high: 30, mean: 25, current: 17 }

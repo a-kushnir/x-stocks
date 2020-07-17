@@ -83,13 +83,15 @@
   document.addEventListener("turbolinks:load", () => {
     init_representation("#dividends-table-container", "#dividends-charts-container", "#dividends-table-radio", "#dividends-charts-radio");
     dataTable("#dividends-table", {order: [0, 'asc']});
+
+    destroy_all_charts();
     <% values, labels = dividends_allocation %>
     allocation_chart("#dividends_allocation", <%= json values %>, <%= json labels %>);
     dividends_month_chart('#monthly_dividends', {
       labels: <%= json month_names %>,
       datasets: [{
         data: <%= json months %>,
-        backgroundColor: <%= json Array.new(12, '#5B9BD5') %>
+        backgroundColor: <%= json Array.new(12, '#9DC3E6') %>
       }]
     })
   })

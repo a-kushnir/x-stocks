@@ -1,3 +1,18 @@
+<% content_for :page_title do %>
+  <div class="btn-group btn-group-toggle float-right" style="margin-right: 15px; margin-top: 15px;" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" id="portfolio-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#portfolio-table-container", "#portfolio-charts-container");'> Table
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" id="portfolio-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#portfolio-table-container", "#portfolio-charts-container");'> Charts
+    </label>
+  </div>
+  <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center" style="margin-left: 132px;">
+    <h1 class="bd-title">My Positions</h1>
+  </header>
+<% end %>
+
+<div id="portfolio-table-container">
 <%
   positions = Position.where(user: current_user)
   market_value = positions.sum(:market_value)
@@ -6,7 +21,6 @@
   <thead class="thead-light">
     <tr>
       <th class="text-center border-right">Symbol</th>
-      <!--th>Company</th-->
       <th class="no-search text-right">Shares</th>
       <th class="no-search text-right border-right">Average Price</th>
       <th class="no-search text-right">Market Price</th>
@@ -28,7 +42,6 @@
           </div>
           <%= link_to position.stock.symbol, stock_path(position.stock) %>
         </td>
-        <!--td><%#= position.stock.company_name %></td-->
         <td class="text-right"><%= number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
         <td class="text-right border-right"><%= number_to_currency(position.average_price) %></td>
         <td class="text-right"><%= number_to_currency(position.market_price) %></td>
@@ -65,18 +78,28 @@
     </tr>
   </tfoot>
 </table>
+</div>
 
-<div class="form-group row">
-  <div class="mx-auto" style="height: 400px;">
-    <canvas id="position_allocation" width="500" height="400"></canvas>
-  </div>
-  <div class="mx-auto" style="height: 400px;">
-    <canvas id="sector_allocation" width="500" height="400"></canvas>
+<div id="portfolio-charts-container">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="border rounded mx-md-auto" style="width: 580px; height: 443px; padding-bottom: 15px; margin-bottom: 15px;">
+        <h4 class="text-center">Stock allocation</h4>
+        <canvas id="position_allocation" width="580" height="400"></canvas>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="border rounded mx-md-auto" style="width: 580px; height: 443px; padding-bottom: 15px;">
+        <h4 class="text-center">Sector allocation</h4>
+        <canvas id="sector_allocation" width="580" height="400"></canvas>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
   document.addEventListener("turbolinks:load", () => {
+    init_representation("#portfolio-table-container", "#portfolio-charts-container", "#portfolio-table-radio", "#portfolio-charts-radio");
     dataTable("#positions-table", {order: [0, 'asc']});
     <% values, labels = position_allocation %>
     allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);

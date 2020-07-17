@@ -78,7 +78,7 @@ module Etl
 
       def metric(stock, json)
         json ||= {}
-        data = json['metric']
+        data = json['metric'] || {}
         stock.finnhub_beta = data['beta']
         stock.week_52_high = data['52WeekHigh']
         stock.week_52_high_date = data['52WeekHighDate']

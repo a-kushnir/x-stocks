@@ -1,10 +1,10 @@
 <% content_for :page_title do %>
   <div class="btn-group btn-group-toggle float-right" style="margin-right: 15px; margin-top: 15px;" data-toggle="buttons">
     <label class="btn btn-secondary active">
-      <input type="radio" id="portfolio-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#portfolio-table-container", "#portfolio-charts-container");'> Table
+      <input type="radio" id="positions-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#positions-table-container", "#positions-charts-container");'> Table
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" id="portfolio-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#portfolio-table-container", "#portfolio-charts-container");'> Charts
+      <input type="radio" id="positions-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#positions-table-container", "#positions-charts-container");'> Charts
     </label>
   </div>
   <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center" style="margin-left: 132px;">
@@ -12,7 +12,7 @@
   </header>
 <% end %>
 
-<div id="portfolio-table-container">
+<div id="positions-table-container">
 <%
   positions = Position.where(user: current_user)
   market_value = positions.sum(:market_value)
@@ -80,7 +80,7 @@
 </table>
 </div>
 
-<div id="portfolio-charts-container">
+<div id="positions-charts-container">
   <div class="row">
     <div class="col-xl-6">
       <div class="border rounded mx-md-auto" style="width: 580px; height: 443px; padding-bottom: 15px; margin-bottom: 15px;">
@@ -99,7 +99,7 @@
 
 <script>
   document.addEventListener("turbolinks:load", () => {
-    init_representation("#portfolio-table-container", "#portfolio-charts-container", "#portfolio-table-radio", "#portfolio-charts-radio");
+    init_representation("#positions-table-container", "#positions-charts-container", "#positions-table-radio", "#positions-charts-radio");
     dataTable("#positions-table", {order: [0, 'asc']});
     <% values, labels = position_allocation %>
     allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);

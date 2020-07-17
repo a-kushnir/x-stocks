@@ -66,4 +66,23 @@ module StocksHelper
     }
   end
 
+  def position_allocation
+    positions = @positions.sort_by(&:market_value).reverse
+    values = positions.map(&:market_value)
+    labels = positions.map {|p| p.stock.symbol }
+    [values, labels]
+  end
+
+  def sector_allocation
+    sectors = Hash.new(0)
+    @positions.each do |pos|
+      sectors[pos.stock.sector] += pos.market_value
+    end
+    sectors = sectors.map {|key, value| [key, value] }
+    sectors = sectors.sort_by(&:last).reverse
+    values = sectors.map(&:last)
+    labels = sectors.map(&:first)
+    [values, labels]
+  end
+
 end

@@ -70,16 +70,18 @@
   <div class="mx-auto" style="height: 400px;">
     <canvas id="position_allocation" width="500" height="400"></canvas>
   </div>
+  <div class="mx-auto" style="height: 400px;">
+    <canvas id="sector_allocation" width="500" height="400"></canvas>
+  </div>
 </div>
 
 <script>
   document.addEventListener("turbolinks:load", () => {
     dataTable("#positions-table", {order: [0, 'asc']});
-
-    <% positions = @positions.sort_by(&:market_value).reverse %>
-    <% values = positions.map(&:market_value) %>
-    <% labels = positions.map {|p| p.stock.symbol } %>
+    <% values, labels = position_allocation %>
     allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);
+    <% values, labels = sector_allocation %>
+    allocation_chart("#sector_allocation", <%= json values %>, <%= json labels %>);
   })
 
   function refresh_page() {

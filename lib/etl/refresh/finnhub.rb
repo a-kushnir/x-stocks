@@ -17,7 +17,7 @@ module Etl
       def hourly_all_stocks!
         Stock.all.each do |stock|
           hourly_one_stock!(stock)
-          sleep(1.0/30) # Limit up to 30 requests per second
+          sleep(1.0/10) # Limit up to 10 requests per second
         end
         Config[:stock_price_updated_at] = DateTime.now
       end
@@ -46,7 +46,7 @@ module Etl
       def daily_all_stocks!
         Stock.all.each do |stock|
           daily_one_stock!(stock)
-          sleep(1.0/30) # Limit up to 30 requests per second
+          sleep(1.0/10) # Limit up to 10 requests per second
         end
         Config[:daily_finnhub_updated_at] = DateTime.now
       end

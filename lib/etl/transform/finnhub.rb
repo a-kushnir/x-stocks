@@ -77,6 +77,7 @@ module Etl
       end
 
       def metric(stock, json)
+        json ||= {}
         data = json['metric']
         stock.finnhub_beta = data['beta']
         stock.week_52_high = data['52WeekHigh']

@@ -5,7 +5,7 @@
       <%= @error.message %>
     </p>
     <p>
-      <label>Backtrace:</label>
+      <label>Backtrace:</label><br>
       <small><%= @error.backtrace.map { |line| h(line) }.join('<br>').html_safe %></small>
     </p>
   </div>

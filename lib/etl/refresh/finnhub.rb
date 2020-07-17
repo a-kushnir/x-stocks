@@ -28,7 +28,7 @@ module Etl
 
       def hourly_one_stock!(stock)
         json = Etl::Extract::Finnhub.new.quote(stock.symbol)
-        Etl::Transform::Finnhub::new.quote(stock, json)
+        Etl::Transform::Finnhub::new.quote(stock, json) if json
       end
 
       #########
@@ -57,16 +57,16 @@ module Etl
 
       def daily_one_stock!(stock)
         json = Etl::Extract::Finnhub.new.recommendation(stock.symbol)
-        Etl::Transform::Finnhub::new.recommendation(stock, json)
+        Etl::Transform::Finnhub::new.recommendation(stock, json) if json
 
         json = Etl::Extract::Finnhub.new.price_target(stock.symbol)
-        Etl::Transform::Finnhub::new.price_target(stock, json)
+        Etl::Transform::Finnhub::new.price_target(stock, json) if json
 
         json = Etl::Extract::Finnhub.new.earnings(stock.symbol)
-        Etl::Transform::Finnhub::new.earnings(stock, json)
+        Etl::Transform::Finnhub::new.earnings(stock, json) if json
 
         json = Etl::Extract::Finnhub.new.metric(stock.symbol)
-        Etl::Transform::Finnhub::new.metric(stock, json)
+        Etl::Transform::Finnhub::new.metric(stock, json) if json
       end
 
     end

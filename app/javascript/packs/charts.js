@@ -358,7 +358,7 @@ window.recommendation_mean_chart = function(canvas, value) {
     });
 }
 
-window.allocation_chart = function(canvas, values, labels) {
+window.allocation_chart = function(canvas, values, labels, symbols = null) {
     canvas = $(canvas);
     if (canvas.length === 0) return;
 
@@ -369,6 +369,7 @@ window.allocation_chart = function(canvas, values, labels) {
     const data = {
         datasets: [{
             data: values,
+            symbols: symbols,
             backgroundColor: chart_office_colors,
         }],
         labels: labels
@@ -395,7 +396,10 @@ window.allocation_chart = function(canvas, values, labels) {
                         else if (share >= 1) share = share.toFixed(1)
                         else if (share >= 0.1) share = share.toFixed(2);
 
-                        return label + ': $' + Number(value).toFixed(2) + ' (' + share + '%)';
+                        const symbols = data.datasets[tooltipItem.datasetIndex].symbols;
+                        const symbol = symbols !== null ? ' (' + symbols[tooltipItem.index] + ')' : '';
+
+                        return label + symbol + ': $' + Number(value).toFixed(2) + ' (' + share + '%)';
                     }
                 }
             },

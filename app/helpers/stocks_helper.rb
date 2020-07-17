@@ -84,9 +84,10 @@ module StocksHelper
     end
     sectors = sectors.values
     sectors = sectors.sort_by {|sector| -sector[:value] }
-    values = sectors.map {|sector| sector[:value] }
-    labels = sectors.map {|sector| "#{sector[:sector]} (#{sector[:symbols].join(', ')})" }
-    [values, labels]
+    values = sectors.map {|sector| sector[:value].to_f }
+    labels = sectors.map {|sector| sector[:sector] }
+    symbols = sectors.map {|sector| sector[:symbols].join(', ') }
+    [values, labels, symbols]
   end
 
 end

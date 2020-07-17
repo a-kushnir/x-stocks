@@ -105,8 +105,8 @@
     destroy_all_charts();
     <% values, labels = position_allocation %>
     allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);
-    <% values, labels = sector_allocation %>
-    allocation_chart("#sector_allocation", <%= json values %>, <%= json labels %>);
+    <% values, labels, symbols = sector_allocation %>
+    allocation_chart("#sector_allocation", <%= json values %>, <%= json labels %>, <%= json symbols %>);
   })
 
   function refresh_page() {

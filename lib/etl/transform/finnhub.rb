@@ -13,6 +13,7 @@ module Etl
       end
 
       def quote(stock, json)
+        json ||= {}
         stock.current_price = json['c']
         stock.prev_close_price = json['pc']
         stock.open_price = json['o']

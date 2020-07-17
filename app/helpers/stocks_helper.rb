@@ -74,14 +74,17 @@ module StocksHelper
   end
 
   def sector_allocation
-    sectors = Hash.new(0)
+    sectors = {}
     @positions.each do |pos|
-      sectors[pos.stock.sector] += pos.market_value
+      next if (pos.market_value || 0).zero?
+      sector = sectors[pos.stock.sector] ||= {sector: pos.stock.sector, value: 0, symbols: []}
+      sector[:value] += pos.market_value
+      sector[:symbols] << pos.stock.symbol
     end
-    sectors = sectors.map {|key, value| [key, value.to_f] }
-    sectors = sectors.sort_by(&:last).reverse
-    values = sectors.map(&:last)
-    labels = sectors.map(&:first)
+    sectors = sectors.values
+    sectors = sectors.sort_by {|sector| -sector[:value] }
+    values = sectors.map {|sector| sector[:value] }
+    labels = sectors.map {|sector| "#{sector[:sector]} (#{sector[:symbols].join(', ')})" }
     [values, labels]
   end
 

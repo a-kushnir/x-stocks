@@ -68,7 +68,7 @@ module StocksHelper
 
   def position_allocation
     positions = @positions.sort_by(&:market_value).reverse
-    values = positions.map(&:market_value)
+    values = positions.map {|p| p.market_value.to_f }
     labels = positions.map {|p| p.stock.symbol }
     [values, labels]
   end
@@ -78,7 +78,7 @@ module StocksHelper
     @positions.each do |pos|
       sectors[pos.stock.sector] += pos.market_value
     end
-    sectors = sectors.map {|key, value| [key, value] }
+    sectors = sectors.map {|key, value| [key, value.to_f] }
     sectors = sectors.sort_by(&:last).reverse
     values = sectors.map(&:last)
     labels = sectors.map(&:first)

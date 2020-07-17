@@ -379,7 +379,7 @@ window.allocation_chart = function(canvas, values, labels) {
                         const label = data.labels[tooltipItem.index];
                         const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 
-                        let share = Number(value / total) * 100;
+                        let share = Number(value / total * 100);
                         if (share >= 10) share = share.toFixed(0)
                         else if (share >= 1) share = share.toFixed(1)
                         else if (share >= 0.1) share = share.toFixed(2);

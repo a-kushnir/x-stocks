@@ -66,80 +66,23 @@
   </tfoot>
 </table>
 
-<script>
-    <% positions = @positions.sort_by(&:market_value).reverse %>
-    <% value = positions.map(&:market_value) # positions.map {|p| (p.market_value / market_value * 100).round(2) } %>
-    <% labels = positions.map {|p| p.stock.symbol } %>
-
-    function x() {
-        var total = <%= market_value %>;
-        if ($('#myChart').length === 0)
-            return;
-
-        var data = {
-                datasets: [{
-                    data: <%= json value %>,
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                    ],
-                  }],
-            labels: <%= json labels %>
-        };
-
-        var ctx = document.getElementById('myChart');
-        new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: {
-              legend: {
-                position: 'right',
-                labels: {
-                  boxWidth: 12
-                },
-              },
-              tooltips: {
-                callbacks: {
-                  label: function(tooltipItem, data) {
-                    const label = data.labels[tooltipItem.index];
-                    const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-
-                    let share = Number(value / total) * 100;
-                    if (share >= 10) share = share.toFixed(0)
-                    else if (share >= 1) share = share.toFixed(1)
-                    else if (share >= 0.1) share = share.toFixed(2);
-
-                    return label + ': $' + Number(value).toFixed(2) + ' (' + share + '%)';
-                  }
-                }
-              },
-              plugins: {
-                datalabels: {
-                  display: false
-                }
-              }
-            }
-        });
-    }
-</script>
+<div class="form-group row">
+  <div class="mx-auto" style="height: 400px;">
+    <canvas id="position_allocation" width="500" height="400"></canvas>
+  </div>
+</div>
 
 <script>
   document.addEventListener("turbolinks:load", () => {
     dataTable("#positions-table", {order: [0, 'asc']});
-    x();
+
+    <% positions = @positions.sort_by(&:market_value).reverse %>
+    <% values = positions.map(&:market_value) %>
+    <% labels = positions.map {|p| p.stock.symbol } %>
+    allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);
   })
 
   function refresh_page() {
     window.location.reload();
   }
 </script>
-
-<div class="form-group row">
-  <div class="mx-auto" style="height: 400px;">
-    <canvas id="myChart" width="500" height="400"></canvas>
-  </div>
-</div>

@@ -53,7 +53,7 @@
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
         <td class="text-right"><%= number_to_currency(position.est_annual_dividend) %></td>
         <td class="text-right"><%= number_to_currency(position.est_annual_income) %></td>
-        <td class="text-right"><%= number_to_percentage(position.market_value / market_value * 100, precision: 2) %></td>
+        <td class="text-right"><%= number_to_percentage((position.market_value / market_value * 100 rescue nil), precision: 2) %></td>
       </tr>
     <% end %>
   </tbody>

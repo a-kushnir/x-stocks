@@ -2,6 +2,8 @@ module Etl
   module Refresh
     class Yahoo
 
+      PAUSE = 1.0 # Limit up to 1 request per second
+
       def daily_last_run_at
         Service[:daily_yahoo]
       end
@@ -15,7 +17,7 @@ module Etl
         Service.lock(:daily_yahoo) do |logger|
           Stock.all.each do |stock|
             daily_one_stock!(stock, logger)
-            sleep(1.0) # Limit up to 1 request per second
+            sleep(PAUSE)
           end
         end
       end

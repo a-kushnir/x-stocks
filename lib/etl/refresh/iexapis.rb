@@ -2,6 +2,8 @@ module Etl
   module Refresh
     class Iexapis
 
+      PAUSE = 1.0 / 30 # Limit up to 30 requests per second
+
       def weekly_last_run_at
         Service[:weekly_iexapis]
       end
@@ -15,7 +17,7 @@ module Etl
         Service.lock(:weekly_iexapis) do |logger|
           Stock.all.each do |stock|
             weekly_one_stock!(stock, logger)
-            sleep(1.0 / 30) # Limit up to 30 requests per second
+            sleep(PAUSE)
           end
         end
       end
@@ -27,8 +29,12 @@ module Etl
       def weekly_one_stock!(stock, logger = nil)
         json = Etl::Extract::Iexapis.new(logger).dividends(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+        sleep(PAUSE)
+
         json = Etl::Extract::Iexapis.new(logger).dividends_3m(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+        sleep(PAUSE)
+
         json = Etl::Extract::Iexapis.new(logger).dividends_6m(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)
       end

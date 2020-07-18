@@ -2,6 +2,8 @@ module Etl
   module Refresh
     class Finnhub
 
+      PAUSE = 1.0 / 10 # Limit up to 10 requests per second
+
       ##########
       # Hourly #
 
@@ -18,7 +20,7 @@ module Etl
         Service.lock(:stock_prices) do |logger|
           Stock.all.each do |stock|
             hourly_one_stock!(stock, logger)
-            sleep(1.0/10) # Limit up to 10 requests per second
+            sleep(PAUSE)
           end
         end
       end
@@ -48,7 +50,7 @@ module Etl
         Service.lock(:daily_finnhub) do |logger|
           Stock.all.each do |stock|
             daily_one_stock!(stock, logger)
-            sleep(1.0/10) # Limit up to 10 requests per second
+            sleep(PAUSE)
           end
         end
       end
@@ -60,12 +62,15 @@ module Etl
       def daily_one_stock!(stock, logger = nil)
         json = Etl::Extract::Finnhub.new(logger).recommendation(stock.symbol)
         Etl::Transform::Finnhub.new(logger).recommendation(stock, json) if json
+        sleep(PAUSE)
 
         json = Etl::Extract::Finnhub.new(logger).price_target(stock.symbol)
         Etl::Transform::Finnhub.new(logger).price_target(stock, json) if json
+        sleep(PAUSE)
 
         json = Etl::Extract::Finnhub.new(logger).earnings(stock.symbol)
         Etl::Transform::Finnhub.new(logger).earnings(stock, json) if json
+        sleep(PAUSE)
 
         json = Etl::Extract::Finnhub.new(logger).metric(stock.symbol)
         Etl::Transform::Finnhub.new(logger).metric(stock, json) if json

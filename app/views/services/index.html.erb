@@ -2,6 +2,7 @@
   <thead class="thead-light">
   <tr>
     <th>Service</th>
+    <th>Schedule</th>
     <th>Last start at</th>
     <th class="no-sort no-search">Arguments</th>
     <th class="no-sort no-search">Actions</th>
@@ -10,9 +11,11 @@
 
   <tbody>
   <% @services.each do |service_code, service| %>
+    <% serv = service[:service] ? Service.find_by(key: service[:service]) : nil %>
     <tr>
       <td><%= service[:name] %></td>
-      <% prev = service[:prev]&.call %>
+      <td><%= service[:schedule] %></td>
+      <% prev = serv&.last_run_at %>
       <td><%= prev ? "#{time_ago_in_words prev} ago" : "" %></td>
       <td>
         <%= form_tag(service_path(service_code), method: 'put') do %>
@@ -23,7 +26,11 @@
           <% end %>
         <% end %>
       </td>
-      <td><%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %></td>
+      <td>
+        <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %>
+        <%= link_to 'Log', "/services/#{service_code}/error", class: 'btn btn-outline-dark' if serv&.log.present? %>
+        <%= link_to 'Error', "/services/#{service_code}/error", class: 'btn btn-outline-dark' if serv&.error.present? %>
+      </td>
     </tr>
   <% end %>
   </tbody>

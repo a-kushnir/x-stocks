@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_000000) do
+ActiveRecord::Schema.define(version: 2020_07_18_031801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 2020_07_06_000000) do
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
     t.index ["user_id"], name: "index_positions_on_user_id"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "locked_at"
+    t.datetime "last_run_at"
+    t.string "error"
+    t.string "log"
+    t.index ["key"], name: "index_services_on_key", unique: true
   end
 
   create_table "stocks", force: :cascade do |t|

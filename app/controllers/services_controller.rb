@@ -12,24 +12,44 @@ class ServicesController < ApplicationController
     @page_title = 'Services'
     @page_menu_item = :services
 
-    service = SERVICES[params[:id]]
-
-    if service
+    find_service do |service|
       service[:proc].call(params)
       flash[:notice] = "#{service[:name]} complete"
-    else
-      flash[:notice] = "Invalid service"
+      redirect_to action: 'index'
     end
+  end
 
-    redirect_to action: 'index'
+  def log
+    find_service do |service|
+      serv = service[:service] ? Service.find_by(key: service[:service]) : nil
+      send_data(serv&.log, filename: 'service-log.txt', type: 'text/plain')
+    end
+  end
+
+  def error
+    find_service do |service|
+      serv = service[:service] ? Service.find_by(key: service[:service]) : nil
+      send_data(serv&.error, filename: 'service-error.txt', type: 'text/plain')
+    end
   end
 
   private
 
+  def find_service
+    service = SERVICES[params[:id]]
+    if service
+      yield service
+    else
+      flash[:notice] = "Invalid service"
+      redirect_to action: 'index'
+    end
+  end
+
   SERVICES = HashWithIndifferentAccess.new({
       hourly_all_finnhub: {
-          name: 'Update stock prices [Finnhub] / Auto (Hourly)',
-          prev: ->() { Etl::Refresh::Finnhub.new.hourly_last_run_at },
+          service: 'stock_prices',
+          name: 'Update stock prices [Finnhub]',
+          schedule: 'Hourly',
           proc: ->(args) do
             Etl::Refresh::Finnhub.new.hourly_all_stocks!
           end
@@ -42,8 +62,9 @@ class ServicesController < ApplicationController
           end
       },
       daily_all_yahoo: {
-          name: 'Update stock information [Yahoo] / Auto (Daily)',
-          prev: ->() { Etl::Refresh::Yahoo.new.daily_last_run_at },
+          service: 'daily_yahoo',
+          name: 'Update stock information [Yahoo]',
+          schedule: 'Daily',
           proc: ->(args) do
             Etl::Refresh::Yahoo.new.daily_all_stocks!
           end
@@ -57,8 +78,9 @@ class ServicesController < ApplicationController
           end
       },
       daily_all_finnhub: {
-          name: 'Update stock information [Finnhub] / Auto (Daily)',
-          prev: ->() { Etl::Refresh::Finnhub.new.daily_last_run_at },
+          service: 'daily_finnhub',
+          name: 'Update stock information [Finnhub]',
+          schedule: 'Daily',
           proc: ->(args) do
             Etl::Refresh::Finnhub.new.daily_all_stocks!
           end
@@ -72,8 +94,9 @@ class ServicesController < ApplicationController
           end
       },
       weekly_all_iexapis: {
-          name: 'Update stock dividends [IEX Cloud] / Auto (Weekly)',
-          prev: ->() { Etl::Refresh::Iexapis.new.weekly_last_run_at },
+          service: 'weekly_iexapis',
+          name: 'Update stock dividends [IEX Cloud]',
+          schedule: 'Weekly',
           proc: ->(args) do
             Etl::Refresh::Iexapis.new.weekly_all_stocks!
           end

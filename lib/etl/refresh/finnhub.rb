@@ -6,7 +6,7 @@ module Etl
       # Hourly #
 
       def hourly_last_run_at
-        DateTime.parse(Config[:stock_price_updated_at]) rescue nil
+        Service[:stock_prices]
       end
 
       def hourly_all_stocks?
@@ -15,11 +15,12 @@ module Etl
       end
 
       def hourly_all_stocks!
-        Stock.all.each do |stock|
-          hourly_one_stock!(stock)
-          sleep(1.0/10) # Limit up to 10 requests per second
+        Service.lock(:stock_prices) do |logger|
+          Stock.all.each do |stock|
+            hourly_one_stock!(stock)
+            sleep(1.0/10) # Limit up to 10 requests per second
+          end
         end
-        Config[:stock_price_updated_at] = DateTime.now
       end
 
       def hourly_all_stocks
@@ -35,7 +36,7 @@ module Etl
       # Daily #
 
       def daily_last_run_at
-        DateTime.parse(Config[:daily_finnhub_updated_at]) rescue nil
+        Service[:daily_finnhub]
       end
 
       def daily_all_stocks?
@@ -44,11 +45,13 @@ module Etl
       end
 
       def daily_all_stocks!
-        Stock.all.each do |stock|
-          daily_one_stock!(stock)
-          sleep(1.0/10) # Limit up to 10 requests per second
+        Service.lock(:daily_finnhub) do |logger|
+          0/0
+          Stock.all.each do |stock|
+            daily_one_stock!(stock)
+            sleep(1.0/10) # Limit up to 10 requests per second
+          end
         end
-        Config[:daily_finnhub_updated_at] = DateTime.now
       end
 
       def daily_all_stocks

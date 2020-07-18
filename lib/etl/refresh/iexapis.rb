@@ -3,7 +3,7 @@ module Etl
     class Iexapis
 
       def weekly_last_run_at
-        DateTime.parse(Config[:weekly_iexapis_updated_at]) rescue nil
+        Service[:weekly_iexapis]
       end
 
       def weekly_all_stocks?
@@ -12,11 +12,12 @@ module Etl
       end
 
       def weekly_all_stocks!
-        Stock.all.each do |stock|
-          weekly_one_stock!(stock)
-          sleep(1.0 / 30) # Limit up to 30 requests per second
+        Service.lock(:weekly_iexapis) do |logger|
+          Stock.all.each do |stock|
+            weekly_one_stock!(stock)
+            sleep(1.0 / 30) # Limit up to 30 requests per second
+          end
         end
-        Config[:weekly_iexapis_updated_at] = DateTime.now
       end
 
       def weekly_all_stocks

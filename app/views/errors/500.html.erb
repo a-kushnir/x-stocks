@@ -6,7 +6,7 @@
     </p>
     <p>
       <label>Backtrace:</label><br>
-      <small><%= @error.backtrace.map { |line| h(line) }.join('<br>').html_safe %></small>
+      <small><%= Backtrace.clean(@error.backtrace).map { |line| h(line) }.join('<br>').html_safe %></small>
     </p>
   </div>
 <% end %>

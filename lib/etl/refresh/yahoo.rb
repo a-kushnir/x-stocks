@@ -14,7 +14,7 @@ module Etl
       def daily_all_stocks!
         Service.lock(:daily_yahoo) do |logger|
           Stock.all.each do |stock|
-            daily_one_stock!(stock)
+            daily_one_stock!(stock, logger)
             sleep(1.0) # Limit up to 1 request per second
           end
         end
@@ -24,9 +24,9 @@ module Etl
         daily_all_stocks! if daily_all_stocks?
       end
 
-      def daily_one_stock!(stock)
-        json = Etl::Extract::Yahoo.new.statistics(stock.symbol)
-        Etl::Transform::Yahoo::new.statistics(stock, json)
+      def daily_one_stock!(stock, logger = nil)
+        json = Etl::Extract::Yahoo.new(logger).statistics(stock.symbol)
+        Etl::Transform::Yahoo::new(logger).statistics(stock, json)
       end
 
     end

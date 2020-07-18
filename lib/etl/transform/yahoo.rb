@@ -1,6 +1,6 @@
 module Etl
   module Transform
-    class Yahoo
+    class Yahoo < Base
 
       def statistics(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')

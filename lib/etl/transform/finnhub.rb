@@ -1,6 +1,6 @@
 module Etl
   module Transform
-    class Finnhub
+    class Finnhub < Base
 
       def company(stock, json)
         stock.ipo = json['ipo']

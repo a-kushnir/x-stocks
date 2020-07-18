@@ -1,6 +1,6 @@
 module Etl
   module Transform
-    class Iexapis
+    class Iexapis < Base
 
       def company(stock, json)
         json ||= {}

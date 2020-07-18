@@ -17,7 +17,7 @@ module Etl
       def hourly_all_stocks!
         Service.lock(:stock_prices) do |logger|
           Stock.all.each do |stock|
-            hourly_one_stock!(stock)
+            hourly_one_stock!(stock, logger)
             sleep(1.0/10) # Limit up to 10 requests per second
           end
         end
@@ -27,9 +27,9 @@ module Etl
         hourly_all_stocks! if hourly_all_stocks?
       end
 
-      def hourly_one_stock!(stock)
-        json = Etl::Extract::Finnhub.new.quote(stock.symbol)
-        Etl::Transform::Finnhub::new.quote(stock, json) if json
+      def hourly_one_stock!(stock, logger = nil)
+        json = Etl::Extract::Finnhub.new(logger).quote(stock.symbol)
+        Etl::Transform::Finnhub::new(logger).quote(stock, json) if json
       end
 
       #########
@@ -47,7 +47,7 @@ module Etl
       def daily_all_stocks!
         Service.lock(:daily_finnhub) do |logger|
           Stock.all.each do |stock|
-            daily_one_stock!(stock)
+            daily_one_stock!(stock, logger)
             sleep(1.0/10) # Limit up to 10 requests per second
           end
         end
@@ -57,18 +57,18 @@ module Etl
         daily_all_stocks! if daily_all_stocks?
       end
 
-      def daily_one_stock!(stock)
-        json = Etl::Extract::Finnhub.new.recommendation(stock.symbol)
-        Etl::Transform::Finnhub::new.recommendation(stock, json) if json
+      def daily_one_stock!(stock, logger = nil)
+        json = Etl::Extract::Finnhub.new(logger).recommendation(stock.symbol)
+        Etl::Transform::Finnhub.new(logger).recommendation(stock, json) if json
 
-        json = Etl::Extract::Finnhub.new.price_target(stock.symbol)
-        Etl::Transform::Finnhub::new.price_target(stock, json) if json
+        json = Etl::Extract::Finnhub.new(logger).price_target(stock.symbol)
+        Etl::Transform::Finnhub.new(logger).price_target(stock, json) if json
 
-        json = Etl::Extract::Finnhub.new.earnings(stock.symbol)
-        Etl::Transform::Finnhub::new.earnings(stock, json) if json
+        json = Etl::Extract::Finnhub.new(logger).earnings(stock.symbol)
+        Etl::Transform::Finnhub.new(logger).earnings(stock, json) if json
 
-        json = Etl::Extract::Finnhub.new.metric(stock.symbol)
-        Etl::Transform::Finnhub::new.metric(stock, json) if json
+        json = Etl::Extract::Finnhub.new(logger).metric(stock.symbol)
+        Etl::Transform::Finnhub.new(logger).metric(stock, json) if json
       end
 
     end

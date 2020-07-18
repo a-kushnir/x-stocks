@@ -45,7 +45,7 @@ module Etl
         stock.dividend_details += json
         stock.dividend_details.uniq!
         stock.dividend_details.sort_by! { |row| row['payment_date'] }
-        stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].zero? }
+        stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
         stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
         last_div = stock.dividend_details.last

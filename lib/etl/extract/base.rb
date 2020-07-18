@@ -12,7 +12,7 @@ module Etl
 
       def load_text(url)
         response = Net::HTTP.get_response(URI(url))
-        validate!(response)
+        validate!(response, url)
 
         if response.is_a?(Net::HTTPSuccess)
           response.body
@@ -21,7 +21,7 @@ module Etl
 
       def load_json(url)
         response = Net::HTTP.get_response(URI(url))
-        validate!(response)
+        validate!(response, url)
 
         if response.is_a?(Net::HTTPSuccess)
           JSON.parse(response.body)
@@ -32,7 +32,7 @@ module Etl
         URI.escape(value)
       end
 
-      def validate!(response)
+      def validate!(response, url)
         logger&.log_info("#{response.code} #{url}")
         logger&.log_info("#{response.body}")
         raise 'Unauthorized' if response.code == 401

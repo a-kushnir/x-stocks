@@ -18,7 +18,7 @@ module Etl
 
       def hourly_all_stocks!
         Service.lock(:stock_prices) do |logger|
-          Stock.all.each do |stock|
+          Stock.order('RANDOM()').all.each do |stock|
             hourly_one_stock!(stock, logger)
             sleep(PAUSE)
           end
@@ -50,7 +50,7 @@ module Etl
 
       def daily_all_stocks!
         Service.lock(:daily_finnhub) do |logger|
-          Stock.all.each do |stock|
+          Stock.order('RANDOM()').all.each do |stock|
             daily_one_stock!(stock, logger)
             sleep(PAUSE)
           end

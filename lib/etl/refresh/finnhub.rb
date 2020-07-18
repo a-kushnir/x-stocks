@@ -46,7 +46,6 @@ module Etl
 
       def daily_all_stocks!
         Service.lock(:daily_finnhub) do |logger|
-          0/0
           Stock.all.each do |stock|
             daily_one_stock!(stock)
             sleep(1.0/10) # Limit up to 10 requests per second

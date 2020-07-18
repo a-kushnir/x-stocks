@@ -1,8 +1,13 @@
-<% if current_user && Etl::Refresh::Finnhub.new.hourly_all_stocks? %>
+<% if current_user && (
+    (price = Etl::Refresh::Finnhub.new.hourly_all_stocks?) ||
+    Etl::Refresh::Yahoo.new.daily_all_stocks? ||
+    Etl::Refresh::Finnhub.new.daily_all_stocks? ||
+    Etl::Refresh::Iexapis.new.weekly_all_stocks?
+) %>
   <div id="data-refresh-div" class="col text-right align-items-center">
     <div id="data-refresh-spin" class="spinner-border spinner-border-sm text-light" role="status">
       <span class="sr-only"></span>
     </div>
-    <span id="data-refresh-text" class="text-light" style="padding-left: 3px;"></span>
+    <span id="data-refresh-text" class="text-light" style="padding-left: 3px;"><%= price ? 'Updating Stock Prices' : 'Updating Stock Data' %></span>
   </div>
 <% end %>

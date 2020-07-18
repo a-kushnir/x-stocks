@@ -20,6 +20,8 @@ module Etl
             sleep(PAUSE)
           end
         end
+
+        true
       end
 
       def daily_all_stocks

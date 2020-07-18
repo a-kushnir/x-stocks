@@ -6,12 +6,10 @@ function update_prices() {
     const div_selector = $('#data-refresh-div');
     if (div_selector.length === 0) return;
 
-    refresh_status("Updating prices");
-
     $.ajax('/data/refresh', {method: 'post'})
         .done(function() {
             $('#data-refresh-spin').hide();
-            refresh_status("Prices updated");
+            refresh_status("Stocks updated");
 
             if (typeof refresh_page === "function") {
                 refresh_page();

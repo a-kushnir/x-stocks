@@ -28,8 +28,8 @@
       </td>
       <td>
         <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %>
-        <%= link_to 'Log', "/services/#{service_code}/log", class: 'btn btn-outline-dark' if serv&.log.present? %>
-        <%= link_to 'Error', "/services/#{service_code}/error", class: 'btn btn-outline-dark' if serv&.error.present? %>
+        <%= link_to 'Log', "/services/#{service_code}/log", class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
+        <%= link_to 'Error', "/services/#{service_code}/error", class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
       </td>
     </tr>
   <% end %>

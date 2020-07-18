@@ -15,6 +15,7 @@ module Etl
 
         logger&.log_info("#{response.code} #{url}")
         logger&.log_info("#{response.body}")
+        raise 'API limit reached' if response.code == 429
 
         if response.is_a?(Net::HTTPSuccess)
           response.body
@@ -26,6 +27,7 @@ module Etl
 
         logger&.log_info("#{response.code} #{url}")
         logger&.log_info("#{response.body}")
+        raise 'API limit reached' if response.code == 429
 
         if response.is_a?(Net::HTTPSuccess)
           JSON.parse(response.body)

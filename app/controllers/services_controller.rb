@@ -58,6 +58,7 @@ class ServicesController < ApplicationController
           name: 'Update stock prices [Finnhub]',
           args: [:stock_id],
           proc: ->(args) do
+            stock = Stock.find_by!(id: args[:stock_id])
             Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)
           end
       },

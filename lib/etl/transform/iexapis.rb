@@ -45,6 +45,7 @@ module Etl
         stock.dividend_details += json
         stock.dividend_details.uniq!
         stock.dividend_details.sort_by! { |row| row['payment_date'] }
+        stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
         last_div = stock.dividend_details.last
         stock.dividend_frequency = last_div['frequency'] rescue nil
@@ -55,12 +56,9 @@ module Etl
             'monthly' => 12
         }[(stock.dividend_frequency || '').downcase]
         stock.dividend_frequency_num = num
-
-        if stock.issue_type == 'et' # Index Stocks only
-          stock.dividend_amount = last_div['amount'] rescue nil
-          stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
-        end
-
+        
+        stock.dividend_amount = last_div['amount'] rescue nil
+        stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
         stock.update_dividends!
       end
 

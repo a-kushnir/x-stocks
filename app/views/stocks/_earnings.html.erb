@@ -1,0 +1,17 @@
+<% if @stock.earnings.present? %>
+  <% earnings = @stock.earnings.reverse %>
+<div style="margin-top: 15px;">
+  <h4>Earnings</h4>
+  <div style="width: 280px; height: 220px;">
+    <canvas id="earnings_<%= @stock.symbol %>" width="280" height="220"></canvas>
+  </div>
+  <script>
+    document.addEventListener("turbolinks:load", () => {
+      earnings_chart("#earnings_<%= @stock.symbol %>",
+        <%= json earnings.map {|e| e['estimate'] } %>,
+        <%= json earnings.map {|e| e['actual'] } %>,
+        <%= json earnings.map {|e| date = Date.parse(e['period']); "Q#{(date.month / 3.0).ceil} #{date.year}" } %>)
+    });
+  </script>
+</div>
+<% end %>

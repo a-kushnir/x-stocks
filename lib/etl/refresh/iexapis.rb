@@ -15,7 +15,7 @@ module Etl
 
       def weekly_all_stocks!
         Service.lock(:weekly_iexapis) do |logger|
-          Stock.order('RANDOM()').all.each do |stock|
+          Stock.random.all.each do |stock|
             weekly_one_stock!(stock, logger)
             sleep(PAUSE)
           end

@@ -9,6 +9,7 @@ class Stock < ApplicationRecord
   end
 
   default_scope { order(symbol: :asc) }
+  scope :random, -> { unscoped.order('RANDOM()') }
 
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true

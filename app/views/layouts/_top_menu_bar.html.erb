@@ -24,6 +24,7 @@
 
       <% if user_signed_in? %>
         <%= nav_menu_link(:services, 'Services', services_path) %>
+        <%= nav_menu_link(:profile, 'My Profile', edit_user_registration_path)  %>
         <li class="nav-item">
           <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'nav-link' %>
         </li>

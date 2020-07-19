@@ -4,13 +4,8 @@ module Etl
 
       PAUSE = 1.0 / 30 # Limit up to 30 requests per second
 
-      def weekly_last_run_at
-        Service[:weekly_iexapis]
-      end
-
       def weekly_all_stocks?
-        updated_at = weekly_last_run_at
-        updated_at.nil? || updated_at < 1.day.ago
+        Service[:weekly_iexapis]&.runnable?(1.day)
       end
 
       def weekly_all_stocks!
@@ -20,8 +15,6 @@ module Etl
             sleep(PAUSE)
           end
         end
-
-        true
       end
 
       def weekly_all_stocks

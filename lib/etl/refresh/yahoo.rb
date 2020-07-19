@@ -4,13 +4,8 @@ module Etl
 
       PAUSE = 1.0 # Limit up to 1 request per second
 
-      def daily_last_run_at
-        Service[:daily_yahoo]
-      end
-
       def daily_all_stocks?
-        updated_at = daily_last_run_at
-        updated_at.nil? || updated_at < 1.day.ago
+        Service[:daily_yahoo]&.runnable?(1.day)
       end
 
       def daily_all_stocks!
@@ -20,8 +15,6 @@ module Etl
             sleep(PAUSE)
           end
         end
-
-        true
       end
 
       def daily_all_stocks

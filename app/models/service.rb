@@ -24,12 +24,22 @@ class Service < ApplicationRecord
         service.last_run_at = DateTime.now
         service.locked_at = nil
         service.save!
+
+        true
       end
     end
   end
 
   def self.[](key)
-    self.find_by(key: key)&.last_run_at
+    self.find_by(key: key)
+  end
+
+  def locked?
+    locked_at && locked_at > 1.hour.ago
+  end
+
+  def runnable?(period)
+    !locked? && (!last_run_at || last_run_at < period.ago)
   end
 
   def log_info(text)

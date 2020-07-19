@@ -8,13 +8,8 @@ module Etl
       ##########
       # Hourly #
 
-      def hourly_last_run_at
-        Service[:stock_prices]
-      end
-
       def hourly_all_stocks?
-        updated_at = hourly_last_run_at
-        updated_at.nil? || updated_at < 1.hour.ago
+        Service[:stock_prices]&.runnable?(1.hour)
       end
 
       def hourly_all_stocks!
@@ -24,8 +19,6 @@ module Etl
             sleep(PAUSE_SHORT)
           end
         end
-
-        true
       end
 
       def hourly_all_stocks
@@ -40,13 +33,8 @@ module Etl
       #########
       # Daily #
 
-      def daily_last_run_at
-        Service[:daily_finnhub]
-      end
-
       def daily_all_stocks?
-        updated_at = daily_last_run_at
-        updated_at.nil? || updated_at < 1.day.ago
+        Service[:daily_finnhub]&.runnable?(1.day)
       end
 
       def daily_all_stocks!
@@ -56,8 +44,6 @@ module Etl
             sleep(PAUSE_LONG)
           end
         end
-
-        true
       end
 
       def daily_all_stocks

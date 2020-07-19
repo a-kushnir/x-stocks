@@ -11,7 +11,8 @@ function update_prices() {
             $('#data-refresh-spin').hide();
             refresh_status("Stocks updated");
 
-            if (typeof refresh_page === "function") {
+            if (div_selector.data('refresh') &&
+              typeof refresh_page === "function") {
                 refresh_page();
             }
 

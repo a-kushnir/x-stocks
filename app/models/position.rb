@@ -22,6 +22,18 @@ class Position < ApplicationRecord
     model.update_all('gain_loss_pct = gain_loss / total_cost * 100')
   end
 
+  def self.day_change(user)
+    p = Position.unscoped
+        .select('SUM(positions.market_value) market_value, SUM(positions.shares * stocks.price_change) price_change')
+        .joins('JOIN stocks ON positions.stock_id = stocks.id')
+        .where(user: user).to_a.first
+    { market_value: p.market_value, price_change: p.price_change, price_change_pct: p.price_change / p.market_value * 100 } rescue nil
+  end
+
+  def self.est_ann_income(user)
+    Position.where(user: user).sum('est_annual_income')
+  end
+
   def update_prices
     self.total_cost = average_price * shares rescue nil
     self.market_price = stock.current_price rescue nil

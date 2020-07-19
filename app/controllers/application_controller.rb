@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, with: :internal_error
 
-  private
-
   def not_found
     @page_title = '404 Page not found'
     respond_to do |format|
@@ -14,6 +12,8 @@ class ApplicationController < ActionController::Base
       format.any  { head 404 }
     end
   end
+
+  private
 
   def internal_error(error = nil)
     @page_title = '500 Internal Server Error'

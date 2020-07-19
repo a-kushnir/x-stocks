@@ -17,4 +17,6 @@ Rails.application.routes.draw do
 
   post '/data/refresh', to: 'data#refresh', as: 'data_refresh_url'
 
+  match '*path', to: 'application#not_found', via: :all
+
 end

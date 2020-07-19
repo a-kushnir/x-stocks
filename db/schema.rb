@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_031801) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "dividend_growth_3y", precision: 12, scale: 4
-    t.decimal "dividend_growth_years", precision: 12, scale: 4
+    t.integer "dividend_growth_years"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end

@@ -34,6 +34,22 @@ module StocksHelper
     end
   end
 
+  def safety_human(value)
+    if value.nil?
+      nil
+    elsif value >= 4.5
+      'Very Safe'
+    elsif value >= 3.5
+      'Safe'
+    elsif value >= 2.5
+      'Borderline'
+    elsif value >= 1.5
+      'Unsafe'
+    else
+      'Very Unsafe'
+    end
+  end
+
   def rec_min_visible_value(details)
     details.values.map { |value| value.sum }.max / 10 rescue 1
   end

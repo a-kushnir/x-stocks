@@ -52,7 +52,7 @@
     </td>
     <td></td>
     <td>
-      Dividend Growth 5Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_5y, precision: 2) %></strong>
+      Dividend Growth 3Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_3y, precision: 2) %></strong>
     </td>
   </tr>
   <tr>
@@ -61,18 +61,25 @@
     </td>
     <td></td>
     <td>
-      Payout: <strong class="float-right"><%= number_to_percentage(@stock.payout_ratio, precision: 2) %></strong>
+      Dividend Safety: <strong class="float-right"><%= "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})" if @stock.dividend_rating %></strong>
     </td>
   </tr>
-  <% if @stock.outstanding_shares %>
   <tr>
     <td>
       Outstanding Shares: <strong class="float-right"><%= number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
     </td>
     <td></td>
     <td>
-      Market Cap: <strong class="float-right"><%= number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true) %></strong>
+      Years of Dividend Growth: <strong class="float-right"><%= @stock.dividend_growth_years %></strong>
     </td>
   </tr>
-  <% end %>
+  <tr>
+    <td>
+      Market Cap: <strong class="float-right"><%= number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true) %></strong>
+    </td>
+    <td></td>
+    <td>
+      Payout: <strong class="float-right"><%= number_to_percentage(@stock.payout_ratio, precision: 2) %></strong>
+    </td>
+  </tr>
 </table>

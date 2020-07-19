@@ -31,7 +31,7 @@ class Service < ApplicationRecord
   end
 
   def self.[](key)
-    self.find_by(key: key)
+    self.find_or_initialize_by(key: key)
   end
 
   def locked?

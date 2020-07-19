@@ -3,6 +3,7 @@
 @import "bootstrap-override";
 @import "datatables";
 @import "sticky-footer";
+@import "font-awesome";
 
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
@@ -55,4 +56,8 @@
 
 .small-widget {
   margin-bottom: 15px;
+}
+
+.fa-sm {
+  font-size: 12px;
 }

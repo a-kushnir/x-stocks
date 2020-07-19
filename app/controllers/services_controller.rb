@@ -111,6 +111,7 @@ class ServicesController < ApplicationController
           end
       },
       weekly_one_dividend: {
+          service: 'weekly_dividend',
           name: 'Update stock dividends [Dividend.com]',
           args: [:stock_id],
           proc: ->(args) do

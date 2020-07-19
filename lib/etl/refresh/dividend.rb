@@ -2,10 +2,10 @@ module Etl
   module Refresh
     class Dividend
 
-      PAUSE = 1.0 / 30 # Limit up to 30 requests per second
+      PAUSE = 1.0 # Limit up to 1 request per second
 
       def weekly_all_stocks?
-        Service[:weekly_dividend]&.runnable?(1.day)
+        Service[:weekly_dividend].runnable?(1.day)
       end
 
       def weekly_all_stocks!

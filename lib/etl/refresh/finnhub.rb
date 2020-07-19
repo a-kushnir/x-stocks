@@ -9,7 +9,7 @@ module Etl
       # Hourly #
 
       def hourly_all_stocks?
-        Service[:stock_prices]&.runnable?(1.hour)
+        Service[:stock_prices].runnable?(1.hour)
       end
 
       def hourly_all_stocks!
@@ -34,7 +34,7 @@ module Etl
       # Daily #
 
       def daily_all_stocks?
-        Service[:daily_finnhub]&.runnable?(1.day)
+        Service[:daily_finnhub].runnable?(1.day)
       end
 
       def daily_all_stocks!

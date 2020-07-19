@@ -5,7 +5,7 @@ module Etl
       PAUSE = 1.0 # Limit up to 1 request per second
 
       def daily_all_stocks?
-        Service[:daily_yahoo]&.runnable?(1.day)
+        Service[:daily_yahoo].runnable?(1.day)
       end
 
       def daily_all_stocks!

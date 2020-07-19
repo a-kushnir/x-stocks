@@ -5,7 +5,7 @@ module Etl
       PAUSE = 1.0 / 30 # Limit up to 30 requests per second
 
       def weekly_all_stocks?
-        Service[:weekly_iexapis]&.runnable?(1.day)
+        Service[:weekly_iexapis].runnable?(1.day)
       end
 
       def weekly_all_stocks!
@@ -21,14 +21,14 @@ module Etl
         weekly_all_stocks! if weekly_all_stocks?
       end
 
-      def weekly_one_stock!(stock, logger = nil)
+      def weekly_one_stock!(stock, logger = nil, immediate: false)
         json = Etl::Extract::Iexapis.new(logger).dividends(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-        sleep(PAUSE)
+        sleep(PAUSE) unless immediate
 
         json = Etl::Extract::Iexapis.new(logger).dividends_3m(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-        sleep(PAUSE)
+        sleep(PAUSE) unless immediate
 
         json = Etl::Extract::Iexapis.new(logger).dividends_6m(stock.symbol)
         Etl::Transform::Iexapis::new(logger).dividends(stock, json)

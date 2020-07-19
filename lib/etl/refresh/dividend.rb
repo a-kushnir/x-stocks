@@ -10,7 +10,7 @@ module Etl
 
       def weekly_all_stocks!
         Service.lock(:weekly_dividend) do |logger|
-          Stock.where.not(exchange_id: nil).random.all.each do |stock|
+          Stock.random.all.each do |stock|
             weekly_one_stock!(stock, logger)
             sleep(PAUSE)
           end
@@ -22,6 +22,7 @@ module Etl
       end
 
       def weekly_one_stock!(stock, logger = nil)
+        return if stock.exchange.blank?
         json = Etl::Extract::Dividend.new(logger).data(stock)
         Etl::Transform::Dividend::new(logger).data(stock, json)
       end

@@ -50,6 +50,14 @@
         </td>
       </tr>
       <% end %>
+      <% if @position.market_value %>
+        <tr>
+          <td>
+            Portfolio Diversity:
+            <strong class="float-right"><%= number_to_percentage(@position.market_value / Position.market_value(current_user) * 100, precision: 2) rescue nil %></strong>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
     </tbody>
   </table>

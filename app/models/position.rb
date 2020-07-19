@@ -30,6 +30,10 @@ class Position < ApplicationRecord
     { market_value: p.market_value, price_change: p.price_change, price_change_pct: p.price_change / p.market_value * 100 } rescue nil
   end
 
+  def self.market_value(user)
+    Position.where(user: user).sum('market_value')
+  end
+
   def self.est_ann_income(user)
     Position.where(user: user).sum('est_annual_income')
   end

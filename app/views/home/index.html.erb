@@ -1,22 +1,12 @@
 <div class="row">
-  <div class="col-sm-8 text-center">
+  <div class="col-sm-8 col-xl-7 text-center">
     <%= render partial: 'fear_n_greed' %>
-
-    <h3 style="margin-top: 20px;">Dividend Hikes and Cuts</h3>
-    <div style="min-height: 406px;">
-      <a class="twitter-timeline"
-         data-lang="en" data-width="300" data-height="400" data-dnt="true" data-theme="light"
-         href="https://twitter.com/dividendhike">
-      </a>
-      <a class="twitter-timeline"
-         data-lang="en" data-width="300" data-height="400" data-dnt="true" data-theme="light"
-         href="https://twitter.com/dividendcut">
-      </a>
-    </div>
-
+    <%= render partial: 'div_hikes_n_cuts' %>
   </div>
   <div class="col-sm-4">
     <%= render partial: 'portfolio' %>
     <%= render partial: 'links' %>
+    <%= render partial: 'top_movers', locals: {title: 'Top Gainers', where: 'price_change_pct > 0', order: 'desc'} %>
+    <%= render partial: 'top_movers', locals: {title: 'Top Losers', where: 'price_change_pct < 0', order: 'asc'} %>
   </div>
 </div>

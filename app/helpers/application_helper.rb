@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def stock_path(stock)
+    "/stocks/#{URI.escape(stock.symbol)}"
+  end
+
   def back_url
     'javascript:history.back()'
   end

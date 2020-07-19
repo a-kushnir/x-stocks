@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2020_07_18_031801) do
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "est_annual_income", precision: 12, scale: 4
     t.string "note"
+    t.integer "metascore"
+    t.string "metascore_details"
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
     t.index ["user_id"], name: "index_positions_on_user_id"
@@ -118,6 +120,8 @@ ActiveRecord::Schema.define(version: 2020_07_18_031801) do
     t.string "metascore_details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "dividend_growth_3y", precision: 12, scale: 4
+    t.decimal "dividend_growth_years", precision: 12, scale: 4
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end

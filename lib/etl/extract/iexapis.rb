@@ -6,23 +6,23 @@ module Etl
       IEXAPIS_KEY = ENV['IEXAPIS_KEY']
 
       def company(symbol)
-        load_json(company_url(symbol))
+        get_json(company_url(symbol))
       end
 
       def dividends(symbol)
-        load_json(dividends_url(symbol))
+        get_json(dividends_url(symbol))
       end
 
       def dividends_3m(symbol)
-        load_json(dividends_3m_url(symbol))
+        get_json(dividends_3m_url(symbol))
       end
 
       def dividends_6m(symbol)
-        load_json(dividends_6m_url(symbol))
+        get_json(dividends_6m_url(symbol))
       end
 
       def dividends_next(symbol)
-        load_json(dividends_next_url(symbol))
+        get_json(dividends_next_url(symbol))
       end
 
       private

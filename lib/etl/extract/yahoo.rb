@@ -5,11 +5,11 @@ module Etl
       BASE_URL = 'https://finance.yahoo.com'
 
       def test(symbol)
-        load_text(test_url(symbol))
+        get_text(test_url(symbol))
       end
 
       def statistics(symbol)
-        text = load_text(statistics_url(symbol))
+        text = get_text(statistics_url(symbol))
         json = text.match(/root.App.main = ({.*});/i).captures.first
         JSON.parse(json)
       rescue

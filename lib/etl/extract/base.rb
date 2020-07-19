@@ -10,7 +10,7 @@ module Etl
 
       protected
 
-      def load_text(url)
+      def get_text(url)
         response = Net::HTTP.get_response(URI(url))
         validate!(response, url)
 
@@ -19,8 +19,25 @@ module Etl
         end
       end
 
-      def load_json(url)
+      def get_json(url)
         response = Net::HTTP.get_response(URI(url))
+        validate!(response, url)
+
+        if response.is_a?(Net::HTTPSuccess)
+          JSON.parse(response.body)
+        end
+      end
+
+      def post_json(url, body)
+        uri = URI(url)
+        request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+
+        request.body = body.to_json
+        logger&.log_info("POST #{url}: #{body.to_json}")
+
+        response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+          http.request(request)
+        end
         validate!(response, url)
 
         if response.is_a?(Net::HTTPSuccess)

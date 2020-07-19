@@ -16,6 +16,7 @@ module Etl
         Etl::Refresh::Yahoo.new.daily_one_stock!(stock) rescue nil
         Etl::Refresh::Finnhub.new.daily_one_stock!(stock) rescue nil
         Etl::Refresh::Iexapis.new.weekly_one_stock!(stock) rescue nil
+        Etl::Refresh::Dividend.new.weekly_one_stock!(stock) rescue nil
       end
 
     end

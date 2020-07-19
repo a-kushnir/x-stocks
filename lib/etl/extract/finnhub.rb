@@ -6,31 +6,31 @@ module Etl
       FINNHUB_KEY = ENV['FINNHUB_KEY']
 
       def company(symbol)
-        load_json(company_url(symbol))
+        get_json(company_url(symbol))
       end
 
       def peers(symbol)
-        load_json(peers_url(symbol))
+        get_json(peers_url(symbol))
       end
 
       def quote(symbol)
-        load_json(quote_url(symbol))
+        get_json(quote_url(symbol))
       end
 
       def recommendation(symbol)
-        load_json(recommendation_url(symbol))
+        get_json(recommendation_url(symbol))
       end
 
       def price_target(symbol)
-        load_json(price_target_url(symbol))
+        get_json(price_target_url(symbol))
       end
 
       def earnings(symbol)
-        load_json(earnings_url(symbol))
+        get_json(earnings_url(symbol))
       end
 
       def metric(symbol)
-        load_json(metric_url(symbol))
+        get_json(metric_url(symbol))
       end
 
       private

@@ -110,6 +110,21 @@ class ServicesController < ApplicationController
             Etl::Refresh::Iexapis.new.weekly_one_stock!(stock)
           end
       },
+      weekly_one_dividend: {
+          name: 'Update stock dividends [Dividend.com]',
+          args: [:stock_id],
+          proc: ->(args) do
+            stock = Stock.find_by!(id: args[:stock_id])
+            Etl::Refresh::Dividend.new.weekly_one_stock!(stock)
+          end
+      },
+      weekly_all_dividend: {
+          name: 'Update stock dividends [Dividend.com]',
+          schedule: 'Weekly',
+          proc: ->(args) do
+            Etl::Refresh::Dividend.new.weekly_all_stocks!
+          end
+      },
       company_information: {
           name: 'Load company information [Finnhub] [IEX Cloud] [Yahoo]',
           args: [:stock_id],

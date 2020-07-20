@@ -1,0 +1,30 @@
+<div class="small-widget my-side-panel">
+  <% next_div_ex_date = @stock.next_div_ex_date if @stock.next_div_ex_date && @stock.next_div_ex_date >= Date.today %>
+  <% if next_div_ex_date %>
+    <h4>Next Dividend</h4>
+
+    <div id="my_position_readonly" style="margin-bottom: 15px;">
+      <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+        <tbody>
+          <tr>
+            <td style="border-top: none;">
+              Amount:
+              <strong class="float-right"><%= number_to_currency(@stock.next_div_amount) %></strong>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Ex Date:
+              <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Payment Date:
+              <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  <% end %>
+</div>

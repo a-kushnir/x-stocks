@@ -31,7 +31,7 @@ module Etl
 
           if node['dars_overall'].present?
             tags = []
-            tags << 'Safe Dividends' if stock.dividend_rating >= 4.0
+            tags << 'Safe Dividends' if stock.dividend_rating && stock.dividend_rating >= 4.0
             ::Tag.batch_update(stock, :safe_dividend_tag, tags)
           end
 

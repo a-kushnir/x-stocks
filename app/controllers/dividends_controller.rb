@@ -1,4 +1,5 @@
 class DividendsController < ApplicationController
+  helper :stocks
 
   def index
     @positions = Position

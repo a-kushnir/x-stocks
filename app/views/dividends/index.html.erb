@@ -19,7 +19,8 @@
 <table id="dividends-table" class="table table-hover table-override">
   <thead class="thead-light">
   <tr>
-    <th class="text-center border-right">Symbol</th>
+    <th class="text-center">Symbol</th>
+    <th class="text-center border-right">Safety</th>
     <%
       month_names = []
        div.months.each_with_index do |month, index|
@@ -35,11 +36,14 @@
   <tbody>
   <% estimates.each do |position, est| %>
   <tr>
-    <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>">
+    <td class="text-nowrap" data-search="<%= position.stock.symbol %>">
       <div class="text-center" style="width: 48px; display: inline-block; margin-right: 10px;">
         <img src="<%= position.stock.logo.present? ? position.stock.logo : '/img/no-logo.png' %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
       </div>
       <%= link_to position.stock.symbol, stock_path(position.stock) %>
+    </td>
+    <td class="text-right border-right text-nowrap" data-sort="<%= number_with_precision(position.stock.dividend_rating, precision: 1) if position.stock.dividend_rating %>">
+      <small><%= safety_human(position.stock.dividend_rating) %></small> <%= number_with_precision(position.stock.dividend_rating, precision: 1) if position.stock.dividend_rating %>
     </td>
     <% div.months.each_with_index do |month, index| %>
       <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
@@ -52,7 +56,7 @@
   </tbody>
   <tfoot class="thead-light">
     <tr>
-      <th class="text-right border-right" colspan="1">Total</th>
+      <th class="text-right border-right" colspan="2">Total</th>
       <% months.each do |month| %>
         <th class="text-right"><%= number_to_currency month %></th>
       <% end %>

@@ -18,6 +18,7 @@ require("chartjs-plugin-datalabels")
 require("packs/data_refresh");
 require("packs/data_table");
 require("packs/twitter");
+require("packs/jcountdown");
 require("packs/charts");
 
 
@@ -48,3 +49,12 @@ window.switch_representation_to_charts = function(table, charts) {
     charts.show();
     location.hash = "#charts";
 }
+
+document.addEventListener("turbolinks:load", () => {
+    $(".jcountdown").each(function (index, item) {
+        $(item).setCountdown({
+            targetDate: $(item).data('target'),
+            itemLabels: ['day', 'hr', 'min', 'sec']
+        });
+    });
+})

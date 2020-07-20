@@ -52,7 +52,11 @@
     </td>
     <td></td>
     <td>
-      Dividend Growth 3Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_3y, precision: 2) %></strong>
+      <% if @stock.dividend_growth_3y %>
+        Dividend Growth 3Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_3y, precision: 2) %></strong>
+      <% else %>
+        Dividend Growth 5Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_5y, precision: 2) %></strong>
+      <% end %>
     </td>
   </tr>
   <tr>

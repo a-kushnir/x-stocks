@@ -3,6 +3,10 @@
 //= require bootstrap-select
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 
 function formatCurrency(total) {

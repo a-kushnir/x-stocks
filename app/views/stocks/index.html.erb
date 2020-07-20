@@ -64,7 +64,7 @@
         <td class="text-right" data-sort="<%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>">
           <small><%= safety_human(stock.dividend_rating) %></small> <%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>
         </td>
-        <td class="text-right" data-sort="<%= stock.metascore if stock.metascore %>">
+        <td class="text-right" data-sort="<%= stock.metascore if stock.metascore %>" data-toggle="tooltip" data-placement="left" title="<%= metascore_details(stock) %>">
           <%= stock.metascore if stock.metascore %>
         </td>
       </tr>

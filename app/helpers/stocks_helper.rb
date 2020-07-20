@@ -106,4 +106,21 @@ module StocksHelper
     [values, labels, symbols]
   end
 
+  def metascore_details(stock)
+    return unless stock.metascore_details
+    stock.metascore_details.map do |k, v|
+      if k == 'yahoo_rec'
+        "#{v['score']}: Yahoo Rec. #{v['value']} #{rec_human(v['value'])}"
+      elsif k == 'finnhub_rec'
+        "#{v['score']}: Finnhub Rec. #{v['value']} #{rec_human(v['value'])}"
+      elsif k == 'payout_ratio'
+        "#{v['score']}: Payout #{v['value']}%"
+      elsif k == 'div_safety'
+        "#{v['score']}: Div Safety #{v['value']}"
+      else
+        "#{v['score']}: #{k} #{v['value']}"
+      end
+    end.join("\n")
+  end
+
 end

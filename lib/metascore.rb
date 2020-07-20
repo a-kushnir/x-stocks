@@ -5,29 +5,29 @@ class Metascore
 
     if stock.yahoo_rec
       value = convert((4.5)..(1.5), 0..100, stock.yahoo_rec)
-      details[:yahoo_rec] = {value: stock.yahoo_rec, score: value, weight: 2}
+      details[:yahoo_rec] = {value: stock.yahoo_rec.to_f, score: value, weight: 2}
     end
 
     if stock.finnhub_rec
       value = convert((4.5)..(1.5), 0..100, stock.finnhub_rec)
-      details[:finnhub_rec] = {value: stock.finnhub_rec, score: value, weight: 2}
+      details[:finnhub_rec] = {value: stock.finnhub_rec.to_f, score: value, weight: 2}
     end
 
     if stock.payout_ratio && !stock.index?
       value = if stock.payout_ratio < 0
-                convert(-50..0, 0..30, stock.yahoo_rec)
+                convert(-50..0, 0..30, stock.payout_ratio)
               elsif stock.payout_ratio < 75
-                convert(0..75, 100..80, stock.yahoo_rec)
+                convert(0..75, 100..80, stock.payout_ratio)
               else
-                convert(75..150, 80..0, stock.yahoo_rec)
+                convert(75..150, 80..0, stock.payout_ratio)
               end
 
-      details[:payout_ratio] = {value: stock.payout_ratio, score: value, weight: 2}
+      details[:payout_ratio] = {value: stock.payout_ratio.to_f, score: value, weight: 2}
     end
 
     if stock.dividend_rating
       value = convert(0..5, 0..100, stock.dividend_rating)
-      details[:div_safety] = {value: stock.dividend_rating, score: value, weight: 4}
+      details[:div_safety] = {value: stock.dividend_rating.to_f, score: value, weight: 4}
     end
 
     result(details)

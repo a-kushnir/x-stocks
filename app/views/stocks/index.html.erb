@@ -17,6 +17,7 @@
       <th class="no-search text-right">Yahoo Rec.</th>
       <th class="no-search text-right">Finnhub Rec.</th>
       <th class="no-search text-right">Div. Safety</th>
+      <th class="no-search text-right">Metascore</th>
     </tr>
   </thead>
 
@@ -62,6 +63,9 @@
         </td>
         <td class="text-right" data-sort="<%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>">
           <small><%= safety_human(stock.dividend_rating) %></small> <%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>
+        </td>
+        <td class="text-right" data-sort="<%= stock.metascore if stock.metascore %>">
+          <%= stock.metascore if stock.metascore %>
         </td>
       </tr>
     <% end %>

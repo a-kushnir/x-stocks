@@ -129,6 +129,9 @@ window.price_target_chart = function(canvas, data) {
             legend: {
                 display: false,
             },
+            tooltips: {
+              enabled: false,
+            },
             scales: {
                 xAxes: [{
                     position: 'bottom',
@@ -305,6 +308,9 @@ window.recommendation_mean_chart = function(canvas, value) {
             intersect: true,
             legend: {
                 display: false,
+            },
+            tooltips: {
+                enabled: false,
             },
             scales: {
                 xAxes: [{

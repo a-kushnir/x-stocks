@@ -14,6 +14,8 @@ class Stock < ApplicationRecord
   before_validation :upcase_symbol
   validates :symbol, presence: true, uniqueness: true
 
+  before_save :update_metascore
+
   serialize :peers, JSON
   serialize :yahoo_rec_details, JSON
   serialize :finnhub_rec_details, JSON
@@ -45,8 +47,16 @@ class Stock < ApplicationRecord
     save!
   end
 
+  def update_metascore
+    self.metascore, self.metascore_details = Metascore.new.calculate(self)
+  end
+
   def destroyable?
     !positions.exists?
+  end
+
+  def index?
+    issue_type == 'et'
   end
 
   private

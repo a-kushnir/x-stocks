@@ -63,6 +63,13 @@ module Etl
         stock.update_dividends!
       end
 
+      def next_dividend(stock, json)
+        stock.next_div_ex_date = json&.dig('exDate')
+        stock.next_div_payment_date = json&.dig('paymentDate')
+        stock.next_div_amount = json&.dig('amount')
+        stock.save!
+      end
+
     end
   end
 end

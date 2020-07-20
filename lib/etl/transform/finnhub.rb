@@ -67,6 +67,7 @@ module Etl
           if json.present?
             json.map do |row|
               row.delete('symbol')
+              row['estimate'] = row['estimate'].round(4) if row['estimate']
               row
             end
           else

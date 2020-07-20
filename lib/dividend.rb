@@ -46,6 +46,9 @@ class Dividend
         results << { payment_date: payment_date, amount: amount }
       end
     when 'monthly'
+      (3).times do
+        payment_date = payment_date << 1
+      end
       (2*12).times do
         payment_date = payment_date >> 1
         results << { payment_date: payment_date, amount: amount }

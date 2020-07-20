@@ -27,7 +27,7 @@ class Position < ApplicationRecord
         .select('SUM(positions.market_value) market_value, SUM(positions.shares * stocks.price_change) price_change')
         .joins('JOIN stocks ON positions.stock_id = stocks.id')
         .where(user: user).to_a.first
-    { market_value: p.market_value, price_change: p.price_change, price_change_pct: p.price_change / p.market_value * 100 } rescue nil
+    { market_value: p.market_value || 0, price_change: p.price_change || 0, price_change_pct: (p.price_change / p.market_value * 100 rescue 0) }
   end
 
   def self.market_value(user)

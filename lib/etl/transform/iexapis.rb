@@ -33,7 +33,7 @@ module Etl
         return if json.blank?
         json = [json] unless json.is_a?(Array)
 
-        json.map do |row|
+        json = json.map do |row|
           {
             'ex_date' => row['exDate'],
             'payment_date' => row['paymentDate'],

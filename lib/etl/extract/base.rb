@@ -33,7 +33,7 @@ module Etl
         request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
 
         request.body = body.to_json
-        logger&.log_info("POST #{url}: #{body.to_json}")
+        log_info("POST #{url}: #{body.to_json}")
 
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
           http.request(request)
@@ -50,11 +50,19 @@ module Etl
       end
 
       def validate!(response, url)
-        logger&.log_info("#{response.code} #{url}")
-        logger&.log_info("#{response.body}")
+        log_info("#{response.code} #{url}")
+        log_info("#{response.body}")
         raise '401 - Unauthorized' if response.code == 401
         raise '429 - API limit reached' if response.code == 429 # Finnhub
         raise '500 - Internal Server Error' if response.code == 500
+      end
+
+      def log_info(value)
+        if logger
+          logger.log_info(value)
+        else
+          puts value
+        end
       end
 
     end

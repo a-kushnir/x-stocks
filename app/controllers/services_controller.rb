@@ -33,10 +33,28 @@ class ServicesController < ApplicationController
     end
   end
 
+  def run
+    if Service.where('locked_at < ?', 1.hour.ago).exists?
+      render json: {result: 'locked'}
+
+    elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
+      Etl::Refresh::Finnhub.new.hourly_all_stocks
+      render json: {result: 'success'}
+
+    else
+      Etl::Refresh::Yahoo.new.daily_all_stocks
+      Etl::Refresh::Finnhub.new.daily_all_stocks
+      Etl::Refresh::Iexapis.new.weekly_all_stocks
+      Etl::Refresh::Dividend.new.weekly_all_stocks
+      render json: {result: 'success'}
+
+    end
+  end
+
   private
 
   def find_service
-    service = SERVICES[params[:id]]
+    service = SERVICES.find_by(key: params[:id])
     if service
       yield service
     else
@@ -107,7 +125,7 @@ class ServicesController < ApplicationController
           args: [:stock_id],
           proc: ->(args) do
             stock = Stock.find_by!(id: args[:stock_id])
-            Etl::Refresh::Iexapis.new.weekly_one_stock!(stock)
+            Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, nil, immediate: true)
           end
       },
       weekly_all_dividend: {

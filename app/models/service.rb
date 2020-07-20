@@ -1,5 +1,16 @@
 class Service < ApplicationRecord
 
+  def self.fast_update?
+    Etl::Refresh::Finnhub.new.hourly_all_stocks?
+  end
+
+  def self.slow_update?
+    Etl::Refresh::Yahoo.new.daily_all_stocks? ||
+    Etl::Refresh::Finnhub.new.daily_all_stocks? ||
+    Etl::Refresh::Iexapis.new.weekly_all_stocks? ||
+    Etl::Refresh::Dividend.new.weekly_all_stocks?
+  end
+
   def self.lock(key)
     service = Service.find_or_create_by!(key: key)
     if service.locked_at.nil? ||
@@ -31,7 +42,7 @@ class Service < ApplicationRecord
   end
 
   def self.[](key)
-    self.find_or_initialize_by(key: key)
+    self.select('locked_at, last_run_at').find_or_initialize_by(key: key)
   end
 
   def locked?

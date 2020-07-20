@@ -13,6 +13,9 @@ Rails.application.routes.draw do
       get :log
       get :error
     end
+    collection do
+      post :run
+    end
   end
 
   post '/data/refresh', to: 'data#refresh', as: 'data_refresh_url'

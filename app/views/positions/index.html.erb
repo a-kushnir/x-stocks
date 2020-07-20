@@ -97,7 +97,10 @@
 <script>
   document.addEventListener("turbolinks:load", () => {
     init_representation("#positions-table-container", "#positions-charts-container", "#positions-table-radio", "#positions-charts-radio");
-    dataTable("#positions-table", {order: [0, 'asc']});
+    dataTable("#positions-table", {
+      order: [0, "asc"],
+      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+    });
 
     destroy_all_charts();
     <% values, labels = position_allocation %>

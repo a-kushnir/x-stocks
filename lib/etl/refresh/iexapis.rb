@@ -23,7 +23,7 @@ module Etl
 
       def weekly_one_stock!(stock, logger = nil, immediate: false)
         json = Etl::Extract::Iexapis.new(logger).dividends_next(stock.symbol)
-        Etl::Transform::Iexapis::new(logger).dividends(stock, [json]) if json
+        Etl::Transform::Iexapis::new(logger).dividends(stock, json)
         Etl::Transform::Iexapis::new(logger).next_dividend(stock, json)
         sleep(PAUSE) unless immediate
 

@@ -67,6 +67,7 @@ module Etl
       end
 
       def next_dividend(stock, json)
+        json = json.first if json.is_a?(Array)
         stock.next_div_ex_date = json&.dig('exDate')
         stock.next_div_payment_date = json&.dig('paymentDate')
         stock.next_div_amount = json&.dig('amount')

@@ -54,7 +54,7 @@ class ServicesController < ApplicationController
   private
 
   def find_service
-    service = SERVICES.find_by(key: params[:id])
+    service = SERVICES[params[:id]]
     if service
       yield service
     else

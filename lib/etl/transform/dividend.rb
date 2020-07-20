@@ -11,20 +11,36 @@ module Etl
         stock.dividend_growth_3y = number_or_nil(node['growth_over_years'])
         stock.dividend_growth_years = number_or_nil(node['consective_year_of_growth'])
 
-        if stock.save && node['consective_year_of_growth'].present?
+        if stock.save
 
-          tags = []
-          if stock.dividend_growth_years >= 10
-            tags << 'Dividend Achiever'
-          end
-          if stock.dividend_growth_years >= 10 && stock.dividend_growth_years < 25
-            tags << 'Dividend Contender'
-          end
-          if stock.dividend_growth_years >= 25
-            tags << 'Dividend Champion'
+          if node['consective_year_of_growth'].present?
+            tags = []
+
+            if stock.dividend_growth_years >= 10
+              tags << 'Dividend Achiever'
+            end
+            if stock.dividend_growth_years >= 10 && stock.dividend_growth_years < 25
+              tags << 'Dividend Contender'
+            end
+            if stock.dividend_growth_years >= 25
+              tags << 'Dividend Champion'
+            end
+
+            ::Tag.batch_update(stock, :dividend_tag, tags)
           end
 
-          ::Tag.batch_update(stock, :dividend_tag, tags)
+          if node['dars_overall'].present?
+            tags = []
+            tags << 'Safe Dividends' if stock.dividend_rating >= 4.0
+            ::Tag.batch_update(stock, :safe_dividend_tag, tags)
+          end
+
+          if stock.dividend_growth_3y.to_f >= 5.0 || stock.dividend_growth_5y.to_f >= 5.0
+            tags = []
+            tags << 'High Dividend Growth'
+            ::Tag.batch_update(stock, :dividend_growth_tag, tags)
+          end
+
         end
       end
 

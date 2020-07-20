@@ -1,9 +1,9 @@
 <p class="align-top">
   <strong>Related Tags</strong><br>
-  <% @stock.tags.by_key(:company_tag).each do |tag| %>
-    <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
-  <% end %> <% @stock.tags.by_key(:dividend_tag).each do |tag| %>
-    <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
+  <% [:company_tag, :dividend_tag, :safe_dividend_tag, :dividend_growth_tag].each do |key| %>
+    <% @stock.tags.by_key(key).each do |tag| %>
+      <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
+    <% end %>
   <% end %><br>
 
   <% peers = stock_peers %>

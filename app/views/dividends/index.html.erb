@@ -20,6 +20,7 @@
   <thead class="thead-light">
   <tr>
     <th class="text-center">Symbol</th>
+    <th class="text-right">Yield</th><h></h>
     <th class="text-center border-right">Safety</th>
     <%
       month_names = []
@@ -42,8 +43,14 @@
       </div>
       <%= link_to position.stock.symbol, stock_path(position.stock) %>
     </td>
-    <td class="text-right border-right text-nowrap" data-sort="<%= number_with_precision(position.stock.dividend_rating, precision: 1) if position.stock.dividend_rating %>">
-      <small><%= safety_human(position.stock.dividend_rating) %></small> <%= number_with_precision(position.stock.dividend_rating, precision: 1) if position.stock.dividend_rating %>
+    <td class="text-right" data-sort="<%= number_with_precision(position.stock.est_annual_dividend_pct, precision: 2) %>">
+      <%= number_to_percentage(position.stock.est_annual_dividend_pct, precision: 2) %>
+    </td>
+    <% dividend_rating = (position.stock.dividend_rating * 20).to_i rescue nil %>
+    <td class="text-center text-nowrap border-right" data-sort="<%= dividend_rating %>">
+      <% if dividend_rating %>
+        <span class="badge badge-dark <%= metascore_color(dividend_rating) %>"><%= dividend_rating %></span>
+      <% end %>
     </td>
     <% div.months.each_with_index do |month, index| %>
       <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil %>
@@ -56,7 +63,7 @@
   </tbody>
   <tfoot class="thead-light">
     <tr>
-      <th class="text-right border-right" colspan="2">Total</th>
+      <th class="text-right border-right" colspan="3">Total</th>
       <% months.each do |month| %>
         <th class="text-right"><%= number_to_currency month %></th>
       <% end %>

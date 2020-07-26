@@ -2,6 +2,8 @@ class StocksController < ApplicationController
   include StocksHelper
 
   def index
+    return if handle_goto_param?
+
     @tag = params[:tag]
     stock_ids = @tag ? Tag.where(name: @tag).pluck(:stock_id) : []
     @tag = nil unless stock_ids.present?
@@ -63,6 +65,26 @@ class StocksController < ApplicationController
 
   def stock_params
     params.require(:stock).permit(:symbol)
+  end
+
+  def handle_goto_param?
+    value = params[:goto]
+    return false if value.blank?
+
+    stock = Stock.find_by(symbol: value.upcase)
+    if stock
+      redirect_to stock_path(stock)
+      return true
+    end
+
+    stocks = Stock.where('company_name ILIKE ?', "%#{value.downcase}%").all
+    if stocks.count == 1
+      redirect_to stock_path(stocks.first)
+      return true
+    end
+
+    redirect_to url_for(search: value)
+    true
   end
 
 end

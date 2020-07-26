@@ -13,7 +13,7 @@ module Etl
 
         if stock.save
 
-          if node['consective_year_of_growth'].present?
+          if number_or_nil(node['consective_year_of_growth']).is_a?(Numeric)
             tags = []
 
             if stock.dividend_growth_years >= 10

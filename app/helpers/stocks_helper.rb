@@ -106,6 +106,10 @@ module StocksHelper
     [values, labels, symbols]
   end
 
+  def dividend_precision(amount)
+    amount && amount.to_s == amount.round(2).to_s ? 2 : 4
+  end
+
   def metascore_details(stock)
     return unless stock.metascore_details
     stock.metascore_details.map do |k, v|

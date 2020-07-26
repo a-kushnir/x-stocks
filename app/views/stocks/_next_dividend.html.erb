@@ -12,7 +12,7 @@
         <tr>
           <td style="border-top: none;">
             Amount:
-            <strong class="float-right"><%= number_to_currency(@stock.next_div_amount) %></strong>
+            <strong class="float-right"><%= number_to_currency(@stock.next_div_amount, precision: dividend_precision(@stock.next_div_amount)) %></strong>
           </td>
         </tr>
         <tr>

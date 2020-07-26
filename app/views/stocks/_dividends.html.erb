@@ -13,7 +13,8 @@
   <tbody>
   <tr>
     <% div.months.each do |month| %>
-      <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency est.detect {|e| e[:month] == month}&.dig(:amount) %></td>
+      <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) %>
+      <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
     <% end %>
   </tr>
   </tbody>

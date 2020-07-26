@@ -27,6 +27,8 @@ module Xlsx
           end
 
           sheet.add_row footer_row(months), style: footer_style(styles)
+
+          sheet.column_widths *[10, 10, 10, Array.new(13, 13)].flatten
         end
 
         package.serialize(file_name)

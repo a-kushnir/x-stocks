@@ -49,7 +49,7 @@
       <div class="text-center" style="width: 48px; display: inline-block; margin-right: 10px;">
         <img src="<%= position.stock.logo.present? ? position.stock.logo : '/img/no-logo.png' %>" alt="<%= position.stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
       </div>
-      <% offset = position.stock.logo.present? ? 32 : 0 %>
+      <% offset = position.note.present? ? 32 : 0 %>
       <%= link_to position.stock.symbol, stock_path(position.stock), style: "padding-top: 10px; margin-right: #{offset}px;" %>
     </td>
     <td class="text-right" data-sort="<%= number_with_precision(position.stock.est_annual_dividend_pct, precision: 2) %>">

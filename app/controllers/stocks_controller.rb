@@ -12,6 +12,8 @@ class StocksController < ApplicationController
     @stocks = @stocks.where(id: stock_ids) if stock_ids.present?
     @stocks = @stocks.all
 
+    @positions = Position.where(stock: @stocks, user: current_user).all
+
     @page_title = 'Stocks'
     @page_menu_item = :stocks
   end

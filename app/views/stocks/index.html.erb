@@ -25,11 +25,18 @@
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td class="text-nowrap" data-search="<%= stock.symbol %>">
+        <td class="text-nowrap border-right" data-search="<%= stock.symbol %>" data-sort="<%= stock.symbol %>">
+          <% position = @positions.detect { |p| p.stock_id == stock.id } %>
+          <% if position&.note.present? %>
+            <div class="alert alert-warning float-right" style="padding: 0 6px; margin-bottom: 0">
+              <i class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="right" title="<%= position.note %>"></i>
+            </div>
+          <% end %>
           <div class="text-center" style="width: 48px; display: inline-block; margin-right: 10px;">
             <img src="<%= stock.logo.present? ? stock.logo : '/img/no-logo.png' %>" alt="<%= stock.symbol %> Logo" style="max-height: 24px; max-width: 48px;"/>
           </div>
-          <%= link_to stock.symbol, stock_path(stock) %>
+          <% offset = position&.note.present? ? 32 : 0 %>
+          <%= link_to stock.symbol, stock_path(stock), style: "padding-top: 10px; margin-right: #{offset}px;" %>
         </td>
         <td><%= stock.company_name %></td>
         <td class="text-right">

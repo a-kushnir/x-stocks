@@ -4,6 +4,10 @@
     <% @stock.tags.by_key(key).each do |tag| %>
       <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
     <% end %>
+  <% end %>
+
+  <% VirtualTag.all.select { |tag| tag.eligible?(@stock) }.each do |tag| %>
+    <%= link_to tag.name, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
   <% end %><br>
 
   <% peers = stock_peers %>

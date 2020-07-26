@@ -3,10 +3,7 @@ class StocksController < ApplicationController
 
   def index
     return if handle_goto_param?
-
-    @tag = params[:tag]
-    stock_ids = @tag ? Tag.where(name: @tag).pluck(:stock_id) : []
-    @tag = nil unless stock_ids.present?
+    stock_ids = handle_tag_param
 
     @stocks = Stock
     @stocks = @stocks.where(id: stock_ids) if stock_ids.present?
@@ -87,6 +84,23 @@ class StocksController < ApplicationController
 
     redirect_to url_for(search: value)
     true
+  end
+
+  def handle_tag_param
+    @tag = params[:tag]
+    return if @tag.blank?
+
+    virtual_tag = VirtualTag.find(@tag)
+
+    stock_ids =
+      if virtual_tag
+        virtual_tag.find_stock_ids
+      else
+        Tag.where(name: @tag).pluck(:stock_id)
+      end
+
+    @tag = nil unless stock_ids.present?
+    stock_ids
   end
 
 end

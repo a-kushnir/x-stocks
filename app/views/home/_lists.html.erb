@@ -17,6 +17,11 @@
       <li class="nav-item">
         <a class="nav-link" href="/stocks?tag=Safe%20Dividends">High Dividend Growth (&ge;5.0%)</a>
       </li>
+      <% VirtualTag.all.each do |tag| %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= url_for(controller: 'stocks', action: 'index', tag: tag.name) %>"><%= tag.description %></a>
+        </li>
+      <% end %>
     </ul>
   </nav>
 </div>

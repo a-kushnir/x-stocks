@@ -1,7 +1,10 @@
 <% content_for :page_title do %>
   <div class="btn-group btn-group-toggle float-right" style="margin-right: 15px; margin-top: 15px;" data-toggle="buttons">
-    <label class="btn btn-secondary active">
+    <label class="btn btn-secondary">
       <input type="radio" id="dividends-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#dividends-table-container", "#dividends-charts-container");'> Table
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" id="dividends-excel-radio" name="representation" autocomplete="off" onclick='switch_representation_to_excel("#dividends-table-container", "#dividends-charts-container", "#dividends-table-radio", "#dividends-charts-radio")'> Excel
     </label>
     <label class="btn btn-secondary">
       <input type="radio" id="dividends-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#dividends-table-container", "#dividends-charts-container");'> Charts
@@ -24,9 +27,9 @@
     <th class="text-center border-right">Safety</th>
     <%
       month_names = []
-       div.months.each_with_index do |month, index|
-         month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
-       end
+     div.months.each_with_index do |month, index|
+       month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+     end
     %>
     <% month_names.each do |month_name| %>
       <th class="text-right" style="width: 7%"><%= month_name %></th>

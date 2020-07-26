@@ -2,21 +2,6 @@
   <h3>Lists</h3>
   <nav class="sidebar my-block">
     <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link" href="/stocks?tag=Dividend%20Achiever">Dividend Achievers (&ge;10 years)</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/stocks?tag=Dividend%20Contender">Dividend Contenders (10-24 years)</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/stocks?tag=Dividend%20Champion">Dividend Champions (&ge;25 years)</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/stocks?tag=Safe%20Dividends">Safe Dividends (Rating &ge;4.0)</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/stocks?tag=Safe%20Dividends">High Dividend Growth (&ge;5.0%)</a>
-      </li>
       <% VirtualTag.all.each do |tag| %>
         <li class="nav-item">
           <a class="nav-link" href="<%= url_for(controller: 'stocks', action: 'index', tag: tag.name) %>"><%= tag.description %></a>

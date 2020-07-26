@@ -94,7 +94,7 @@ class StocksController < ApplicationController
 
     stock_ids =
       if virtual_tag
-        virtual_tag.find_stock_ids
+        virtual_tag.find_stock_ids(current_user)
       else
         Tag.where(name: @tag).pluck(:stock_id)
       end

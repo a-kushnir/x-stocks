@@ -6,7 +6,7 @@
     <% end %>
   <% end %>
 
-  <% VirtualTag.all.select { |tag| tag.eligible?(@stock) }.each do |tag| %>
+  <% VirtualTag.all.select { |tag| tag.eligible?(@position) }.each do |tag| %>
     <%= link_to tag.name, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
   <% end %><br>
 

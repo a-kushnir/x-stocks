@@ -38,4 +38,8 @@ module ApplicationHelper
     JSON.generate(object).html_safe
   end
 
+  def multiline_text_to_html(value)
+    (value || '').to_s.split("\n").map { |line| h line }.join('<br>').html_safe
+  end
+
 end

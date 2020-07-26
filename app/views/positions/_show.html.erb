@@ -62,6 +62,13 @@
     </tbody>
   </table>
 
+  <% if @position.note.present? %>
+    <div class="alert alert-warning fade show">
+      <i class="fa fa-thumb-tack float-right"></i>
+      <%= multiline_text_to_html(@position.note) %>
+    </div>
+  <% end %>
+
   <%= link_to 'Edit', '#', class: 'btn btn-outline-dark', onclick: '$("#my_position_readonly").hide(); $("#my_position_writable").show(); return false;' %>
 </div>
 <div id="my_position_writable" style="display: none;" style="margin-bottom: 15px;">

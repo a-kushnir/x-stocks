@@ -32,6 +32,13 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <%= form.label :note %>
+    <div class="input-group mb-3">
+      <%= form.text_area :note, class: 'form-control' %>
+    </div>
+  </div>
+
   <div class="my-button-group">
     <%= link_to 'Cancel', '#', class: 'btn btn-outline-dark', onclick: '$("#my_position_readonly").show(); $("#my_position_writable").hide(); return false;', style: 'margin-left: 0;' %>
     <%= form.submit 'Save', class: 'btn btn-primary', onclick: 'ajax_submit_and_reload($(".my-form"), $("#my-position-div"));' %>

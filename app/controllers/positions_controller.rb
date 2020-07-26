@@ -7,6 +7,11 @@ class PositionsController < ApplicationController
 
     @page_title = 'My Positions'
     @page_menu_item = :positions
+
+    respond_to do |format|
+      format.html { }
+      format.xlsx { generate_xlsx }
+    end
   end
 
   def update
@@ -31,4 +36,11 @@ class PositionsController < ApplicationController
   def position_params
     params.require(:position).permit(:shares, :average_price, :note)
   end
+
+  def generate_xlsx
+    send_tmp_file('Positions.xlsx') do |file_name|
+      Xlsx::Positions.new.generate(file_name, @positions)
+    end
+  end
+
 end

@@ -54,7 +54,7 @@ window.switch_representation_to_excel = function(table, charts, table_radio, cha
         }
     },100);
     
-    location.href = '/dividends.xlsx'
+    location.href = location.protocol + '//'+ location.host + location.pathname + '.xlsx'
 }
 
 window.switch_representation_to_charts = function(table, charts) {

@@ -20,7 +20,7 @@ class DividendsController < ApplicationController
 
   def generate_xlsx
     send_tmp_file('Dividends.xlsx') do |file_name|
-      Xlsx::Dividend.new.generate(file_name, @positions)
+      Xlsx::Dividends.new.generate(file_name, @positions)
     end
   end
 

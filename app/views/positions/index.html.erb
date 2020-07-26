@@ -4,6 +4,9 @@
       <input type="radio" id="positions-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#positions-table-container", "#positions-charts-container");'> Table
     </label>
     <label class="btn btn-secondary">
+      <input type="radio" id="dividends-excel-radio" name="representation" autocomplete="off" onclick='switch_representation_to_excel("#positions-table-container", "#positions-charts-container", "#positions-table-radio", "#positions-charts-radio")'> Excel
+    </label>
+    <label class="btn btn-secondary">
       <input type="radio" id="positions-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#positions-table-container", "#positions-charts-container");'> Charts
     </label>
   </div>
@@ -29,7 +32,7 @@
       <th class="no-search text-right">Gain/Loss</th>
       <th class="no-search text-right">Gain/Loss %</th>
       <th class="no-search text-right">Annual Dividend</th>
-      <th class="no-search text-right">Share %</th>
+      <th class="no-search text-right">Diversity %</th>
     </tr>
   </thead>
   <tbody>

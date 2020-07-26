@@ -11,12 +11,13 @@ module Xlsx
 
     def add_styles(sheet)
       {
+          normal: add_style(sheet, BASE_FORMAT),
           percent: add_style(sheet, BASE_FORMAT, PERCENT_2_DECIMAL),
+          money: add_style(sheet, BASE_FORMAT, US_DOLLAR_2_DECIMAL),
           header: add_style(sheet, BASE_FORMAT, HEADER_FORMAT),
           header_money: add_style(sheet, BASE_FORMAT, HEADER_FORMAT, US_DOLLAR_2_DECIMAL),
           header_right: add_style(sheet, BASE_FORMAT, HEADER_FORMAT, ALIGN_RIGHT),
-          row: add_style(sheet, BASE_FORMAT),
-          row_money: add_style(sheet, BASE_FORMAT, US_DOLLAR_2_DECIMAL),
+          header_percent: add_style(sheet, BASE_FORMAT, HEADER_FORMAT, PERCENT_2_DECIMAL),
       }
     end
 

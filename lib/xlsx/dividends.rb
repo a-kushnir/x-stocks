@@ -1,5 +1,5 @@
 module Xlsx
-  class Dividend < Base
+  class Dividends < Base
 
     def generate(file_name, positions)
       positions = positions.sort_by { |position| position.stock.symbol }
@@ -65,7 +65,7 @@ module Xlsx
     end
 
     def data_style(s)
-      [s[:row], s[:percent], s[:row], Array.new(13, s[:row_money])].flatten
+      [s[:normal], s[:percent], s[:normal], Array.new(13, s[:money])].flatten
     end
 
     def footer_row(months)

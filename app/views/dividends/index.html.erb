@@ -40,7 +40,7 @@
   <tbody>
   <% estimates.each do |position, est| %>
   <tr>
-    <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>">
+    <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>" data-sort="<%= position.stock.symbol %>">
       <% if position.note.present? %>
         <div class="alert alert-warning float-right" style="padding: 0 6px; margin-bottom: 0">
           <i class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="right" title="<%= position.note %>"></i>

@@ -1,12 +1,16 @@
 .jcountdown {
+  font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
   div {
     display: inline-block;
     font-weight: bolder;
-    font-size: 130%;
+    font-size: 150%;
+    padding-right: 1px;
+    padding-top: 3px;
+    padding-bottom: 10px;
   }
   label {
     font-size: 80%;
     font-weight: 400;
-    padding-right: 8px;
+    padding-right: 9px;
   }
 }

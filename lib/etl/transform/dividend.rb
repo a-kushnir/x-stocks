@@ -12,6 +12,10 @@ module Etl
         stock.dividend_growth_years = number_or_nil(node['consective_year_of_growth'])
 
         stock.save
+
+      ::Tag.batch_update(stock, :dividend_tag, [])
+      ::Tag.batch_update(stock, :safe_dividend_tag, [])
+      ::Tag.batch_update(stock, :dividend_growth_tag, [])
       end
 
     end

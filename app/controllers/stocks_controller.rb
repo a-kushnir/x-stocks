@@ -34,8 +34,6 @@ class StocksController < ApplicationController
 
     if @stock.save
       Etl::Refresh::Company.new.one_stock!(@stock)
-
-      flash[:notice] = "#{@stock} stock created"
       redirect_to stock_path(@stock)
     else
       set_page_title

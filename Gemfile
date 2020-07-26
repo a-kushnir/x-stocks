@@ -55,3 +55,4 @@ gem 'bootstrap-select-rails'
 gem "font-awesome-rails"
 gem 'jquery-datatables'
 gem 'devise'
+gem 'caxlsx'

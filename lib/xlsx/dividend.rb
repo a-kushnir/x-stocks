@@ -1,22 +1,32 @@
 module Xlsx
-  class Dividend
+  class Dividend < Base
 
     def generate(file_name, positions)
       positions = positions.sort_by { |position| position.stock.symbol }
 
       Axlsx::Package.new do |package|
-        package.workbook.add_worksheet(:name => "My Dividends") do |sheet|
+        package.workbook.add_worksheet(name: 'My Dividends') do |sheet|
+
+          sheet.sheet_view.pane do |pane|
+            pane.top_left_cell = "A2"
+            pane.state = :frozen_split
+            pane.y_split = 1
+            pane.x_split = 0
+            pane.active_pane = :bottom_right
+          end
+
+          styles = add_styles(sheet)
 
           div = ::Dividend.new
           months = Array.new(12, 0.to_d)
 
-          sheet.add_row header_row(div.months)
+          sheet.add_row header_row(div.months), style: header_style(styles)
 
           positions.each do |position|
-            sheet.add_row data_row(div, months, position, div.estimate(position.stock))
+            sheet.add_row data_row(div, months, position, div.estimate(position.stock)), style: data_style(styles)
           end
 
-          sheet.add_row footer_row(months)
+          sheet.add_row footer_row(months), style: footer_style(styles)
         end
 
         package.serialize(file_name)
@@ -34,10 +44,14 @@ module Xlsx
       ['Symbol', 'Yield', 'Safety', month_names, 'Total'].flatten
     end
 
+    def header_style(s)
+      [s[:header], Array.new(15, s[:header_right])].flatten
+    end
+
     def data_row(div, months, position, est)
       row = [
           position.stock.symbol,
-          position.stock.est_annual_dividend_pct,
+          (position.stock.est_annual_dividend_pct / 100 rescue nil),
           ((position.stock.dividend_rating * 20).to_i rescue nil),
       ]
 
@@ -50,8 +64,16 @@ module Xlsx
       row << est.map {|e| e[:amount] }.sum * position.shares rescue nil
     end
 
+    def data_style(s)
+      [s[:row], s[:percent], s[:row], Array.new(13, s[:row_money])].flatten
+    end
+
     def footer_row(months)
       ['', '', 'Total', months, months.sum].flatten
+    end
+
+    def footer_style(s)
+      [Array.new(3, s[:header_right]), Array.new(13, s[:header_money])].flatten
     end
 
   end

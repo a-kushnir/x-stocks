@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
   def not_found
     @page_title = '404 Page not found'
     respond_to do |format|
-      format.html { render :file => "/errors/404", layout: 'application', status: 404 }
+      format.html { render file: '/errors/404', layout: 'application', status: 404 }
+      format.xlsx { render file: '/errors/404', layout: 'application', status: 404, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 404 }
-      format.xlsx { head 404 }
       format.any  { head 404 }
     end
   end
@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
     @page_title = '500 Internal Server Error'
     @error = error
     respond_to do |format|
-      format.html { render :file => "/errors/500", layout: 'application', status: 500 }
+      format.html { render file: '/errors/500', layout: 'application', status: 500 }
+      format.xlsx { render file: '/errors/500', layout: 'application', status: 500, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 500 }
-      format.xlsx { head 500 }
       format.any  { head 500 }
     end
   end

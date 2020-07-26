@@ -52,9 +52,9 @@ module Etl
       def validate!(response, url)
         log_info("#{response.code} #{url}")
         log_info("#{response.body}")
-        raise '401 - Unauthorized' if response.code == 401
-        raise '429 - API limit reached' if response.code == 429 # Finnhub
-        raise '500 - Internal Server Error' if response.code == 500
+        raise '401 - Unauthorized' if response.code == '401'
+        raise '429 - API limit reached' if response.code == '429' # Finnhub
+        raise '500 - Internal Server Error' if response.code == '500'
       end
 
       def log_info(value)

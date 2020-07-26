@@ -13,7 +13,7 @@ function update_prices() {
 
             if (div_selector.data('refresh') &&
               typeof refresh_page === "function") {
-                refresh_page();
+                //refresh_page();
             }
 
             div_selector.fadeOut(3000, function() {

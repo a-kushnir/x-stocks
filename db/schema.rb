@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_195922) do
+ActiveRecord::Schema.define(version: 2020_07_26_092436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,9 @@ ActiveRecord::Schema.define(version: 2020_07_20_195922) do
     t.date "next_div_ex_date"
     t.date "next_div_payment_date"
     t.decimal "next_div_amount", precision: 12, scale: 4
+    t.boolean "sp500"
+    t.boolean "nasdaq100"
+    t.boolean "dowjones"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end

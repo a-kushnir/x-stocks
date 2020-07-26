@@ -17,6 +17,8 @@ module Etl
         Etl::Refresh::Finnhub.new.daily_one_stock!(stock) rescue nil
         Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, nil, immediate: true) rescue nil
         Etl::Refresh::Dividend.new.weekly_one_stock!(stock) rescue nil
+
+        Etl::Refresh::Slickcharts.new.all_stocks! rescue nil
       end
 
     end

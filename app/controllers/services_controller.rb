@@ -152,6 +152,12 @@ class ServicesController < ApplicationController
             Etl::Refresh::Company.new.one_stock!(stock)
           end
       },
+      slickcharts: {
+          name: 'S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]',
+          proc: ->(args) do
+            Etl::Refresh::Slickcharts.new.all_stocks!
+          end
+      },
   })
 
 end

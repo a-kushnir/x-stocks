@@ -3,7 +3,8 @@
   <tr>
     <th>Service</th>
     <th>Schedule</th>
-    <th>Last start at</th>
+    <th>Status</th>
+    <th>Last Run</th>
     <th class="no-sort no-search">Arguments</th>
     <th class="no-sort no-search">Actions</th>
   </tr>
@@ -15,8 +16,10 @@
     <tr>
       <td><%= service[:name] %></td>
       <td><%= service[:schedule] %></td>
-      <% prev = serv&.last_run_at %>
-      <td><%= prev ? "#{time_ago_in_words prev} ago" : "" %></td>
+      <% locked_at = serv&.locked_at %>
+      <td><%= serv ? (locked_at ? "Started #{time_ago_in_words locked_at} ago" : "Paused") : '' %></td>
+      <% last_run_at = serv&.last_run_at %>
+      <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
         <%= form_tag(service_path(service_code), method: 'put') do %>
           <% (service[:args] || []).each do |arg| %>

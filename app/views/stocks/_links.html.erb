@@ -2,15 +2,17 @@
   <h4>Links</h4>
   <nav class="sidebar my-block">
     <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link" href="https://finance.yahoo.com/quote/<%= @stock.symbol %>">Yahoo Finance (<%= @stock.symbol %>) <i class="fa fa-sm fa-external-link"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="https://www.dividend.com/search?q=<%= @stock.symbol %>">Dividend.com (<%= @stock.symbol %>) <i class="fa fa-sm fa-external-link"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="https://robinhood.com/stocks/<%= @stock.symbol %>">Robinhood (<%= @stock.symbol %>) <i class="fa fa-sm fa-external-link"></i></a>
-      </li>
+      <% [
+             ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance (#{@stock.symbol})"],
+             ["https://www.dividend.com/search?q=#{@stock.symbol}", "Dividend.com (#{@stock.symbol})"],
+             ["https://robinhood.com/stocks/#{@stock.symbol}", "Robinhood (#{@stock.symbol})"],
+         ].each do |link| %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= link[0] %>">
+            <i class="fa fa-external-link text-center" style="width: 19px; padding-right: 3px;"></i> <%= link[1] %>
+          </a>
+        </li>
+      <% end %>
     </ul>
   </nav>
 </div>

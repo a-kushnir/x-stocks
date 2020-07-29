@@ -13,7 +13,7 @@ class Metascore
       details[:finnhub_rec] = {value: stock.finnhub_rec.to_f, score: value, weight: 2}
     end
 
-    if stock.payout_ratio && !stock.index?
+    if !stock.payout_ratio.to_f.zero? && !stock.index?
       value = if stock.payout_ratio < 0
                 convert(-50..0, 0..30, stock.payout_ratio)
               elsif stock.payout_ratio < 75

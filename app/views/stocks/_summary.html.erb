@@ -83,7 +83,7 @@
     </td>
     <td></td>
     <td>
-      Payout: <strong class="float-right"><%= number_to_percentage(@stock.payout_ratio, precision: 2) %></strong>
+      Payout: <strong class="float-right"><%= number_to_percentage(@stock.payout_ratio, precision: 2) unless @stock.payout_ratio.to_f.zero? %></strong>
     </td>
   </tr>
 </table>

@@ -43,6 +43,7 @@ module Etl
             daily_one_stock!(stock, logger)
             sleep(PAUSE_LONG)
           end
+          earnings_calendar(logger)
         end
       end
 
@@ -65,6 +66,20 @@ module Etl
 
         json = Etl::Extract::Finnhub.new(logger).metric(stock.symbol)
         Etl::Transform::Finnhub.new(logger).metric(stock, json) if json
+      end
+
+      def earnings_calendar(logger = nil, stock = nil)
+        date = Date.today
+        period = 1.week
+
+        12.times do |index|
+          sleep(PAUSE_LONG) if index != 0
+
+          json = Etl::Extract::Finnhub.new(logger).earnings_calendar(date, date + period)
+          Etl::Transform::Finnhub.new(logger).earnings_calendar(json, stock) if json
+
+          date += period
+        end
       end
 
     end

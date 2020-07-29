@@ -33,6 +33,10 @@ module Etl
         get_json(metric_url(symbol))
       end
 
+      def earnings_calendar(from, to)
+        get_json(earnings_calendar_url(from, to))
+      end
+
       private
 
       def company_url(symbol)
@@ -61,6 +65,10 @@ module Etl
 
       def metric_url(symbol)
         "#{BASE_URL}/stock/metric?symbol=#{esc(symbol)}&metric=all&token=#{FINNHUB_KEY}"
+      end
+
+      def earnings_calendar_url(from, to)
+        "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{FINNHUB_KEY}"
       end
 
     end

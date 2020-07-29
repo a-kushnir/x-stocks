@@ -92,6 +92,40 @@ module Etl
         stock.pe_ratio_ttm = data['peInclExtraTTM']
       end
 
+      def earnings_calendar(json, stock = nil)
+        json ||= []
+        (json['earningsCalendar'] || []).each do |row|
+          next if stock && stock.symbol != row['symbol']
+
+          stock = Stock.find_by(symbol: row['symbol'])
+          next unless stock
+
+          date = Date.parse(row['date'])
+          if stock.next_earnings_date.nil? ||
+              (date.future? && stock.next_earnings_date >= date)
+            stock.next_earnings_date = date
+            stock.next_earnings_hour = row['hour']
+            stock.next_earnings_est_eps = row['epsEstimate']
+          end
+
+          details = (stock.next_earnings_details ||= [])
+          details.reject! { |d| d['date'] == row['date'] }
+
+          details << {
+              date: row['date'],
+              hour: row['hour'],
+              eps_estimate: row['epsEstimate'],
+              eps_actual: row['epsActual'],
+              revenue_estimate: row['revenueEstimate'],
+              revenue_actual: row['revenueActual'],
+              quarter: row['quarter'],
+              year: row['year'],
+          }
+
+          stock.save!
+        end
+      end
+
       private
 
       def recommendation_mean(rec_details)

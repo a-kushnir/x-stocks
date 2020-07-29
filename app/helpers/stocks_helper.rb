@@ -142,4 +142,12 @@ module StocksHelper
     end
   end
 
+  def humanize_earnings_hour(value)
+    {
+      'bmo' => 'Before Market Open',
+      'amc' => 'After Market Close',
+      'dmh' => 'During Market Hours'
+    }[value] || 'Unknown'
+  end
+
 end

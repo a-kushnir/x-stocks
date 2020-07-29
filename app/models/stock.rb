@@ -22,6 +22,7 @@ class Stock < ApplicationRecord
   serialize :finnhub_price_target, JSON
   serialize :earnings, JSON
   serialize :dividend_details, JSON
+  serialize :next_earnings_details, JSON
   serialize :metascore_details, JSON
 
   def to_s

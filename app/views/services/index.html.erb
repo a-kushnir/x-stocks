@@ -11,18 +11,18 @@
   </thead>
 
   <tbody>
-  <% @services.each do |service_code, service| %>
-    <% serv = service[:service] ? Service.find_by(key: service[:service]) : nil %>
+  <% @service_runners.each do |service_runner| %>
+    <% serv = service_runner.service %>
     <tr>
-      <td><%= service[:name] %></td>
-      <td><%= service[:schedule] %></td>
+      <td><%= service_runner.name %></td>
+      <td><%= service_runner.schedule_code %></td>
       <% locked_at = serv&.locked_at %>
       <td><%= serv ? (locked_at ? "Started #{time_ago_in_words locked_at} ago" : "Paused") : '' %></td>
       <% last_run_at = serv&.last_run_at %>
       <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
-        <%= form_tag(service_path(service_code), method: 'put') do %>
-          <% (service[:args] || []).each do |arg| %>
+        <%= form_tag(service_path(service_runner), method: 'put') do %>
+          <% (service_runner.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
               <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }), class: 'selectpicker', data: {live_search: true}) %>
             <% end %>
@@ -31,8 +31,8 @@
       </td>
       <td>
         <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %>
-        <%= link_to 'Log', "/services/#{service_code}/log", class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
-        <%= link_to 'Error', "/services/#{service_code}/error", class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
+        <%= link_to 'Log', service_log_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
+        <%= link_to 'Error', service_error_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
       </td>
     </tr>
   <% end %>

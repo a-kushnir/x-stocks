@@ -44,6 +44,7 @@ class ServicesController < ApplicationController
       Etl::Refresh::Finnhub.new.daily_all_stocks
       Etl::Refresh::Iexapis.new.weekly_all_stocks
       Etl::Refresh::Dividend.new.weekly_all_stocks
+      Etl::Refresh::Finnhub.new.weekly_all_stocks
       render json: {result: 'success'}
 
     end

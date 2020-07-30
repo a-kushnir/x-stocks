@@ -19,6 +19,7 @@ module Etl
         Etl::Refresh::Dividend.new.weekly_one_stock!(stock) rescue nil
 
         Etl::Refresh::Slickcharts.new.all_stocks! rescue nil
+        Etl::Refresh::Finnhub.new.weekly_all_stocks! rescue nil
       end
 
     end

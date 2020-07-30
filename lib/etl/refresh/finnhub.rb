@@ -43,7 +43,6 @@ module Etl
             daily_one_stock!(stock, logger)
             sleep(PAUSE_LONG)
           end
-          earnings_calendar(logger)
         end
       end
 
@@ -67,6 +66,25 @@ module Etl
         json = Etl::Extract::Finnhub.new(logger).metric(stock.symbol)
         Etl::Transform::Finnhub.new(logger).metric(stock, json) if json
       end
+
+      ##########
+      # Weekly #
+
+      def weekly_all_stocks?
+        Service[:weekly_finnhub].runnable?(1.day)
+      end
+
+      def weekly_all_stocks!
+        Service.lock(:weekly_finnhub) do |logger|
+          earnings_calendar(logger)
+        end
+      end
+
+      def weekly_all_stocks
+        weekly_all_stocks! if weekly_all_stocks?
+      end
+
+      private
 
       def earnings_calendar(logger = nil, stock = nil)
         date = Date.today

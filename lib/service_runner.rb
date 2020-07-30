@@ -101,9 +101,9 @@ class ServiceRunner
                           Etl::Refresh::Slickcharts.new.all_stocks!
                         end),
 
-      ServiceRunner.new('Manual update of upcoming earnings (part of daily update) [Finnhub]', 'upcoming_earnings', {},
+      ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', {service_code: 'weekly_finnhub', schedule_code: 'Weekly'},
                         ->(args) do
-                          Etl::Refresh::Finnhub.new.earnings_calendar
+                          Etl::Refresh::Finnhub.new.weekly_all_stocks!
                         end),
   ].freeze
 

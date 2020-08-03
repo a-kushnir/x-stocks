@@ -59,6 +59,9 @@
               data: form.serialize(),
               success: function(data) {
                   $(form_container).html(data);
+              },
+              error: function(data) {
+                  $(form_container).html(data.responseText);
               }
           });
       });

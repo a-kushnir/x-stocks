@@ -1,4 +1,11 @@
 <% if @error %>
+  <% if @layout != 'application' %>
+    <div class="form-group" style="margin-top: 8px; margin-bottom: 8px">
+      <p style="margin-top: 8px; margin-bottom: 8px">
+        Oops! Something went wrong
+      </p>
+    </div>
+  <% end %>
   <div class="form-group" id="error-details" style="display:none;">
     <p>
       <label>Message:</label>
@@ -11,6 +18,8 @@
   </div>
 <% end %>
 <div class="row text-center">
-  <%= link_to 'Go back to Home Page', root_path, class: 'btn btn-link' %>
+  <% if @layout == 'application' %>
+    <%= link_to 'Go back to Home Page', root_path, class: 'btn btn-link' %>
+  <% end %>
   <a href="#" class="btn btn-link" onclick="$('#error-details').toggle(); return false;">Show Details</a><br>
 </div>

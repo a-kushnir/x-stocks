@@ -4,11 +4,13 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, with: :internal_error
 
-  def not_found
+  def not_found(layout: 'application')
     @page_title = '404 Page not found'
+    @layout = layout
+
     respond_to do |format|
-      format.html { render file: '/errors/404', layout: 'application', status: 404 }
-      format.xlsx { render file: '/errors/404', layout: 'application', status: 404, formats: [:html], content_type: Mime[:html] }
+      format.html { render file: '/errors/404', layout: layout, status: 404 }
+      format.xlsx { render file: '/errors/404', layout: layout, status: 404, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 404 }
       format.any  { head 404 }
     end
@@ -16,12 +18,14 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def internal_error(error = nil)
+  def internal_error(error = nil, layout: 'application')
     @page_title = '500 Internal Server Error'
     @error = error
+    @layout = layout
+
     respond_to do |format|
-      format.html { render file: '/errors/500', layout: 'application', status: 500 }
-      format.xlsx { render file: '/errors/500', layout: 'application', status: 500, formats: [:html], content_type: Mime[:html] }
+      format.html { render file: '/errors/500', layout: layout, status: 500 }
+      format.xlsx { render file: '/errors/500', layout: layout, status: 500, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 500 }
       format.any  { head 500 }
     end

@@ -5,9 +5,10 @@ class Position < ApplicationRecord
 
   validates :user, presence: true
   validates :stock, presence: true, uniqueness: { scope: :user }
-  validates :shares, numericality: true, allow_nil: true
-  validates :average_price, numericality: true, allow_nil: true
+  validates :shares, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :average_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
+  before_validation :remove_zero_numbers
   before_save :update_prices, :update_dividends
 
   def to_s
@@ -56,4 +57,10 @@ class Position < ApplicationRecord
     self.est_annual_dividend = stock.est_annual_dividend
     self.est_annual_income = est_annual_dividend * shares rescue nil
   end
+
+  def remove_zero_numbers
+    self.shares = nil if shares&.zero?
+    self.average_price = nil if average_price&.zero?
+  end
+
 end

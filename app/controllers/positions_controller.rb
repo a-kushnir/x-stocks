@@ -24,6 +24,8 @@ class PositionsController < ApplicationController
     else
       render partial: 'edit', layout: nil
     end
+  rescue Exception => error
+    internal_error(error, layout: nil)
   end
 
   private

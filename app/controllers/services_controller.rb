@@ -32,7 +32,7 @@ class ServicesController < ApplicationController
   end
 
   def run
-    if Service.where('locked_at < ?', 1.hour.ago).exists?
+    if Service.where('locked_at > ?', 1.hour.ago).exists?
       render json: {result: 'locked'}
 
     elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?

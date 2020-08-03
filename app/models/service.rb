@@ -11,10 +11,9 @@ class Service < ApplicationRecord
     Etl::Refresh::Dividend.new.weekly_all_stocks?
   end
 
-  def self.lock(key)
+  def self.lock(key, force: false)
     service = Service.find_or_create_by!(key: key)
-    if service.locked_at.nil? ||
-        service.locked_at < 1.hour.ago
+    if force || service.locked_at.nil? || service.locked_at < 1.hour.ago
 
       rows_updated = Service
         .where(id: service.id, locked_at: service.locked_at)
@@ -29,12 +28,13 @@ class Service < ApplicationRecord
           yield service
         rescue Exception => error
           service.error = "Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
+          raise error
+        ensure
+          service.log = service.instance_variable_get :@log_writer
+          service.last_run_at = DateTime.now
+          service.locked_at = nil
+          service.save!
         end
-
-        service.log = service.instance_variable_get :@log_writer
-        service.last_run_at = DateTime.now
-        service.locked_at = nil
-        service.save!
 
         true
       end

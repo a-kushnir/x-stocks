@@ -8,8 +8,8 @@ module Etl
         Service[:weekly_iexapis].runnable?(1.day)
       end
 
-      def weekly_all_stocks!
-        Service.lock(:weekly_iexapis) do |logger|
+      def weekly_all_stocks!(force: false)
+        Service.lock(:weekly_iexapis, force: force) do |logger|
           Stock.random.all.each do |stock|
             weekly_one_stock!(stock, logger)
             sleep(PAUSE)

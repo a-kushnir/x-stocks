@@ -12,8 +12,8 @@ module Etl
         Service[:stock_prices].runnable?(1.hour)
       end
 
-      def hourly_all_stocks!
-        Service.lock(:stock_prices) do |logger|
+      def hourly_all_stocks!(force: false)
+        Service.lock(:stock_prices, force: force) do |logger|
           Stock.random.all.each do |stock|
             hourly_one_stock!(stock, logger)
             sleep(PAUSE_SHORT)
@@ -37,8 +37,8 @@ module Etl
         Service[:daily_finnhub].runnable?(1.day)
       end
 
-      def daily_all_stocks!
-        Service.lock(:daily_finnhub) do |logger|
+      def daily_all_stocks!(force: false)
+        Service.lock(:daily_finnhub, force: force) do |logger|
           Stock.random.all.each do |stock|
             daily_one_stock!(stock, logger)
             sleep(PAUSE_LONG)
@@ -74,8 +74,8 @@ module Etl
         Service[:weekly_finnhub].runnable?(1.day)
       end
 
-      def weekly_all_stocks!
-        Service.lock(:weekly_finnhub) do |logger|
+      def weekly_all_stocks!(force: false)
+        Service.lock(:weekly_finnhub, force: force) do |logger|
           earnings_calendar(logger)
         end
       end

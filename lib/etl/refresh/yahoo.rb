@@ -8,8 +8,8 @@ module Etl
         Service[:daily_yahoo].runnable?(1.day)
       end
 
-      def daily_all_stocks!
-        Service.lock(:daily_yahoo) do |logger|
+      def daily_all_stocks!(force: false)
+        Service.lock(:daily_yahoo, force: force) do |logger|
           Stock.random.all.each do |stock|
             daily_one_stock!(stock, logger)
             sleep(PAUSE)

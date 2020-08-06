@@ -5,7 +5,9 @@
       <% [
              ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance (#{@stock.symbol})"],
              ["https://www.dividend.com/search?q=#{@stock.symbol}", "Dividend.com (#{@stock.symbol})"],
+             ["https://seekingalpha.com/symbol/#{@stock.symbol}", "Seeking Alpha (#{@stock.symbol})"],
              ["https://robinhood.com/stocks/#{@stock.symbol}", "Robinhood (#{@stock.symbol})"],
+             ["https://www.webull.com/quote/#{@stock.exchange&.code&.downcase}-#{@stock.symbol.downcase}", "Webull (#{@stock.symbol})"],
          ].each do |link| %>
         <li class="nav-item">
           <a class="nav-link" href="<%= link[0] %>">

@@ -15,4 +15,12 @@ class Exchange < ApplicationRecord
     end
   end
 
+  def code
+    if short_name.downcase == 'amex'
+      'nysearca'
+    else
+      short_name.downcase
+    end
+  end
+
 end

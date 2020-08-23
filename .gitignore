@@ -35,4 +35,7 @@
 yarn-debug.log*
 .yarn-integrity
 
+# ignore JetBrains IDE stuff
 /.idea
+/.generators
+/.rakeTasks

@@ -3,10 +3,10 @@ module Etl
     class Iexapis < Base
 
       def company(stock, json)
-        json ||= {}
+        return if json.blank?
 
         stock.company_name = json['companyName']
-        stock.exchange = Exchange.search(json['exchange'])
+        stock.exchange ||= Exchange.find_by(iexapis_code: json['exchange']) if json['exchange'].present?
         stock.industry = json['industry']
         stock.website = json['website']
         stock.description = json['description']
@@ -31,6 +31,7 @@ module Etl
 
       def dividends(stock, json)
         return if json.blank?
+
         json = [json] unless json.is_a?(Array)
 
         json = json.map do |row|
@@ -67,10 +68,13 @@ module Etl
       end
 
       def next_dividend(stock, json)
+        return if json.blank?
+
         json = json.first if json.is_a?(Array)
         stock.next_div_ex_date = json&.dig('exDate')
         stock.next_div_payment_date = json&.dig('paymentDate')
         stock.next_div_amount = json&.dig('amount')
+
         stock.save!
       end
 

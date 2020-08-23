@@ -3,7 +3,6 @@ module Etl
     class Finnhub < Base
 
       BASE_URL = 'https://finnhub.io/api/v1'
-      FINNHUB_KEY = ENV['FINNHUB_KEY']
 
       def company(symbol)
         get_json(company_url(symbol))
@@ -39,36 +38,42 @@ module Etl
 
       private
 
+      def token
+        value = ENV['FINNHUB_KEY']
+        raise 'ENV[FINNHUB_KEY] is required to use this API' if value.blank?
+        value
+      end
+
       def company_url(symbol)
-        "#{BASE_URL}/stock/profile2?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/profile2?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def peers_url(symbol)
-        "#{BASE_URL}/stock/peers?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/peers?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def quote_url(symbol)
-        "#{BASE_URL}/quote?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/quote?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def recommendation_url(symbol)
-        "#{BASE_URL}/stock/recommendation?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/recommendation?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def price_target_url(symbol)
-        "#{BASE_URL}/stock/price-target?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/price-target?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def earnings_url(symbol)
-        "#{BASE_URL}/stock/earnings?symbol=#{esc(symbol)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/earnings?symbol=#{esc(symbol)}&token=#{token}"
       end
 
       def metric_url(symbol)
-        "#{BASE_URL}/stock/metric?symbol=#{esc(symbol)}&metric=all&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/stock/metric?symbol=#{esc(symbol)}&metric=all&token=#{token}"
       end
 
       def earnings_calendar_url(from, to)
-        "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{FINNHUB_KEY}"
+        "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
       end
 
     end

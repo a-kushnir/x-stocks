@@ -3,22 +3,30 @@ module Etl
     class Finnhub < Base
 
       def company(stock, json)
+        return if json.blank?
+
         stock.ipo = json['ipo']
         stock.logo = json['logo']
+        stock.exchange ||= Exchange.find_by(finnhub_code: json['exchange']) if json['exchange'].present?
+
         stock.save
       end
 
       def peers(stock, json)
+        return if json.blank?
+
         stock.peers = json
       end
 
       def quote(stock, json)
-        json ||= {}
+        return if json.blank?
+
         stock.current_price = json['c']
         stock.prev_close_price = json['pc']
         stock.open_price = json['o']
         stock.day_low_price = json['l']
         stock.day_high_price = json['h']
+
         stock.update_prices!
       end
 

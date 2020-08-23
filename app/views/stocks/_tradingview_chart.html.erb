@@ -9,7 +9,7 @@
             new TradingView.widget(
                 {
                     "autosize": true,
-                    "symbol": "<%= @stock.exchange.short_name %>:<%= @stock.symbol %>",
+                    "symbol": "<%= @stock.exchange.tradingview_code %>:<%= @stock.symbol %>",
                     "timezone": "Etc/UTC",
                     "theme": "light",
                     "style": "2",

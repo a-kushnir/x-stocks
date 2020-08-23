@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_184744) do
+ActiveRecord::Schema.define(version: 2020_08_23_201452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,14 @@ ActiveRecord::Schema.define(version: 2020_07_29_184744) do
 
   create_table "exchanges", force: :cascade do |t|
     t.string "name", null: false
-    t.string "short_name", null: false
+    t.string "code", null: false
     t.string "region", null: false
     t.datetime "created_at", null: false
+    t.string "iexapis_code"
+    t.string "webull_code"
+    t.string "finnhub_code"
+    t.string "tradingview_code"
+    t.string "dividend_code"
   end
 
   create_table "positions", force: :cascade do |t|

@@ -3,7 +3,6 @@ module Etl
     class Iexapis < Base
 
       BASE_URL = 'https://cloud.iexapis.com/stable'
-      IEXAPIS_KEY = ENV['IEXAPIS_KEY']
 
       def company(symbol)
         get_json(company_url(symbol))
@@ -27,24 +26,30 @@ module Etl
 
       private
 
+      def token
+        value = ENV['IEXAPIS_KEY']
+        raise 'ENV[IEXAPIS_KEY] is required to use this API' if value.blank?
+        value
+      end
+
       def company_url(symbol)
-        "#{BASE_URL}/stock/#{esc(symbol)}/company?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/company?token=#{token}"
       end
 
       def dividends_url(symbol)
-        "#{BASE_URL}/stock/#{esc(symbol)}/dividends?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends?token=#{token}"
       end
 
       def dividends_3m_url(symbol)
-        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/3m?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/3m?token=#{token}"
       end
 
       def dividends_6m_url(symbol)
-        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/6m?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/6m?token=#{token}"
       end
 
       def dividends_next_url(symbol)
-        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/next?token=#{IEXAPIS_KEY}";
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/next?token=#{token}"
       end
 
     end

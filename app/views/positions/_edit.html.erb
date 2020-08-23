@@ -12,9 +12,9 @@
   <div class="form-group">
     <%= form.label :shares %>
     <% if @position.errors[:shares].empty? %>
-      <%= form.text_field :shares, class: 'form-control', value: number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %>
+      <%= form.text_field :shares, class: 'form-control', value: number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true), autocomplete: :off %>
     <% else %>
-      <%= form.text_field :shares, class: 'form-control' %>
+      <%= form.text_field :shares, class: 'form-control', autocomplete: :off %>
     <% end %>
   </div>
 
@@ -25,9 +25,9 @@
         <span class="input-group-text">$</span>
       </div>
       <% if @position.errors[:average_price].empty? %>
-        <%= form.text_field :average_price, class: 'form-control', value: number_to_currency(@position.average_price, unit: '') %>
+        <%= form.text_field :average_price, class: 'form-control', value: number_to_currency(@position.average_price, unit: ''), autocomplete: :off %>
       <% else %>
-        <%= form.text_field :average_price, class: 'form-control' %>
+        <%= form.text_field :average_price, class: 'form-control', autocomplete: :off %>
       <% end %>
     </div>
   </div>

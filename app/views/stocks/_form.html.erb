@@ -1,17 +1,4 @@
-<% if @stock.errors.any? %>
-  <div class="form-group">
-    <% @stock.errors.full_messages.each do |msg| %>
-      <div class="alert alert-danger" role="alert">
-        <%= msg %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
-<div class="form-group">
-  <%= form.label :symbol %>
-  <%= form.text_field :symbol, class: 'form-control', style: 'text-transform: uppercase;', autocomplete: :off %>
-</div>
+<%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off %>
 
 <div class="my-button-group-centered">
   <%= link_to 'Back', back_url, class: 'btn btn-outline-dark' %>

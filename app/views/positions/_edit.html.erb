@@ -1,47 +1,16 @@
-<%= form_with scope: :position, url: position_path(@position), method: :put, local: true, html: {class: 'my-form', style: 'margin-bottom: 20px;'} do |form| %>
-  <% if @position.errors.any? %>
-    <div class="form-group">
-      <% @position.errors.full_messages.each do |msg| %>
-        <div class="alert alert-danger" role="alert">
-          <%= msg %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+<%= bootstrap_form_for(@position, url: position_path(@position), method: :put, html: {id: 'position-form', class: 'my-form', style: 'margin-bottom: 20px;'}) do |form| %>
 
-  <div class="form-group">
-    <%= form.label :shares %>
-    <% if @position.errors[:shares].empty? %>
-      <%= form.text_field :shares, class: 'form-control', value: number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true), autocomplete: :off %>
-    <% else %>
-      <%= form.text_field :shares, class: 'form-control', autocomplete: :off %>
-    <% end %>
-  </div>
+  <%= form.text_field :shares, autocomplete: :off,
+                      value: format_if_valid(@position, :shares) { |value| number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) } %>
 
-  <div class="form-group">
-    <%= form.label :average_price %>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text">$</span>
-      </div>
-      <% if @position.errors[:average_price].empty? %>
-        <%= form.text_field :average_price, class: 'form-control', value: number_to_currency(@position.average_price, unit: ''), autocomplete: :off %>
-      <% else %>
-        <%= form.text_field :average_price, class: 'form-control', autocomplete: :off %>
-      <% end %>
-    </div>
-  </div>
+  <%= form.text_field :average_price, autocomplete: :off, prepend: '$',
+                      value: format_if_valid(@position, :average_price) { |value| number_to_currency(value, unit: '') } %>
 
-  <div class="form-group">
-    <%= form.label :note %>
-    <div class="input-group mb-3">
-      <%= form.text_area :note, class: 'form-control' %>
-    </div>
-  </div>
+  <%= form.text_area :note %>
 
   <div class="my-button-group">
     <%= link_to 'Cancel', '#', class: 'btn btn-outline-dark', onclick: '$("#my_position_readonly").show(); $("#my_position_writable").hide(); return false;', style: 'margin-left: 0;' %>
-    <%= form.submit 'Save', class: 'btn btn-primary', onclick: 'ajax_submit_and_reload($(".my-form"), $("#my-position-div"));' %>
+    <%= form.submit 'Save', class: 'btn btn-primary', onclick: 'ajax_submit_and_reload($("#position-form"), $("#my-position-div"));' %>
   </div>
 <% end %>
 

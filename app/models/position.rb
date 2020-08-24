@@ -8,8 +8,7 @@ class Position < ApplicationRecord
   validates :shares, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :average_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
-  before_validation :remove_zero_numbers
-  before_save :update_prices, :update_dividends
+  before_save :remove_zero_numbers, :update_prices, :update_dividends
 
   def to_s
     stock&.to_s

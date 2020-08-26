@@ -5,7 +5,7 @@ module Etl
       BASE_URL = 'https://www.dividend.com/api'
 
       def data(stock)
-        symbol = "#{stock.symbol}--#{stock.exchange.short_name}"
+        symbol = "#{stock.symbol}--#{stock.exchange.dividend_code}"
 
         body = {
             "tm" => "3-comparison-center",

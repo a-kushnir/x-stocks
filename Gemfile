@@ -57,3 +57,4 @@ gem 'font-awesome-rails'
 gem 'jquery-datatables'
 gem 'devise'
 gem 'caxlsx'
+gem 'rubocop', require: false

@@ -14,10 +14,16 @@ xStocks
 
 [xStocks](http://x-stocks.herokuapp.com/) is a Stock Data Aggregator website
 
+## Prerequisites
+
+xStocks website is designed to run with a minimal set of prerequisites. You will need the following:
+
+- Ruby 2.6.6
+- Bundler
+
 ## License
 
-The Aimeos TYPO3 extension is licensed under the terms of the GPL Open Source
-license and is available for free.
+xStocks website is licensed under the terms of the GPL Open Source license and is available for free.
 
 ## Links
 

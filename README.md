@@ -34,6 +34,8 @@
 
 [(Back to top)](#table-of-contents)
 
+Install PostgreSQL and create _x_stocks_ user and _x_stocks_development_ database or update _config\database.yml_ file to match existing configuration
+
 To build and run this application locally, you'll need latest versions of Git, Ruby, Yarn and Node installed on your computer. From your command line:
 
 ```
@@ -48,6 +50,9 @@ $ bundle
 
 # Install packages
 $ yarn install
+
+# Run mirgations
+$ rails db:migrate
 
 # Run the app
 $ rails s

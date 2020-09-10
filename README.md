@@ -10,20 +10,39 @@ xStocks
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)
 [![License](https://img.shields.io/github/license/a-kushnir/x-stocks)](https://img.shields.io/github/license/a-kushnir/x-stocks)
 
-:star: Star us on GitHub — it helps!
-
 [xStocks](http://x-stocks.herokuapp.com/) is a Stock Data Aggregator website
 
-## Prerequisites
+## Requirements
+* Linux or macOS or Windows
+* PostgreSQL, [download](https://www.postgresql.org/download/)
+* Ruby 2.6 or later, [download](https://www.ruby-lang.org/en/downloads/)
+* Yarn 1.22 or later, [download](https://classic.yarnpkg.com/en/docs/install/)
+* Node 12 or later, [download](https://nodejs.org/en/download/)
+* Git
 
-xStocks website is designed to run with a minimal set of prerequisites. You will need the following:
+## Build
 
-- Ruby 2.6.6
-- Bundler
+To build and run this application locally, you'll need latest versions of Git, Ruby, Yarn and Node installed on your computer. From your command line:
+
+```
+# Clone this repository
+$ git clone https://github.com/a-kushnir/x-stocks.git
+
+# Go into the repository
+$ cd x-stocks
+
+# Install gems
+$ bundle
+
+# Install packages
+$ yarn install
+
+# Run the app
+$ rails s
+```
 
 ## License
-
-xStocks website is licensed under the terms of the GPL Open Source license and is available for free.
+xStocks is under the MIT license. See the [LICENSE](https://github.com/a-kushnir/x-stocks/blob/develop/LICENSE.md) for more information.
 
 ## Links
 

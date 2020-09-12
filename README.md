@@ -14,10 +14,43 @@
 
 # Table of contents
 
+- [Screenshots](#screenshots)
+    - [Home Page](#home-page)
+    - [Stock Page](#stock-page)
+    - [My Positions](#my-positions)
+    - [My Dividends](#my-dividends)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [License](#license)
 - [Links](#links)
+
+# Screenshots
+
+[(Back to top)](#table-of-contents)
+
+xStock is a website that allows to gather and analyze stock information from multiple sources and apply the data for your own portfolio.
+
+## Home Page
+News, vital market information with links to Sceeners and other important pages.
+
+![home-page](https://user-images.githubusercontent.com/1454297/92982276-a58df780-f45a-11ea-897a-34c22b7cb71f.png)
+
+## Stock Page
+All gathered information about a single stock.
+
+![stock-information](https://user-images.githubusercontent.com/1454297/92982322-e6860c00-f45a-11ea-9d20-d855d9140279.png)
+
+## My Positions
+All gathered information about user portfolio. Information can be presented in Table or Chart mode or exported to Excel format.
+
+![positions-table](https://user-images.githubusercontent.com/1454297/92982317-dff79480-f45a-11ea-83a3-55d0abec70e3.png)
+![positions-charts](https://user-images.githubusercontent.com/1454297/92982319-e259ee80-f45a-11ea-9744-69176ec46e09.png)
+
+## My Dividends
+All gathered information about user dividends. Information can be presented in Table or Chart mode or exported to Excel format.
+
+![divident-table](https://user-images.githubusercontent.com/1454297/92982334-f30a6480-f45a-11ea-9ce7-9855bd6fd86a.png)
+![divident-charts](https://user-images.githubusercontent.com/1454297/92982335-f4d42800-f45a-11ea-86ca-3b1a607eefe9.png)
 
 # Requirements
 

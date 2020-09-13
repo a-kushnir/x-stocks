@@ -101,5 +101,5 @@ xStocks is under the MIT license. See the [LICENSE](https://github.com/a-kushnir
 
 [(Back to top)](#table-of-contents)
 
-* [Web site](http://x-stocks.herokuapp.com/)
-* [Source code](https://github.com/aimeos/aimeos-typo3)
+* [Live version on Heroku](http://x-stocks.herokuapp.com/)
+* [Source code](https://github.com/a-kushnir/x-stocks)

@@ -1,10 +1,11 @@
 <a href="http://x-stocks.herokuapp.com/">
-    <img src="https://raw.githubusercontent.com/a-kushnir/x-stocks/main/public/img/favicons/favicon.svg" alt="xStocks logo" title="xStpcks" align="right" height="60" />
+    <img src="https://raw.githubusercontent.com/a-kushnir/x-stocks/main/public/img/favicons/favicon.svg" alt="xStocks logo" title="xStocks" align="right" height="60" />
 </a>
 
 # xStocks
 
 [![Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)
+[![Language](https://img.shields.io/badge/language-ruby-orange)](https://img.shields.io/badge/language-ruby-orange)
 [![Bootstrap](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/bootstrap)](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/bootstrap)
 [![jQuery](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/jquery)](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/jquery)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)
@@ -101,5 +102,5 @@ xStocks is under the MIT license. See the [LICENSE](https://github.com/a-kushnir
 
 [(Back to top)](#table-of-contents)
 
-* [Live version on Heroku](http://x-stocks.herokuapp.com/)
+* [Live version](http://x-stocks.herokuapp.com/) on Heroku
 * [Source code](https://github.com/a-kushnir/x-stocks)

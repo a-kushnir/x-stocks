@@ -12,6 +12,18 @@ class Config < ApplicationRecord
     config.update(value: value)
   end
 
+  def self.cached(key, expires_in)
+    config = Config.find_by(key: key)
+
+    if config.nil? || config.updated_at < expires_in.ago
+      config ||= Config.new(key: key)
+      config.value = yield
+      config.save
+    end
+
+    config.value
+  end
+
   def to_s
     key
   end

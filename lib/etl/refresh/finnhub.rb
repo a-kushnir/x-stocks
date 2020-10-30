@@ -2,8 +2,8 @@ module Etl
   module Refresh
     class Finnhub
 
-      PAUSE_SHORT = 1.0 / 2 # Limit up to 2 requests per second
-      PAUSE_LONG = 1.0 * 2 # Limit up to a request per 2 seconds
+      PAUSE_SHORT = 1.0 / 10 # Limit up to 5 requests per second
+      PAUSE_LONG = 1.0 / 3 # Limit up to 2 request per second
 
       ##########
       # Hourly #

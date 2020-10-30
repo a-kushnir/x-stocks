@@ -2,9 +2,11 @@ module Etl
   module Extract
     class Base
 
+      attr_reader :token
       attr_reader :logger
 
-      def initialize(logger)
+      def initialize(token: nil, logger: nil)
+        @token = token
         @logger = logger
       end
 

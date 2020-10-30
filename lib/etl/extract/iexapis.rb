@@ -3,6 +3,7 @@ module Etl
     class Iexapis < Base
 
       BASE_URL = 'https://cloud.iexapis.com/stable'
+      TOKEN_KEY = 'IEXAPIS_KEY'
 
       def company(symbol)
         get_json(company_url(symbol))
@@ -25,12 +26,6 @@ module Etl
       end
 
       private
-
-      def token
-        value = ENV['IEXAPIS_KEY']
-        raise 'ENV[IEXAPIS_KEY] is required to use this API' if value.blank?
-        value
-      end
 
       def company_url(symbol)
         "#{BASE_URL}/stock/#{esc(symbol)}/company?token=#{token}"

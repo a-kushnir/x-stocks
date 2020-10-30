@@ -22,7 +22,7 @@ module Etl
       end
 
       def daily_one_stock!(stock, logger = nil)
-        json = Etl::Extract::Yahoo.new(logger).statistics(stock.symbol)
+        json = Etl::Extract::Yahoo.new(logger: logger).statistics(stock.symbol)
         Etl::Transform::Yahoo::new(logger).statistics(stock, json)
       end
 

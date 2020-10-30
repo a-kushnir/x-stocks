@@ -3,6 +3,7 @@ module Etl
     class Finnhub < Base
 
       BASE_URL = 'https://finnhub.io/api/v1'
+      TOKEN_KEY = 'FINNHUB_KEY'
 
       def company(symbol)
         get_json(company_url(symbol))
@@ -37,12 +38,6 @@ module Etl
       end
 
       private
-
-      def token
-        value = ENV['FINNHUB_KEY']
-        raise 'ENV[FINNHUB_KEY] is required to use this API' if value.blank?
-        value
-      end
 
       def company_url(symbol)
         "#{BASE_URL}/stock/profile2?symbol=#{esc(symbol)}&token=#{token}"

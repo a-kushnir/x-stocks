@@ -10,8 +10,9 @@ module Etl
 
       def weekly_all_stocks!(force: false)
         Service.lock(:weekly_iexapis, force: force) do |logger|
+          token_store = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
           Stock.random.all.each do |stock|
-            weekly_one_stock!(stock, logger)
+            weekly_one_stock!(stock, token_store, logger)
             sleep(PAUSE)
           end
         end
@@ -21,23 +22,31 @@ module Etl
         weekly_all_stocks! if weekly_all_stocks?
       end
 
-      def weekly_one_stock!(stock, logger = nil, immediate: false)
-        json = Etl::Extract::Iexapis.new(logger).dividends_next(stock.symbol)
-        Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-        Etl::Transform::Iexapis::new(logger).next_dividend(stock, json)
-        sleep(PAUSE) unless immediate
+      def weekly_one_stock!(stock, token_store, logger = nil, immediate: false)
+        token_store.try_token do |token|
+          json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_next(stock.symbol)
+          Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+          Etl::Transform::Iexapis::new(logger).next_dividend(stock, json)
+          sleep(PAUSE) unless immediate
+        end
 
-        json = Etl::Extract::Iexapis.new(logger).dividends(stock.symbol)
-        Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-        sleep(PAUSE) unless immediate
-
-        if immediate || stock.dividend_details.blank?
-          json = Etl::Extract::Iexapis.new(logger).dividends_3m(stock.symbol)
+        token_store.try_token do |token|
+          json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends(stock.symbol)
           Etl::Transform::Iexapis::new(logger).dividends(stock, json)
           sleep(PAUSE) unless immediate
+        end
 
-          json = Etl::Extract::Iexapis.new(logger).dividends_6m(stock.symbol)
-          Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+        if immediate || stock.dividend_details.blank?
+          token_store.try_token do |token|
+            json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_3m(stock.symbol)
+            Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+            sleep(PAUSE) unless immediate
+          end
+
+          token_store.try_token do |token|
+            json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_6m(stock.symbol)
+            Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+          end
         end
       end
 

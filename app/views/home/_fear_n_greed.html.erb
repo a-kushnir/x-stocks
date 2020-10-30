@@ -1,5 +1,25 @@
 <h3>Fear & Greed Index</h3>
 
-<a href="https://money.cnn.com/data/fear-and-greed/">
-  <%= image_tag(@fear_n_greed_image_url, class: 'img-fluid border rounded') rescue 'No Image Available' %><br>
-</a>
+<div id="carouselExampleControls" class="carousel slide" data-interval="false">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <a href="https://money.cnn.com/data/fear-and-greed/">
+        <%= image_tag('http://markets.money.cnn.com/Marketsdata/Api/Chart/FearGreedHistoricalImage?chartType=AvgPtileModel',
+                      class: 'img-fluid border rounded', alt: 'Fear & Greed Over Time') %>
+      </a>
+    </div>
+    <div class="carousel-item">
+      <a href="https://money.cnn.com/data/fear-and-greed/">
+        <%= image_tag(@fear_n_greed_image_url, class: 'img-fluid border rounded', alt: 'Fear & Greed Index') rescue 'No Image Available' %><br>
+      </a>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

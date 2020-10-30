@@ -2,3 +2,17 @@
 .dropdown.bootstrap-select.form-control {
   height: auto;
 }
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 32px;
+  font-weight: bold;
+  color: #007bff;
+}
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 32px;
+  font-weight: bold;
+  color: #007bff;
+}

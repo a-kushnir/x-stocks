@@ -6,14 +6,20 @@ module Etl
         iexapis_ts = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
         finnhub_ts = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
 
-        json = Etl::Extract::Iexapis.new(token: iexapis_ts, logger: logger).company(stock.symbol) rescue nil
-        Etl::Transform::Iexapis::new(logger).company(stock, json) rescue nil
+        iexapis_ts.try_token do |token|
+          json = Etl::Extract::Iexapis.new(token: token, logger: logger).company(stock.symbol) rescue nil
+          Etl::Transform::Iexapis::new(logger).company(stock, json) rescue nil
+        end
 
-        json = Etl::Extract::Finnhub.new(token: finnhub_ts, logger: logger).company(stock.symbol) rescue nil
-        Etl::Transform::Finnhub::new(logger).company(stock, json) rescue nil
+        finnhub_ts.try_token do |token|
+          json = Etl::Extract::Finnhub.new(token: token, logger: logger).company(stock.symbol) rescue nil
+          Etl::Transform::Finnhub::new(logger).company(stock, json) rescue nil
+        end
 
-        json = Etl::Extract::Finnhub.new(token: finnhub_ts,logger: logger).peers(stock.symbol) rescue nil
-        Etl::Transform::Finnhub::new(logger).peers(stock, json) rescue nil
+        finnhub_ts.try_token do |token|
+          json = Etl::Extract::Finnhub.new(token: token,logger: logger).peers(stock.symbol) rescue nil
+          Etl::Transform::Finnhub::new(logger).peers(stock, json) rescue nil
+        end
 
         Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, finnhub_ts) rescue nil
         Etl::Refresh::Yahoo.new.daily_one_stock!(stock) rescue nil

@@ -3,8 +3,8 @@ module Etl
     class Company
 
       def one_stock!(stock, logger = nil)
-        iexapis_ts = TokenStore.new(Etl::Refresh::Iexapis::TOKEN_KEY)
-        finnhub_ts = TokenStore.new(Etl::Refresh::Finnhub::TOKEN_KEY)
+        iexapis_ts = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
+        finnhub_ts = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
 
         json = Etl::Extract::Iexapis.new(token: iexapis_ts, logger: logger).company(stock.symbol) rescue nil
         Etl::Transform::Iexapis::new(logger).company(stock, json) rescue nil

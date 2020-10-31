@@ -11,7 +11,7 @@ class Stock < ApplicationRecord
   default_scope { order(symbol: :asc) }
   scope :random, -> { unscoped.order('RANDOM()') }
 
-  before_validation :upcase_symbol
+  before_validation :strip_symbol, :upcase_symbol
   validates :symbol, presence: true, uniqueness: true
 
   before_save :update_metascore
@@ -61,6 +61,10 @@ class Stock < ApplicationRecord
   end
 
   private
+
+  def strip_symbol
+    self.symbol = symbol.strip
+  end
 
   def upcase_symbol
     self.symbol = symbol.upcase

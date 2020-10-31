@@ -26,7 +26,9 @@ module Etl
         hourly_all_stocks! if hourly_all_stocks?
       end
 
-      def hourly_one_stock!(stock, token_store, logger = nil)
+      def hourly_one_stock!(stock, token_store = nil, logger = nil)
+        token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(token: token, logger: logger).quote(stock.symbol)
           Etl::Transform::Finnhub::new(logger).quote(stock, json) if json
@@ -54,7 +56,9 @@ module Etl
         daily_all_stocks! if daily_all_stocks?
       end
 
-      def daily_one_stock!(stock, token_store, logger = nil, immediate: false)
+      def daily_one_stock!(stock, token_store = nil, logger = nil, immediate: false)
+        token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(token: token, logger: logger).recommendation(stock.symbol)
           Etl::Transform::Finnhub.new(logger).recommendation(stock, json) if json

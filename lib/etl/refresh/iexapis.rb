@@ -22,7 +22,9 @@ module Etl
         weekly_all_stocks! if weekly_all_stocks?
       end
 
-      def weekly_one_stock!(stock, token_store, logger = nil, immediate: false)
+      def weekly_one_stock!(stock, token_store = nil, logger = nil, immediate: false)
+        token_store ||= TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
+        
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_next(stock.symbol)
           Etl::Transform::Iexapis::new(logger).dividends(stock, json)

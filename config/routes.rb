@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => 'registrations'}
 
-  resources :stocks, except: [:edit, :update]
+  resources :stocks, except: [:edit, :update], id: /.*/
   resources :positions, only: [:index, :update]
   resources :dividends, only: [:index]
 

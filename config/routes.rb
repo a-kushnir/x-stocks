@@ -8,11 +8,14 @@ Rails.application.routes.draw do
   resources :positions, only: [:index, :update]
   resources :dividends, only: [:index]
 
-  resources :services, only: [:index, :update] do
+  resources :services, only: [:index] do
     member do
-      get :run
+      get :run, to: 'services#run_one'
       get :log
       get :error
+    end
+    collection do
+      get :run, to: 'services#run_all'
     end
   end
 

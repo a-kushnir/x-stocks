@@ -13,15 +13,15 @@ function submitEventSource(form, options) {
 }
 
 function runEventSource(url, options) {
-    const uri = new URL(url);
-
     if (options.data) {
+        const uri = new URL(url);
         options.data.forEach(function (param) {
             uri.searchParams.append(param.name, param.value);
         })
+        url = uri.toString();
     }
 
-    const source = new EventSource(uri.toString());
+    const source = new EventSource(url);
     source.addEventListener('message', function(e) {
         if (typeof(options.message) === 'function') {
             options.message(JSON.parse(e.data));

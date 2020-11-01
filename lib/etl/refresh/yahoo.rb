@@ -20,7 +20,7 @@ module Etl
       end
 
       def daily_all_stocks(&block)
-        daily_all_stocks!(block) if daily_all_stocks?
+        daily_all_stocks!(&block) if daily_all_stocks?
       end
 
       def daily_one_stock!(stock, logger = nil)

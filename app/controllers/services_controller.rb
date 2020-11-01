@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
     @page_menu_item = :services
   end
 
-  def run
+  def run_one
     find_service_runner do |service_runner|
       EventStream.run(response) do |stream|
         service_runner.run(params) do |status|
@@ -31,22 +31,23 @@ class ServicesController < ApplicationController
     end
   end
 
-  def run2
-    if Service.where('locked_at > ?', 1.hour.ago).exists?
-      render json: {result: 'locked'}
+  def run_all
+    EventStream.run(response) do |stream|
 
-    elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
-      Etl::Refresh::Finnhub.new.hourly_all_stocks
-      render json: {result: 'success'}
+      if Service.locked?
+        # Just wait
 
-    else
-      Etl::Refresh::Yahoo.new.daily_all_stocks
-      Etl::Refresh::Finnhub.new.daily_all_stocks
-      Etl::Refresh::Iexapis.new.weekly_all_stocks
-      Etl::Refresh::Dividend.new.weekly_all_stocks
-      Etl::Refresh::Finnhub.new.weekly_all_stocks
-      render json: {result: 'success'}
+      elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
+        Etl::Refresh::Finnhub.new.hourly_all_stocks { |status| stream.write(status) }
 
+      else
+        Etl::Refresh::Yahoo.new.daily_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Finnhub.new.daily_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Iexapis.new.weekly_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Dividend.new.weekly_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Finnhub.new.weekly_all_stocks { |status| stream.write(status) }
+
+      end
     end
   end
 

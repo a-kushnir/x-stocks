@@ -76,6 +76,7 @@
               setMessage(data.message);
           },
           error: function(data) {
+              console.error(data);
               setProgress(null, false);
               const backtrace = data.backtrace.map(line => document.htmlEscape(line)).join('<br>');
               setMessage(`Error: ${data.message}

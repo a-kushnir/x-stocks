@@ -9,7 +9,7 @@ function submitEventSource(form, options) {
     options ||= {}
     options.data = data;
 
-    runEventSource(url, options);
+    return runEventSource(url, options);
 }
 
 function runEventSource(url, options) {

@@ -41,9 +41,12 @@
 
 <div id="output" class="card" style="display: none; margin-top: 10px;">
   <div class="card-header">
+    <button type="button" class="close float-right" aria-label="Close" onclick="stopService();">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <h3>Running Service</h3>
     <div id="output-progress" class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+      <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
     <div id="output-message" class="font-italic" style="margin-top: 5px;"></div>
   </div>
@@ -54,10 +57,13 @@
     dataTable("#services-table", {order: [0, 'asc']});
   })
 
-  let running = false;
+  let esRunning = null;
+  let esError = false;
+  let esComponent = null;
+
   function runService(sender) {
-      if (running) return;
-      running = true;
+      if (esRunning) return;
+      esRunning = true;
 
       const form = $(sender).parents('tr').find('form');
       const control = $('#output');
@@ -69,8 +75,8 @@
           scrollTop: control.offset().top
       }, 2000);
 
-      let error = false;
-      submitEventSource(form, {
+      esError = false;
+      esComponent = submitEventSource(form, {
           message: function(data) {
               setProgress(data.percent, true);
               setMessage(data.message);
@@ -82,18 +88,33 @@
               setMessage(`Error: ${data.message}
                     <a href="#" onclick="$('#backtrace').toggle(); return false">(more)</a>
                     <div id='backtrace' style="display: none">${backtrace}<div>`);
-              error = true;
+              esError = true;
           },
           open: function() {
               setMessage('Retrieving information...');
           },
           closed: function() {
-              if (!error) {
-                  control.delay(3000).slideUp();
-              }
-              running = false;
+              serviceStopped();
           }
       })
+  }
+
+  function stopService() {
+      if (esComponent && confirm('Are you sure you want to stop the service?')) {
+          esComponent.close();
+          serviceStopped();
+          setProgress(null, false);
+          setMessage('Cancelled');
+      }
+  }
+
+  function serviceStopped() {
+      if (!esError) {
+          const control = $('#output');
+          control.delay(3000).slideUp();
+      }
+      esRunning = false;
+      esComponent = null;
   }
 
   function setProgress(percent, valid) {

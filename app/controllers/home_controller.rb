@@ -9,14 +9,16 @@ class HomeController < ApplicationController
   include ActionController::Live
 
   def demo
-    sse = SSE.new(response.stream)
     response.headers['Content-Type'] = 'text/event-stream'
-    120.times do |i|
-      sse.write({count: i}.to_json)
-      sleep(1)
-    end
+    60.times {
+      response.stream.write "hello world\n"
+      puts "response.stream.write"
+      sleep 1
+    }
+  rescue Exception => ex
+    puts "Exception: #{ex.message}"
   ensure
-    sse.close
+    response.stream.close
   end
 
 end

@@ -3,6 +3,7 @@ module Etl
 
     # Support for key_0, key_1, etc.
     SUFFIX_REGEX = /^_\d+$/
+    PAUSE = 1.0
 
     attr_reader :logger
     attr_reader :key
@@ -25,6 +26,7 @@ module Etl
         rescue
           disable_token(token)
           token = random_token!
+          sleep(PAUSE)
         end
       end
     end

@@ -21,7 +21,7 @@
       <% last_run_at = serv&.last_run_at %>
       <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
-        <%= form_tag(service_path(service_runner), method: 'put') do %>
+        <%= form_tag(run_service_path(service_runner)) do %>
           <% (service_runner.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
               <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }), class: 'selectpicker', data: {live_search: true}) %>
@@ -30,7 +30,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %>
+        <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "runService(this); return false;" %>
         <%= link_to 'Log', service_log_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
         <%= link_to 'Error', service_error_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
       </td>
@@ -39,8 +39,88 @@
   </tbody>
 </table>
 
+<div id="output" class="card" style="display: none; margin-top: 10px;">
+  <div class="card-header">
+    <h3>Running Service</h3>
+    <div id="output-progress" class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+    </div>
+    <div id="output-message" class="font-italic" style="margin-top: 5px;"></div>
+  </div>
+</div>
+
 <script>
   document.addEventListener("turbolinks:load", () => {
     dataTable("#services-table", {order: [0, 'asc']});
   })
+
+  let running = false;
+  function runService(sender) {
+      if (running) return;
+      running = true;
+
+      const form = $(sender).parents('tr').find('form');
+      const control = $('#output');
+
+      setMessage('Connecting to server...');
+      setProgress(0, true);
+      control.slideDown();
+      $('html, body').animate({
+          scrollTop: control.offset().top
+      }, 2000);
+
+      let error = false;
+      submitEventSource(form, {
+          message: function(data) {
+              setProgress(data.percent, true);
+              setMessage(data.message);
+          },
+          error: function(data) {
+              console.error(data);
+              setProgress(null, false);
+              const backtrace = data.backtrace.map(line => document.htmlEscape(line)).join('<br>');
+              setMessage(`Error: ${data.message}
+                    <a href="#" onclick="$('#backtrace').toggle(); return false">(more)</a>
+                    <div id='backtrace' style="display: none">${backtrace}<div>`);
+              error = true;
+          },
+          open: function() {
+              setMessage('Retrieving information...');
+          },
+          closed: function() {
+              if (!error) {
+                  control.delay(3000).slideUp();
+              }
+              running = false;
+          }
+      })
+  }
+
+  function setProgress(percent, valid) {
+      const control = $('#output-progress .progress-bar');
+      if (Number.isInteger(percent)) {
+          control
+            .css({width: `${percent}%`})
+            .attr('aria-valuenow', percent)
+            .html(`${percent}%`);
+
+          if (percent < 100) {
+              control.addClass('progress-bar-animated');
+              control.addClass('progress-bar-striped');
+          } else {
+              control.removeClass('progress-bar-animated');
+              control.removeClass('progress-bar-striped');
+          }
+      }
+      if (valid) {
+          control.removeClass('bg-danger');
+      } else {
+          control.addClass('bg-danger');
+      }
+  }
+
+  function setMessage(html) {
+      const control = $('#output-message');
+      control.html(html);
+  }
 </script>

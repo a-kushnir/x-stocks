@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  include ActionController::Live
 
   def index
     @service_runners = ServiceRunner.all
@@ -8,14 +9,13 @@ class ServicesController < ApplicationController
     @page_menu_item = :services
   end
 
-  def update
-    @page_title = 'Services'
-    @page_menu_item = :services
-
+  def run_one
     find_service_runner do |service_runner|
-      service_runner.run(params)
-      flash[:notice] = "#{service_runner.name} complete"
-      redirect_to action: 'index'
+      EventStream.run(response) do |stream|
+        service_runner.run(params) do |status|
+          stream.write(status)
+        end
+      end
     end
   end
 
@@ -31,22 +31,23 @@ class ServicesController < ApplicationController
     end
   end
 
-  def run
-    if Service.where('locked_at > ?', 1.hour.ago).exists?
-      render json: {result: 'locked'}
+  def run_all
+    EventStream.run(response) do |stream|
 
-    elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
-      Etl::Refresh::Finnhub.new.hourly_all_stocks
-      render json: {result: 'success'}
+      if Service.locked?
+        # Just wait
 
-    else
-      Etl::Refresh::Yahoo.new.daily_all_stocks
-      Etl::Refresh::Finnhub.new.daily_all_stocks
-      Etl::Refresh::Iexapis.new.weekly_all_stocks
-      Etl::Refresh::Dividend.new.weekly_all_stocks
-      Etl::Refresh::Finnhub.new.weekly_all_stocks
-      render json: {result: 'success'}
+      elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
+        Etl::Refresh::Finnhub.new.hourly_all_stocks { |status| stream.write(status) }
 
+      else
+        Etl::Refresh::Yahoo.new.daily_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Finnhub.new.daily_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Iexapis.new.weekly_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Dividend.new.weekly_all_stocks { |status| stream.write(status) }
+        Etl::Refresh::Finnhub.new.weekly_all_stocks { |status| stream.write(status) }
+
+      end
     end
   end
 

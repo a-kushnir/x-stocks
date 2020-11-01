@@ -1,6 +1,6 @@
 module Etl
   module Refresh
-    class Finnhub
+    class Finnhub < Base
 
       PAUSE_SHORT = 1.0 / 10  # Limit up to 10 requests per second
       PAUSE_LONG = 1.0 / 3    # Limit up to 3 requests per second
@@ -12,21 +12,23 @@ module Etl
         Service[:stock_prices].runnable?(1.hour)
       end
 
-      def hourly_all_stocks!(force: false)
+      def hourly_all_stocks!(force: false, &block)
         Service.lock(:stock_prices, force: force) do |logger|
           token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          Stock.random.all.each do |stock|
+          each_stock_with_message do |stock, message|
+            block.call message if block_given?
             hourly_one_stock!(stock, token_store, logger)
             sleep(PAUSE_SHORT)
           end
+          block.call completed_message if block_given?
         end
       end
 
-      def hourly_all_stocks
-        hourly_all_stocks! if hourly_all_stocks?
+      def hourly_all_stocks(&block)
+        hourly_all_stocks!(&block) if hourly_all_stocks?
       end
 
-      def hourly_one_stock!(stock, token_store = nil, logger = nil)
+      def hourly_one_stock!(stock, token_store = nil, logger = nil, &block)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
         token_store.try_token do |token|
@@ -42,18 +44,20 @@ module Etl
         Service[:daily_finnhub].runnable?(1.day)
       end
 
-      def daily_all_stocks!(force: false)
+      def daily_all_stocks!(force: false, &block)
         Service.lock(:daily_finnhub, force: force) do |logger|
           token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          Stock.random.all.each do |stock|
+          each_stock_with_message do |stock, message|
+            block.call message if block_given?
             daily_one_stock!(stock, token_store, logger)
             sleep(PAUSE_LONG)
           end
+          block.call completed_message if block_given?
         end
       end
 
-      def daily_all_stocks
-        daily_all_stocks! if daily_all_stocks?
+      def daily_all_stocks(&block)
+        daily_all_stocks!(&block) if daily_all_stocks?
       end
 
       def daily_one_stock!(stock, token_store = nil, logger = nil, immediate: false)

@@ -45,8 +45,12 @@ class Service < ApplicationRecord
     self.select('locked_at, last_run_at').find_or_initialize_by(key: key)
   end
 
+  def self.locked?
+    Service.where('locked_at > ?', 10.minutes.ago).exists?
+  end
+
   def locked?
-    locked_at && locked_at > 1.hour.ago
+    locked_at && locked_at > 10.minutes.ago
   end
 
   def runnable?(period)

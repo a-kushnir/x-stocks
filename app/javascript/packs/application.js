@@ -74,3 +74,7 @@ document.addEventListener("turbolinks:load", () => {
         });
     });
 })
+
+document.htmlEscape = function(value) {
+    return $('<div>').text(value).html();
+}

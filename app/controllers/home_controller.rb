@@ -6,15 +6,17 @@ class HomeController < ApplicationController
     @fear_n_greed_image_url = Etl::Refresh::FearNGreed.new.image_url
   end
 
+  include ActionController::Live
+
   def demo
+    sse = SSE.new(response.stream)
     response.headers['Content-Type'] = 'text/event-stream'
-    response.stream.write "="
     120.times do |i|
+      sse.write({count: i}.to_json)
       sleep(1)
-      response.stream.write 'x'
     end
-    response.stream.write "="
-    response.stream.close
+  ensure
+    sse.close
   end
 
 end

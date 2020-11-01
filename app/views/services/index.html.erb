@@ -39,6 +39,11 @@
   </tbody>
 </table>
 
+<span id="output"></span>
+<div id="output-progress" class="progress">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+</div>
+
 <script>
   document.addEventListener("turbolinks:load", () => {
     dataTable("#services-table", {order: [0, 'asc']});
@@ -46,19 +51,26 @@
 
   function runService(sender) {
       const form = $(sender).parents('tr').find('form');
+      const output = $('#output');
+      const progress = $('#output-progress .progress-bar');
 
       submitEventSource(form, {
-          message: function(message) {
-              debugger;
+          message: function(data) {
+              progress
+                  .css({width: `${data.percent}%`})
+                  .attr('aria-valuenow', data.percent)
+                  .html(`${data.percent}%`);
+              output.html(data.message);
           },
-          error: function(error) {
-              debugger;
+          error: function(data) {
+              output.html(data.error);
           },
           open: function() {
-              debugger;
+              output.html('Connected');
           },
           closed: function() {
-              debugger;
+              output.html('Closed');
+
           }
       })
   }

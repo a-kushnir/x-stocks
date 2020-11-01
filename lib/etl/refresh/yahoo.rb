@@ -15,6 +15,7 @@ module Etl
             daily_one_stock!(stock, logger)
             sleep(PAUSE)
           end
+          block.call completed_message if block_given?
         end
       end
 

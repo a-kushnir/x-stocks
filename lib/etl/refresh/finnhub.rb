@@ -20,6 +20,7 @@ module Etl
             hourly_one_stock!(stock, token_store, logger)
             sleep(PAUSE_SHORT)
           end
+          block.call completed_message if block_given?
         end
       end
 
@@ -51,6 +52,7 @@ module Etl
             daily_one_stock!(stock, token_store, logger)
             sleep(PAUSE_LONG)
           end
+          block.call completed_message if block_given?
         end
       end
 

@@ -19,6 +19,13 @@ module Etl
         end
       end
 
+      def processing_message(percent)
+        {
+            message: "Processing",
+            percent: percent
+        }
+      end
+
       def completed_message
         {
           message: "Completed",

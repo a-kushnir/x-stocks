@@ -118,8 +118,7 @@ class ServiceRunner
 
       ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', {},
                         ->(args, &block) do
-                          Etl::Refresh::Slickcharts.new.all_stocks!
-                          block.call completed_message
+                          Etl::Refresh::Slickcharts.new.all_stocks!(&block)
                         end),
 
       ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', {service_code: 'weekly_finnhub', schedule_code: 'Weekly'},

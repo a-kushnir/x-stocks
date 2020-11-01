@@ -43,7 +43,7 @@
   <div class="card-header">
     <h3>Running Service</h3>
     <div id="output-progress" class="progress">
-      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
     </div>
     <div id="output-message" class="font-italic" style="margin-top: 5px;"></div>
   </div>
@@ -65,8 +65,11 @@
       setMessage('Connecting to server...');
       setProgress(0, true);
       control.slideDown();
-      let error = false;
+      $('html, body').animate({
+          scrollTop: control.offset().top
+      }, 2000);
 
+      let error = false;
       submitEventSource(form, {
           message: function(data) {
               setProgress(data.percent, true);
@@ -99,6 +102,14 @@
             .css({width: `${percent}%`})
             .attr('aria-valuenow', percent)
             .html(`${percent}%`);
+
+          if (percent < 100) {
+              control.addClass('progress-bar-animated');
+              control.addClass('progress-bar-striped');
+          } else {
+              control.removeClass('progress-bar-animated');
+              control.removeClass('progress-bar-striped');
+          }
       }
       if (valid) {
           control.removeClass('bg-danger');

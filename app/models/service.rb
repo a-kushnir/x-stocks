@@ -13,7 +13,7 @@ class Service < ApplicationRecord
 
   def self.lock(key, force: false)
     service = Service.find_or_create_by!(key: key)
-    if force || service.locked_at.nil? || service.locked_at < 1.hour.ago
+    if force || !service.locked?
 
       rows_updated = Service
         .where(id: service.id, locked_at: service.locked_at)

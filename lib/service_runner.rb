@@ -25,7 +25,7 @@ class ServiceRunner
   end
 
   def service
-    @service ||= Service.find_by(key: service_code) if service_code.present?
+    Service.find_by(key: service_code) if service_code.present?
   end
 
   def run(args, &block)

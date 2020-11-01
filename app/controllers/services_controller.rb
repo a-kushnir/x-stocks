@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  include ActionController::Live
 
   def index
     @service_runners = ServiceRunner.all
@@ -8,14 +9,13 @@ class ServicesController < ApplicationController
     @page_menu_item = :services
   end
 
-  def update
-    @page_title = 'Services'
-    @page_menu_item = :services
-
+  def run
     find_service_runner do |service_runner|
-      service_runner.run(params)
-      flash[:notice] = "#{service_runner.name} complete"
-      redirect_to action: 'index'
+      EventStream.run(response) do |stream|
+        service_runner.run(params) do |status|
+          stream.write(status)
+        end
+      end
     end
   end
 
@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
     end
   end
 
-  def run
+  def run2
     if Service.where('locked_at > ?', 1.hour.ago).exists?
       render json: {result: 'locked'}
 

@@ -1,7 +1,7 @@
 module ServicesHelper
 
-  def service_path(service_runner)
-    "/services/#{URI.escape(service_runner.lookup_code)}"
+  def run_service_path(service_runner)
+    "/services/#{URI.escape(service_runner.lookup_code)}/run"
   end
 
   def service_log_path(service_runner)

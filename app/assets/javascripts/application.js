@@ -1,4 +1,5 @@
 //= require datatables
+//= require eventsource
 
 //= require bootstrap-select
 $(document).on('turbolinks:load', function() {

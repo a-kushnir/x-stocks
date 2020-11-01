@@ -1,6 +1,6 @@
 module Etl
   module Refresh
-    class Iexapis
+    class Iexapis < Base
 
       PAUSE = 1.0 / 30 # Limit up to 30 requests per second
 
@@ -8,18 +8,19 @@ module Etl
         Service[:weekly_iexapis].runnable?(1.day)
       end
 
-      def weekly_all_stocks!(force: false)
+      def weekly_all_stocks!(force: false, &block)
         Service.lock(:weekly_iexapis, force: force) do |logger|
           token_store = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
-          Stock.random.all.each do |stock|
+          each_stock_with_message do |stock, message|
+            block.call message if block_given?
             weekly_one_stock!(stock, token_store, logger)
             sleep(PAUSE)
           end
         end
       end
 
-      def weekly_all_stocks
-        weekly_all_stocks! if weekly_all_stocks?
+      def weekly_all_stocks(&block)
+        weekly_all_stocks!(&block) if weekly_all_stocks?
       end
 
       def weekly_one_stock!(stock, token_store = nil, logger = nil, immediate: false)

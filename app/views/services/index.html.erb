@@ -21,7 +21,7 @@
       <% last_run_at = serv&.last_run_at %>
       <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
-        <%= form_tag(service_path(service_runner), method: 'put') do %>
+        <%= form_tag(run_service_path(service_runner)) do %>
           <% (service_runner.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
               <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }), class: 'selectpicker', data: {live_search: true}) %>
@@ -30,7 +30,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "$(this).parents('tr').find('form').submit(); return false;" %>
+        <%= link_to 'Start', "#", class: 'btn btn-primary', onclick: "runService(this); return false;" %>
         <%= link_to 'Log', service_log_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
         <%= link_to 'Error', service_error_path(service_runner), class: 'btn btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
       </td>
@@ -43,4 +43,23 @@
   document.addEventListener("turbolinks:load", () => {
     dataTable("#services-table", {order: [0, 'asc']});
   })
+
+  function runService(sender) {
+      const form = $(sender).parents('tr').find('form');
+
+      submitEventSource(form, {
+          message: function(message) {
+              debugger;
+          },
+          error: function(error) {
+              debugger;
+          },
+          open: function() {
+              debugger;
+          },
+          closed: function() {
+              debugger;
+          }
+      })
+  }
 </script>

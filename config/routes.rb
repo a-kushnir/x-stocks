@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
   root to: 'home#index'
-  get '/home/demo', to: 'home#demo'
 
-  devise_for :users, :controllers => {:registrations => 'registrations'}
+  devise_for :users, controllers: {registrations: 'registrations'}
 
   resources :stocks, except: [:edit, :update], id: /.*/
   resources :positions, only: [:index, :update]
@@ -11,11 +10,9 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :update] do
     member do
+      get :run
       get :log
       get :error
-    end
-    collection do
-      post :run
     end
   end
 

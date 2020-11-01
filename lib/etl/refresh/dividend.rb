@@ -1,6 +1,6 @@
 module Etl
   module Refresh
-    class Dividend
+    class Dividend < Base
 
       PAUSE = 1.0 # Limit up to 1 request per second
 
@@ -8,17 +8,18 @@ module Etl
         Service[:weekly_dividend].runnable?(1.day)
       end
 
-      def weekly_all_stocks!(force: false)
+      def weekly_all_stocks!(force: false, &block)
         Service.lock(:weekly_dividend, force: force) do |logger|
-          Stock.random.all.each do |stock|
+          each_stock_with_message do |stock, message|
+            block.call message if block_given?
             weekly_one_stock!(stock, logger)
             sleep(PAUSE)
           end
         end
       end
 
-      def weekly_all_stocks
-        weekly_all_stocks! if weekly_all_stocks?
+      def weekly_all_stocks(&block)
+        weekly_all_stocks!(&block) if weekly_all_stocks?
       end
 
       def weekly_one_stock!(stock, logger = nil)

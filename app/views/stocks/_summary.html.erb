@@ -86,13 +86,15 @@
       Payout: <strong class="float-right"><%= number_to_percentage(@stock.payout_ratio, precision: 2) unless @stock.payout_ratio.to_f.zero? %></strong>
     </td>
   </tr>
+  <% if @stock.yahoo_discount %>
   <tr>
     <td>
-      Fair Value: <strong class="float-right"><%= delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0)) %> (<%= @stock.yahoo_discount > 0 ? 'Undervalued' : 'Overvalued' %>)</strong>
+      Fair Value: <strong class="float-right"><%= delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0)) %> (<%= @stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued' %>)</strong>
       <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Fair Value is the appropriate price for the shares of a company, based on its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate. Estimated return represents the projected annual return you might expect after purchasing shares in the company and holding them over the default time horizon of 5 years, based on the EPS growth rate that we have projected."></i>
     </td>
     <td></td>
     <td>
     </td>
   </tr>
+  <% end %>
 </table>

@@ -8,6 +8,9 @@ $(document).on('turbolinks:load', function() {
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
 });
 
 function formatCurrency(total) {

@@ -12,8 +12,17 @@ module Etl
 
       protected
 
-      def get_text(url)
-        response = Net::HTTP.get_response(URI(url))
+      def http_get(url, headers = {})
+        uri = URI(url)
+        request = Net::HTTP::Get.new(uri)
+        headers.each { |key, value| request[key] = value }
+        http = Net::HTTP.new(uri.hostname, uri.port)
+        http.use_ssl = uri.scheme == 'https'
+        http.request(request)
+      end
+
+      def get_text(url, headers = {})
+        response = http_get(url, headers)
         validate!(response, url)
 
         if response.is_a?(Net::HTTPSuccess)
@@ -21,8 +30,8 @@ module Etl
         end
       end
 
-      def get_json(url)
-        response = Net::HTTP.get_response(URI(url))
+      def get_json(url, headers = {})
+        response = http_get(url, headers)
         validate!(response, url)
 
         if response.is_a?(Net::HTTPSuccess)

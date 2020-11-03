@@ -11,6 +11,7 @@
       <th class="no-search text-right">Price</th>
       <th class="no-search text-right">Change</th>
       <th class="no-search text-right">Change&nbsp;%</th>
+      <th class="no-search text-right">Fair Value</th>
       <th class="no-search text-right">Est. Annual Div.</th>
       <th class="no-search text-right">Est. Yield %</th>
       <th class="no-search text-right">Payout %</th>
@@ -49,6 +50,9 @@
         <% price_change_pct = number_to_percentage(stock.price_change_pct, precision: 2) %>
         <td class="text-right <%= delta_class(price_change_pct) %>">
           <%= delta_number(price_change_pct) %>
+        </td>
+        <td class="text-right <%= delta_class(stock.yahoo_discount) %>">
+          <%= delta_number(number_to_percentage(stock.yahoo_discount, precision: 0)) rescue nil %>
         </td>
         <td class="text-right">
           <%= number_to_currency(stock.est_annual_dividend) %>

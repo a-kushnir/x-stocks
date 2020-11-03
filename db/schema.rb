@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_201452) do
+ActiveRecord::Schema.define(version: 2020_11_03_214735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 2020_08_23_201452) do
     t.string "next_earnings_hour"
     t.decimal "next_earnings_est_eps", precision: 12, scale: 4
     t.string "next_earnings_details"
+    t.integer "yahoo_discount"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end

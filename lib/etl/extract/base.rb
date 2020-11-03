@@ -53,7 +53,7 @@ module Etl
 
       def validate!(response, url)
         log_info("#{response.code} #{url}")
-        log_info("(#{response.body.size} bytes): #{safe_limit(response.body, 512)}")
+        log_info("(#{response.body.size} bytes): #{response.body}")
         raise '401 - Unauthorized' if response.code == '401'
         raise '429 - API limit reached' if response.code == '429' # Finnhub
         raise '500 - Internal Server Error' if response.code == '500'
@@ -65,11 +65,6 @@ module Etl
         else
           puts value
         end
-      end
-
-      def safe_limit(value, limit)
-        value = value.to_s
-        value.size > limit ? "#{value[0..limit-1]}..." : value
       end
 
     end

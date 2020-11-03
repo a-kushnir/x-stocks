@@ -17,7 +17,7 @@ module Etl
           token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             block.call message if block_given?
-            hourly_one_stock!(stock, token_store, logger)
+            hourly_one_stock!(stock, token_store: token_store, logger: logger)
             sleep(PAUSE_SHORT)
           end
           block.call completed_message if block_given?
@@ -28,7 +28,7 @@ module Etl
         hourly_all_stocks!(&block) if hourly_all_stocks?
       end
 
-      def hourly_one_stock!(stock, token_store = nil, logger = nil, &block)
+      def hourly_one_stock!(stock, token_store: nil, logger: nil, &block)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
         token_store.try_token do |token|
@@ -49,7 +49,7 @@ module Etl
           token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             block.call message if block_given?
-            daily_one_stock!(stock, token_store, logger)
+            daily_one_stock!(stock, token_store: token_store, logger: logger)
             sleep(PAUSE_LONG)
           end
           block.call completed_message if block_given?
@@ -60,7 +60,7 @@ module Etl
         daily_all_stocks!(&block) if daily_all_stocks?
       end
 
-      def daily_one_stock!(stock, token_store = nil, logger = nil, immediate: false)
+      def daily_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
         token_store.try_token do |token|

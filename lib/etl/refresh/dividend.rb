@@ -12,7 +12,7 @@ module Etl
         Service.lock(:weekly_dividend, force: force) do |logger|
           each_stock_with_message do |stock, message|
             block.call message if block_given?
-            weekly_one_stock!(stock, logger)
+            weekly_one_stock!(stock, logger: logger)
             sleep(PAUSE)
           end
           block.call completed_message if block_given?
@@ -23,7 +23,7 @@ module Etl
         weekly_all_stocks!(&block) if weekly_all_stocks?
       end
 
-      def weekly_one_stock!(stock, logger = nil)
+      def weekly_one_stock!(stock, logger: nil)
         return if stock.exchange.blank?
         json = Etl::Extract::Dividend.new(logger: logger).data(stock)
         Etl::Transform::Dividend::new(logger).data(stock, json)

@@ -12,7 +12,7 @@ module Etl
         Service.lock(:daily_yahoo, force: force) do |logger|
           each_stock_with_message do |stock, message|
             block.call message if block_given?
-            daily_one_stock!(stock, logger)
+            daily_one_stock!(stock, logger: logger)
             sleep(PAUSE)
           end
           block.call completed_message if block_given?
@@ -23,7 +23,7 @@ module Etl
         daily_all_stocks!(&block) if daily_all_stocks?
       end
 
-      def daily_one_stock!(stock, logger = nil)
+      def daily_one_stock!(stock, logger: nil)
         json = Etl::Extract::Yahoo.new(logger: logger).statistics(stock.symbol)
         Etl::Transform::Yahoo::new(logger).statistics(stock, json)
       end

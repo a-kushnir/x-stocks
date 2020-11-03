@@ -1,5 +1,7 @@
 class Service < ApplicationRecord
 
+  attr_accessor :text_size_limit
+
   def self.fast_update?
     Etl::Refresh::Finnhub.new.hourly_all_stocks?
   end
@@ -22,6 +24,7 @@ class Service < ApplicationRecord
       if rows_updated == 1
         service.reload
         service.error = nil
+        service.text_size_limit = 512
         service.instance_variable_set :@log_writer, ''
 
         begin
@@ -59,12 +62,19 @@ class Service < ApplicationRecord
 
   def log_info(text)
     @log_writer ||= ''
-    @log_writer << "[#{DateTime.now}] INFO #{text}\n"
+    @log_writer << "[#{DateTime.now}] INFO #{limit_text_size(text)}\n"
   end
 
   def log_error(error)
     @log_writer ||= ''
     @log_writer << "[#{DateTime.now}] ERROR Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
+  end
+
+  private
+
+  def limit_text_size(value)
+    value = value.to_s
+    text_size_limit && value.size > text_size_limit ? "#{value[0..text_size_limit-1]}..." : value
   end
 
 end

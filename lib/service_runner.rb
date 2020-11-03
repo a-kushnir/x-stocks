@@ -48,11 +48,14 @@ class ServiceRunner
                           Etl::Refresh::Finnhub.new.hourly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_one_finnhub', {arguments: [:stock_id]},
+      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_one_finnhub', {service_code: 'hourly_one_finnhub', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, &block)
+                          Service.lock(:hourly_one_finnhub, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, logger: logger, &block)
+                          end
                           block.call completed_message
                         end),
 
@@ -61,11 +64,14 @@ class ServiceRunner
                           Etl::Refresh::Yahoo.new.daily_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock information [Yahoo]', 'daily_one_yahoo', {arguments: [:stock_id]},
+      ServiceRunner.new('Update stock information [Yahoo]', 'daily_one_yahoo', {service_code: 'daily_one_yahoo', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Yahoo.new.daily_one_stock!(stock)
+                          Service.lock(:daily_one_yahoo, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Yahoo.new.daily_one_stock!(stock, logger: logger)
+                          end
                           block.call completed_message
                         end),
 
@@ -74,11 +80,14 @@ class ServiceRunner
                           Etl::Refresh::Finnhub.new.daily_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock information [Finnhub]', 'daily_one_finnhub', {arguments: [:stock_id]},
+      ServiceRunner.new('Update stock information [Finnhub]', 'daily_one_finnhub', {service_code: 'daily_one_finnhub', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Finnhub.new.daily_one_stock!(stock)
+                          Service.lock(:daily_one_finnhub, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Finnhub.new.daily_one_stock!(stock, logger: logger)
+                          end
                           block.call completed_message
                         end),
 
@@ -87,11 +96,14 @@ class ServiceRunner
                           Etl::Refresh::Iexapis.new.weekly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_one_iexapis', {arguments: [:stock_id]},
+      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_one_iexapis', {service_code: 'weekly_one_iexapis', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, nil, immediate: true, &block)
+                          Service.lock(:weekly_one_iexapis, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, logger: logger, immediate: true, &block)
+                          end
                           block.call completed_message
                         end),
 
@@ -100,23 +112,29 @@ class ServiceRunner
                           Etl::Refresh::Dividend.new.weekly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_one_dividend', {arguments: [:stock_id]},
+      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_one_dividend', {service_code: 'weekly_one_dividend', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Dividend.new.weekly_one_stock!(stock)
+                          Service.lock(:weekly_one_dividend, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger)
+                          end
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Load company information [Finnhub] [IEX Cloud] [Yahoo]', 'company_information', {arguments: [:stock_id]},
+      ServiceRunner.new('Load company information [Finnhub] [IEX Cloud] [Yahoo]', 'company_information', {service_code: 'company_information', arguments: [:stock_id]},
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
-                          Etl::Refresh::Company.new.one_stock!(stock)
+                          Service.lock(:company_information, force: true) do |logger|
+                            logger.text_size_limit = nil
+                            Etl::Refresh::Company.new.one_stock!(stock, logger: logger)
+                          end
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', {},
+      ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', {service_code: 'slickcharts'},
                         ->(args, &block) do
                           Etl::Refresh::Slickcharts.new.all_stocks!(&block)
                         end),

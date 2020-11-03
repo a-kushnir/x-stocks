@@ -34,7 +34,11 @@ class StocksController < ApplicationController
     @stock = Stock.new(stock_params)
 
     if @stock.save
-      Etl::Refresh::Company.new.one_stock!(@stock)
+      Service.lock(:company_information, force: true) do |logger|
+        logger.text_size_limit = nil
+        Etl::Refresh::Company.new.one_stock!(@stock, logger: logger)
+      end
+
       redirect_to stock_path(@stock)
     else
       set_page_title

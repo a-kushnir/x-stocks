@@ -10,13 +10,10 @@ module Etl
             extractor = Etl::Extract::FearNGreed.new(logger: logger)
             source_image_url = extractor.image_url
 
-
             unless source_image_url.blank?
               path = "#{Rails.root}/public#{stored_image_url}"
               extractor.download(path, source_image_url)
             end
-
-            stored_image_url
           end
         rescue Exception => error
           logger&.log_error(error)

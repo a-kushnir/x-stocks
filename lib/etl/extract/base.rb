@@ -10,6 +10,15 @@ module Etl
         @logger = logger
       end
 
+      def download(path, url)
+        response = http_get(url)
+        validate!(response, url)
+
+        if response.is_a?(Net::HTTPSuccess)
+          File.open(path, 'wb') { |file| file << response.body }
+        end
+      end
+
       protected
 
       def http_get(url, headers = {})

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_214735) do
+ActiveRecord::Schema.define(version: 2020_07_06_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 2020_11_03_214735) do
     t.string "name", null: false
     t.string "code", null: false
     t.string "region", null: false
-    t.datetime "created_at", null: false
     t.string "iexapis_code"
     t.string "webull_code"
     t.string "finnhub_code"
     t.string "tradingview_code"
     t.string "dividend_code"
+    t.datetime "created_at", null: false
   end
 
   create_table "positions", force: :cascade do |t|
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 2020_11_03_214735) do
     t.decimal "gain_loss_pct", precision: 10, scale: 2
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "est_annual_income", precision: 12, scale: 4
-    t.string "note"
     t.integer "metascore"
     t.string "metascore_details"
+    t.string "note"
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
     t.index ["user_id"], name: "index_positions_on_user_id"
@@ -103,6 +103,11 @@ ActiveRecord::Schema.define(version: 2020_11_03_214735) do
     t.string "dividend_details"
     t.string "dividend_frequency"
     t.integer "dividend_frequency_num"
+    t.decimal "dividend_growth_3y", precision: 12, scale: 4
+    t.integer "dividend_growth_years"
+    t.date "next_div_ex_date"
+    t.date "next_div_payment_date"
+    t.decimal "next_div_amount", precision: 12, scale: 4
     t.decimal "dividend_amount", precision: 12, scale: 4
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "est_annual_dividend_pct", precision: 10, scale: 2
@@ -112,32 +117,28 @@ ActiveRecord::Schema.define(version: 2020_11_03_214735) do
     t.decimal "eps_growth_3y", precision: 12, scale: 4
     t.decimal "eps_growth_5y", precision: 12, scale: 4
     t.decimal "pe_ratio_ttm", precision: 12, scale: 4
+    t.string "earnings"
+    t.date "next_earnings_date"
+    t.string "next_earnings_hour"
+    t.decimal "next_earnings_est_eps", precision: 12, scale: 4
+    t.string "next_earnings_details"
+    t.string "string"
     t.decimal "yahoo_beta", precision: 10, scale: 6
     t.decimal "yahoo_rec", precision: 5, scale: 2
     t.string "yahoo_rec_details"
+    t.integer "yahoo_discount"
     t.decimal "finnhub_beta", precision: 10, scale: 6
     t.string "finnhub_price_target"
     t.decimal "finnhub_rec", precision: 5, scale: 2
     t.string "finnhub_rec_details"
     t.decimal "dividend_rating", precision: 5, scale: 2
-    t.string "earnings"
+    t.boolean "sp500"
+    t.boolean "nasdaq100"
+    t.boolean "dowjones"
     t.integer "metascore"
     t.string "metascore_details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "dividend_growth_3y", precision: 12, scale: 4
-    t.integer "dividend_growth_years"
-    t.date "next_div_ex_date"
-    t.date "next_div_payment_date"
-    t.decimal "next_div_amount", precision: 12, scale: 4
-    t.boolean "sp500"
-    t.boolean "nasdaq100"
-    t.boolean "dowjones"
-    t.date "next_earnings_date"
-    t.string "next_earnings_hour"
-    t.decimal "next_earnings_est_eps", precision: 12, scale: 4
-    t.string "next_earnings_details"
-    t.integer "yahoo_discount"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end

@@ -2,8 +2,14 @@ class CreateTables < ActiveRecord::Migration[6.0]
   def change
     create_table :exchanges do |t|
       t.string :name, null: false
-      t.string :short_name, null: false
+      t.string :code, null: false
       t.string :region, null: false
+
+      t.string :iexapis_code, null: true
+      t.string :webull_code, null: true
+      t.string :finnhub_code, null: true
+      t.string :tradingview_code, null: true
+      t.string :dividend_code, null: true
 
       t.datetime :created_at, null: false
     end
@@ -52,6 +58,12 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.string :dividend_details
       t.string :dividend_frequency
       t.integer :dividend_frequency_num
+      t.decimal :dividend_growth_3y, precision: 12, scale: 4
+      t.integer :dividend_growth_years
+      t.date :next_div_ex_date
+      t.date :next_div_payment_date
+      t.decimal :next_div_amount, precision: 12, scale: 4
+
       t.decimal :dividend_amount, precision: 12, scale: 4
       t.decimal :est_annual_dividend, precision: 12, scale: 4
       t.decimal :est_annual_dividend_pct, precision: 10, scale: 2
@@ -63,10 +75,17 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :eps_growth_5y, precision: 12, scale: 4
       t.decimal :pe_ratio_ttm, precision: 12, scale: 4
 
+      t.string :earnings
+      t.date :next_earnings_date
+      t.string :next_earnings_hour
+      t.decimal :next_earnings_est_eps, precision: 12, scale: 4
+      t.string :next_earnings_details, :string
+
       # Yahoo
       t.decimal :yahoo_beta, precision: 10, scale: 6
       t.decimal :yahoo_rec, precision: 5, scale: 2
       t.string :yahoo_rec_details
+      t.integer :yahoo_discount, null: true
 
       # Finnhub
       t.decimal :finnhub_beta, precision: 10, scale: 6
@@ -77,7 +96,10 @@ class CreateTables < ActiveRecord::Migration[6.0]
       # Dividend.com
       t.decimal :dividend_rating, precision: 5, scale: 2
 
-      t.string :earnings
+      # Slickcharts
+      t.boolean :sp500
+      t.boolean :nasdaq100
+      t.boolean :dowjones
 
       t.integer :metascore
       t.string :metascore_details
@@ -114,6 +136,9 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.decimal :est_annual_dividend, precision: 12, scale: 4
       t.decimal :est_annual_income, precision: 12, scale: 4
 
+      t.integer :metascore
+      t.string :metascore_details
+
       t.string :note
 
       t.index [:user_id, :stock_id], unique: true
@@ -129,12 +154,74 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.index :key, unique: true
     end
 
+    create_table :services do |t|
+      t.string :key, null: false
+      t.datetime :locked_at
+      t.datetime :last_run_at
+      t.string :error
+      t.string :log
+
+      t.index :key, unique: true
+    end
+
     reversible do |dir|
       dir.up do
-        Exchange.create!({name: 'Nasdaq', short_name: 'NASDAQ', region: 'United States'})
-        Exchange.create!({name: 'New York Stock Exchange', short_name: 'NYSE', region: 'United States'})
-        Exchange.create!({name: 'NYSE Arca', short_name: 'AMEX', region: 'United States'})
-        Exchange.create!({name: 'Toronto Stock Exchange', short_name: 'TSX', region: 'Canada'})
+        User.create!(email: 'admin@admin.com', password: 'admin!')
+
+        Exchange.create!({
+          name: 'Nasdaq',
+          code: 'NASDAQ',
+          region: 'United States',
+          iexapis_code: 'NASDAQ',
+          webull_code: 'nasdaq',
+          finnhub_code: 'NASDAQ NMS - GLOBAL MARKET',
+          tradingview_code: 'NASDAQ',
+          dividend_code: 'NASDAQ'
+        })
+
+        Exchange.create!({
+          name: 'New York Stock Exchange',
+          code: 'NYSE',
+          region: 'United States',
+          iexapis_code: 'New York Stock Exchange',
+          webull_code: 'nyse',
+          finnhub_code: 'NEW YORK STOCK EXCHANGE, INC.',
+          tradingview_code: 'NYSE',
+          dividend_code: 'NYSE'
+        })
+
+        Exchange.create!({
+          name: 'NYSE Arca',
+          code: 'AMEX',
+          region: 'United States',
+          iexapis_code: 'NYSE Arca',
+          webull_code: 'nysearca',
+          finnhub_code: nil,
+          tradingview_code: 'AMEX',
+          dividend_code: 'AMEX'
+        })
+
+        Exchange.find_by({
+          name: 'Toronto Stock Exchange',
+          code: 'TSX',
+          region: 'Canada',
+          iexapis_code: 'US OTC',
+          webull_code: 'otcmkts',
+          finnhub_code: 'OTC MARKETS',
+          tradingview_code: 'OTC',
+          dividend_code: 'OTC'
+        })
+
+        Exchange.create!({
+          name: 'Bats Global Markets',
+          code: 'BATS',
+          region: 'United States',
+          iexapis_code: nil,
+          webull_code: 'amex',
+          finnhub_code: 'BATS EXCHANGE',
+          tradingview_code: 'AMEX',
+          dividend_code: 'NASDAQ'
+        })
       end
     end
   end

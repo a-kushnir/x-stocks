@@ -22,6 +22,9 @@
     - [My Dividends](#my-dividends)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Configuration](#configuration)
+    - [API Keys](#api-keys)
+    - [Users](#users)
 - [License](#license)
 - [Links](#links)
 
@@ -91,6 +94,41 @@ $ rails db:migrate
 # Run the app
 $ rails s
 ```
+
+# Configuration
+
+[(Back to top)](#table-of-contents)
+
+## API Keys
+
+### Finnhub Stock API
+* Sign up on https://finnhub.io/
+* Copy API Key (example: bueso4n48v6tiubaqv70)
+* Add environment variable FINNHUB_KEY with the copied value
+* You can use multiple keys to overcome free account limitations, use variables like FINNHUB_KEY_2, FINNHUB_KEY_3 and so on
+
+### IEX Cloud
+* Sign up on https://iexcloud.io/
+* Copy API Token (example: pk_e735a31e0a593e7db8c38c9ce04632e7)
+* Add environment variable IEXAPIS_KEY with the copied value
+* You can use multiple keys to overcome free account limitations, use variables like IEXAPIS_KEY_2, IEXAPIS_KEY_3 and so on
+
+### Environment variables
+
+Learn more about environment variables:
+* [RubyMine](https://www.jetbrains.com/help/objc/add-environment-variables-and-program-arguments.html)
+* [Heroku](https://devcenter.heroku.com/articles/config-vars)
+
+## Users
+
+### Default User
+* Username: admin@admin.com
+* Password: admin!
+
+### New User
+* Sign in under an existing user
+* Type the following url in your address line: /users/sign_up
+* Complete registration
 
 # License
 

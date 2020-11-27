@@ -48,12 +48,12 @@ class Position < ApplicationRecord
 
   def self.update_dividends!(stock)
     model = where(stock: stock)
-    model.update_all(est_annual_dividend: stock.est_annual_dividend)
+    model.update_all(est_annual_dividend: stock.div_suspended? ? nil : stock.est_annual_dividend)
     model.update_all('est_annual_income = est_annual_dividend * shares')
   end
 
   def update_dividends
-    self.est_annual_dividend = stock.est_annual_dividend
+    self.est_annual_dividend = stock.div_suspended? ? nil : stock.est_annual_dividend
     self.est_annual_income = est_annual_dividend * shares rescue nil
   end
 

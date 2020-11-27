@@ -39,6 +39,7 @@
   </thead>
   <tbody>
   <% estimates.each do |position, est| %>
+  <% div_suspended = position.stock.div_suspended? %>
   <tr>
     <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>" data-sort="<%= position.stock.symbol %>">
       <% if position.note.present? %>
@@ -53,7 +54,9 @@
       <%= link_to position.stock.symbol, stock_path(position.stock), style: "padding-top: 10px; margin-right: #{offset}px;" %>
     </td>
     <td class="text-right" data-sort="<%= number_with_precision(position.stock.est_annual_dividend_pct, precision: 2) %>">
-      <%= number_to_percentage(position.stock.est_annual_dividend_pct, precision: 2) %>
+      <%= div_suspended ?
+            '<strong class="float-right text-danger">Suspended</strong>'.html_safe :
+            number_to_percentage(position.stock.est_annual_dividend_pct, precision: 2) %>
     </td>
     <% dividend_rating = (position.stock.dividend_rating * 20).to_i rescue nil %>
     <td class="text-center text-nowrap border-right" data-sort="<%= dividend_rating %>">

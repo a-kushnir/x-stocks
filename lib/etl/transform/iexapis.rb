@@ -30,7 +30,7 @@ module Etl
       end
 
       def dividends(stock, json)
-        return if json.blank?
+        return unless json
 
         json = [json] unless json.is_a?(Array)
 

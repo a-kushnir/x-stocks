@@ -22,6 +22,7 @@ class Dividend
   def estimate(stock)
     last_div = (stock.dividend_details || []).last
     return nil unless last_div
+    return nil if stock.div_suspended?
 
     payment_date = Date.parse(last_div['payment_date'])
     amount = last_div['amount'].to_d

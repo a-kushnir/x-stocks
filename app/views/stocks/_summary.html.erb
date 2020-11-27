@@ -1,3 +1,4 @@
+<% div_suspended = @stock.div_suspended? %>
 <h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
   <% if @stock.price_change %>
     <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
@@ -37,7 +38,9 @@
     <td></td>
     <td>
       Forward Dividend & Yield:
-      <% if @stock.est_annual_dividend %>
+      <% if div_suspended %>
+        <strong class="float-right text-danger">Suspended</strong>
+      <% elsif @stock.est_annual_dividend %>
         <strong class="float-right"><%= number_to_currency(@stock.est_annual_dividend) %> (<%= number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) %>)</strong>
       <% end %>
     </td>
@@ -52,10 +55,10 @@
     </td>
     <td></td>
     <td>
-      <% if @stock.dividend_growth_3y %>
+      <% if @stock.dividend_growth_3y && !div_suspended %>
         Dividend Growth 3Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_3y, precision: 2) %></strong>
       <% else %>
-        Dividend Growth 5Y: <strong class="float-right"><%= number_to_percentage(@stock.dividend_growth_5y, precision: 2) %></strong>
+        Dividend Growth 5Y: <strong class="float-right"><%= div_suspended ? nil : number_to_percentage(@stock.dividend_growth_5y, precision: 2) %></strong>
       <% end %>
     </td>
   </tr>
@@ -74,7 +77,7 @@
     </td>
     <td></td>
     <td>
-      Years of Dividend Growth: <strong class="float-right"><%= @stock.dividend_growth_years %></strong>
+      Years of Dividend Growth: <strong class="float-right"><%= div_suspended ? nil : @stock.dividend_growth_years %></strong>
     </td>
   </tr>
   <tr>

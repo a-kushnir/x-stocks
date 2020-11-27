@@ -51,9 +51,11 @@ module Xlsx
     end
 
     def data_row(div, months, position, est)
+      div_suspended = position.stock.div_suspended?
+
       row = [
           position.stock.symbol,
-          (position.stock.est_annual_dividend_pct / 100 rescue nil),
+          div_suspended ? 'Suspended' : (position.stock.est_annual_dividend_pct / 100 rescue nil),
           ((position.stock.dividend_rating * 20).to_i rescue nil),
       ]
 
@@ -64,6 +66,7 @@ module Xlsx
       end
 
       row << est.map {|e| e[:amount] }.sum * position.shares rescue nil
+      row
     end
 
     def data_style(s)

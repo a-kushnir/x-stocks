@@ -1,5 +1,7 @@
 class Stock < ApplicationRecord
 
+  DAYS_IN_YEAR = 365.25
+
   belongs_to :exchange, optional: true
   has_many :positions
   has_many :tags, dependent: :destroy do
@@ -58,6 +60,12 @@ class Stock < ApplicationRecord
 
   def index?
     issue_type == 'et'
+  end
+
+  def div_suspended?
+    last_div = dividend_details.last
+    (dividend_amount || est_annual_dividend || dividend_frequency_num || dividend_growth_3y || dividend_growth_5y) &&
+      (last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)
   end
 
   private

@@ -2,13 +2,6 @@ module Etl
   module Transform
     class Iexapis < Base
 
-      DIVIDEND_FREQUENCIES = {
-        'annual' => 1,
-        'semi-annual' => 2,
-        'quarterly' => 4,
-        'monthly' => 12
-      }.freeze
-
       def company(stock, json)
         return if json.blank?
 
@@ -59,13 +52,10 @@ module Etl
         stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
         stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
-        last_div =
-          stock.dividend_details
-          .select {|detail| DIVIDEND_FREQUENCIES[(detail['frequency']  || '').downcase] }
-          .last
+        last_div = stock.last_periodic_dividend_detail
 
         stock.dividend_frequency = last_div['frequency'] rescue nil
-        num = DIVIDEND_FREQUENCIES[(stock.dividend_frequency || '').downcase]
+        num = Stock::DIVIDEND_FREQUENCIES[(stock.dividend_frequency || '').downcase]
         stock.dividend_frequency_num = num
 
         stock.dividend_amount = last_div['amount'] rescue nil

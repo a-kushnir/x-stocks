@@ -2,6 +2,13 @@ class Stock < ApplicationRecord
 
   DAYS_IN_YEAR = 365.25
 
+  DIVIDEND_FREQUENCIES = {
+      'annual' => 1,
+      'semi-annual' => 2,
+      'quarterly' => 4,
+      'monthly' => 12
+  }.freeze
+
   belongs_to :exchange, optional: true
   has_many :positions
   has_many :tags, dependent: :destroy do
@@ -67,6 +74,12 @@ class Stock < ApplicationRecord
     (dividend_amount || est_annual_dividend || dividend_frequency_num || dividend_growth_3y || dividend_growth_5y) &&
       (next_div_ex_date.nil? || (next_div_ex_date.past? && (next_div_ex_date < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)) &&
       (last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)
+  end
+
+  def last_periodic_dividend_detail
+    (dividend_details || [])
+      .select {|detail| DIVIDEND_FREQUENCIES[(detail['frequency']  || '').downcase] }
+      .last
   end
 
   private

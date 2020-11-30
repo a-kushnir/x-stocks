@@ -63,7 +63,7 @@ class Stock < ApplicationRecord
   end
 
   def div_suspended?
-    last_div = dividend_details.last
+    last_div = dividend_details&.last
     (dividend_amount || est_annual_dividend || dividend_frequency_num || dividend_growth_3y || dividend_growth_5y) &&
       (last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)
   end

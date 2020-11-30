@@ -15,7 +15,7 @@ class Config < ApplicationRecord
   def self.cached(key, expires_in)
     config = Config.find_by(key: key)
 
-    if config.nil? || config.updated_at < expires_in.ago
+    if config.nil? || expires_in.nil? || config.updated_at < expires_in.ago
       config ||= Config.new(key: key)
       config.value = yield
       config.save

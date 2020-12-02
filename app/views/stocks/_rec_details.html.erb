@@ -1,7 +1,8 @@
-<% if mean.present? || details.present? %>
+<% has_details = details.present? && details.detect {|_, v| v.detect {|i| !i.zero? }} %>
+<% if mean.present? || has_details %>
 <div class="small-widget my-side-panel">
   <h4><%= label %></h4>
-  <% if details.present? %>
+  <% if has_details %>
     <div style="width: 260px; height: 200px;">
       <canvas id="<%= id %>_details_canvas_<%= @stock.symbol %>" width="260" height="200"></canvas>
     </div>

@@ -1,6 +1,6 @@
 <% has_details = details.present? && details.detect {|_, v| v.detect {|i| !i.zero? }} %>
 <% if mean.present? || has_details %>
-<div class="small-widget my-side-panel">
+<div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
   <% if has_details %>
     <div style="width: 260px; height: 200px;">

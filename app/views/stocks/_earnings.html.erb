@@ -1,6 +1,6 @@
 <% if @stock.earnings.present? %>
   <% earnings = @stock.earnings.reverse %>
-<div class="small-widget my-side-panel">
+<div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4>Earnings</h4>
   <div style="width: 280px; height: 220px;">
     <canvas id="earnings_<%= @stock.symbol %>" width="280" height="220"></canvas>

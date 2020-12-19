@@ -103,3 +103,9 @@
     width: 48%
   }
 }
+
+.stock-dividends-table {
+  tr:last-child td {
+    border-bottom: 1px solid #dee2e6;
+  }
+}

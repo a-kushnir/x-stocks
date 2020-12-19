@@ -90,3 +90,16 @@
 .rec-str-buy {
   background-color: #008F88
 }
+
+.stock-summary-table {
+  margin-top: 15px;
+
+  tr:first-child td {
+    border-top: none;
+  }
+  tr td { width: 4% }
+  tr td:first-child,
+  tr td:last-child {
+    width: 48%
+  }
+}

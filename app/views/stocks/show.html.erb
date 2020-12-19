@@ -14,13 +14,6 @@
     <%= render partial: 'dividends' %>
     <%= render partial: 'about_company' %>
     <%= render partial: 'tags' %>
-
-    <div>
-      <%= link_to 'Back', back_url, class: 'btn btn-link' %>
-      <% if @stock.destroyable? %>
-        <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@stock.to_s}?"} %>
-      <% end %>
-    </div>
   </div>
 
   <div class="col-sm-4">
@@ -33,5 +26,14 @@
     <%= render partial: 'price_target', locals: { id: 'finnhub_price_target', label: 'Analyst Price Targets', target_price: @stock.finnhub_price_target } %>
     <%= render partial: 'earnings' %>
     <%= render partial: 'tradingview_rec' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <%= link_to 'Back', back_url, class: 'btn btn-link' %>
+    <% if @stock.destroyable? %>
+      <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@stock.to_s}?"} %>
+    <% end %>
   </div>
 </div>

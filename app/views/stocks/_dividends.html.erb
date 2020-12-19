@@ -1,22 +1,37 @@
 <% div = ::Dividend.new %>
 <% est = div.estimate(@stock) %>
 <% if est %>
-<strong>Estimated Dividends</strong>
-<table class="table table-sm">
-  <thead>
-  <tr>
-    <% div.months.each_with_index do |month, index| %>
-      <td class="text-right" style="width: 8%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></td>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <% div.months.each do |month| %>
-      <% amount = est.detect {|e| e[:month] == month}&.dig(:amount) %>
-      <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
-    <% end %>
-  </tr>
-  </tbody>
-</table>
+  <strong>Estimated Dividends</strong>
+
+  <table class="table table-sm d-none d-lg-table">
+    <thead>
+    <tr>
+      <% div.months.each_with_index do |month, index| %>
+        <td class="text-right" style="width: 8%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></td>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <% div.months.each do |month| %>
+        <% amount = est.detect { |e| e[:month] == month }&.dig(:amount) %>
+        <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
+      <% end %>
+    </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-sm d-lg-none">
+    <tbody>
+      <% div.months.each_with_index do |month| %>
+      <% amount = est.detect { |e| e[:month] == month }&.dig(:amount) %>
+      <% if amount %>
+        <tr>
+          <td class="text-right" style="width: 8%"><%= month.strftime("%b'%y") %></td>
+          <td class="text-right" style="border-bottom: 1px solid #dee2e6;"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
+        </tr>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

@@ -42,4 +42,7 @@ module ApplicationHelper
     (value || '').to_s.split("\n").map { |line| h line }.join('<br>').html_safe
   end
 
+  def default_columns
+    @columns.select { |column| column[:default] }.map{ |column| column[:index] }.to_json
+  end
 end

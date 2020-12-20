@@ -5,6 +5,8 @@ class ServicesController < ApplicationController
     @service_runners = ServiceRunner.all
     @stocks = Stock.all
 
+    @columns = columns
+
     @page_title = 'Services'
     @page_menu_item = :services
   end
@@ -61,5 +63,17 @@ class ServicesController < ApplicationController
       flash[:notice] = "Invalid service"
       redirect_to action: 'index'
     end
+  end
+
+  def columns
+    columns = []
+
+    columns << {label: 'Schedule', index: index = 1, default: true}
+    columns << {label: 'Status', index: index += 1, default: true}
+    columns << {label: 'Last Run', index: index += 1, default: true}
+    columns << {label: 'Arguments', index: index += 1, default: true}
+    columns << {label: 'Actions', index: index + 1, default: true}
+
+    columns
   end
 end

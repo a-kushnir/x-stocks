@@ -35,10 +35,23 @@
       <th class="no-search text-right">Gain/Loss %</th>
       <th class="no-search text-right">Annual Dividend</th>
       <th class="no-search text-right">Diversity %</th>
+      <th class="no-search text-right">Price</th>
+      <th class="no-search text-right">Change</th>
+      <th class="no-search text-right">Change&nbsp;%</th>
+      <th class="no-search text-right">Fair Value</th>
+      <th class="no-search text-right">Est. Annual Div.</th>
+      <th class="no-search text-right">Est. Yield %</th>
+      <th class="no-search text-right">Payout %</th>
+      <th class="no-search text-right">Yahoo Rec.</th>
+      <th class="no-search text-right">Finnhub Rec.</th>
+      <th class="no-search text-right">Div. Safety</th>
+      <th class="no-search text-right">Ex Date</th>
+      <th class="no-search text-right">Score</th>
     </tr>
   </thead>
   <tbody>
     <% @positions.each do |position| %>
+      <% stock = position.stock %>
       <tr>
         <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>" data-sort="<%= position.stock.symbol %>">
           <% if position.note.present? %>
@@ -63,6 +76,52 @@
         <td class="text-right <%= delta_class(growth) %>"><%= delta_number(growth) %></td>
         <td class="text-right"><%= number_to_currency(position.est_annual_income) %></td>
         <td class="text-right"><%= number_to_percentage((position.market_value / market_value * 100 rescue nil), precision: 2) %></td>
+
+        <td class="text-right">
+          <%= number_to_currency(stock.current_price) %>
+        </td>
+        <% price_change = number_to_currency(stock.price_change) %>
+        <td class="text-right <%= delta_class(price_change) %>">
+          <%= delta_number(price_change) %>
+        </td>
+        <% price_change_pct = number_to_percentage(stock.price_change_pct, precision: 2) %>
+        <td class="text-right <%= delta_class(price_change_pct) %>">
+          <%= delta_number(price_change_pct) %>
+        </td>
+        <td class="text-right <%= delta_class(stock.yahoo_discount) %>">
+          <%= delta_number(number_to_percentage(stock.yahoo_discount, precision: 0)) rescue nil %>
+        </td>
+        <td class="text-right">
+          <%= number_to_currency(stock.est_annual_dividend) %>
+        </td>
+        <td class="text-right">
+          <%= number_to_percentage(stock.est_annual_dividend_pct, precision: 2) rescue nil %>
+        </td>
+        <td class="text-right">
+          <%= number_to_percentage(stock.payout_ratio, precision: 2) if stock.payout_ratio && !stock.payout_ratio.zero? %>
+        </td>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.yahoo_rec, precision: 2) %>">
+          <% if stock.yahoo_rec %>
+            <small><%= rec_human(stock.yahoo_rec) %></small> <%= number_with_precision(stock.yahoo_rec, precision: 2) %>
+          <% end %>
+        </td>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.finnhub_rec, precision: 2) %>">
+          <% if stock.finnhub_rec %>
+            <small><%= rec_human(stock.finnhub_rec) %></small> <%= number_with_precision(stock.finnhub_rec, precision: 2) %>
+          <% end %>
+        </td>
+        <td class="text-right" data-sort="<%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>">
+          <small><%= safety_human(stock.dividend_rating) %></small> <%= number_with_precision(stock.dividend_rating, precision: 1) if stock.dividend_rating %>
+        </td>
+        <% next_div_ex_date = stock.next_div_ex_date if stock.next_div_ex_date && stock.next_div_ex_date >= Date.today %>
+        <td class="text-right" data-sort="<%= next_div_ex_date %>">
+          <%= next_div_ex_date&.strftime('%b, %d %Y') %>
+        </td>
+        <td class="text-right" data-sort="<%= stock.metascore if stock.metascore %>" data-toggle="tooltip" data-placement="left" title="<%= metascore_details(stock) %>">
+          <% if stock.metascore %>
+            <span class="badge badge-dark <%= metascore_color(stock.metascore) %>"><%= stock.metascore %></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -83,6 +142,7 @@
       <th class="text-right <%= delta_class(gain_loss_pct) %>"><%= delta_number(number_to_percentage(gain_loss_pct, precision: 2)) %></th>
       <th class="text-right"><%= number_to_currency(est_annual_income) %></th>
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
+      <th colspan="12"></th>
     </tr>
   </tfoot>
 </table>
@@ -111,7 +171,7 @@
     dataTable("#positions-table", {
       order: [0, "asc"],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
-    });
+    }, <%= default_columns %>);
 
     destroy_all_charts();
     <% values, labels = position_allocation %>

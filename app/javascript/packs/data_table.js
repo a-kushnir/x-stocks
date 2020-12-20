@@ -59,14 +59,15 @@ document.addEventListener("turbolinks:load", () => {
     };
 });
 
-function loadColumns(selector) {
+function loadColumns(selector, defaultColumns) {
     const table = $(selector);
     const row = table.find('tr:first');
 
     const size = row.children().length;
     if (size <= 0) return null;
 
-    const value = LocalStorage.getObject(table.attr('id'));
+    let value = LocalStorage.getObject(table.attr('id'));
+    if (!value) value = defaultColumns;
     if (!value) return null;
 
     const result = [];
@@ -79,11 +80,11 @@ function loadColumns(selector) {
     return result;
 }
 
-window.dataTable = function(table, options = {}) {
+window.dataTable = function(table, options = {}, defaultColumns = []) {
     table = $(table);
     if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
         options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
-        options['columns'] = loadColumns(table);
+        options['columns'] = loadColumns(table, defaultColumns);
         options['autoWidth'] = false;
         table.dataTable(options);
     }

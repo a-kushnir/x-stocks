@@ -34,14 +34,13 @@ class DividendsController < ApplicationController
     end
 
     columns = []
-    columns << {label: 'Yield', index: 1}
-    columns << {label: 'Safety', index: 2}
+    columns << {label: 'Yield', index: index = 1, default: true}
+    columns << {label: 'Safety', index: index += 1, default: true}
 
-    index = 2
     month_names.each do |month_name|
-      columns << {label: month_name, index: index += 1}
+      columns << {label: month_name, index: index += 1, default: true}
     end
-    columns << {label: 'Total', index: index + 1}
+    columns << {label: 'Total', index: index + 1, default: true}
 
     columns
   end

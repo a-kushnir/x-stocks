@@ -111,19 +111,21 @@ class StocksController < ApplicationController
 
   def columns
     columns = []
-    columns << {label: 'Company', index: 1}
-    columns << {label: 'Price', index: 2}
-    columns << {label: 'Change', index: 3}
-    columns << {label: 'Change %', index: 4}
-    columns << {label: 'Fair Value', index: 5}
-    columns << {label: 'Est. Annual Div.', index: 6}
-    columns << {label: 'Est. Field %', index: 7}
-    columns << {label: 'Payout %', index: 8}
-    columns << {label: 'Yahoo Rec.', index: 9}
-    columns << {label: 'Finnhub Rec.', index: 10}
-    columns << {label: 'Div. Safety', index: 11}
-    columns << {label: 'Ex Date', index: 12}
-    columns << {label: 'Score', index: 13}
+
+    columns << {label: 'Company', index: index = 1, default: true}
+    columns << {label: 'Price', index: index += 1, default: true}
+    columns << {label: 'Change', index: index += 1, default: true}
+    columns << {label: 'Change %', index: index += 1, default: true}
+    columns << {label: 'Fair Value', index: index += 1, default: true}
+    columns << {label: 'Est. Annual Div.', index: index += 1, default: true}
+    columns << {label: 'Est. Field %', index: index += 1, default: true}
+    columns << {label: 'Payout %', index: index += 1}
+    columns << {label: 'Yahoo Rec.', index: index += 1, default: true}
+    columns << {label: 'Finnhub Rec.', index: index += 1, default: true}
+    columns << {label: 'Div. Safety', index: index += 1, default: true}
+    columns << {label: 'Ex Date', index: index += 1}
+    columns << {label: 'Score', index: index + 1, default: true}
+
     columns
   end
 end

@@ -49,15 +49,30 @@ class PositionsController < ApplicationController
 
   def columns
     columns = []
-    columns << {label: 'Shares', index: 1}
-    columns << {label: 'Average Price', index: 2}
-    columns << {label: 'Market Price', index: 3}
-    columns << {label: 'Total Cost', index: 4}
-    columns << {label: 'Market Value', index: 5}
-    columns << {label: 'Gain/Loss', index: 6}
-    columns << {label: 'Gain/Loss %', index: 7}
-    columns << {label: 'Annual Dividend', index: 8}
-    columns << {label: 'Diversity %', index: 9}
+
+    columns << {label: 'Shares', index: index = 1, default: true}
+    columns << {label: 'Average Price', index: index += 1, default: true}
+    columns << {label: 'Market Price', index: index += 1, default: true}
+    columns << {label: 'Total Cost', index: index += 1, default: true}
+    columns << {label: 'Market Value', index: index += 1, default: true}
+    columns << {label: 'Gain/Loss', index: index += 1, default: true}
+    columns << {label: 'Gain/Loss %', index: index += 1, default: true}
+    columns << {label: 'Annual Dividend', index: index += 1, default: true}
+    columns << {label: 'Diversity %', index: index += 1, default: true}
+
+    columns << {label: 'Price', index: index += 1}
+    columns << {label: 'Change', index: index += 1}
+    columns << {label: 'Change %', index: index += 1}
+    columns << {label: 'Fair Value', index: index += 1}
+    columns << {label: 'Est. Annual Div.', index: index += 1}
+    columns << {label: 'Est. Field %', index: index += 1}
+    columns << {label: 'Payout %', index: index += 1}
+    columns << {label: 'Yahoo Rec.', index: index += 1}
+    columns << {label: 'Finnhub Rec.', index: index += 1}
+    columns << {label: 'Div. Safety', index: index += 1}
+    columns << {label: 'Ex Date', index: index += 1}
+    columns << {label: 'Score', index: index + 1}
+
     columns
   end
 end

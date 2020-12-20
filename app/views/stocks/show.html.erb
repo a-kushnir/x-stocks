@@ -12,8 +12,11 @@
     <%= render partial: 'tradingview_chart' %>
     <%= render partial: 'summary' %>
     <%= render partial: 'dividends' %>
-    <%= render partial: 'about_company' %>
-    <%= render partial: 'tags' %>
+
+    <div class="d-none d-md-block">
+      <%= render partial: 'about_company' %>
+      <%= render partial: 'tags' %>
+    </div>
   </div>
 
   <div class="col-md-4">
@@ -26,6 +29,11 @@
     <%= render partial: 'price_target', locals: { id: 'finnhub_price_target', label: 'Analyst Price Targets', target_price: @stock.finnhub_price_target } %>
     <%= render partial: 'earnings' %>
     <%= render partial: 'tradingview_rec' %>
+
+    <div class="d-block d-md-none">
+      <%= render partial: 'about_company' %>
+      <%= render partial: 'tags' %>
+    </div>
   </div>
 </div>
 

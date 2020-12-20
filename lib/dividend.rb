@@ -20,7 +20,7 @@ class Dividend
   end
 
   def estimate(stock)
-    last_div = stock.last_periodic_dividend_detail
+    last_div = stock.periodic_dividend_details.last
     return nil unless last_div
     return nil if stock.div_suspended?
 

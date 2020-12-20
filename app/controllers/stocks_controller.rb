@@ -119,6 +119,7 @@ class StocksController < ApplicationController
     columns << {label: 'Fair Value', index: index += 1, default: true}
     columns << {label: 'Est. Annual Div.', index: index += 1, default: true}
     columns << {label: 'Est. Field %', index: index += 1, default: true}
+    columns << {label: 'Div. Change %', index: index += 1}
     columns << {label: 'Payout %', index: index += 1}
     columns << {label: 'Yahoo Rec.', index: index += 1, default: true}
     columns << {label: 'Finnhub Rec.', index: index += 1, default: true}

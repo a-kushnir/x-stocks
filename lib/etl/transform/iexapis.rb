@@ -52,7 +52,7 @@ module Etl
         stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
         stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
-        last_div = stock.last_periodic_dividend_detail
+        last_div = stock.periodic_dividend_details.last
 
         stock.dividend_frequency = last_div['frequency'] rescue nil
         num = Stock::DIVIDEND_FREQUENCIES[(stock.dividend_frequency || '').downcase]

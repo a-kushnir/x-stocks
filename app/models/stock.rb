@@ -76,10 +76,23 @@ class Stock < ApplicationRecord
       (last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)
   end
 
-  def last_periodic_dividend_detail
-    (dividend_details || [])
-      .select {|detail| DIVIDEND_FREQUENCIES[(detail['frequency']  || '').downcase] }
-      .last
+  def div_change_pct
+    if div_suspended?
+      -100
+    else
+      size = periodic_dividend_details.size
+      last = periodic_dividend_details[size - 1]
+      prev = periodic_dividend_details[size - 2]
+      if last && prev
+        100 * ((last['amount'] - prev['amount']) / prev['amount']).round(2) rescue 0
+      else
+        nil
+      end
+    end
+  end
+
+  def periodic_dividend_details
+    (dividend_details || []).select {|detail| DIVIDEND_FREQUENCIES[(detail['frequency']  || '').downcase] }
   end
 
   private

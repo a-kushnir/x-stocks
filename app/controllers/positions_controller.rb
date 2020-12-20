@@ -5,6 +5,8 @@ class PositionsController < ApplicationController
       .where.not(shares: nil)
       .all
 
+    @columns = columns
+
     @page_title = 'My Positions'
     @page_menu_item = :positions
 
@@ -45,4 +47,17 @@ class PositionsController < ApplicationController
     end
   end
 
+  def columns
+    columns = []
+    columns << {label: 'Shares', index: 1}
+    columns << {label: 'Average Price', index: 2}
+    columns << {label: 'Market Price', index: 3}
+    columns << {label: 'Total Cost', index: 4}
+    columns << {label: 'Market Value', index: 5}
+    columns << {label: 'Gain/Loss', index: 6}
+    columns << {label: 'Gain/Loss %', index: 7}
+    columns << {label: 'Annual Dividend', index: 8}
+    columns << {label: 'Diversity %', index: 9}
+    columns
+  end
 end

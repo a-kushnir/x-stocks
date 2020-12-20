@@ -15,11 +15,13 @@
   </header>
 <% end %>
 
+<%= render partial: 'shared/column', locals: {columns: @columns} %>
+
 <div id="dividends-table-container">
 <% div = ::Dividend.new %>
 <% estimates = @positions.map { |position| [position, div.estimate(position.stock)] }  %>
 <% months = Array.new(12, 0.to_d)  %>
-<table id="dividends-table" class="table table-hover table-override">
+<table id="dividends-table" class="table table-sm table-hover table-override">
   <thead class="thead-light">
   <tr>
     <th class="text-center">Symbol</th>
@@ -27,9 +29,9 @@
     <th class="text-center border-right">Safety</th>
     <%
       month_names = []
-     div.months.each_with_index do |month, index|
-       month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
-     end
+      div.months.each_with_index do |month, index|
+        month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+      end
     %>
     <% month_names.each do |month_name| %>
       <th class="text-right" style="width: 7%"><%= month_name %></th>

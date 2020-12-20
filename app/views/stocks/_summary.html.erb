@@ -31,6 +31,7 @@
     right_table << {label: 'Dividend Growth 5Y', value: number_to_percentage(@stock.dividend_growth_5y, precision: 2)} if @stock.dividend_growth_5y
     right_table << {label: 'Years of Dividend Growth', value: @stock.dividend_growth_years} if @stock.dividend_growth_years
   end
+  right_table << {label: 'Dividend Change', value: number_to_percentage(@stock.div_change_pct, precision: 1), danger: @stock.div_change_pct < 0} if @stock.div_change_pct
   right_table << {label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})"} if @stock.dividend_rating
   right_table << {label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2)} unless @stock.payout_ratio.to_f.zero?
 %>

@@ -83,6 +83,7 @@ function loadColumns(selector, defaultColumns) {
 window.dataTable = function(table, options = {}, defaultColumns = []) {
     table = $(table);
     if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
+        checkboxMenu(defaultColumns);
         options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
         options['columns'] = loadColumns(table, defaultColumns);
         options['autoWidth'] = false;

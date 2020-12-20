@@ -1,20 +1,4 @@
 $(document).on('turbolinks:load', function() {
-
-    const table = $('.table-override');
-    const id = $(table).attr('id');
-    const value = LocalStorage.getObject(id);
-    const checkboxes = $(".checkbox-menu input[type='checkbox']");
-    if (value) {
-        $.each(checkboxes, function (_, checkbox) {
-            const cb = $(checkbox);
-            const checked = value.indexOf(parseInt(cb.val())) >= 0;
-            cb.prop('checked', checked);
-            cb.closest("li").toggleClass("active", checked);
-        });
-    } else {
-        checkboxes.prop('checked', true);
-    }
-
     $(".checkbox-menu").on("change", "input[type='checkbox']", function(e) {
         $(this).closest("li").toggleClass("active", this.checked);
 
@@ -39,3 +23,23 @@ $(document).on('turbolinks:load', function() {
         e.stopPropagation();
     });
 })
+
+window.checkboxMenu = function (defaultColumns) {
+    const table = $('.table-override');
+    const id = $(table).attr('id');
+    const checkboxes = $(".checkbox-menu input[type='checkbox']");
+
+    let value = LocalStorage.getObject(id);
+    if (!value) value = defaultColumns;
+
+    if (value) {
+        $.each(checkboxes, function (_, checkbox) {
+            const cb = $(checkbox);
+            const checked = value.indexOf(parseInt(cb.val())) >= 0;
+            cb.prop('checked', checked);
+            cb.closest("li").toggleClass("active", checked);
+        });
+    } else {
+        checkboxes.prop('checked', true);
+    }
+}

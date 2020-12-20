@@ -40,21 +40,23 @@ module Etl
           sleep(PAUSE) unless immediate
         end
 
-        token_store.try_token do |token|
-          json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_1m(stock.symbol)
-          Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-          sleep(PAUSE) unless immediate
-        end
+        if immediate || stock.dividend_details.blank?
+          token_store.try_token do |token|
+            json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_1m(stock.symbol)
+            Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+            sleep(PAUSE) unless immediate
+          end
 
-        token_store.try_token do |token|
-          json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_3m(stock.symbol)
-          Etl::Transform::Iexapis::new(logger).dividends(stock, json)
-          sleep(PAUSE) unless immediate
-        end
+          token_store.try_token do |token|
+            json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_3m(stock.symbol)
+            Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+            sleep(PAUSE) unless immediate
+          end
 
-        token_store.try_token do |token|
-          json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_6m(stock.symbol)
-          Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+          token_store.try_token do |token|
+            json = Etl::Extract::Iexapis.new(token: token, logger: logger).dividends_6m(stock.symbol)
+            Etl::Transform::Iexapis::new(logger).dividends(stock, json)
+          end
         end
       end
 

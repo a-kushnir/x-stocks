@@ -71,7 +71,10 @@ function loadColumns(selector) {
 
     const result = [];
     for(let i = 0; i < size; i++) {
-        result.push({'visible': value.indexOf(i) >= 0});
+        let visible =
+            value.indexOf(i) >= 0 ||
+            $(".checkbox-menu input[value='" + i + "']").length === 0;
+        result.push({'visible': visible});
     }
     return result;
 }

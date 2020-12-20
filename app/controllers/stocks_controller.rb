@@ -11,6 +11,8 @@ class StocksController < ApplicationController
 
     @positions = Position.where(stock: @stocks, user: current_user).all
 
+    @columns = columns
+
     @page_title = 'Stocks'
     @page_menu_item = :stocks
   end
@@ -107,4 +109,21 @@ class StocksController < ApplicationController
     stock_ids
   end
 
+  def columns
+    columns = []
+    columns << {label: 'Company', index: 1}
+    columns << {label: 'Price', index: 2}
+    columns << {label: 'Change', index: 3}
+    columns << {label: 'Change %', index: 4}
+    columns << {label: 'Fair Value', index: 5}
+    columns << {label: 'Est. Annual Div.', index: 6}
+    columns << {label: 'Est. Field %', index: 7}
+    columns << {label: 'Payout %', index: 8}
+    columns << {label: 'Yahoo Rec.', index: 9}
+    columns << {label: 'Finnhub Rec.', index: 10}
+    columns << {label: 'Div. Safety', index: 11}
+    columns << {label: 'Ex Date', index: 12}
+    columns << {label: 'Score', index: 13}
+    columns
+  end
 end

@@ -36,7 +36,7 @@ $.extend( $.fn.dataTable.defaults, {
     targets: 'no-search',
     searchable: false,
   }],
-  dom: "<'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6'l>>" +
+  dom: "<'row'<'col-12'<'float-left'f><'float-right'l>>>" +
     "<'row'<'col-sm-12'tr>>" +
     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
 });

@@ -1,7 +1,8 @@
 //= require datatables
 //= require eventsource
-
+//= require checkbox-menu
 //= require bootstrap-select
+
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');
 

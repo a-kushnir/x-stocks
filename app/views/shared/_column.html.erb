@@ -1,0 +1,15 @@
+<div class="dropdown float-right">
+  <button class="btn btn-outline-dark dropdown-toggle dropdown-button" type="button"
+          id="ddColumns" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <i class="fa fa-cog text-center"></i>
+  </button>
+  <ul class="dropdown-menu checkbox-menu allow-focus dropdown-menu-right" aria-labelledby="ddColumns">
+    <% columns.each do |column| %>
+      <li class="active">
+        <label>
+          <input type="checkbox" checked="checked" value="<%= column[:index] %>"> <%= column[:label] %>
+        </label>
+      </li>
+    <% end %>
+  </ul>
+</div>

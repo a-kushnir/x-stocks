@@ -13,6 +13,10 @@ module Etl
         get_json(dividends_url(symbol))
       end
 
+      def dividends_1m(symbol)
+        get_json(dividends_1m_url(symbol))
+      end
+
       def dividends_3m(symbol)
         get_json(dividends_3m_url(symbol))
       end
@@ -33,6 +37,10 @@ module Etl
 
       def dividends_url(symbol)
         "#{BASE_URL}/stock/#{esc(symbol)}/dividends?token=#{token}"
+      end
+
+      def dividends_1m_url(symbol)
+        "#{BASE_URL}/stock/#{esc(symbol)}/dividends/1m?token=#{token}"
       end
 
       def dividends_3m_url(symbol)

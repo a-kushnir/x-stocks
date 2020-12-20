@@ -9,7 +9,7 @@ module Etl
         stock.exchange ||= Exchange.find_by(iexapis_code: json['exchange']) if json['exchange'].present?
         stock.industry = json['industry']
         stock.website = json['website']
-        stock.description = json['description']
+        stock.description = json['description'] if stock.description.blank?
         stock.ceo = json['CEO']
         stock.security_name = json['securityName']
         stock.issue_type = json['issueType']

@@ -13,6 +13,9 @@ module Etl
         stock.est_annual_dividend = summary&.dig('QuoteSummaryStore', 'summaryDetail', 'dividendRate', 'raw')
         stock.yahoo_discount = summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount') rescue nil
 
+        description = summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary')
+        stock.description = description if description.present?
+
         stock.update_dividends!
       end
 

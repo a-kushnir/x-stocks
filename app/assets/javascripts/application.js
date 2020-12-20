@@ -2,6 +2,7 @@
 //= require eventsource
 //= require checkbox-menu
 //= require bootstrap-select
+//= require local-store
 
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');

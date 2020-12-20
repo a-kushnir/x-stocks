@@ -59,10 +59,29 @@ document.addEventListener("turbolinks:load", () => {
     };
 });
 
+function loadColumns(selector) {
+    const table = $(selector);
+    const row = table.find('tr:first');
+
+    const size = row.children().length;
+    if (size <= 0) return null;
+
+    const value = LocalStorage.getObject(table.attr('id'));
+    if (!value) return null;
+
+    const result = [];
+    for(let i = 0; i < size; i++) {
+        result.push({'visible': value.indexOf(i) >= 0});
+    }
+    return result;
+}
+
 window.dataTable = function(table, options = {}) {
     table = $(table);
     if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
-        options['order'] = $.fn.dataTable.orderOrSaved(options['order'])
+        options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
+        options['columns'] = loadColumns(table);
+        options['autoWidth'] = false;
         table.dataTable(options);
     }
 }

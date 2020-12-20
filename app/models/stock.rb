@@ -84,7 +84,7 @@ class Stock < ApplicationRecord
       last = periodic_dividend_details[size - 1]
       prev = periodic_dividend_details[size - 2]
       if last && prev
-        100 * ((last['amount'] - prev['amount']) / prev['amount']).round(2) rescue 0
+        100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4) rescue 0
       else
         nil
       end

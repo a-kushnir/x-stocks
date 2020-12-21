@@ -18,20 +18,20 @@
   left_table << {label: 'PE Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2)} if @stock.week_52_low && @stock.pe_ratio_ttm
   left_table << {label: 'Outstanding Shares', value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true)} if @stock.outstanding_shares
   left_table << {label: 'Market Cap', value: number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true)} if @stock.market_capitalization
-  left_table << {label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", help: 'Fair Value is the appropriate price for the shares of a company, based on its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate. Estimated return represents the projected annual return you might expect after purchasing shares in the company and holding them over the default time horizon of 5 years, based on the EPS growth rate that we have projected.'} if @stock.yahoo_discount
+  left_table << {label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i), help: 'Fair Value is the appropriate price for the shares of a company, based on its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate. Estimated return represents the projected annual return you might expect after purchasing shares in the company and holding them over the default time horizon of 5 years, based on the EPS growth rate that we have projected.'} if @stock.yahoo_discount
 
   right_table = []
   right_table << {label: 'EPS (TTM)', value: number_with_precision(@stock.eps_ttm, precision: 2)} if @stock.eps_ttm
-  right_table << {label: 'EPS Growth 5Y', value:number_to_percentage(@stock.eps_growth_5y, precision: 2)} if @stock.eps_growth_5y
+  right_table << {label: 'EPS Growth 5Y', value: "#{change_icon(@stock.eps_growth_5y)} #{number_to_percentage(@stock.eps_growth_5y, precision: 2)}".html_safe, class: delta_class(@stock.eps_growth_5y)} if @stock.eps_growth_5y
   if div_suspended
-    right_table << {label: 'Forward Dividend & Yield', value: 'Suspended', danger: true}
+    right_table << {label: 'Forward Dividend & Yield', value: 'Suspended', class: 'text-danger'}
   else
     right_table << {label: 'Forward Dividend & Yield', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2)})"} if @stock.est_annual_dividend
-    right_table << {label: 'Dividend Growth 3Y', value: number_to_percentage(@stock.dividend_growth_3y, precision: 2)} if @stock.dividend_growth_3y
-    right_table << {label: 'Dividend Growth 5Y', value: number_to_percentage(@stock.dividend_growth_5y, precision: 2)} if @stock.dividend_growth_5y
+    right_table << {label: 'Dividend Growth 3Y', value: "#{change_icon(@stock.dividend_growth_3y)} #{number_to_percentage(@stock.dividend_growth_3y, precision: 2)}".html_safe, class: delta_class(@stock.dividend_growth_3y)} if @stock.dividend_growth_3y
+    right_table << {label: 'Dividend Growth 5Y', value: "#{change_icon(@stock.dividend_growth_5y)} #{number_to_percentage(@stock.dividend_growth_5y, precision: 2)}".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
     right_table << {label: 'Years of Dividend Growth', value: @stock.dividend_growth_years} if @stock.dividend_growth_years
   end
-  right_table << {label: 'Dividend Change', value: number_to_percentage(@stock.div_change_pct, precision: 1), danger: @stock.div_change_pct < 0} if @stock.div_change_pct
+  right_table << {label: 'Dividend Change', value: "#{change_icon(@stock.div_change_pct)} #{number_to_percentage(@stock.div_change_pct, precision: 1)}".html_safe, class: delta_class(@stock.div_change_pct)} if @stock.div_change_pct
   right_table << {label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})"} if @stock.dividend_rating
   right_table << {label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2)} unless @stock.payout_ratio.to_f.zero?
 %>
@@ -42,7 +42,7 @@
     <td>
       <% row = left_table[index] %>
       <% if row %>
-        <%= row[:label] %>: <strong class="float-right <%= 'text-danger' if row[:danger] %>"><%= row[:value] %></strong>
+        <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
         <% end %>
@@ -52,7 +52,7 @@
     <td>
       <% row = right_table[index] %>
       <% if row %>
-        <%= row[:label] %>: <strong class="float-right <%= 'text-danger' if row[:danger] %>"><%= row[:value] %></strong>
+        <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
         <% end %>
@@ -69,7 +69,7 @@
     <td>
       <% row = combined_table[index] %>
       <% if row %>
-        <%= row[:label] %>: <strong class="float-right <%= 'text-danger' if row[:danger] %>"><%= row[:value] %></strong>
+        <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
         <% end %>

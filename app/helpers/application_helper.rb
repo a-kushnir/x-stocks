@@ -19,6 +19,17 @@ module ApplicationHelper
     end
   end
 
+  def change_icon(number)
+    number = number.to_s
+    if number.blank? || !(number =~ /[1-9]/i)
+      nil
+    elsif number =~ /-/i
+      content_tag(:i, {class: 'fas fa-caret-down text-danger'}) {}
+    else
+      content_tag(:i, {class: 'fas fa-caret-up text-success'}) {}
+    end
+  end
+
   def delta_number(number)
     number = number.to_s
     if number.present? && number =~ /[1-9]/i && !(number =~ /-/i)

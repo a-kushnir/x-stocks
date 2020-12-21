@@ -1,0 +1,19 @@
+<div class="btn-group btn-group-toggle float-right" style="margin-right: 15px; margin-top: 15px;" data-toggle="buttons">
+  <label class="btn btn-secondary">
+    <input type="radio" id="format-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("<%= table %>", "<%= chart %>");'>
+    <i class="fas fa-table"></i><span class="d-none d-md-inline"> Table</span>
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" id="format-excel-radio" name="representation" autocomplete="off" onclick='switch_representation_to_excel("<%= table %>", "<%= chart %>", "#format-table-radio", "#format-charts-radio")'>
+    <i class="fas fa-file-excel"></i><span class="d-none d-md-inline"> Excel</span>
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" id="format-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("<%= table %>", "<%= chart %>");'>
+    <i class="fas fa-chart-pie"></i><span class="d-none d-md-inline"> Charts</span>
+  </label>
+</div>
+<script>
+    document.addEventListener("turbolinks:load", () => {
+        init_representation("<%= table %>", "<%= chart %>", "#format-table-radio", "#format-charts-radio");
+    });
+</script>

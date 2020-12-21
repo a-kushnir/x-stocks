@@ -1,23 +1,12 @@
 <% content_for :page_title do %>
-  <div class="btn-group btn-group-toggle float-right" style="margin-right: 15px; margin-top: 15px;" data-toggle="buttons">
-    <label class="btn btn-secondary">
-      <input type="radio" id="positions-table-radio" name="representation" autocomplete="off" onclick='switch_representation_to_table("#positions-table-container", "#positions-charts-container");'> Table
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" id="dividends-excel-radio" name="representation" autocomplete="off" onclick='switch_representation_to_excel("#positions-table-container", "#positions-charts-container", "#positions-table-radio", "#positions-charts-radio")'> Excel
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" id="positions-charts-radio" name="representation" autocomplete="off" onclick='switch_representation_to_charts("#positions-table-container", "#positions-charts-container");'> Charts
-    </label>
-  </div>
+  <%= render partial: 'shared/format', locals: {table: "#positions-table-container", chart: "#positions-charts-container"} %>
   <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center" style="margin-left: 132px;">
     <h1 class="bd-title">My Positions</h1>
   </header>
 <% end %>
 
-<%= render partial: 'shared/column', locals: {columns: @columns} %>
-
 <div id="positions-table-container">
+  <%= render partial: 'shared/column', locals: {columns: @columns} %>
 <%
   positions = Position.where(user: current_user)
   market_value = positions.sum(:market_value)
@@ -171,7 +160,6 @@
 
 <script>
   document.addEventListener("turbolinks:load", () => {
-    init_representation("#positions-table-container", "#positions-charts-container", "#positions-table-radio", "#positions-charts-radio");
     dataTable("#positions-table", {
       order: [0, "asc"],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]

@@ -6,7 +6,7 @@ module Etl
         return if json.blank?
 
         stock.company_name = json['companyName']
-        stock.exchange ||= Exchange.find_by(iexapis_code: json['exchange']) if json['exchange'].present?
+        stock.exchange ||= Exchange.search_by(:iexapis_code, json['exchange']) if json['exchange'].present?
         stock.industry = json['industry']
         stock.website = json['website']
         stock.description = json['description'] if stock.description.blank?

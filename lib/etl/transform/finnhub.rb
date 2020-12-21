@@ -7,7 +7,7 @@ module Etl
 
         stock.ipo = json['ipo']
         stock.logo = json['logo']
-        stock.exchange ||= Exchange.find_by(finnhub_code: json['exchange']) if json['exchange'].present?
+        stock.exchange ||= Exchange.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
 
         stock.save
       end

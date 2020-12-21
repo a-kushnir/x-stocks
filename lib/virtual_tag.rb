@@ -42,7 +42,7 @@ class VirtualTag
       VirtualTag.new('S&P 500', 'S&P 500 Index', ->(position) { position.stock.sp500 }, ->(user) { Stock.where(sp500: true) }, 'fa-list-ol' ),
       VirtualTag.new('Nasdaq 100', 'Nasdaq 100 Index', ->(position) { position.stock.nasdaq100 }, ->(user) { Stock.where(nasdaq100: true) }, 'fa-list-ol' ),
       VirtualTag.new('Dow Jones', 'Dow Jones Industrial Average', ->(position) { position.stock.dowjones }, ->(user) { Stock.where(dowjones: true) }, 'fa-list-ol' ),
-      VirtualTag.new('Ex Date Soon', 'Ex Date ≤ 1 month in the future', ->(position) { position.stock.next_div_ex_date && position.stock.next_div_ex_date >= Date.today && position.stock.next_div_ex_date < 1.month.since }, ->(user) { Stock.where(['next_div_ex_date >= ? and next_div_ex_date < ?', Date.today, 1.month.since]) }, 'fa-calendar', '11-asc'),
+      VirtualTag.new('Ex Date Soon', 'Ex Date ≤ 1 month in the future', ->(position) { position.stock.next_div_ex_date && position.stock.next_div_ex_date >= Date.today && position.stock.next_div_ex_date < 1.month.since }, ->(user) { Stock.where(['next_div_ex_date >= ? and next_div_ex_date < ?', Date.today, 1.month.since]) }, 'fa-calendar-alt', '11-asc'),
       VirtualTag.new('My Note', 'My Note is Present', ->(position) { position.note.present? }, ->(user) { Position.where(user: user).pluck(:stock_id, :note).map {|stock_id, note| note.present? ? stock_id : nil }.compact }, 'fa-thumbtack'),
   ].freeze
 

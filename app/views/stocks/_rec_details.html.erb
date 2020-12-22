@@ -3,7 +3,7 @@
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
   <% if has_details %>
-    <div style="width: 260px; height: 200px;">
+    <div style="width: 260px; height: 200px;" class="mx-auto">
       <canvas id="<%= id %>_details_canvas_<%= @stock.symbol %>" width="260" height="200"></canvas>
     </div>
     <script>
@@ -16,7 +16,7 @@
     </script>
   <% end %>
   <% if mean.present? %>
-    <div style="display: block; width: 280px; height: 85px; margin-top: -5px;">
+    <div style="display: block; width: 280px; height: 85px; margin-top: -5px;" class="mx-auto">
       <canvas id="<%= id %>_mean_canvas_<%= @stock.symbol %>" width="280" height="85" class="chartjs-render-monitor"></canvas>
     </div>
     <script>

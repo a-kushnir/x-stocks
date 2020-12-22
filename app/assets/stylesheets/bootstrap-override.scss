@@ -3,16 +3,20 @@
   height: auto;
 }
 
-.carousel-control-next-icon:after
-{
-  content: '>';
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  height: 48px;
+}
+.carousel-control-next-icon:after,
+.carousel-control-prev-icon:after {
   font-size: 32px;
   font-weight: bold;
   color: #007bff;
 }
+.carousel-control-next-icon:after {
+  content: '>';
+}
 .carousel-control-prev-icon:after {
   content: '<';
-  font-size: 32px;
-  font-weight: bold;
-  color: #007bff;
 }

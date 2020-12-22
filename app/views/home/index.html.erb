@@ -6,12 +6,17 @@
 <div class="row">
   <div class="col-lg-4 col-xl-6 text-center">
     <%= render partial: 'fear_n_greed' %>
-    <%= render partial: 'div_hikes_n_cuts' %>
+    <div class="text-center d-none d-md-block">
+      <%= render partial: 'div_hikes_n_cuts' %>
+    </div>
   </div>
   <div class="col-lg-4 col-xl-3">
     <%= render partial: 'portfolio' %>
     <%= render partial: 'top_movers', locals: {title: 'Top Gainers', where: 'price_change_pct > 0', order: 'desc'} %>
     <%= render partial: 'top_movers', locals: {title: 'Top Losers', where: 'price_change_pct < 0', order: 'asc'} %>
+    <div class="text-center d-block d-md-none">
+      <%= render partial: 'div_hikes_n_cuts' %>
+    </div>
   </div>
   <div class="col-lg-4 col-xl-3">
     <%= render partial: 'links' %>

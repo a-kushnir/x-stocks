@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   mount API::Root => '/api'
 
   devise_for :users, controllers: {registrations: 'registrations'}
+  devise_scope :user do
+    post '/registrations/regenerate' => 'registrations#regenerate'
+  end
 
   resources :stocks, except: [:edit, :update], id: /.*/
   resources :positions, only: [:index, :update]

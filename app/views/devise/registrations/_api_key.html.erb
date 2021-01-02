@@ -1,0 +1,18 @@
+<div class="row justify-content-center my-form-row">
+  <div class="col-6">
+  <h3 class="text-center">API Key</h3>
+    <%= form_for(resource, as: resource_name, url: '/registrations/regenerate', html: { method: :post, class: 'my-form mx-auto' }) do |f| %>
+      <div class="input-group">
+        <%= f.text_field :api_key, readonly: true, class: 'form-control' %>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('#user_api_key')"><i class="far fa-copy"></i></button>
+        </div>
+      </div>
+
+      <div class="my-button-group-centered">
+        <!--button class="btn btn-primary" type="button">API Documentation</button-->
+        <%= f.submit 'Regenerate', class: 'btn btn-dark' %>
+      </div>
+    <% end %>
+  </div>
+</div>

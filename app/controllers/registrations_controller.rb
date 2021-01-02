@@ -36,6 +36,11 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def regenerate
+    current_user.regenerate_api_key!
+    redirect_to edit_user_registration_path
+  end
+
   protected
 
   # Security fix: Sign Up for existing users only

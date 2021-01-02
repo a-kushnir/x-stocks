@@ -43,3 +43,4 @@ gem 'jquery-datatables'
 gem 'devise'
 gem 'caxlsx'
 gem 'rubocop', require: false
+gem 'nokogiri', '>= 1.11.0.rc4'

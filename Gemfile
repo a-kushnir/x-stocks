@@ -41,6 +41,8 @@ gem 'bootstrap-select-rails'
 gem 'font_awesome5_rails'
 gem 'jquery-datatables'
 gem 'devise'
+gem 'grape'
+gem 'grape-entity'
 gem 'caxlsx'
 gem 'rubocop', require: false
 gem 'nokogiri', '>= 1.11.0.rc4'

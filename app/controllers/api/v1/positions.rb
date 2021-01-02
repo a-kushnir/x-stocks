@@ -8,7 +8,7 @@ module API
         desc 'Returns all stock positions.'
         get do
           positions = Position.where(user: current_user).where.not(shares: nil).all
-          present positions, with: API::Entities::Position
+          present positions, with: API::Entities::Position, type: :details
         end
 
         desc 'Returns all stock position summary.'

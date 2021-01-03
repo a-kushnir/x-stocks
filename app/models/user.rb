@@ -14,6 +14,6 @@ class User < ApplicationRecord
   private
 
   def generate_api_key
-    self.api_key ||= Devise.friendly_token if User.column_names.include?(:api_key)
+    self.api_key ||= Devise.friendly_token if respond_to?(:api_key)
   end
 end

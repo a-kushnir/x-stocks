@@ -5,12 +5,26 @@ module API
 
       namespace :stocks do
 
-        desc 'Returns available stock symbols.'
+        desc 'Returns available stock symbols.',
+             is_array: true,
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' }
+             ]
         get do
           Stock.order(:symbol).pluck([:symbol])
         end
 
-        desc 'Returns company information.'
+        desc 'Returns company information.',
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' },
+                 { code: 404, message: 'Unknown Symbol' }
+             ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
@@ -20,7 +34,14 @@ module API
           present stock, with: API::Entities::Stock, type: :company
         end
 
-        desc 'Returns stock information.'
+        desc 'Returns stock information.',
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' },
+                 { code: 404, message: 'Unknown Symbol' }
+             ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
@@ -31,7 +52,14 @@ module API
           present stock, with: API::Entities::Stock, type: :quote
         end
 
-        desc 'Returns stock earnings information.'
+        desc 'Returns stock earnings information.',
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' },
+                 { code: 404, message: 'Unknown Symbol' }
+             ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
@@ -41,7 +69,14 @@ module API
           present stock, with: API::Entities::Stock, type: :earnings
         end
 
-        desc 'Returns stock dividends information.'
+        desc 'Returns stock dividends information.',
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' },
+                 { code: 404, message: 'Unknown Symbol' }
+             ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
         end
@@ -51,7 +86,14 @@ module API
           present stock, with: API::Entities::Stock, type: :dividends
         end
 
-        desc 'Returns stock recommendations.'
+        desc 'Returns stock recommendations.',
+             success: [
+                 { code: 200, model: API::Entities::Stock }
+             ],
+             failure: [
+                 { code: 401, message: 'Unauthorized' },
+                 { code: 404, message: 'Unknown Symbol' }
+             ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
         end

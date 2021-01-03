@@ -5,7 +5,7 @@ class Exchange < ApplicationRecord
 
   def self.search_by(column, value)
     Exchange.all.detect do |exchange|
-      exchange[column].upcase == value.upcase
+      exchange[column] && exchange[column]&.upcase == value&.upcase
     end
   end
 

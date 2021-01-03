@@ -21,6 +21,19 @@ module API
               API::Entities::Position,
               API::Entities::Stock,
               API::Entities::Portfolio
+          ],
+          schemes: ['http'],
+          security_definitions: {
+              ApiKeyAuth: {
+                  type: 'apiKey',
+                  in: 'query',
+                  name: 'token'
+              }
+          },
+          security: [
+              {
+                  ApiKeyAuth: []
+              }
           ]
 
       end

@@ -13,7 +13,7 @@ module API
 
         desc 'Returns stock exchange information.'
         params do
-          requires :code, type: String, desc: 'Stock exchange code for the report Ex: NYSE'
+          requires :code, type: String, desc: 'Stock exchange code for the report. Example: NYSE'
         end
         get ':code' do
           exchange = Exchange.find_by(code: params[:code]&.upcase)

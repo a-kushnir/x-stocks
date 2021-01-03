@@ -12,7 +12,7 @@ module API
 
         desc 'Returns company information.'
         params do
-          requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
+          requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/company' do
           stock = Stock.find_by(symbol: params[:symbol])
@@ -22,7 +22,7 @@ module API
 
         desc 'Returns stock information.'
         params do
-          requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
+          requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/quote' do
           stock = Stock.find_by(symbol: params[:symbol])
@@ -33,7 +33,7 @@ module API
 
         desc 'Returns stock earnings information.'
         params do
-          requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
+          requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/earnings' do
           stock = Stock.find_by(symbol: params[:symbol])

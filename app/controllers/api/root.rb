@@ -6,9 +6,7 @@ module API
       error!({error: 'Server error', exception: {message: e.message, backtrace: Backtrace.clean(e.backtrace)}}, 500)
     end
 
-    mount API::V1::Exchanges
-    mount API::V1::Stocks
-    mount API::V1::Positions
+    include API::V1::Root
 
     get '/(*:url)' do
       error!({error: 'Not Found'}, 404)

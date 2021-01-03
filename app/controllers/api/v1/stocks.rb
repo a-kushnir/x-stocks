@@ -27,6 +27,7 @@ module API
         get ':symbol/quote' do
           stock = Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
+          Etl::Refresh::Finnhub.new.hourly_one_stock!(stock) rescue nil
           present stock, with: API::Entities::Stock, type: :quote
         end
 

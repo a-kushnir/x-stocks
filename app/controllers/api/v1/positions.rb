@@ -20,6 +20,7 @@ module API
         get ':symbol' do
           stock = Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
+          Etl::Refresh::Finnhub.new.hourly_one_stock!(stock) rescue nil
           relation = Position.where(user: current_user).where.not(shares: nil)
           position = relation.where(stock_id: stock.id).first
           error!('Unknown Symbol', 404) unless position

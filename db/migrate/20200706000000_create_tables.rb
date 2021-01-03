@@ -79,7 +79,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.date :next_earnings_date
       t.string :next_earnings_hour
       t.decimal :next_earnings_est_eps, precision: 12, scale: 4
-      t.string :next_earnings_details, :string
+      t.string :next_earnings_details
 
       # Yahoo
       t.decimal :yahoo_beta, precision: 10, scale: 6

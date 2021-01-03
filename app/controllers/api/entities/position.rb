@@ -15,6 +15,7 @@ module API
           expose :gain_loss_pct
           expose :est_annual_dividend
           expose :est_annual_income
+          expose(:diversity) { |model, options| (100 * model.market_value / options[:market_value]).round(2).to_f rescue nil }
         end
       end
 

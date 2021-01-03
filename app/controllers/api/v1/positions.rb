@@ -7,9 +7,26 @@ module API
 
         desc 'Returns all stock positions.'
         get do
-          positions = Position.where(user: current_user).where.not(shares: nil).all
-          present positions, with: API::Entities::Position, type: :details
+          relation = Position.where(user: current_user).where.not(shares: nil)
+          positions = relation.all
+          market_value = relation.sum(:market_value)
+          present positions, with: API::Entities::Position, type: :details, market_value: market_value
         end
+
+        desc 'Returns stock position.'
+        params do
+          requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
+        end
+        get ':symbol' do
+          stock = Stock.find_by(symbol: params[:symbol])
+          error!('Unknown Symbol', 404) unless stock
+          relation = Position.where(user: current_user).where.not(shares: nil)
+          position = relation.where(stock_id: stock.id).first
+          error!('Unknown Symbol', 404) unless position
+          market_value = relation.sum(:market_value)
+          present position, with: API::Entities::Position, type: :details, market_value: market_value
+        end
+      end
 
         desc 'Returns all stock position summary.'
         get 'summary' do
@@ -25,19 +42,6 @@ module API
 
           present summary, with: API::Entities::Position, type: :summary
         end
-
-        desc 'Returns stock position.'
-        params do
-          requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
-        end
-        get ':symbol' do
-          stock = Stock.find_by(symbol: params[:symbol])
-          error!('Unknown Symbol', 404) unless stock
-          position = Position.where(user: current_user).where.not(shares: nil).where(stock_id: stock.id).first
-          error!('Unknown Symbol', 404) unless position
-          present position, with: API::Entities::Position, type: :details
-        end
-      end
 
     end
   end

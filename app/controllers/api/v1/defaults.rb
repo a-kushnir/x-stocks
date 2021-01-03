@@ -18,6 +18,7 @@ module API
         end
 
         before do
+          header 'Access-Control-Allow-Origin', '*'
           authorize!
         end
 

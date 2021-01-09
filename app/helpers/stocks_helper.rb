@@ -10,7 +10,7 @@ module StocksHelper
   end
 
   def link_to_website(url)
-    link_to url.sub(/^https?\:\/\/(www.)?/, ''), url if url
+    link_to url.sub(%r{^https?\://(www.)?}, ''), url if url
   end
 
   def stock_peers
@@ -52,7 +52,9 @@ module StocksHelper
   end
 
   def rec_min_visible_value(details)
-    details.values.map { |value| value.sum }.max / 10 rescue 1
+    details.values.map(&:sum).max / 10
+  rescue StandardError
+    1
   end
 
   def rec_graph_data(details)
@@ -60,25 +62,25 @@ module StocksHelper
       labels: details.keys.map { |date| Date.parse(date).strftime('%b') },
       datasets:
         [{
-           label: 'Strong Sell',
-           backgroundColor: '#FF333A',
-           data: details.values.map { |value| value[4] }
+          label: 'Strong Sell',
+          backgroundColor: '#FF333A',
+          data: details.values.map { |value| value[4] }
         }, {
-           label: 'Sell',
-           backgroundColor: '#FFA33E',
-           data: details.values.map { |value| value[3] }
+          label: 'Sell',
+          backgroundColor: '#FFA33E',
+          data: details.values.map { |value| value[3] }
         }, {
-           label: 'Hold',
-           backgroundColor: '#FFDC48',
-           data: details.values.map { |value| value[2] }
+          label: 'Hold',
+          backgroundColor: '#FFDC48',
+          data: details.values.map { |value| value[2] }
         }, {
-           label: 'Buy',
-           backgroundColor: '#00C073',
-           data: details.values.map { |value| value[1] }
+          label: 'Buy',
+          backgroundColor: '#00C073',
+          data: details.values.map { |value| value[1] }
         }, {
-           label: 'Strong Buy',
-           backgroundColor: '#008F88',
-           data: details.values.map { |value| value[0] }
+          label: 'Strong Buy',
+          backgroundColor: '#008F88',
+          data: details.values.map { |value| value[0] }
         }]
     }
   end

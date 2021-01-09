@@ -22,8 +22,8 @@ module Etl
 
       def processing_message(percent)
         {
-            message: 'Processing',
-            percent: percent
+          message: 'Processing',
+          percent: percent
         }
       end
 

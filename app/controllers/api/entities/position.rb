@@ -14,7 +14,11 @@ module API
         expose :gain_loss, documentation: { type: Float }
         expose :gain_loss_pct, documentation: { type: Float }
         expose :est_annual_income, as: :est_annual_dividend, documentation: { type: Float }
-        expose(:diversity, documentation: { type: Float }) { |model, options| (100 * model.market_value / options[:market_value]).round(2).to_f rescue nil }
+        expose(:diversity, documentation: { type: Float }) do |model, options|
+          (100 * model.market_value / options[:market_value]).round(2).to_f
+        rescue StandardError
+          nil
+        end
       end
     end
   end

@@ -4,10 +4,10 @@ class Stock < ApplicationRecord
   DAYS_IN_YEAR = 365.25
 
   DIVIDEND_FREQUENCIES = {
-      'annual' => 1,
-      'semi-annual' => 2,
-      'quarterly' => 4,
-      'monthly' => 12
+    'annual' => 1,
+    'semi-annual' => 2,
+    'quarterly' => 4,
+    'monthly' => 12
   }.freeze
 
   belongs_to :exchange, optional: true
@@ -44,16 +44,36 @@ class Stock < ApplicationRecord
   end
 
   def update_prices!
-    self.price_change = (current_price - prev_close_price) rescue nil
-    self.price_change_pct = (price_change / prev_close_price * 100) rescue nil
-    self.est_annual_dividend_pct = est_annual_dividend / current_price * 100 rescue nil
-    self.market_capitalization = outstanding_shares * current_price rescue nil
+    self.price_change = begin
+                          (current_price - prev_close_price)
+                        rescue StandardError
+                          nil
+                        end
+    self.price_change_pct = begin
+                              (price_change / prev_close_price * 100)
+                            rescue StandardError
+                              nil
+                            end
+    self.est_annual_dividend_pct = begin
+                                     est_annual_dividend / current_price * 100
+                                   rescue StandardError
+                                     nil
+                                   end
+    self.market_capitalization = begin
+                                   outstanding_shares * current_price
+                                 rescue StandardError
+                                   nil
+                                 end
     ::Position.update_prices!(self)
     save!
   end
 
   def update_dividends!
-    self.est_annual_dividend_pct = est_annual_dividend / current_price * 100 rescue nil
+    self.est_annual_dividend_pct = begin
+                                     est_annual_dividend / current_price * 100
+                                   rescue StandardError
+                                     nil
+                                   end
     ::Position.update_dividends!(self)
     save!
   end
@@ -73,8 +93,16 @@ class Stock < ApplicationRecord
   def div_suspended?
     last_div = dividend_details&.last
     (dividend_amount || est_annual_dividend || dividend_frequency_num || dividend_growth_3y || dividend_growth_5y) &&
-      (next_div_ex_date.nil? || (next_div_ex_date.past? && (next_div_ex_date < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)) &&
-      (last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago) rescue true)
+      (next_div_ex_date.nil? || begin
+                                  next_div_ex_date.past? && (next_div_ex_date < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago)
+                                rescue StandardError
+                                  true
+                                end) &&
+      begin
+        last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / dividend_frequency_num).days.ago)
+      rescue StandardError
+        true
+      end
   end
 
   def div_change_pct
@@ -84,7 +112,13 @@ class Stock < ApplicationRecord
       size = periodic_dividend_details.size
       last = periodic_dividend_details[size - 1]
       prev = periodic_dividend_details[size - 2]
-      100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4) rescue 0 if last && prev
+      if last && prev
+        begin
+          100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4)
+        rescue StandardError
+          0
+        end
+      end
     end
   end
 

@@ -3,7 +3,7 @@
 module Etl
   class TokenStore
     # Support for key_0, key_1, etc.
-    SUFFIX_REGEX = /^_\d+$/
+    SUFFIX_REGEX = /^_\d+$/.freeze
     PAUSE = 1.0
 
     attr_reader :logger
@@ -24,7 +24,7 @@ module Etl
           result = yield token
           success = true
           result
-        rescue
+        rescue StandardError
           disable_token(token)
           token = random_token!
           sleep(PAUSE)

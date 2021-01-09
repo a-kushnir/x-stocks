@@ -9,10 +9,10 @@ module API
         desc 'Returns available stock symbols.',
              is_array: true,
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' }
+               { code: 401, message: 'Unauthorized' }
              ]
         get do
           Stock.order(:symbol).pluck([:symbol])
@@ -20,11 +20,11 @@ module API
 
         desc 'Returns company information.',
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Symbol' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Symbol' }
              ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
@@ -37,11 +37,11 @@ module API
 
         desc 'Returns stock information.',
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Symbol' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Symbol' }
              ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
@@ -49,17 +49,21 @@ module API
         get ':symbol/quote' do
           stock = Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
-          Etl::Refresh::Finnhub.new.hourly_one_stock!(stock) rescue nil
+          begin
+            Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)
+          rescue StandardError
+            nil
+          end
           present stock, with: API::Entities::Stock, type: :quote
         end
 
         desc 'Returns stock earnings information.',
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Symbol' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Symbol' }
              ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
@@ -72,11 +76,11 @@ module API
 
         desc 'Returns stock dividends information.',
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Symbol' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Symbol' }
              ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
@@ -89,11 +93,11 @@ module API
 
         desc 'Returns stock recommendations.',
              success: [
-                 { code: 200, model: API::Entities::Stock }
+               { code: 200, model: API::Entities::Stock }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Symbol' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Symbol' }
              ]
         params do
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'

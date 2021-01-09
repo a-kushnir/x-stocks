@@ -29,7 +29,7 @@ module Etl
         hourly_all_stocks!(&block) if hourly_all_stocks?
       end
 
-      def hourly_one_stock!(stock, token_store: nil, logger: nil, &block)
+      def hourly_one_stock!(stock, token_store: nil, logger: nil)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
         token_store.try_token do |token|

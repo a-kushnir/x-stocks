@@ -55,12 +55,24 @@ module Etl
 
         last_div = stock.periodic_dividend_details.last
 
-        stock.dividend_frequency = last_div['frequency'] rescue nil
+        stock.dividend_frequency = begin
+                                     last_div['frequency']
+                                   rescue StandardError
+                                     nil
+                                   end
         num = Stock::DIVIDEND_FREQUENCIES[(stock.dividend_frequency || '').downcase]
         stock.dividend_frequency_num = num
 
-        stock.dividend_amount = last_div['amount'] rescue nil
-        stock.est_annual_dividend = stock.dividend_frequency_num * stock.dividend_amount rescue nil
+        stock.dividend_amount = begin
+                                  last_div['amount']
+                                rescue StandardError
+                                  nil
+                                end
+        stock.est_annual_dividend = begin
+                                      stock.dividend_frequency_num * stock.dividend_amount
+                                    rescue StandardError
+                                      nil
+                                    end
         stock.update_dividends!
       end
 

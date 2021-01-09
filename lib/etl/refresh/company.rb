@@ -8,28 +8,80 @@ module Etl
         finnhub_ts = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
 
         iexapis_ts.try_token do |token|
-          json = Etl::Extract::Iexapis.new(token: token, logger: logger).company(stock.symbol) rescue nil
-          Etl::Transform::Iexapis.new(logger).company(stock, json) rescue nil
+          json = begin
+                   Etl::Extract::Iexapis.new(token: token, logger: logger).company(stock.symbol)
+                 rescue StandardError
+                   nil
+                 end
+          begin
+            Etl::Transform::Iexapis.new(logger).company(stock, json)
+          rescue StandardError
+            nil
+          end
         end
 
         finnhub_ts.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).company(stock.symbol) rescue nil
-          Etl::Transform::Finnhub.new(logger).company(stock, json) rescue nil
+          json = begin
+                   Etl::Extract::Finnhub.new(token: token, logger: logger).company(stock.symbol)
+                 rescue StandardError
+                   nil
+                 end
+          begin
+            Etl::Transform::Finnhub.new(logger).company(stock, json)
+          rescue StandardError
+            nil
+          end
         end
 
         finnhub_ts.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).peers(stock.symbol) rescue nil
-          Etl::Transform::Finnhub.new(logger).peers(stock, json) rescue nil
+          json = begin
+                   Etl::Extract::Finnhub.new(token: token, logger: logger).peers(stock.symbol)
+                 rescue StandardError
+                   nil
+                 end
+          begin
+            Etl::Transform::Finnhub.new(logger).peers(stock, json)
+          rescue StandardError
+            nil
+          end
         end
 
-        Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, token_store: finnhub_ts, logger: logger) rescue nil
-        Etl::Refresh::Yahoo.new.daily_one_stock!(stock, logger: logger) rescue nil
-        Etl::Refresh::Finnhub.new.daily_one_stock!(stock, token_store: finnhub_ts, logger: logger, immediate: true) rescue nil
-        Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, token_store: iexapis_ts, logger: logger, immediate: true) rescue nil
-        Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger) rescue nil
+        begin
+          Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, token_store: finnhub_ts, logger: logger)
+        rescue StandardError
+          nil
+        end
+        begin
+          Etl::Refresh::Yahoo.new.daily_one_stock!(stock, logger: logger)
+        rescue StandardError
+          nil
+        end
+        begin
+          Etl::Refresh::Finnhub.new.daily_one_stock!(stock, token_store: finnhub_ts, logger: logger, immediate: true)
+        rescue StandardError
+          nil
+        end
+        begin
+          Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, token_store: iexapis_ts, logger: logger, immediate: true)
+        rescue StandardError
+          nil
+        end
+        begin
+          Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger)
+        rescue StandardError
+          nil
+        end
 
-        Etl::Refresh::Slickcharts.new.all_stocks! rescue nil
-        Etl::Refresh::Finnhub.new.weekly_all_stocks! rescue nil
+        begin
+          Etl::Refresh::Slickcharts.new.all_stocks!
+        rescue StandardError
+          nil
+        end
+        begin
+          Etl::Refresh::Finnhub.new.weekly_all_stocks!
+        rescue StandardError
+          nil
+        end
       end
     end
   end

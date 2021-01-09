@@ -9,8 +9,8 @@ class EventStream
       yield instance
     rescue ActionController::Live::ClientDisconnected
       # Connection closed by client
-    rescue Exception => ex
-      instance&.write({ message: ex.message, backtrace: Backtrace.clean(ex.backtrace) }, event: 'exception')
+    rescue Exception => e
+      instance&.write({ message: e.message, backtrace: Backtrace.clean(e.backtrace) }, event: 'exception')
     ensure
       instance&.close
     end

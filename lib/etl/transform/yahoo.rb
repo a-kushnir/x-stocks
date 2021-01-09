@@ -7,12 +7,20 @@ module Etl
         summary = json&.dig('context', 'dispatcher', 'stores')
 
         stock.outstanding_shares = summary&.dig('StreamDataStore', 'quoteData', stock.symbol, 'sharesOutstanding', 'raw')
-        stock.payout_ratio = summary&.dig('QuoteSummaryStore', 'summaryDetail', 'payoutRatio', 'raw') * 100 rescue nil
+        stock.payout_ratio = begin
+                               summary&.dig('QuoteSummaryStore', 'summaryDetail', 'payoutRatio', 'raw') * 100
+                             rescue StandardError
+                               nil
+                             end
         stock.yahoo_beta = summary&.dig('QuoteSummaryStore', 'defaultKeyStatistics', 'beta', 'raw')
         stock.yahoo_rec = summary&.dig('QuoteSummaryStore', 'financialData', 'recommendationMean', 'raw')
         stock.yahoo_rec_details = to_rec(summary&.dig('QuoteSummaryStore', 'recommendationTrend', 'trend'))
         stock.est_annual_dividend = summary&.dig('QuoteSummaryStore', 'summaryDetail', 'dividendRate', 'raw')
-        stock.yahoo_discount = summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount') rescue nil
+        stock.yahoo_discount = begin
+                                 summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')
+                               rescue StandardError
+                                 nil
+                               end
 
         description = summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary')
         stock.description = description if description.present?

@@ -9,11 +9,11 @@ module Etl
         symbol = "#{stock.symbol}--#{stock.exchange.dividend_code}"
 
         body = {
-            'tm' => '3-comparison-center',
-            'r' => "ES::DividendStock::Stock##{symbol}",
-            'default_tab' => 'best-dividend-stocks',
-            'only' => %w[meta data thead],
-            'selected_symbols' => [symbol]
+          'tm' => '3-comparison-center',
+          'r' => "ES::DividendStock::Stock##{symbol}",
+          'default_tab' => 'best-dividend-stocks',
+          'only' => %w[meta data thead],
+          'selected_symbols' => [symbol]
         }
 
         post_json(data_url, body)

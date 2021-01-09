@@ -9,10 +9,10 @@ module API
         desc 'Returns available stock exchanges',
              is_array: true,
              success: [
-                 { code: 200, model: API::Entities::Exchange }
+               { code: 200, model: API::Entities::Exchange }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' }
+               { code: 401, message: 'Unauthorized' }
              ]
         get do
           exchanges = Exchange.all
@@ -21,11 +21,11 @@ module API
 
         desc 'Returns stock exchange information',
              success: [
-                 { code: 200, model: API::Entities::Exchange }
+               { code: 200, model: API::Entities::Exchange }
              ],
              failure: [
-                 { code: 401, message: 'Unauthorized' },
-                 { code: 404, message: 'Unknown Code' }
+               { code: 401, message: 'Unauthorized' },
+               { code: 404, message: 'Unknown Code' }
              ]
         params do
           requires :code, type: String, desc: 'Stock exchange code for the report. Example: NYSE'

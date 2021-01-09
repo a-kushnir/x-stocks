@@ -9,7 +9,7 @@ module Etl
         text = get_text(summary_url(symbol), headers)
         json = text.match(/root.App.main = ({.*});/i).captures.first
         JSON.parse(json)
-      rescue
+      rescue StandardError
         nil
       end
 

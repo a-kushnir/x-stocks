@@ -56,13 +56,13 @@ module Etl
       def price_target(stock, json)
         stock.finnhub_price_target =
           if json.present? &&
-              (json['targetHigh']).positive? && (json['targetLow']).positive? &&
-              (json['targetMean']).positive? && (json['targetMedian']).positive?
+             (json['targetHigh']).positive? && (json['targetLow']).positive? &&
+             (json['targetMean']).positive? && (json['targetMedian']).positive?
             {
               high: json['targetHigh'],
               low: json['targetLow'],
               mean: json['targetMean'],
-              median: json['targetMedian'],
+              median: json['targetMedian']
             }
           end
 
@@ -107,7 +107,7 @@ module Etl
 
           date = Date.parse(row['date'])
           if stock.next_earnings_date.nil? ||
-              (date.future? && stock.next_earnings_date >= date)
+             (date.future? && stock.next_earnings_date >= date)
             stock.next_earnings_date = date
             stock.next_earnings_hour = row['hour']
             stock.next_earnings_est_eps = row['epsEstimate']
@@ -117,14 +117,14 @@ module Etl
           details.reject! { |d| d['date'] == row['date'] }
 
           details << {
-              date: row['date'],
-              hour: row['hour'],
-              eps_estimate: row['epsEstimate'],
-              eps_actual: row['epsActual'],
-              revenue_estimate: row['revenueEstimate'],
-              revenue_actual: row['revenueActual'],
-              quarter: row['quarter'],
-              year: row['year'],
+            date: row['date'],
+            hour: row['hour'],
+            eps_estimate: row['epsEstimate'],
+            eps_actual: row['epsActual'],
+            revenue_estimate: row['revenueEstimate'],
+            revenue_actual: row['revenueActual'],
+            quarter: row['quarter'],
+            year: row['year']
           }
 
           stock.save!

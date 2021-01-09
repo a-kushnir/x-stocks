@@ -15,8 +15,8 @@ module Etl
 
             extractor.download(stored_image_path, source_image_url) unless source_image_url.blank?
           end
-        rescue Exception => error
-          logger&.log_error(error)
+        rescue Exception => e
+          logger&.log_error(e)
         end
 
         stored_image_url

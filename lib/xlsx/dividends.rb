@@ -28,7 +28,7 @@ module Xlsx
 
           sheet.add_row footer_row(months), style: footer_style(styles)
 
-          sheet.column_widths *[10, 10, 10, Array.new(13, 13)].flatten
+          sheet.column_widths(*[10, 10, 10, Array.new(13, 13)].flatten)
         end
 
         package.serialize(file_name)
@@ -54,18 +54,38 @@ module Xlsx
       div_suspended = position.stock.div_suspended?
 
       row = [
-          position.stock.symbol,
-          div_suspended ? 'Suspended' : (position.stock.est_annual_dividend_pct / 100 rescue nil),
-          ((position.stock.dividend_rating * 20).to_i rescue nil)
+        position.stock.symbol,
+        if div_suspended
+          'Suspended'
+        else
+          begin
+                                                position.stock.est_annual_dividend_pct / 100
+          rescue StandardError
+            nil
+                                              end
+        end,
+        begin
+          (position.stock.dividend_rating * 20).to_i
+        rescue StandardError
+          nil
+        end
       ]
 
       div.months.each_with_index do |month, index|
-        amount = est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares rescue nil
+        amount = begin
+                   est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares
+                 rescue StandardError
+                   nil
+                 end
         months[index] += amount if amount
         row << amount
       end
 
-      row << est.map { |e| e[:amount] }.sum * position.shares rescue nil
+      begin
+        row << est.map { |e| e[:amount] }.sum * position.shares
+      rescue StandardError
+        nil
+      end
       row
     end
 

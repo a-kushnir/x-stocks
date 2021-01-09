@@ -3,9 +3,9 @@
 class PositionsController < ApplicationController
   def index
     @positions = Position
-      .where(user: current_user)
-      .where.not(shares: nil)
-      .all
+                 .where(user: current_user)
+                 .where.not(shares: nil)
+                 .all
 
     @columns = columns
 
@@ -28,8 +28,8 @@ class PositionsController < ApplicationController
     else
       render partial: 'edit', layout: nil
     end
-  rescue Exception => error
-    internal_error(error, layout: nil)
+  rescue Exception => e
+    internal_error(e, layout: nil)
   end
 
   private

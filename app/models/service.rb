@@ -9,9 +9,9 @@ class Service < ApplicationRecord
 
   def self.slow_update?
     Etl::Refresh::Yahoo.new.daily_all_stocks? ||
-    Etl::Refresh::Finnhub.new.daily_all_stocks? ||
-    Etl::Refresh::Iexapis.new.weekly_all_stocks? ||
-    Etl::Refresh::Dividend.new.weekly_all_stocks?
+      Etl::Refresh::Finnhub.new.daily_all_stocks? ||
+      Etl::Refresh::Iexapis.new.weekly_all_stocks? ||
+      Etl::Refresh::Dividend.new.weekly_all_stocks?
   end
 
   def self.lock(key, force: false)
@@ -26,9 +26,9 @@ class Service < ApplicationRecord
 
     begin
       yield service
-    rescue Exception => error
-      service.error = "Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
-      raise error
+    rescue Exception => e
+      service.error = "Message: #{e.message}\nBacktrace:\n#{Backtrace.clean(e.backtrace).join("\n")}"
+      raise e
     ensure
       service.log = service.instance_variable_get :@log_writer
       service.last_run_at = DateTime.now
@@ -70,8 +70,8 @@ class Service < ApplicationRecord
   def lock!
     rows_updated =
       Service
-        .where(id: id, locked_at: locked_at)
-        .update_all(locked_at: DateTime.now)
+      .where(id: id, locked_at: locked_at)
+      .update_all(locked_at: DateTime.now)
 
     rows_updated == 1
   end

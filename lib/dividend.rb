@@ -60,7 +60,7 @@ class Dividend
     from_date, to_date = date_range
     results.select! do |row|
       row[:payment_date] >= from_date &&
-      row[:payment_date] <= to_date
+        row[:payment_date] <= to_date
     end
 
     results.each do |row|

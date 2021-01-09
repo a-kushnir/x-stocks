@@ -18,23 +18,23 @@ module API
           add_version: false,
           hide_documentation_path: true,
           models: [
-              API::Entities::Exchange,
-              API::Entities::Position,
-              API::Entities::Stock,
-              API::Entities::Portfolio
+            API::Entities::Exchange,
+            API::Entities::Position,
+            API::Entities::Stock,
+            API::Entities::Portfolio
           ],
           schemes: ['http'],
           security_definitions: {
-              ApiKeyAuth: {
-                  type: 'apiKey',
-                  in: 'query',
-                  name: 'token'
-              }
+            ApiKeyAuth: {
+              type: 'apiKey',
+              in: 'query',
+              name: 'token'
+            }
           },
           security: [
-              {
-                  ApiKeyAuth: []
-              }
+            {
+              ApiKeyAuth: []
+            }
           ]
       end
     end

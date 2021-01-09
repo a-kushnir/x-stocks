@@ -171,59 +171,59 @@ class CreateTables < ActiveRecord::Migration[6.0]
         User.create!(email: 'admin@admin.com', password: 'admin!')
 
         Exchange.create!({
-          name: 'Nasdaq',
-          code: 'NASDAQ',
-          region: 'United States',
-          iexapis_code: 'NASDAQ',
-          webull_code: 'nasdaq',
-          finnhub_code: 'NASDAQ NMS - GLOBAL MARKET',
-          tradingview_code: 'NASDAQ',
-          dividend_code: 'NASDAQ'
-        })
+                           name: 'Nasdaq',
+                           code: 'NASDAQ',
+                           region: 'United States',
+                           iexapis_code: 'NASDAQ',
+                           webull_code: 'nasdaq',
+                           finnhub_code: 'NASDAQ NMS - GLOBAL MARKET',
+                           tradingview_code: 'NASDAQ',
+                           dividend_code: 'NASDAQ'
+                         })
 
         Exchange.create!({
-          name: 'New York Stock Exchange',
-          code: 'NYSE',
-          region: 'United States',
-          iexapis_code: 'New York Stock Exchange',
-          webull_code: 'nyse',
-          finnhub_code: 'NEW YORK STOCK EXCHANGE, INC.',
-          tradingview_code: 'NYSE',
-          dividend_code: 'NYSE'
-        })
+                           name: 'New York Stock Exchange',
+                           code: 'NYSE',
+                           region: 'United States',
+                           iexapis_code: 'New York Stock Exchange',
+                           webull_code: 'nyse',
+                           finnhub_code: 'NEW YORK STOCK EXCHANGE, INC.',
+                           tradingview_code: 'NYSE',
+                           dividend_code: 'NYSE'
+                         })
 
         Exchange.create!({
-          name: 'NYSE Arca',
-          code: 'AMEX',
-          region: 'United States',
-          iexapis_code: 'NYSE Arca',
-          webull_code: 'nysearca',
-          finnhub_code: nil,
-          tradingview_code: 'AMEX',
-          dividend_code: 'AMEX'
-        })
+                           name: 'NYSE Arca',
+                           code: 'AMEX',
+                           region: 'United States',
+                           iexapis_code: 'NYSE Arca',
+                           webull_code: 'nysearca',
+                           finnhub_code: nil,
+                           tradingview_code: 'AMEX',
+                           dividend_code: 'AMEX'
+                         })
 
         Exchange.find_by({
-          name: 'Toronto Stock Exchange',
-          code: 'TSX',
-          region: 'Canada',
-          iexapis_code: 'US OTC',
-          webull_code: 'otcmkts',
-          finnhub_code: 'OTC MARKETS',
-          tradingview_code: 'OTC',
-          dividend_code: 'OTC'
-        })
+                           name: 'Toronto Stock Exchange',
+                           code: 'TSX',
+                           region: 'Canada',
+                           iexapis_code: 'US OTC',
+                           webull_code: 'otcmkts',
+                           finnhub_code: 'OTC MARKETS',
+                           tradingview_code: 'OTC',
+                           dividend_code: 'OTC'
+                         })
 
         Exchange.create!({
-          name: 'Bats Global Markets',
-          code: 'BATS',
-          region: 'United States',
-          iexapis_code: nil,
-          webull_code: 'amex',
-          finnhub_code: 'BATS EXCHANGE',
-          tradingview_code: 'AMEX',
-          dividend_code: 'NASDAQ'
-        })
+                           name: 'Bats Global Markets',
+                           code: 'BATS',
+                           region: 'United States',
+                           iexapis_code: nil,
+                           webull_code: 'amex',
+                           finnhub_code: 'BATS EXCHANGE',
+                           tradingview_code: 'AMEX',
+                           dividend_code: 'NASDAQ'
+                         })
       end
     end
   end

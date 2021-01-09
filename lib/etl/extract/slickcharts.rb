@@ -32,7 +32,7 @@ module Etl
       end
 
       def text_to_list(value)
-        matches = value.scan(/<td><a href="\/symbol\/(.+)">(.+)<\/a><\/td>/i)
+        matches = value.scan(%r{<td><a href="/symbol/(.+)">(.+)</a></td>}i)
         hash = {}
         matches.each do |match|
           hash[match.first] = true

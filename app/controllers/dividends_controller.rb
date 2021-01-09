@@ -5,9 +5,9 @@ class DividendsController < ApplicationController
 
   def index
     @positions = Position
-      .where(user: current_user)
-      .where.not(shares: nil)
-      .all
+                 .where(user: current_user)
+                 .where.not(shares: nil)
+                 .all
 
     @columns = columns
 

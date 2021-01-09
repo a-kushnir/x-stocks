@@ -14,91 +14,6 @@ Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: outdent, indent
-Layout/AccessModifierIndentation:
-  Exclude:
-    - 'bin/bundle'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'bin/webpack'
-    - 'bin/webpack-dev-server'
-
-# Offense count: 27
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Layout/FirstArrayElementIndentation:
-  Exclude:
-    - 'app/controllers/api/v1/exchanges.rb'
-    - 'app/controllers/api/v1/positions.rb'
-    - 'app/controllers/api/v1/root.rb'
-    - 'app/controllers/api/v1/stocks.rb'
-    - 'lib/service_runner.rb'
-    - 'lib/virtual_tag.rb'
-    - 'lib/xlsx/dividends.rb'
-    - 'lib/xlsx/positions.rb'
-
-# Offense count: 25
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/FirstHashElementIndentation:
-  Exclude:
-    - 'app/controllers/api/v1/root.rb'
-    - 'app/helpers/stocks_helper.rb'
-    - 'app/models/stock.rb'
-    - 'db/migrate/20200706000000_create_tables.rb'
-    - 'db/migrate/20201221020704_add_new_exchange.rb'
-    - 'lib/etl/extract/dividend.rb'
-    - 'lib/etl/refresh/base.rb'
-    - 'lib/etl/transform/finnhub.rb'
-    - 'lib/xlsx/base.rb'
-
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/controllers/dividends_controller.rb'
-    - 'app/controllers/positions_controller.rb'
-    - 'app/models/position.rb'
-    - 'app/models/service.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'app/models/service.rb'
-    - 'lib/dividend.rb'
-    - 'lib/etl/transform/finnhub.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBrackets: space, no_space
-Layout/SpaceInsideArrayLiteralBrackets:
-  Exclude:
-    - 'config/environments/production.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Lint/AmbiguousOperator:
-  Exclude:
-    - 'lib/xlsx/dividends.rb'
-    - 'lib/xlsx/positions.rb'
-
 # Offense count: 2
 Lint/IneffectiveAccessModifier:
   Exclude:
@@ -120,21 +35,6 @@ Lint/SafeNavigationChain:
     - 'lib/etl/transform/yahoo.rb'
     - 'lib/xlsx/dividends.rb'
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/service_runner.rb'
-    - 'lib/virtual_tag.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'lib/etl/refresh/finnhub.rb'
-
 # Offense count: 9
 Lint/UriEscapeUnescape:
   Exclude:
@@ -143,14 +43,6 @@ Lint/UriEscapeUnescape:
     - 'app/helpers/services_helper.rb'
     - 'app/helpers/stocks_helper.rb'
     - 'lib/etl/extract/base.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'lib/service_runner.rb'
-    - 'lib/virtual_tag.rb'
 
 # Offense count: 32
 # Configuration parameters: IgnoredMethods.
@@ -181,7 +73,7 @@ Metrics/MethodLength:
 # Offense count: 1
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ModuleLength:
-  Max: 137
+  Max: 138
 
 # Offense count: 1
 # Configuration parameters: CountKeywordArgs.
@@ -203,25 +95,6 @@ Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredName.
-Naming/RescuedExceptionsVariableName:
-  Exclude:
-    - 'app/controllers/positions_controller.rb'
-    - 'app/models/service.rb'
-    - 'lib/etl/refresh/fear_n_greed.rb'
-    - 'lib/event_stream.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'test/channels/application_cable/connection_test.rb'
-    - 'test/test_helper.rb'
-
 # Offense count: 68
 Style/Documentation:
   Enabled: false
@@ -233,52 +106,16 @@ Style/DoubleNegation:
   Exclude:
     - 'app/controllers/api/entities/base.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'bin/bundle'
-
 # Offense count: 2
 Style/IdenticalConditionalBranches:
   Exclude:
     - 'lib/metascore.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'lib/service_runner.rb'
 
 # Offense count: 2
 Style/MultipleComparison:
   Exclude:
     - 'app/controllers/dividends_controller.rb'
     - 'lib/xlsx/dividends.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'lib/etl/extract/dividend.rb'
-    - 'lib/etl/extract/fear_n_greed.rb'
-    - 'lib/etl/extract/finnhub.rb'
-    - 'lib/etl/extract/iexapis.rb'
-    - 'lib/etl/extract/slickcharts.rb'
-    - 'lib/etl/extract/yahoo.rb'
-    - 'lib/etl/token_store.rb'
-    - 'lib/xlsx/base.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -294,77 +131,6 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/PerlBackrefs:
-  Exclude:
-    - 'bin/bundle'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'app/helpers/stocks_helper.rb'
-    - 'lib/etl/extract/slickcharts.rb'
-
-# Offense count: 46
-# Cop supports --auto-correct.
-Style/RescueModifier:
-  Exclude:
-    - 'app/controllers/api/entities/position.rb'
-    - 'app/controllers/api/v1/positions.rb'
-    - 'app/controllers/api/v1/stocks.rb'
-    - 'app/controllers/stocks_controller.rb'
-    - 'app/helpers/stocks_helper.rb'
-    - 'app/models/position.rb'
-    - 'app/models/stock.rb'
-    - 'lib/etl/refresh/company.rb'
-    - 'lib/etl/transform/iexapis.rb'
-    - 'lib/etl/transform/yahoo.rb'
-    - 'lib/xlsx/dividends.rb'
-    - 'lib/xlsx/positions.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Exclude:
-    - 'lib/etl/extract/yahoo.rb'
-    - 'lib/etl/token_store.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: .
-# SupportedStyles: use_perl_names, use_english_names
-Style/SpecialGlobalVars:
-  EnforcedStyle: use_perl_names
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/StderrPuts:
-  Exclude:
-    - 'bin/yarn'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-# IgnoredMethods: respond_to, define_method
-Style/SymbolProc:
-  Exclude:
-    - 'app/helpers/stocks_helper.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'lib/etl/transform/finnhub.rb'
-    - 'lib/xlsx/base.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.

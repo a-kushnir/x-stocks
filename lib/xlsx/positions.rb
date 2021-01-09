@@ -27,7 +27,7 @@ module Xlsx
 
           sheet.add_row footer_row(positions), style: footer_style(styles)
 
-          sheet.column_widths *[10, 10, Array.new(8, 15)].flatten
+          sheet.column_widths(*[10, 10, Array.new(8, 15)].flatten)
         end
 
         package.serialize(file_name)
@@ -46,16 +46,24 @@ module Xlsx
 
     def data_row(position, market_value)
       [
-          position.stock.symbol,
-          position.shares,
-          position.average_price,
-          position.market_price,
-          position.total_cost,
-          position.market_value,
-          position.gain_loss,
-          (position.gain_loss_pct / 100 rescue nil),
-          position.est_annual_income,
-          (position.market_value / market_value rescue nil)
+        position.stock.symbol,
+        position.shares,
+        position.average_price,
+        position.market_price,
+        position.total_cost,
+        position.market_value,
+        position.gain_loss,
+        begin
+          position.gain_loss_pct / 100
+        rescue StandardError
+          nil
+        end,
+        position.est_annual_income,
+        begin
+          position.market_value / market_value
+        rescue StandardError
+          nil
+        end
       ]
     end
 
@@ -69,14 +77,18 @@ module Xlsx
       gain_loss = positions.sum { |p| p.gain_loss.to_d }
 
       [
-          Array.new(3, ''),
-          'Total',
-          total_cost,
-          market_value,
-          gain_loss,
-          (gain_loss / total_cost rescue nil),
-          positions.sum { |p| p.est_annual_income.to_d },
-          1
+        Array.new(3, ''),
+        'Total',
+        total_cost,
+        market_value,
+        gain_loss,
+        begin
+          gain_loss / total_cost
+        rescue StandardError
+          nil
+        end,
+        positions.sum { |p| p.est_annual_income.to_d },
+        1
       ].flatten
     end
 

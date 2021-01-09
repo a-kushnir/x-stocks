@@ -58,7 +58,7 @@ describe Dividend do
         month = Date.today.at_beginning_of_month
         payment_date = Date.today
         dividends = [
-            { amount: 7.123456, month: month, payment_date: payment_date }
+          { amount: 7.123456, month: month, payment_date: payment_date }
         ]
         expect(subject.estimate(stock)).to eq(dividends)
       end

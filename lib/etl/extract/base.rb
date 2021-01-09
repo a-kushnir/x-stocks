@@ -3,8 +3,7 @@
 module Etl
   module Extract
     class Base
-      attr_reader :token
-      attr_reader :logger
+      attr_reader :token, :logger
 
       def initialize(token: nil, logger: nil)
         @token = token
@@ -33,7 +32,7 @@ module Etl
       def get_text(url, headers = {})
         response = http_get(url, headers)
         validate!(response, url)
-        return if response.is_a?(Net::HTTPSuccess)
+        return unless response.is_a?(Net::HTTPSuccess)
 
         response.body
       end
@@ -41,7 +40,7 @@ module Etl
       def get_json(url, headers = {})
         response = http_get(url, headers)
         validate!(response, url)
-        return if response.is_a?(Net::HTTPSuccess)
+        return unless response.is_a?(Net::HTTPSuccess)
 
         JSON.parse(response.body)
       end
@@ -57,7 +56,7 @@ module Etl
           http.request(request)
         end
         validate!(response, url)
-        return if response.is_a?(Net::HTTPSuccess)
+        return unless response.is_a?(Net::HTTPSuccess)
 
         JSON.parse(response.body)
       end

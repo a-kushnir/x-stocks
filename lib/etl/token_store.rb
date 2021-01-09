@@ -6,9 +6,7 @@ module Etl
     SUFFIX_REGEX = /^_\d+$/.freeze
     PAUSE = 1.0
 
-    attr_reader :logger
-    attr_reader :key
-    attr_reader :tokens
+    attr_reader :logger, :key, :tokens
 
     def initialize(key, logger = nil)
       @logger = logger
@@ -55,7 +53,7 @@ module Etl
       ENV.each do |k, v|
         next unless k.start_with?(key)
 
-        k = k[key.size..-1]
+        k = k[key.size..]
         result << v if k.blank? || k =~ SUFFIX_REGEX
       end
       log_info("TokenStore: loaded #{result.size} keys for #{key}")

@@ -39,6 +39,15 @@ class Service < ApplicationRecord
     true
   end
 
+  def lock!
+    rows_updated =
+      Service
+      .where(id: id, locked_at: locked_at)
+      .update_all(locked_at: DateTime.now)
+
+    rows_updated == 1
+  end
+
   def self.[](key)
     self.select('locked_at, last_run_at').find_or_initialize_by(key: key)
   end
@@ -57,24 +66,15 @@ class Service < ApplicationRecord
 
   def log_info(text)
     @log_writer ||= ''
-    @log_writer << "[#{DateTime.now}] INFO #{limit_text_size(text)}\n"
+    @log_writer += "[#{DateTime.now}] INFO #{limit_text_size(text)}\n"
   end
 
   def log_error(error)
     @log_writer ||= ''
-    @log_writer << "[#{DateTime.now}] ERROR Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
+    @log_writer += "[#{DateTime.now}] ERROR Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
   end
 
   private
-
-  def lock!
-    rows_updated =
-      Service
-      .where(id: id, locked_at: locked_at)
-      .update_all(locked_at: DateTime.now)
-
-    rows_updated == 1
-  end
 
   def limit_text_size(value)
     value = value.to_s

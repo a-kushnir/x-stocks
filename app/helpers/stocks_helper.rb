@@ -10,7 +10,7 @@ module StocksHelper
   end
 
   def link_to_website(url)
-    link_to url.sub(%r{^https?\://(www.)?}, ''), url if url
+    link_to url.sub(%r{^https?://(www.)?}, ''), url if url
   end
 
   def stock_peers

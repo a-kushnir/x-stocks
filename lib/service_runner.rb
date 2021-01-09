@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 class ServiceRunner
-  attr_reader :name
-  attr_reader :lookup_code
-  attr_reader :service_code
-  attr_reader :schedule_code
-  attr_reader :arguments
-  attr_reader :proc
+  attr_reader :name, :lookup_code, :service_code, :schedule_code, :arguments, :proc
 
   def initialize(name, lookup_code, options, proc)
     @name = name

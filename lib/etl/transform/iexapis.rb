@@ -33,7 +33,7 @@ module Etl
       def dividends(stock, json)
         return unless json
 
-        json = [json] unless json.is_a?(Array)
+        json = Array(json)
 
         json = json.map do |row|
           {

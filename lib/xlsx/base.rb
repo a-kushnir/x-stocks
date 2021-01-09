@@ -23,7 +23,7 @@ module Xlsx
     end
 
     def add_style(sheet, *styles)
-      hash = styles.count == 1 ? styles[0] : styles[0].merge(*styles[1..-1])
+      hash = styles.count == 1 ? styles[0] : styles[0].merge(*styles[1..])
       sheet.styles.add_style hash
     end
   end

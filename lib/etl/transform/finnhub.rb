@@ -35,7 +35,7 @@ module Etl
         json ||= []
 
         json.sort_by! { |row| Date.parse(row['period']) }
-        json = json[-4..-1] if json.size > 4
+        json = json[-4..] if json.size > 4
 
         hash = {}
         json.each do |row|

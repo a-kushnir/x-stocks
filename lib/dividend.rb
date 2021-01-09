@@ -29,20 +29,22 @@ class Dividend
     amount = last_div['amount'].to_d
 
     results = []
-    results << { payment_date: payment_date, amount: amount }
 
     case stock.dividend_frequency
     when 'annual'
+      results << { payment_date: payment_date, amount: amount }
       (2 * 1).times do
         payment_date = payment_date >> 12
         results << { payment_date: payment_date, amount: amount }
       end
     when 'semi-annual'
+      results << { payment_date: payment_date, amount: amount }
       (2 * 2).times do
         payment_date = payment_date >> 6
         results << { payment_date: payment_date, amount: amount }
       end
     when 'quarterly'
+      results << { payment_date: payment_date, amount: amount }
       (2 * 4).times do
         payment_date = payment_date >> 3
         results << { payment_date: payment_date, amount: amount }
@@ -55,6 +57,8 @@ class Dividend
         payment_date = payment_date >> 1
         results << { payment_date: payment_date, amount: amount }
       end
+    else
+      results << { payment_date: payment_date, amount: amount }
     end
 
     from_date, to_date = date_range

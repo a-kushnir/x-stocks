@@ -23,6 +23,11 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
+
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :test do
@@ -31,6 +36,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'rspec', require: false
+  gem 'rspec-rails', require: false
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -44,7 +52,6 @@ gem 'font_awesome5_rails'
 gem 'jquery-datatables'
 gem 'devise'
 gem 'caxlsx'
-gem 'rubocop', require: false
 gem 'nokogiri', '>= 1.11.0.rc4'
 
 gem 'grape'

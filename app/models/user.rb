@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -8,7 +10,7 @@ class User < ApplicationRecord
 
   def regenerate_api_key!
     self.api_key = Devise.friendly_token
-    self.save!
+    save!
   end
 
   private

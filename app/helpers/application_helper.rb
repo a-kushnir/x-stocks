@@ -1,5 +1,6 @@
-module ApplicationHelper
+# frozen_string_literal: true
 
+module ApplicationHelper
   def stock_path(stock)
     "/stocks/#{URI.escape(stock.symbol)}"
   end
@@ -24,9 +25,9 @@ module ApplicationHelper
     if number.blank? || !(number =~ /[1-9]/i)
       nil
     elsif number =~ /-/i
-      content_tag(:i, {class: 'fas fa-caret-down text-danger'}) {}
+      content_tag(:i, { class: 'fas fa-caret-down text-danger' }) {}
     else
-      content_tag(:i, {class: 'fas fa-caret-up text-success'}) {}
+      content_tag(:i, { class: 'fas fa-caret-up text-success' }) {}
     end
   end
 
@@ -41,7 +42,7 @@ module ApplicationHelper
 
   def nav_menu_link(menu_item, name, url, options = {})
     content_tag :li, class: @page_menu_item == menu_item ? 'nav-item active' : 'nav-item' do
-      link_to(name, url, {class: 'nav-link'}.merge(options))
+      link_to(name, url, { class: 'nav-link' }.merge(options))
     end
   end
 
@@ -54,6 +55,6 @@ module ApplicationHelper
   end
 
   def default_columns
-    @columns.select { |column| column[:default] }.map{ |column| column[:index] }.to_json
+    @columns.select { |column| column[:default] }.map { |column| column[:index] }.to_json
   end
 end

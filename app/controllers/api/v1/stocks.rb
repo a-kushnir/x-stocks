@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module API
   module V1
     class Stocks < Grape::API
       include API::V1::Defaults
 
       namespace :stocks do
-
         desc 'Returns available stock symbols.',
              is_array: true,
              success: [
@@ -102,9 +103,7 @@ module API
           error!('Unknown Symbol', 404) unless stock
           present stock, with: API::Entities::Stock, type: :recommendations
         end
-
       end
-
     end
   end
 end

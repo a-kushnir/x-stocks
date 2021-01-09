@@ -1,5 +1,6 @@
-module ServicesHelper
+# frozen_string_literal: true
 
+module ServicesHelper
   def run_service_path(service_runner)
     "/services/#{URI.escape(service_runner.lookup_code)}/run"
   end
@@ -11,5 +12,4 @@ module ServicesHelper
   def service_error_path(service_runner)
     "/services/#{URI.escape(service_runner.lookup_code)}/error"
   end
-
 end

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Refresh
     class Yahoo < Base
-
       PAUSE = 1.0 # Limit up to 1 request per second
 
       def daily_all_stocks?
@@ -25,9 +26,8 @@ module Etl
 
       def daily_one_stock!(stock, logger: nil)
         json = Etl::Extract::Yahoo.new(logger: logger).summary(stock.symbol)
-        Etl::Transform::Yahoo::new(logger).summary(stock, json)
+        Etl::Transform::Yahoo.new(logger).summary(stock, json)
       end
-
     end
   end
 end

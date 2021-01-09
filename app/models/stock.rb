@@ -1,5 +1,6 @@
-class Stock < ApplicationRecord
+# frozen_string_literal: true
 
+class Stock < ApplicationRecord
   DAYS_IN_YEAR = 365.25
 
   DIVIDEND_FREQUENCIES = {
@@ -83,16 +84,12 @@ class Stock < ApplicationRecord
       size = periodic_dividend_details.size
       last = periodic_dividend_details[size - 1]
       prev = periodic_dividend_details[size - 2]
-      if last && prev
-        100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4) rescue 0
-      else
-        nil
-      end
+      100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4) rescue 0 if last && prev
     end
   end
 
   def periodic_dividend_details
-    (dividend_details || []).select {|detail| DIVIDEND_FREQUENCIES[(detail['frequency']  || '').downcase] }
+    (dividend_details || []).select { |detail| DIVIDEND_FREQUENCIES[(detail['frequency'] || '').downcase] }
   end
 
   private
@@ -104,5 +101,4 @@ class Stock < ApplicationRecord
   def upcase_symbol
     self.symbol = symbol.upcase
   end
-
 end

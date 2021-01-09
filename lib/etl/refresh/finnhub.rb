@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Refresh
     class Finnhub < Base
-
       PAUSE_SHORT = 1.0 / 10  # Limit up to 10 requests per second
       PAUSE_LONG = 1.0 / 3    # Limit up to 3 requests per second
 
@@ -33,7 +34,7 @@ module Etl
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(token: token, logger: logger).quote(stock.symbol)
-          Etl::Transform::Finnhub::new(logger).quote(stock, json) if json
+          Etl::Transform::Finnhub.new(logger).quote(stock, json) if json
         end
       end
 
@@ -122,7 +123,6 @@ module Etl
           date += period
         end
       end
-
     end
   end
 end

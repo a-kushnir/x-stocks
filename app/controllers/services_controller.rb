@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ServicesController < ApplicationController
   include ActionController::Live
 
@@ -35,7 +37,6 @@ class ServicesController < ApplicationController
 
   def run_all
     EventStream.run(response) do |stream|
-
       if Service.locked?
         # Just wait
 
@@ -60,7 +61,7 @@ class ServicesController < ApplicationController
     if service
       yield service
     else
-      flash[:notice] = "Invalid service"
+      flash[:notice] = 'Invalid service'
       redirect_to action: 'index'
     end
   end
@@ -68,11 +69,11 @@ class ServicesController < ApplicationController
   def columns
     columns = []
 
-    columns << {label: 'Schedule', index: index = 1, default: true}
-    columns << {label: 'Status', index: index += 1, default: true}
-    columns << {label: 'Last Run', index: index += 1, default: true}
-    columns << {label: 'Arguments', index: index += 1, default: true}
-    columns << {label: 'Actions', index: index + 1, default: true}
+    columns << { label: 'Schedule', index: index = 1, default: true }
+    columns << { label: 'Status', index: index += 1, default: true }
+    columns << { label: 'Last Run', index: index += 1, default: true }
+    columns << { label: 'Arguments', index: index += 1, default: true }
+    columns << { label: 'Actions', index: index + 1, default: true }
 
     columns
   end

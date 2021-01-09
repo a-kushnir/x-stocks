@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module API
   module Entities
     class Exchange < API::Entities::Base

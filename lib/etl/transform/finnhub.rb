@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Finnhub < Base
-
       def company(stock, json)
         return if json.blank?
 
@@ -55,16 +56,14 @@ module Etl
       def price_target(stock, json)
         stock.finnhub_price_target =
           if json.present? &&
-              json['targetHigh'] > 0 && json['targetLow'] > 0 &&
-              json['targetMean'] > 0 && json['targetMedian'] > 0
+              (json['targetHigh']).positive? && (json['targetLow']).positive? &&
+              (json['targetMean']).positive? && (json['targetMedian']).positive?
             {
               high: json['targetHigh'],
               low: json['targetLow'],
               mean: json['targetMean'],
               median: json['targetMedian'],
             }
-          else
-            nil
           end
 
         stock.save
@@ -78,8 +77,6 @@ module Etl
               row['estimate'] = row['estimate'].round(4) if row['estimate']
               row
             end
-          else
-            nil
           end
 
         stock.save
@@ -147,7 +144,6 @@ module Etl
 
         value.to_f / total
       end
-
     end
   end
 end

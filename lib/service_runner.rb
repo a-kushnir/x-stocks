@@ -1,5 +1,6 @@
-class ServiceRunner
+# frozen_string_literal: true
 
+class ServiceRunner
   attr_reader :name
   attr_reader :lookup_code
   attr_reader :service_code
@@ -21,7 +22,7 @@ class ServiceRunner
   end
 
   def self.find(lookup_code)
-    all.detect {|tag| tag.lookup_code == lookup_code }
+    all.detect { |tag| tag.lookup_code == lookup_code }
   end
 
   def service
@@ -43,12 +44,12 @@ class ServiceRunner
   end
 
   ALL = [
-      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_all_finnhub', {service_code: 'stock_prices', schedule_code: 'Hourly'},
+      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_all_finnhub', { service_code: 'stock_prices', schedule_code: 'Hourly' },
                         ->(args, &block) do
                           Etl::Refresh::Finnhub.new.hourly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_one_finnhub', {service_code: 'hourly_one_finnhub', arguments: [:stock_id]},
+      ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_one_finnhub', { service_code: 'hourly_one_finnhub', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -59,12 +60,12 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Update stock information [Yahoo]', 'daily_all_yahoo', {service_code: 'daily_yahoo', schedule_code: 'Daily'},
+      ServiceRunner.new('Update stock information [Yahoo]', 'daily_all_yahoo', { service_code: 'daily_yahoo', schedule_code: 'Daily' },
                         ->(args, &block) do
                           Etl::Refresh::Yahoo.new.daily_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock information [Yahoo]', 'daily_one_yahoo', {service_code: 'daily_one_yahoo', arguments: [:stock_id]},
+      ServiceRunner.new('Update stock information [Yahoo]', 'daily_one_yahoo', { service_code: 'daily_one_yahoo', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -75,12 +76,12 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Update stock information [Finnhub]', 'daily_all_finnhub', {service_code: 'daily_finnhub', schedule_code: 'Daily'},
+      ServiceRunner.new('Update stock information [Finnhub]', 'daily_all_finnhub', { service_code: 'daily_finnhub', schedule_code: 'Daily' },
                         ->(args, &block) do
                           Etl::Refresh::Finnhub.new.daily_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock information [Finnhub]', 'daily_one_finnhub', {service_code: 'daily_one_finnhub', arguments: [:stock_id]},
+      ServiceRunner.new('Update stock information [Finnhub]', 'daily_one_finnhub', { service_code: 'daily_one_finnhub', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -91,12 +92,12 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_all_iexapis', {service_code: 'weekly_iexapis', schedule_code: 'Weekly'},
+      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_all_iexapis', { service_code: 'weekly_iexapis', schedule_code: 'Weekly' },
                         ->(args, &block) do
                           Etl::Refresh::Iexapis.new.weekly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_one_iexapis', {service_code: 'weekly_one_iexapis', arguments: [:stock_id]},
+      ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_one_iexapis', { service_code: 'weekly_one_iexapis', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -107,12 +108,12 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_all_dividend', {service_code: 'weekly_dividend', schedule_code: 'Weekly'},
+      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_all_dividend', { service_code: 'weekly_dividend', schedule_code: 'Weekly' },
                         ->(args, &block) do
                           Etl::Refresh::Dividend.new.weekly_all_stocks!(force: true, &block)
                         end),
 
-      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_one_dividend', {service_code: 'weekly_one_dividend', arguments: [:stock_id]},
+      ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_one_dividend', { service_code: 'weekly_one_dividend', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -123,7 +124,7 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('Load company information [Finnhub] [IEX Cloud] [Yahoo]', 'company_information', {service_code: 'company_information', arguments: [:stock_id]},
+      ServiceRunner.new('Load company information [Finnhub] [IEX Cloud] [Yahoo]', 'company_information', { service_code: 'company_information', arguments: [:stock_id] },
                         ->(args, &block) do
                           stock = Stock.find_by!(id: args[:stock_id])
                           block.call stock_message(stock)
@@ -134,15 +135,14 @@ class ServiceRunner
                           block.call completed_message
                         end),
 
-      ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', {service_code: 'slickcharts'},
+      ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', { service_code: 'slickcharts' },
                         ->(args, &block) do
                           Etl::Refresh::Slickcharts.new.all_stocks!(&block)
                         end),
 
-      ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', {service_code: 'weekly_finnhub', schedule_code: 'Weekly'},
+      ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', { service_code: 'weekly_finnhub', schedule_code: 'Weekly' },
                         ->(args, &block) do
                           Etl::Refresh::Finnhub.new.weekly_all_stocks!(force: true, &block)
-                        end),
+                        end)
   ].freeze
-
 end

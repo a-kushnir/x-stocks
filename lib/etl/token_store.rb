@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Etl
   class TokenStore
-
     # Support for key_0, key_1, etc.
     SUFFIX_REGEX = /^_\d+$/
     PAUSE = 1.0
@@ -38,6 +39,7 @@ module Etl
     def random_token!
       token = random_token
       raise 'All tokens are disabled' unless token
+
       token
     end
 
@@ -52,11 +54,13 @@ module Etl
       result = []
       ENV.each do |k, v|
         next unless k.start_with?(key)
+
         k = k[key.size..-1]
         result << v if k.blank? || k =~ SUFFIX_REGEX
       end
       log_info("TokenStore: loaded #{result.size} keys for #{key}")
       raise "ENV[#{key}] is required to use this API" if result.empty?
+
       result
     end
 
@@ -67,6 +71,5 @@ module Etl
         puts value
       end
     end
-
   end
 end

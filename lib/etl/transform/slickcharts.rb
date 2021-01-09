@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Slickcharts < Base
-
       def sp500(list)
         return if list.blank?
 
@@ -25,7 +26,6 @@ module Etl
         Stock.unscoped.where(id: stock_ids).update_all(dowjones: true)
         Stock.unscoped.where.not(id: stock_ids).update_all(dowjones: false)
       end
-
     end
   end
 end

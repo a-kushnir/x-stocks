@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Refresh
     class Slickcharts < Base
-
       def all_stocks!(&block)
         Service.lock(:slickcharts, force: true) do |logger|
           block.call processing_message 0
@@ -19,7 +20,6 @@ module Etl
           block.call completed_message
         end
       end
-
     end
   end
 end

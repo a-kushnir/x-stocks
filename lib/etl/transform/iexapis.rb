@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Iexapis < Base
-
       def company(stock, json)
         return if json.blank?
 
@@ -24,9 +25,9 @@ module Etl
         stock.country = json['country']
         stock.phone = json['phone']
 
-        if stock.save
-          ::Tag.batch_update(stock, :company_tag, json['tags'])
-        end
+        return unless stock.save
+
+        ::Tag.batch_update(stock, :company_tag, json['tags'])
       end
 
       def dividends(stock, json)
@@ -73,7 +74,6 @@ module Etl
 
         stock.save!
       end
-
     end
   end
 end

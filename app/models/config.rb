@@ -1,5 +1,6 @@
-class Config < ApplicationRecord
+# frozen_string_literal: true
 
+class Config < ApplicationRecord
   validates :key, presence: true, uniqueness: true
   serialize :value, JSON
 
@@ -27,5 +28,4 @@ class Config < ApplicationRecord
   def to_s
     key
   end
-
 end

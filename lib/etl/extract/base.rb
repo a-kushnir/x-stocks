@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Extract
     class Base
-
       attr_reader :token
       attr_reader :logger
 
@@ -13,10 +14,9 @@ module Etl
       def download(path, url)
         response = http_get(url)
         validate!(response, url)
+        return unless response.is_a?(Net::HTTPSuccess)
 
-        if response.is_a?(Net::HTTPSuccess)
-          File.open(path, 'wb') { |file| file << response.body }
-        end
+        File.open(path, 'wb') { |file| file << response.body }
       end
 
       protected
@@ -33,19 +33,17 @@ module Etl
       def get_text(url, headers = {})
         response = http_get(url, headers)
         validate!(response, url)
+        return if response.is_a?(Net::HTTPSuccess)
 
-        if response.is_a?(Net::HTTPSuccess)
-          response.body
-        end
+        response.body
       end
 
       def get_json(url, headers = {})
         response = http_get(url, headers)
         validate!(response, url)
+        return if response.is_a?(Net::HTTPSuccess)
 
-        if response.is_a?(Net::HTTPSuccess)
-          JSON.parse(response.body)
-        end
+        JSON.parse(response.body)
       end
 
       def post_json(url, body)
@@ -59,10 +57,9 @@ module Etl
           http.request(request)
         end
         validate!(response, url)
+        return if response.is_a?(Net::HTTPSuccess)
 
-        if response.is_a?(Net::HTTPSuccess)
-          JSON.parse(response.body)
-        end
+        JSON.parse(response.body)
       end
 
       def esc(value)
@@ -82,7 +79,6 @@ module Etl
           puts value
         end
       end
-
     end
   end
 end

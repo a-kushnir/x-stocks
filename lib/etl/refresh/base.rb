@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Refresh
     class Base
-
       def stock_message(stock)
         {
           message: "Processing #{stock.symbol} (1 out of 1)",
@@ -21,18 +22,17 @@ module Etl
 
       def processing_message(percent)
         {
-            message: "Processing",
+            message: 'Processing',
             percent: percent
         }
       end
 
       def completed_message
         {
-          message: "Completed",
+          message: 'Completed',
           percent: 100
         }
       end
-
     end
   end
 end

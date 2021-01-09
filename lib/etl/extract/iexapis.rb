@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Extract
     class Iexapis < Base
-
       BASE_URL = 'https://cloud.iexapis.com/stable'
       TOKEN_KEY = 'IEXAPIS_KEY'
 
@@ -54,7 +55,6 @@ module Etl
       def dividends_next_url(symbol)
         "#{BASE_URL}/stock/#{esc(symbol)}/dividends/next?token=#{token}"
       end
-
     end
   end
 end

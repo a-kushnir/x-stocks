@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Xlsx
   class Base
-
     BASE_FORMAT = { font_name: 'Calibri' }
     HEADER_FORMAT = { bg_color: 'F2F2F2', b: true }
     US_DOLLAR_2_DECIMAL = { num_fmt: 44 }   # Accounting: 44
@@ -25,6 +26,5 @@ module Xlsx
       hash = styles.count == 1 ? styles[0] : styles[0].merge(*styles[1..-1])
       sheet.styles.add_style hash
     end
-
   end
 end

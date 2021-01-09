@@ -1,5 +1,6 @@
-module PositionsHelper
+# frozen_string_literal: true
 
+module PositionsHelper
   def position_path(position)
     "/positions/#{URI.escape(position.stock.symbol)}"
   end
@@ -15,5 +16,4 @@ module PositionsHelper
       model.send("#{attribute}_before_type_cast")
     end
   end
-
 end

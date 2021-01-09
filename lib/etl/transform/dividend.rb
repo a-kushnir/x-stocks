@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Dividend < Base
-
       def data(stock, json)
         json ||= {}
         node = json.dig('thead', 0)
@@ -13,7 +14,6 @@ module Etl
 
         stock.save
       end
-
     end
   end
 end

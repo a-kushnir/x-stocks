@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Extract
     class Finnhub < Base
-
       BASE_URL = 'https://finnhub.io/api/v1'
       TOKEN_KEY = 'FINNHUB_KEY'
 
@@ -70,7 +71,6 @@ module Etl
       def earnings_calendar_url(from, to)
         "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
       end
-
     end
   end
 end

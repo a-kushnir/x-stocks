@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTables < ActiveRecord::Migration[6.0]
   def change
     create_table :exchanges do |t|
@@ -117,7 +119,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
 
       t.datetime :created_at, null: false
 
-      t.index [:key, :name, :stock_id], unique: true
+      t.index %i[key name stock_id], unique: true
     end
 
     create_table :positions do |t|
@@ -141,7 +143,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
 
       t.string :note
 
-      t.index [:user_id, :stock_id], unique: true
+      t.index %i[user_id stock_id], unique: true
     end
 
     create_table :configs do |t|

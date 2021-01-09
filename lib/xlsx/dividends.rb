@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 module Xlsx
   class Dividends < Base
-
     def generate(file_name, positions)
       positions = positions.sort_by { |position| position.stock.symbol }
 
       Axlsx::Package.new do |package|
         package.workbook.add_worksheet(name: 'My Dividends') do |sheet|
-
           sheet.sheet_view.pane do |pane|
-            pane.top_left_cell = "A2"
+            pane.top_left_cell = 'A2'
             pane.state = :frozen_split
             pane.y_split = 1
             pane.x_split = 0
@@ -40,14 +40,14 @@ module Xlsx
     def header_row(months)
       month_names = []
       months.each_with_index do |month, index|
-        month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+        month_names << (index.zero? || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
       end
 
       ['Symbol', 'Yield', 'Safety', month_names, 'Total'].flatten
     end
 
-    def header_style(s)
-      [s[:header], Array.new(15, s[:header_right])].flatten
+    def header_style(styles)
+      [styles[:header], Array.new(15, styles[:header_right])].flatten
     end
 
     def data_row(div, months, position, est)
@@ -56,30 +56,29 @@ module Xlsx
       row = [
           position.stock.symbol,
           div_suspended ? 'Suspended' : (position.stock.est_annual_dividend_pct / 100 rescue nil),
-          ((position.stock.dividend_rating * 20).to_i rescue nil),
+          ((position.stock.dividend_rating * 20).to_i rescue nil)
       ]
 
       div.months.each_with_index do |month, index|
-        amount = est.detect {|e| e[:month] == month}&.dig(:amount) * position.shares rescue nil
+        amount = est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares rescue nil
         months[index] += amount if amount
         row << amount
       end
 
-      row << est.map {|e| e[:amount] }.sum * position.shares rescue nil
+      row << est.map { |e| e[:amount] }.sum * position.shares rescue nil
       row
     end
 
-    def data_style(s)
-      [s[:normal], s[:percent], s[:normal], Array.new(13, s[:money])].flatten
+    def data_style(styles)
+      [styles[:normal], styles[:percent], styles[:normal], Array.new(13, styles[:money])].flatten
     end
 
     def footer_row(months)
       ['', '', 'Total', months, months.sum].flatten
     end
 
-    def footer_style(s)
-      [Array.new(3, s[:header_right]), Array.new(13, s[:header_money])].flatten
+    def footer_style(styles)
+      [Array.new(3, styles[:header_right]), Array.new(13, styles[:header_money])].flatten
     end
-
   end
 end

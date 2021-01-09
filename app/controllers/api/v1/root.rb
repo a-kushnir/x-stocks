@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 module API
   module V1
     module Root
       extend ActiveSupport::Concern
 
       included do
-
         mount API::V1::Exchanges
         mount API::V1::Stocks
         mount API::V1::Positions
 
         add_swagger_documentation \
-          info: {title: 'xStocks API'},
+          info: { title: 'xStocks API' },
           mount_path: '/v1/swagger_doc',
           base_path: '/api/v1',
           doc_version: '1.0.4',
@@ -35,7 +36,6 @@ module API
                   ApiKeyAuth: []
               }
           ]
-
       end
     end
   end

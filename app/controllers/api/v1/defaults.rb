@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module API
   module V1
     module Defaults
@@ -21,9 +23,7 @@ module API
           header 'Access-Control-Allow-Origin', '*'
           authorize!
         end
-
       end
-
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PositionsController < ApplicationController
   def index
     @positions = Position
@@ -11,7 +13,7 @@ class PositionsController < ApplicationController
     @page_menu_item = :positions
 
     respond_to do |format|
-      format.html { }
+      format.html {}
       format.xlsx { generate_xlsx }
     end
   end
@@ -50,29 +52,29 @@ class PositionsController < ApplicationController
   def columns
     columns = []
 
-    columns << {label: 'Shares', index: index = 1, default: true}
-    columns << {label: 'Average Price', index: index += 1, default: true}
-    columns << {label: 'Market Price', index: index += 1, default: true}
-    columns << {label: 'Total Cost', index: index += 1, default: true}
-    columns << {label: 'Market Value', index: index += 1, default: true}
-    columns << {label: 'Gain/Loss', index: index += 1, default: true}
-    columns << {label: 'Gain/Loss %', index: index += 1, default: true}
-    columns << {label: 'Annual Dividend', index: index += 1, default: true}
-    columns << {label: 'Diversity %', index: index += 1, default: true}
+    columns << { label: 'Shares', index: index = 1, default: true }
+    columns << { label: 'Average Price', index: index += 1, default: true }
+    columns << { label: 'Market Price', index: index += 1, default: true }
+    columns << { label: 'Total Cost', index: index += 1, default: true }
+    columns << { label: 'Market Value', index: index += 1, default: true }
+    columns << { label: 'Gain/Loss', index: index += 1, default: true }
+    columns << { label: 'Gain/Loss %', index: index += 1, default: true }
+    columns << { label: 'Annual Dividend', index: index += 1, default: true }
+    columns << { label: 'Diversity %', index: index += 1, default: true }
 
-    columns << {label: 'Price', index: index += 1}
-    columns << {label: 'Change', index: index += 1}
-    columns << {label: 'Change %', index: index += 1}
-    columns << {label: 'Fair Value', index: index += 1}
-    columns << {label: 'Est. Annual Div.', index: index += 1}
-    columns << {label: 'Est. Field %', index: index += 1}
-    columns << {label: 'Div. Change %', index: index += 1}
-    columns << {label: 'Payout %', index: index += 1}
-    columns << {label: 'Yahoo Rec.', index: index += 1}
-    columns << {label: 'Finnhub Rec.', index: index += 1}
-    columns << {label: 'Div. Safety', index: index += 1}
-    columns << {label: 'Ex Date', index: index += 1}
-    columns << {label: 'Score', index: index + 1}
+    columns << { label: 'Price', index: index += 1 }
+    columns << { label: 'Change', index: index += 1 }
+    columns << { label: 'Change %', index: index += 1 }
+    columns << { label: 'Fair Value', index: index += 1 }
+    columns << { label: 'Est. Annual Div.', index: index += 1 }
+    columns << { label: 'Est. Field %', index: index += 1 }
+    columns << { label: 'Div. Change %', index: index += 1 }
+    columns << { label: 'Payout %', index: index += 1 }
+    columns << { label: 'Yahoo Rec.', index: index += 1 }
+    columns << { label: 'Finnhub Rec.', index: index += 1 }
+    columns << { label: 'Div. Safety', index: index += 1 }
+    columns << { label: 'Ex Date', index: index += 1 }
+    columns << { label: 'Score', index: index + 1 }
 
     columns
   end

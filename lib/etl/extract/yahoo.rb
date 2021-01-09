@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Extract
     class Yahoo < Base
-
       BASE_URL = 'https://finance.yahoo.com'
 
       def summary(symbol)
@@ -23,7 +24,6 @@ module Etl
           'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36'
         }
       end
-
     end
   end
 end

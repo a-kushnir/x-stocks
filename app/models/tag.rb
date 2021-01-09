@@ -1,9 +1,10 @@
-class Tag < ApplicationRecord
+# frozen_string_literal: true
 
+class Tag < ApplicationRecord
   belongs_to :stock
 
   validates :key, presence: true
-  validates :name, presence: true, uniqueness: { scope: [:key, :stock] }
+  validates :name, presence: true, uniqueness: { scope: %i[key stock] }
 
   default_scope { order(name: :asc) }
 
@@ -18,5 +19,4 @@ class Tag < ApplicationRecord
     end
     ::Tag.where(stock_id: stock.id, key: key).where.not(id: updated_ids).delete_all
   end
-
 end

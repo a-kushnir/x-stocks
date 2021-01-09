@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module API
   module Entities
     class Stock < API::Entities::Base
       expose :symbol
       expose(:exchange) { |model, _| model.exchange.code }
 
-      with_options(if: {type: :company}) do
+      with_options(if: { type: :company }) do
         expose :company_name
         expose :industry
         expose :website
@@ -32,7 +34,7 @@ module API
         expose :dowjones, format_with: :bool
       end
 
-      with_options(if: {type: :quote}) do
+      with_options(if: { type: :quote }) do
         with_options(format_with: :float) do
           expose :current_price
           expose :prev_close_price
@@ -48,7 +50,7 @@ module API
         end
       end
 
-      with_options(if: {type: :recommendations}) do
+      with_options(if: { type: :recommendations }) do
         expose :yahoo_beta, format_with: :float
         expose :yahoo_rec, format_with: :float
         expose :yahoo_rec_details
@@ -61,7 +63,7 @@ module API
         expose :metascore_details
       end
 
-      with_options(if: {type: :earnings}) do
+      with_options(if: { type: :earnings }) do
         with_options(format_with: :float) do
           expose :eps_ttm
           expose :eps_growth_3y
@@ -75,7 +77,7 @@ module API
         end
       end
 
-      with_options(if: {type: :dividends}) do
+      with_options(if: { type: :dividends }) do
         with_options(format_with: :float) do
           expose :dividend_frequency, as: :frequency, format_with: nil
           expose :dividend_frequency_num, as: :frequency_num
@@ -98,7 +100,6 @@ module API
           }
         end
       end
-
     end
   end
 end

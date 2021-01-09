@@ -1,5 +1,6 @@
-class Exchange < ApplicationRecord
+# frozen_string_literal: true
 
+class Exchange < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :code, presence: true, uniqueness: true
 
@@ -12,5 +13,4 @@ class Exchange < ApplicationRecord
   def to_s
     "#{name} (#{code})"
   end
-
 end

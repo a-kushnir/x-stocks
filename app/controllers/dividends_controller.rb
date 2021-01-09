@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DividendsController < ApplicationController
   helper :stocks
 
@@ -13,7 +15,7 @@ class DividendsController < ApplicationController
     @page_menu_item = :dividends
 
     respond_to do |format|
-      format.html { }
+      format.html {}
       format.xlsx { generate_xlsx }
     end
   end
@@ -30,17 +32,17 @@ class DividendsController < ApplicationController
     div = ::Dividend.new
     month_names = []
     div.months.each_with_index do |month, index|
-      month_names << (index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+      month_names << (index.zero? || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
     end
 
     columns = []
-    columns << {label: 'Yield', index: index = 1, default: true}
-    columns << {label: 'Safety', index: index += 1, default: true}
+    columns << { label: 'Yield', index: index = 1, default: true }
+    columns << { label: 'Safety', index: index += 1, default: true }
 
     month_names.each do |month_name|
-      columns << {label: month_name, index: index += 1, default: true}
+      columns << { label: month_name, index: index += 1, default: true }
     end
-    columns << {label: 'Total', index: index + 1, default: true}
+    columns << { label: 'Total', index: index + 1, default: true }
 
     columns
   end

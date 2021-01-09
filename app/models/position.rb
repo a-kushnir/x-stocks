@@ -1,5 +1,6 @@
-class Position < ApplicationRecord
+# frozen_string_literal: true
 
+class Position < ApplicationRecord
   belongs_to :user
   belongs_to :stock, optional: true
 
@@ -61,5 +62,4 @@ class Position < ApplicationRecord
     self.shares = nil if shares&.zero?
     self.average_price = nil if average_price&.zero?
   end
-
 end

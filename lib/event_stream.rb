@@ -1,7 +1,8 @@
-class EventStream
+# frozen_string_literal: true
 
+class EventStream
   # Requires "include ActionController::Live" in controller
-  def EventStream.run(response)
+  def self.run(response)
     instance = nil
     begin
       instance = EventStream.new(response)
@@ -9,7 +10,7 @@ class EventStream
     rescue ActionController::Live::ClientDisconnected
       # Connection closed by client
     rescue Exception => ex
-      instance&.write({message: ex.message, backtrace: Backtrace.clean(ex.backtrace)}, event: 'exception')
+      instance&.write({ message: ex.message, backtrace: Backtrace.clean(ex.backtrace) }, event: 'exception')
     ensure
       instance&.close
     end
@@ -21,12 +22,11 @@ class EventStream
   end
 
   def write(object, options = {})
-    object = {message: object} unless object.is_a?(Hash)
+    object = { message: object } unless object.is_a?(Hash)
     @sse.write(object, options)
   end
 
   def close
     @sse.close
   end
-
 end

@@ -1,5 +1,6 @@
-module StocksHelper
+# frozen_string_literal: true
 
+module StocksHelper
   def stock_path(stock)
     "/stocks/#{URI.escape(stock.symbol)}"
   end
@@ -9,7 +10,7 @@ module StocksHelper
   end
 
   def link_to_website(url)
-    link_to url.sub(/^https?\:\/\/(www.)?/,''), url if url
+    link_to url.sub(/^https?\:\/\/(www.)?/, ''), url if url
   end
 
   def stock_peers
@@ -66,7 +67,7 @@ module StocksHelper
            label: 'Sell',
            backgroundColor: '#FFA33E',
            data: details.values.map { |value| value[3] }
-        } , {
+        }, {
            label: 'Hold',
            backgroundColor: '#FFDC48',
            data: details.values.map { |value| value[2] }
@@ -83,26 +84,26 @@ module StocksHelper
   end
 
   def position_allocation
-    positions = @positions.reject {|pos| (pos.market_value || 0).zero? }
+    positions = @positions.reject { |pos| (pos.market_value || 0).zero? }
     positions = positions.sort_by(&:market_value).reverse
-    values = positions.map {|p| p.market_value.to_f }
-    labels = positions.map {|p| p.stock.symbol }
+    values = positions.map { |p| p.market_value.to_f }
+    labels = positions.map { |p| p.stock.symbol }
     [values, labels]
   end
 
   def sector_allocation
     sectors = {}
-    positions = @positions.reject {|pos| (pos.market_value || 0).zero? }
+    positions = @positions.reject { |pos| (pos.market_value || 0).zero? }
     positions.each do |pos|
-      sector = sectors[pos.stock.sector] ||= {sector: pos.stock.sector, value: 0, symbols: []}
+      sector = sectors[pos.stock.sector] ||= { sector: pos.stock.sector, value: 0, symbols: [] }
       sector[:value] += pos.market_value
       sector[:symbols] << pos.stock.symbol
     end
     sectors = sectors.values
-    sectors = sectors.sort_by {|sector| -sector[:value] }
-    values = sectors.map {|sector| sector[:value].to_f }
-    labels = sectors.map {|sector| sector[:sector] }
-    symbols = sectors.map {|sector| sector[:symbols].join(', ') }
+    sectors = sectors.sort_by { |sector| -sector[:value] }
+    values = sectors.map { |sector| sector[:value].to_f }
+    labels = sectors.map { |sector| sector[:sector] }
+    symbols = sectors.map { |sector| sector[:symbols].join(', ') }
     [values, labels, symbols]
   end
 
@@ -112,6 +113,7 @@ module StocksHelper
 
   def metascore_details(stock)
     return unless stock.metascore_details
+
     stock.metascore_details.map do |k, v|
       case k
       when 'yahoo_rec'
@@ -149,5 +151,4 @@ module StocksHelper
       'dmh' => 'During Market Hours'
     }[value] || 'Unknown'
   end
-
 end

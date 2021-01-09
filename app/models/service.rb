@@ -1,5 +1,6 @@
-class Service < ApplicationRecord
+# frozen_string_literal: true
 
+class Service < ApplicationRecord
   attr_accessor :text_size_limit
 
   def self.fast_update?
@@ -15,33 +16,27 @@ class Service < ApplicationRecord
 
   def self.lock(key, force: false)
     service = Service.find_or_create_by!(key: key)
-    if force || !service.locked?
+    return if !force && service.locked?
+    return unless service.lock!
 
-      rows_updated = Service
-        .where(id: service.id, locked_at: service.locked_at)
-        .update_all(locked_at: DateTime.now)
+    service.reload
+    service.error = nil
+    service.text_size_limit = 512
+    service.instance_variable_set :@log_writer, ''
 
-      if rows_updated == 1
-        service.reload
-        service.error = nil
-        service.text_size_limit = 512
-        service.instance_variable_set :@log_writer, ''
-
-        begin
-          yield service
-        rescue Exception => error
-          service.error = "Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
-          raise error
-        ensure
-          service.log = service.instance_variable_get :@log_writer
-          service.last_run_at = DateTime.now
-          service.locked_at = nil
-          service.save!
-        end
-
-        true
-      end
+    begin
+      yield service
+    rescue Exception => error
+      service.error = "Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
+      raise error
+    ensure
+      service.log = service.instance_variable_get :@log_writer
+      service.last_run_at = DateTime.now
+      service.locked_at = nil
+      service.save!
     end
+
+    true
   end
 
   def self.[](key)
@@ -72,9 +67,17 @@ class Service < ApplicationRecord
 
   private
 
-  def limit_text_size(value)
-    value = value.to_s
-    text_size_limit && value.size > text_size_limit ? "#{value[0..text_size_limit-1]}..." : value
+  def lock!
+    rows_updated =
+      Service
+        .where(id: id, locked_at: locked_at)
+        .update_all(locked_at: DateTime.now)
+
+    rows_updated == 1
   end
 
+  def limit_text_size(value)
+    value = value.to_s
+    text_size_limit && value.size > text_size_limit ? "#{value[0..text_size_limit - 1]}..." : value
+  end
 end

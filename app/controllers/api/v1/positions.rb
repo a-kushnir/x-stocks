@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module API
   module V1
     class Positions < Grape::API
       include API::V1::Defaults
 
       namespace :positions do
-
         desc 'Returns whole portfolio information',
              success: [
                  { code: 200, model: API::Entities::Portfolio }
@@ -48,9 +49,7 @@ module API
           market_value = relation.sum(:market_value)
           present position, with: API::Entities::Position, market_value: market_value
         end
-
       end
-
     end
   end
 end

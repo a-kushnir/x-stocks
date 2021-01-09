@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Refresh
     class Dividend < Base
-
       PAUSE = 1.0 # Limit up to 1 request per second
 
       def weekly_all_stocks?
@@ -25,10 +26,10 @@ module Etl
 
       def weekly_one_stock!(stock, logger: nil)
         return if stock.exchange.blank?
-        json = Etl::Extract::Dividend.new(logger: logger).data(stock)
-        Etl::Transform::Dividend::new(logger).data(stock, json)
-      end
 
+        json = Etl::Extract::Dividend.new(logger: logger).data(stock)
+        Etl::Transform::Dividend.new(logger).data(stock, json)
+      end
     end
   end
 end

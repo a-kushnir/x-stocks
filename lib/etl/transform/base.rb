@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Base
-
       attr_reader :logger
 
       def initialize(logger)
@@ -10,14 +11,13 @@ module Etl
 
       protected
 
-      def is_number?(value)
+      def number?(value)
         value =~ /^[\-+]?[0-9]*\.?[0-9]*$/i
       end
 
       def number_or_nil(value)
-        is_number?(value) ? value.to_d : nil
+        number?(value) ? value.to_d : nil
       end
-
     end
   end
 end

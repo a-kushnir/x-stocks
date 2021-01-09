@@ -1,5 +1,6 @@
-class RegistrationsController < Devise::RegistrationsController
+# frozen_string_literal: true
 
+class RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     super
@@ -47,5 +48,4 @@ class RegistrationsController < Devise::RegistrationsController
   def require_no_authentication
     authenticate_scope!
   end
-
 end

@@ -1,5 +1,6 @@
-class Dividend
+# frozen_string_literal: true
 
+class Dividend
   def date_range
     from_date = Date.today.at_beginning_of_month
     to_date = from_date + 1.year - 1.day
@@ -32,30 +33,28 @@ class Dividend
 
     case stock.dividend_frequency
     when 'annual'
-      (2*1).times do
+      (2 * 1).times do
         payment_date = payment_date >> 12
         results << { payment_date: payment_date, amount: amount }
       end
     when 'semi-annual'
-      (2*2).times do
+      (2 * 2).times do
         payment_date = payment_date >> 6
         results << { payment_date: payment_date, amount: amount }
       end
     when 'quarterly'
-      (2*4).times do
+      (2 * 4).times do
         payment_date = payment_date >> 3
         results << { payment_date: payment_date, amount: amount }
       end
     when 'monthly'
-      (3).times do
+      3.times do
         payment_date = payment_date << 1
       end
-      (2*12).times do
+      (2 * 12).times do
         payment_date = payment_date >> 1
         results << { payment_date: payment_date, amount: amount }
       end
-    else
-      # Do nothing
     end
 
     from_date, to_date = date_range
@@ -70,5 +69,4 @@ class Dividend
 
     results
   end
-
 end

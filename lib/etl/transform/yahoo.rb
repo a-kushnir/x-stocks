@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Transform
     class Yahoo < Base
-
       def summary(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')
 
@@ -27,13 +28,12 @@ module Etl
         result = {}
         month = Date.today.at_beginning_of_month - 3.months
         data.reverse.each do |stat|
-          result[month.to_s] = %w(strongBuy buy hold sell strongSell).map {|key| stat[key] }
+          result[month.to_s] = %w[strongBuy buy hold sell strongSell].map { |key| stat[key] }
           month += 1.month
         end
 
         result
       end
-
     end
   end
 end

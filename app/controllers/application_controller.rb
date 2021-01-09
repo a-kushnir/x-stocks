@@ -1,5 +1,6 @@
-class ApplicationController < ActionController::Base
+# frozen_string_literal: true
 
+class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   rescue_from Exception, with: :internal_error
@@ -39,5 +40,4 @@ class ApplicationController < ActionController::Base
     file.close
     file.unlink
   end
-
 end

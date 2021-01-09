@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Etl
   module Extract
     class Slickcharts < Base
-
       BASE_URL = 'https://www.slickcharts.com'
 
       def sp500
@@ -38,7 +39,6 @@ module Etl
         end
         hash.keys
       end
-
     end
   end
 end

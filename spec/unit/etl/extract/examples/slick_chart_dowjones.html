@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/css/cosmo/bootstrap.min.css" >
+
+    <style>
+        .maxWidth {
+            max-width: 1200px;
+        }
+        body {
+            background-color: #FBFCEA;
+            background-color: rgb(250, 250, 250);
+        }
+    </style>
+
+    <title>Dow Jones Companies Sorted by Weight</title>
+    <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:845487,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+
+    <script type="text/javascript">
+        window._mNHandle = window._mNHandle || {};
+        window._mNHandle.queue = window._mNHandle.queue || [];
+        medianet_versionId = "3121199";
+    </script>
+    <script src="https://contextual.media.net/dmedianet.js?cid=8CUN51746" async="async"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <a class="navbar-brand font-italic" href="/">Slickcharts</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <!--
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Indexes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/portfolio">Portfolio Builder &nbsp;&nbsp;<span class="badge badge-pill badge-success">New</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/sp500">S&amp;P 500</a>
+                        <a class="dropdown-item" href="/nasdaq100">Nasdaq 100</a>
+                        <a class="dropdown-item" href="/dowjones">Dow Jones</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/sp500/returns">S&amp;P 500 Returns</a>
+                        <a class="dropdown-item" href="/sp500/performance">S&amp;P 500 Performance</a>
+                        <a class="dropdown-item" href="/sp500/analysis">S&amp;P 500 Analysis</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/nasdaq100/analysis">Nasdaq 100 Analysis</a>
+                        <a class="dropdown-item" href="/dowjones/analysis">Dow Jones Analysis</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Crypto
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/currency">Currency Market Prices</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/currency/BTC">Bitcoin (BTC)</a>
+                        <a class="dropdown-item" href="/currency/ETH">Ethereum (ETH)</a>
+                        <a class="dropdown-item" href="/currency/BCH">Bitcoin Cash (BCH)</a>
+                        <a class="dropdown-item" href="/currency/EOS">EOS (EOS)</a>
+                        <a class="dropdown-item" href="/currency/LTC">Litecoin (LTC)</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/news">Index News</a>
+                        <a class="dropdown-item" href="/emini-data">E-mini Data</a>
+                        <a class="dropdown-item" href="/emini-trading-strategies">Trading Strategies</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            </ul>
+            <!--
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" placeholder="Search" type="text">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            -->
+        </div>
+    </nav>
+
+
+<div class="container-fluid mt-4 maxWidth">
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="mb-3">
+                <div id="393330805">
+                    <script type="text/javascript">
+                        try {
+                            window._mNHandle.queue.push(function (){
+                                window._mNDetails.loadTag("393330805", "728x90", "393330805");
+                            });
+                        }
+                        catch (error) {}
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3 class="text-center">Dow Jones Companies</h3>
+                <p>
+                    The thirty companies included in the Dow Jones Industrial Average are listed below.
+                    The list is sorted by each component's weight in the index. The weight of each
+                    company is determined by the price of the stock. A $100 stock will be weighted more
+                    than a $30 stock. If a stock splits its corresponding weighting in the Dow Jones
+                    will be reduced as its price will be about half of what it was prior to the split.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h5 class="text-center">Components of the Dow Jones</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover table-borderless table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" style="width: 30%">Company</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price</th>
+                                <th scope="col">Chg</th>
+                                <th scope="col">% Chg</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+<tr>
+    <td>1</td>
+    <td><a href="/symbol/UNH">UnitedHealth Group Incorporated</a></td>
+    <td><a href="/symbol/UNH">UNH</a></td>
+    <td>7.735394</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;363.50</td>
+    <td class="text-nowrap" style="color: green">0.11</td>
+    <td class="text-nowrap" style="color: green">(0.03%)</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a href="/symbol/GS">Goldman Sachs Group Inc.</a></td>
+    <td><a href="/symbol/GS">GS</a></td>
+    <td>6.180389</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;290.08</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><a href="/symbol/HD">Home Depot Inc.</a></td>
+    <td><a href="/symbol/HD">HD</a></td>
+    <td>5.642347</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;268.61</td>
+    <td class="text-nowrap" style="color: red">-0.48</td>
+    <td class="text-nowrap" style="color: red">(-0.18%)</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><a href="/symbol/AMGN">Amgen Inc.</a></td>
+    <td><a href="/symbol/AMGN">AMGN</a></td>
+    <td>4.959146</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;238.60</td>
+    <td class="text-nowrap" style="color: green">0.11</td>
+    <td class="text-nowrap" style="color: green">(0.05%)</td>
+</tr>
+
+<tr>
+    <td>5</td>
+    <td><a href="/symbol/MSFT">Microsoft Corporation</a></td>
+    <td><a href="/symbol/MSFT">MSFT</a></td>
+    <td>4.625809</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;219.75</td>
+    <td class="text-nowrap" style="color: green">0.13</td>
+    <td class="text-nowrap" style="color: green">(0.06%)</td>
+</tr>
+
+<tr>
+    <td>6</td>
+    <td><a href="/symbol/CRM">salesforce.com inc.</a></td>
+    <td><a href="/symbol/CRM">CRM</a></td>
+    <td>4.61924</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;222.00</td>
+    <td class="text-nowrap" style="color: red">-0.04</td>
+    <td class="text-nowrap" style="color: red">(-0.02%)</td>
+</tr>
+
+<tr>
+    <td>7</td>
+    <td><a href="/symbol/V">Visa Inc. Class A</a></td>
+    <td><a href="/symbol/V">V</a></td>
+    <td>4.530873</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;215.51</td>
+    <td class="text-nowrap" style="color: green">0.06</td>
+    <td class="text-nowrap" style="color: green">(0.03%)</td>
+</tr>
+
+<tr>
+    <td>8</td>
+    <td><a href="/symbol/BA">Boeing Company</a></td>
+    <td><a href="/symbol/BA">BA</a></td>
+    <td>4.507563</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;209.56</td>
+    <td class="text-nowrap" style="color: red">-0.34</td>
+    <td class="text-nowrap" style="color: red">(-0.16%)</td>
+</tr>
+
+<tr>
+    <td>9</td>
+    <td><a href="/symbol/HON">Honeywell International Inc.</a></td>
+    <td><a href="/symbol/HON">HON</a></td>
+    <td>4.505444</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;210.25</td>
+    <td class="text-nowrap" style="color: green">0.22</td>
+    <td class="text-nowrap" style="color: green">(0.10%)</td>
+</tr>
+
+<tr>
+    <td>10</td>
+    <td><a href="/symbol/MCD">McDonald&#39;s Corporation</a></td>
+    <td><a href="/symbol/MCD">MCD</a></td>
+    <td>4.492094</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;216.42</td>
+    <td class="text-nowrap" style="color: green">0.55</td>
+    <td class="text-nowrap" style="color: green">(0.25%)</td>
+</tr>
+
+<tr>
+    <td>11</td>
+    <td><a href="/symbol/CAT">Caterpillar Inc.</a></td>
+    <td><a href="/symbol/CAT">CAT</a></td>
+    <td>4.115951</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;194.26</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>12</td>
+    <td><a href="/symbol/DIS">Walt Disney Company</a></td>
+    <td><a href="/symbol/DIS">DIS</a></td>
+    <td>3.78431</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;178.69</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>13</td>
+    <td><a href="/symbol/MMM">3M Company</a></td>
+    <td><a href="/symbol/MMM">MMM</a></td>
+    <td>3.596557</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;166.61</td>
+    <td class="text-nowrap" style="color: red">-0.01</td>
+    <td class="text-nowrap" style="color: red">(-0.01%)</td>
+</tr>
+
+<tr>
+    <td>14</td>
+    <td><a href="/symbol/JNJ">Johnson &amp; Johnson</a></td>
+    <td><a href="/symbol/JNJ">JNJ</a></td>
+    <td>3.39842</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;160.85</td>
+    <td class="text-nowrap" style="color: green">0.81</td>
+    <td class="text-nowrap" style="color: green">(0.51%)</td>
+</tr>
+
+<tr>
+    <td>15</td>
+    <td><a href="/symbol/WMT">Walmart Inc.</a></td>
+    <td><a href="/symbol/WMT">WMT</a></td>
+    <td>3.107677</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;146.75</td>
+    <td class="text-nowrap" style="color: green">0.12</td>
+    <td class="text-nowrap" style="color: green">(0.08%)</td>
+</tr>
+
+<tr>
+    <td>16</td>
+    <td><a href="/symbol/NKE">NIKE Inc. Class B</a></td>
+    <td><a href="/symbol/NKE">NKE</a></td>
+    <td>3.071653</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;146.35</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>17</td>
+    <td><a href="/symbol/TRV">Travelers Companies Inc.</a></td>
+    <td><a href="/symbol/TRV">TRV</a></td>
+    <td>2.947049</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;139.65</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>18</td>
+    <td><a href="/symbol/PG">Procter &amp; Gamble Company</a></td>
+    <td><a href="/symbol/PG">PG</a></td>
+    <td>2.942387</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;138.79</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>19</td>
+    <td><a href="/symbol/JPM">JPMorgan Chase &amp; Co.</a></td>
+    <td><a href="/symbol/JPM">JPM</a></td>
+    <td>2.879237</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;136.02</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>20</td>
+    <td><a href="/symbol/AAPL">Apple Inc.</a></td>
+    <td><a href="/symbol/AAPL">AAPL</a></td>
+    <td>2.774341</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;131.76</td>
+    <td class="text-nowrap" style="color: red">-0.29</td>
+    <td class="text-nowrap" style="color: red">(-0.22%)</td>
+</tr>
+
+<tr>
+    <td>21</td>
+    <td><a href="/symbol/IBM">International Business Machines Corporation</a></td>
+    <td><a href="/symbol/IBM">IBM</a></td>
+    <td>2.733443</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;128.57</td>
+    <td class="text-nowrap" style="color: green">0.04</td>
+    <td class="text-nowrap" style="color: green">(0.03%)</td>
+</tr>
+
+<tr>
+    <td>22</td>
+    <td><a href="/symbol/AXP">American Express Company</a></td>
+    <td><a href="/symbol/AXP">AXP</a></td>
+    <td>2.578112</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;121.50</td>
+    <td class="text-nowrap" style="color: red">-0.28</td>
+    <td class="text-nowrap" style="color: red">(-0.23%)</td>
+</tr>
+
+<tr>
+    <td>23</td>
+    <td><a href="/symbol/CVX">Chevron Corporation</a></td>
+    <td><a href="/symbol/CVX">CVX</a></td>
+    <td>1.911863</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;91.08</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>24</td>
+    <td><a href="/symbol/MRK">Merck &amp; Co. Inc.</a></td>
+    <td><a href="/symbol/MRK">MRK</a></td>
+    <td>1.780478</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;83.03</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>25</td>
+    <td><a href="/symbol/VZ">Verizon Communications Inc.</a></td>
+    <td><a href="/symbol/VZ">VZ</a></td>
+    <td>1.240316</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;57.80</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>26</td>
+    <td><a href="/symbol/DOW">Dow Inc.</a></td>
+    <td><a href="/symbol/DOW">DOW</a></td>
+    <td>1.239892</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;58.14</td>
+    <td class="text-nowrap" style="color: red">-0.07</td>
+    <td class="text-nowrap" style="color: red">(-0.12%)</td>
+</tr>
+
+<tr>
+    <td>27</td>
+    <td><a href="/symbol/INTC">Intel Corporation</a></td>
+    <td><a href="/symbol/INTC">INTC</a></td>
+    <td>1.105964</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;51.60</td>
+    <td class="text-nowrap" style="color: red">-0.05</td>
+    <td class="text-nowrap" style="color: red">(-0.10%)</td>
+</tr>
+
+<tr>
+    <td>28</td>
+    <td><a href="/symbol/KO">Coca-Cola Company</a></td>
+    <td><a href="/symbol/KO">KO</a></td>
+    <td>1.058708</td>
+    <td class="text-nowrap"><img src="/img/down.gif" alt=""> &nbsp;&nbsp;51.02</td>
+    <td class="text-nowrap" style="color: red">-0.06</td>
+    <td class="text-nowrap" style="color: red">(-0.12%)</td>
+</tr>
+
+<tr>
+    <td>29</td>
+    <td><a href="/symbol/WBA">Walgreens Boots Alliance Inc</a></td>
+    <td><a href="/symbol/WBA">WBA</a></td>
+    <td>0.95911</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;45.21</td>
+    <td class="text-nowrap" style="color: green">0.00</td>
+    <td class="text-nowrap" style="color: green">(0.00%)</td>
+</tr>
+
+<tr>
+    <td>30</td>
+    <td><a href="/symbol/CSCO">Cisco Systems Inc.</a></td>
+    <td><a href="/symbol/CSCO">CSCO</a></td>
+    <td>0.952753</td>
+    <td class="text-nowrap"><img src="/img/up.gif" alt=""> &nbsp;&nbsp;45.15</td>
+    <td class="text-nowrap" style="color: green">0.09</td>
+    <td class="text-nowrap" style="color: green">(0.20%)</td>
+</tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="shadow p-3 mb-4 bg-white rounded">
+                <h5 class="text-center">Data Details</h5>
+                <p> When companies are removed and added to the index the membership list may temporarily show both the removed company and added company.</p>
+                <p> Data as of 01/07/2021. </p>
+            </div>
+
+            <div class="p-3 mb-3">
+                <div id="215370455">
+                    <script type="text/javascript">
+                        try {
+                            window._mNHandle.queue.push(function (){
+                                window._mNDetails.loadTag("215370455", "300x250", "215370455");
+                            });
+                        }
+                        catch (error) {}
+                    </script>
+                </div>
+            </div>
+
+            
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <h5 class="text-center">Stock Market Indexes</h5>
+    <div class="list-group">
+      <a href="/sp500" class=" list-group-item list-group-item-action">S&amp;P 500 Components</a>
+      <a href="/nasdaq100" class=" list-group-item list-group-item-action"> Nasdaq 100 Components</a>
+      <a href="/dowjones" class="active list-group-item list-group-item-action">Dow Jones Components</a>
+    </div>
+</div>
+
+
+            
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <h5 class="text-center">S&amp;P 500 Data</h5>
+    <div class="list-group">
+      <a href="/sp500/returns" class=" list-group-item list-group-item-action">S&amp;P 500 Historical Returns</a>
+      <a href="/sp500/performance" class=" list-group-item list-group-item-action">S&amp;P Component Performance</a>
+      <a href="/sp500/analysis" class=" list-group-item list-group-item-action">S&amp;P Component Weight Analysis</a>
+      <a href="/sp500/returns/ytd" class=" list-group-item list-group-item-action">S&amp;P 500 YTD Returns</a>
+      <a href="/sp500/yield" class=" list-group-item list-group-item-action">S&amp;P 500 Dividend Yield</a>
+      <a href="/sp500/returns/details" class=" list-group-item list-group-item-action">S&amp;P 500 Annual Return Breakdown</a>
+    </div>
+</div>
+
+
+            <!--
+            
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <h5 class="text-center">Target Indexes</h5>
+    <div class="list-group">
+      <a href="/portfolio" class=" list-group-item list-group-item-action">Portfolio Builder &nbsp;&nbsp;<span class="badge badge-pill badge-success">New</span></a>
+    </div>
+</div>
+
+            -->
+        </div>
+   </div>
+   <div class="row">
+       <div class="col-12">
+           <div class="p-3 mb-5">
+               <div id="836357567">
+                   <script type="text/javascript">
+                       try {
+                           window._mNHandle.queue.push(function (){
+                               window._mNDetails.loadTag("836357567", "970x250", "836357567");
+                           });
+                       }
+                       catch (error) {}
+                   </script>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="/js/popper-1.14.0-umd.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap-4.1.0.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-8313899-12"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-8313899-12');
+    </script>
+</body>
+</html>

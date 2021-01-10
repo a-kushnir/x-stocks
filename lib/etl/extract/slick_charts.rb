@@ -2,19 +2,24 @@
 
 module Etl
   module Extract
-    class Slickcharts < Base
+    class SlickCharts
       BASE_URL = 'https://www.slickcharts.com'
+      LIST_REGEX = %r{<td><a href="/symbol/(.+)">(.+)</a></td>}i.freeze
+
+      def initialize(data_loader)
+        @data_loader = data_loader
+      end
 
       def sp500
-        text_to_list(get_text(sp500_url))
+        text_to_list(data_loader.get_text(sp500_url))
       end
 
       def nasdaq100
-        text_to_list(get_text(nasdaq100_url))
+        text_to_list(data_loader.get_text(nasdaq100_url))
       end
 
       def dowjones
-        text_to_list(get_text(dowjones_url))
+        text_to_list(data_loader.get_text(dowjones_url))
       end
 
       private
@@ -32,13 +37,15 @@ module Etl
       end
 
       def text_to_list(value)
-        matches = value.scan(%r{<td><a href="/symbol/(.+)">(.+)</a></td>}i)
+        matches = value.scan(LIST_REGEX)
         hash = {}
         matches.each do |match|
           hash[match.first] = true
         end
         hash.keys
       end
+
+      attr_reader :data_loader
     end
   end
 end

@@ -29,6 +29,10 @@ describe Etl::Extract::Yahoo do
 
   describe '#summary' do
     it 'returns a hash' do
+      expect(subject.summary(stock)).to be_kind_of(Hash)
+    end
+
+    it 'returns a hash with 2 keys' do
       expect(subject.summary(stock).keys).to eq(%w[context plugins])
     end
 

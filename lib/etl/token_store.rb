@@ -22,7 +22,7 @@ module Etl
           result = yield token
           success = true
           result
-        rescue StandardError
+        rescue Exception
           disable_token(token)
           token = random_token!
           sleep(PAUSE)

@@ -2,75 +2,83 @@
 
 module Etl
   module Extract
-    class Finnhub < Base
+    class Finnhub
       BASE_URL = 'https://finnhub.io/api/v1'
       TOKEN_KEY = 'FINNHUB_KEY'
 
-      def company(symbol)
-        get_json(company_url(symbol))
+      def initialize(data_loader, token, uri: URI)
+        @data_loader = data_loader
+        @token = token
+        @uri = uri
       end
 
-      def peers(symbol)
-        get_json(peers_url(symbol))
+      def company(stock)
+        data_loader.get_json(company_url(stock.symbol))
       end
 
-      def quote(symbol)
-        get_json(quote_url(symbol))
+      def peers(stock)
+        data_loader.get_json(peers_url(stock.symbol))
       end
 
-      def recommendation(symbol)
-        get_json(recommendation_url(symbol))
+      def quote(stock)
+        data_loader.get_json(quote_url(stock.symbol))
       end
 
-      def price_target(symbol)
-        get_json(price_target_url(symbol))
+      def recommendation(stock)
+        data_loader.get_json(recommendation_url(stock.symbol))
       end
 
-      def earnings(symbol)
-        get_json(earnings_url(symbol))
+      def price_target(stock)
+        data_loader.get_json(price_target_url(stock.symbol))
       end
 
-      def metric(symbol)
-        get_json(metric_url(symbol))
+      def earnings(stock)
+        data_loader.get_json(earnings_url(stock.symbol))
+      end
+
+      def metric(stock)
+        data_loader.get_json(metric_url(stock.symbol))
       end
 
       def earnings_calendar(from, to)
-        get_json(earnings_calendar_url(from, to))
+        data_loader.get_json(earnings_calendar_url(from, to))
       end
 
       private
 
       def company_url(symbol)
-        "#{BASE_URL}/stock/profile2?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/profile2?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def peers_url(symbol)
-        "#{BASE_URL}/stock/peers?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/peers?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def quote_url(symbol)
-        "#{BASE_URL}/quote?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/quote?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def recommendation_url(symbol)
-        "#{BASE_URL}/stock/recommendation?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/recommendation?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def price_target_url(symbol)
-        "#{BASE_URL}/stock/price-target?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/price-target?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def earnings_url(symbol)
-        "#{BASE_URL}/stock/earnings?symbol=#{esc(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/earnings?symbol=#{uri.escape(symbol)}&token=#{token}"
       end
 
       def metric_url(symbol)
-        "#{BASE_URL}/stock/metric?symbol=#{esc(symbol)}&metric=all&token=#{token}"
+        "#{BASE_URL}/stock/metric?symbol=#{uri.escape(symbol)}&metric=all&token=#{token}"
       end
 
       def earnings_calendar_url(from, to)
         "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
       end
+
+      attr_reader :data_loader, :token, :uri
     end
   end
 end

@@ -6,7 +6,7 @@ require 'etl/extract/yahoo'
 describe Etl::Extract::Yahoo do
   subject { described_class.new(data_loader, uri: uri) }
 
-  let(:body_html) { File.read(File.dirname(__FILE__) + "/examples/yahoo.html") }
+  let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/yahoo.html") }
 
   let(:data_loader) do
     url = 'https://finance.yahoo.com/quote/SYMBOL?p=SYMBOL'
@@ -29,7 +29,7 @@ describe Etl::Extract::Yahoo do
 
   describe '#summary' do
     it 'returns a hash' do
-      expect(subject.summary(stock).keys).to eq(%w(context plugins))
+      expect(subject.summary(stock).keys).to eq(%w[context plugins])
     end
 
     it 'calls get_text' do

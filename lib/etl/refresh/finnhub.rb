@@ -31,9 +31,10 @@ module Etl
 
       def hourly_one_stock!(stock, token_store: nil, logger: nil)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+        data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).quote(stock.symbol)
+          json = Etl::Extract::Finnhub.new(data_loader, token).quote(stock)
           Etl::Transform::Finnhub.new(logger).quote(stock, json) if json
         end
       end
@@ -63,27 +64,28 @@ module Etl
 
       def daily_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
         token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+        data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).recommendation(stock.symbol)
+          json = Etl::Extract::Finnhub.new(data_loader, token).recommendation(stock)
           Etl::Transform::Finnhub.new(logger).recommendation(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).price_target(stock.symbol)
+          json = Etl::Extract::Finnhub.new(data_loader, token).price_target(stock)
           Etl::Transform::Finnhub.new(logger).price_target(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).earnings(stock.symbol)
+          json = Etl::Extract::Finnhub.new(data_loader, token).earnings(stock)
           Etl::Transform::Finnhub.new(logger).earnings(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(token: token, logger: logger).metric(stock.symbol)
+          json = Etl::Extract::Finnhub.new(data_loader, token).metric(stock)
           Etl::Transform::Finnhub.new(logger).metric(stock, json) if json
         end
       end
@@ -98,7 +100,7 @@ module Etl
       def weekly_all_stocks!(force: false)
         Service.lock(:weekly_finnhub, force: force) do |logger|
           token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          earnings_calendar(token_store, logger)
+          earnings_calendar(token_store, logger: logger)
         end
       end
 
@@ -108,20 +110,29 @@ module Etl
 
       private
 
-      def earnings_calendar(token_store, logger = nil, stock = nil)
+      def earnings_calendar(token_store, logger: nil, stock: nil)
         date = Date.today
         period = 1.week
+        data_loader = Etl::Extract::DataLoader.new(logger)
 
         12.times do |index|
           sleep(PAUSE_LONG) if index != 0
 
           token_store.try_token do |token|
-            json = Etl::Extract::Finnhub.new(token: token, logger: logger).earnings_calendar(date, date + period)
-            Etl::Transform::Finnhub.new(logger).earnings_calendar(json, stock) if json
+            safe_exec do
+              json = Etl::Extract::Finnhub.new(data_loader, token).earnings_calendar(date, date + period)
+              Etl::Transform::Finnhub.new(logger).earnings_calendar(json, stock)
+            end
           end
 
           date += period
         end
+      end
+
+      def safe_exec
+        yield
+      rescue Exception
+        nil
       end
     end
   end

@@ -25,7 +25,7 @@ module Etl
       end
 
       def daily_one_stock!(stock, logger: nil)
-        loader = Etl::Extract::DataLoader.new(logger: logger)
+        loader = Etl::Extract::DataLoader.new(logger)
         json = Etl::Extract::Yahoo.new(loader).summary(stock)
         Etl::Transform::Yahoo.new(logger).summary(stock, json)
       end

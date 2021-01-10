@@ -5,7 +5,7 @@ module Etl
     class DataLoader
       attr_reader :logger
 
-      def initialize(logger: nil)
+      def initialize(logger)
         @logger = logger
       end
 

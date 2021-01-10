@@ -9,7 +9,7 @@ module Etl
         data_loader = Etl::Extract::DataLoader.new(logger)
 
         iexapis_ts.try_token do |token|
-          json = Etl::Extract::Iexapis.new(token: token, logger: logger).company(stock.symbol)
+          json = Etl::Extract::Iexapis.new(data_loader, token).company(stock)
           Etl::Transform::Iexapis.new(logger).company(stock, json)
         end
 

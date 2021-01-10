@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Metascore
+class MetaScore
   def calculate(stock)
     details = {}
 
@@ -46,14 +46,12 @@ class Metascore
     if min < max
       return 0 if value <= min
       return 1 if value >= max
-
-      (value - min).to_f / (max - min)
     else
       return 0 if value >= min
       return 1 if value <= max
-
-      (value - min).to_f / (max - min)
     end
+
+    (value - min).to_f / (max - min)
   end
 
   def convert(src_range, dst_range, value)

@@ -79,7 +79,7 @@ class Stock < ApplicationRecord
   end
 
   def update_metascore
-    self.metascore, self.metascore_details = Metascore.new.calculate(self)
+    self.metascore, self.metascore_details = MetaScore.new.calculate(self)
   end
 
   def destroyable?

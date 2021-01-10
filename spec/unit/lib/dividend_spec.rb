@@ -35,7 +35,7 @@ describe Dividend do
       )
     end
 
-    context 'When no dividend information' do
+    context 'when no dividend information' do
       let(:periodic_dividend_details) { [] }
 
       it 'returns nil' do
@@ -43,7 +43,7 @@ describe Dividend do
       end
     end
 
-    context 'When suspended dividends' do
+    context 'when suspended dividends' do
       let(:div_suspended?) { true }
 
       it 'returns nil' do
@@ -51,7 +51,7 @@ describe Dividend do
       end
     end
 
-    context 'When unknown dividends' do
+    context 'when unknown dividends' do
       let(:dividend_frequency) { 'unknown' }
 
       it 'returns estimated dividends' do
@@ -64,7 +64,7 @@ describe Dividend do
       end
     end
 
-    context 'When annual dividends' do
+    context 'when annual dividends' do
       let(:dividend_frequency) { 'annual' }
 
       it 'returns estimated dividends' do
@@ -77,7 +77,7 @@ describe Dividend do
       end
     end
 
-    context 'When semi-annual dividends' do
+    context 'when semi-annual dividends' do
       let(:dividend_frequency) { 'semi-annual' }
 
       it 'returns estimated dividends' do
@@ -107,7 +107,7 @@ describe Dividend do
       end
     end
 
-    context 'When monthly dividends' do
+    context 'when monthly dividends' do
       let(:dividend_frequency) { 'monthly' }
 
       it 'returns estimated dividends' do

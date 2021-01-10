@@ -107,11 +107,6 @@ Style/DoubleNegation:
     - 'app/controllers/api/entities/base.rb'
 
 # Offense count: 2
-Style/IdenticalConditionalBranches:
-  Exclude:
-    - 'lib/metascore.rb'
-
-# Offense count: 2
 Style/MultipleComparison:
   Exclude:
     - 'app/controllers/dividends_controller.rb'

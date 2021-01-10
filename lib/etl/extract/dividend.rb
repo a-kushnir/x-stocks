@@ -2,11 +2,16 @@
 
 module Etl
   module Extract
-    class Dividend < Base
+    class Dividend
       BASE_URL = 'https://www.dividend.com/api'
 
+      def initialize(data_loader, uri: URI)
+        @data_loader = data_loader
+        @uri = uri
+      end
+
       def data(stock)
-        symbol = "#{stock.symbol}--#{stock.exchange.dividend_code}"
+        symbol = uri.escape("#{stock.symbol}--#{stock.exchange.dividend_code}")
 
         body = {
           'tm' => '3-comparison-center',
@@ -16,7 +21,7 @@ module Etl
           'selected_symbols' => [symbol]
         }
 
-        post_json(data_url, body)
+        data_loader.post_json(data_url, body)
       end
 
       private
@@ -24,6 +29,8 @@ module Etl
       def data_url
         "#{BASE_URL}/data_set/"
       end
+
+      attr_reader :data_loader, :uri
     end
   end
 end

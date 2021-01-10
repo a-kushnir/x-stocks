@@ -27,7 +27,8 @@ module Etl
       def weekly_one_stock!(stock, logger: nil)
         return if stock.exchange.blank?
 
-        json = Etl::Extract::Dividend.new(logger: logger).data(stock)
+        loader = Etl::Extract::DataLoader.new(logger: logger)
+        json = Etl::Extract::Dividend.new(loader).data(stock)
         Etl::Transform::Dividend.new(logger).data(stock, json)
       end
     end

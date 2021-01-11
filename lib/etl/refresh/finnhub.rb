@@ -15,7 +15,7 @@ module Etl
 
       def hourly_all_stocks!(force: false, &block)
         Service.lock(:stock_prices, force: force) do |logger|
-          token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             block.call message if block_given?
             hourly_one_stock!(stock, token_store: token_store, logger: logger)
@@ -30,7 +30,7 @@ module Etl
       end
 
       def hourly_one_stock!(stock, token_store: nil, logger: nil)
-        token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+        token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
@@ -48,7 +48,7 @@ module Etl
 
       def daily_all_stocks!(force: false, &block)
         Service.lock(:daily_finnhub, force: force) do |logger|
-          token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             block.call message if block_given?
             daily_one_stock!(stock, token_store: token_store, logger: logger)
@@ -63,7 +63,7 @@ module Etl
       end
 
       def daily_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
-        token_store ||= TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+        token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
@@ -99,7 +99,7 @@ module Etl
 
       def weekly_all_stocks!(force: false)
         Service.lock(:weekly_finnhub, force: force) do |logger|
-          token_store = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           earnings_calendar(token_store, logger: logger)
         end
       end

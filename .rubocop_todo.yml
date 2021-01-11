@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: TreatCommentsAsGroupSeparators, ConsiderPunctuation, Include.
-# Include: **/*.gemfile, **/Gemfile, **/gems.rb
-Bundler/OrderedGems:
-  Exclude:
-    - 'Gemfile'
-
 # Offense count: 7
 Lint/RescueException:
   Exclude:
@@ -22,7 +14,7 @@ Lint/RescueException:
     - 'lib/etl/refresh/company.rb'
     - 'lib/etl/refresh/fear_n_greed.rb'
     - 'lib/etl/refresh/finnhub.rb'
-    - 'lib/etl/token_store.rb'
+    - 'lib/etl/extract/token_store.rb'
     - 'lib/event_stream.rb'
 
 # Offense count: 2
@@ -51,7 +43,7 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
 # ExcludedMethods: refine
 Metrics/BlockLength:
-  Max: 96
+  Max: 200
 
 # Offense count: 6
 # Configuration parameters: CountComments, CountAsOne.

@@ -11,7 +11,7 @@ module Etl
 
       def weekly_all_stocks!(force: false, &block)
         Service.lock(:weekly_iexapis, force: force) do |logger|
-          token_store = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
+          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             block.call message if block_given?
             weekly_one_stock!(stock, token_store: token_store, logger: logger)
@@ -26,7 +26,7 @@ module Etl
       end
 
       def weekly_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
-        token_store ||= TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
+        token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|

@@ -4,8 +4,8 @@ module Etl
   module Refresh
     class Company
       def one_stock!(stock, logger: nil)
-        iexapis_ts = TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
-        finnhub_ts = TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
+        iexapis_ts = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
+        finnhub_ts = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
         iexapis_ts.try_token do |token|

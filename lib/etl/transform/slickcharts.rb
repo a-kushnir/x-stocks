@@ -2,7 +2,7 @@
 
 module Etl
   module Transform
-    class Slickcharts < Base
+    class Slickcharts
       def sp500(list)
         return if list.blank?
 

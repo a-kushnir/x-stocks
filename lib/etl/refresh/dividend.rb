@@ -29,7 +29,7 @@ module Etl
 
         loader = Etl::Extract::DataLoader.new(logger)
         json = Etl::Extract::Dividend.new(loader).data(stock)
-        Etl::Transform::Dividend.new(logger).data(stock, json)
+        Etl::Transform::Dividend.new.data(stock, json)
       end
     end
   end

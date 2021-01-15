@@ -2,7 +2,7 @@
 
 module Etl
   module Transform
-    class Iexapis < Base
+    class Iexapis
       def company(stock, json)
         return if json.blank?
 

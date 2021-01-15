@@ -10,17 +10,17 @@ module Etl
 
         iexapis_ts.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).company(stock)
-          Etl::Transform::Iexapis.new(logger).company(stock, json)
+          Etl::Transform::Iexapis.new.company(stock, json)
         end
 
         finnhub_ts.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
-          Etl::Transform::Finnhub.new(logger).company(stock, json)
+          Etl::Transform::Finnhub.new.company(stock, json)
         end
 
         finnhub_ts.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).peers(stock)
-          Etl::Transform::Finnhub.new(logger).peers(stock, json)
+          Etl::Transform::Finnhub.new.peers(stock, json)
         end
 
         safe_exec { Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, token_store: finnhub_ts, logger: logger) }

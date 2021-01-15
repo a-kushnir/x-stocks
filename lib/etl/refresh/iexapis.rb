@@ -31,14 +31,14 @@ module Etl
 
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).dividends_next(stock)
-          Etl::Transform::Iexapis.new(logger).dividends(stock, json)
-          Etl::Transform::Iexapis.new(logger).next_dividend(stock, json)
+          Etl::Transform::Iexapis.new.dividends(stock, json)
+          Etl::Transform::Iexapis.new.next_dividend(stock, json)
           sleep(PAUSE) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).dividends(stock)
-          Etl::Transform::Iexapis.new(logger).dividends(stock, json)
+          Etl::Transform::Iexapis.new.dividends(stock, json)
           sleep(PAUSE) unless immediate
         end
 
@@ -46,19 +46,19 @@ module Etl
 
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).dividends_1m(stock)
-          Etl::Transform::Iexapis.new(logger).dividends(stock, json)
+          Etl::Transform::Iexapis.new.dividends(stock, json)
           sleep(PAUSE) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).dividends_3m(stock)
-          Etl::Transform::Iexapis.new(logger).dividends(stock, json)
+          Etl::Transform::Iexapis.new.dividends(stock, json)
           sleep(PAUSE) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Iexapis.new(data_loader, token).dividends_6m(stock)
-          Etl::Transform::Iexapis.new(logger).dividends(stock, json)
+          Etl::Transform::Iexapis.new.dividends(stock, json)
         end
       end
     end

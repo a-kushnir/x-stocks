@@ -2,7 +2,7 @@
 
 module Etl
   module Transform
-    class Finnhub < Base
+    class Finnhub
       def company(stock, json)
         return if json.blank?
 

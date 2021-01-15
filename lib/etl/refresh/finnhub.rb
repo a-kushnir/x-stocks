@@ -35,7 +35,7 @@ module Etl
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).quote(stock)
-          Etl::Transform::Finnhub.new(logger).quote(stock, json) if json
+          Etl::Transform::Finnhub.new.quote(stock, json) if json
         end
       end
 
@@ -68,25 +68,25 @@ module Etl
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).recommendation(stock)
-          Etl::Transform::Finnhub.new(logger).recommendation(stock, json) if json
+          Etl::Transform::Finnhub.new.recommendation(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).price_target(stock)
-          Etl::Transform::Finnhub.new(logger).price_target(stock, json) if json
+          Etl::Transform::Finnhub.new.price_target(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).earnings(stock)
-          Etl::Transform::Finnhub.new(logger).earnings(stock, json) if json
+          Etl::Transform::Finnhub.new.earnings(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).metric(stock)
-          Etl::Transform::Finnhub.new(logger).metric(stock, json) if json
+          Etl::Transform::Finnhub.new.metric(stock, json) if json
         end
       end
 
@@ -121,7 +121,7 @@ module Etl
           token_store.try_token do |token|
             safe_exec do
               json = Etl::Extract::Finnhub.new(data_loader, token).earnings_calendar(date, date + period)
-              Etl::Transform::Finnhub.new(logger).earnings_calendar(json, stock)
+              Etl::Transform::Finnhub.new.earnings_calendar(json, stock)
             end
           end
 

@@ -2,7 +2,7 @@
 
 module Etl
   module Transform
-    class Dividend < Base
+    class Dividend
       def data(stock, json)
         json ||= {}
         node = json.dig('thead', 0)
@@ -13,6 +13,16 @@ module Etl
         stock.dividend_growth_years = number_or_nil(node['consective_year_of_growth'])
 
         stock.save
+      end
+
+      private
+
+      def number?(value)
+        value =~ /^[\-+]?[0-9]*\.?[0-9]*$/i
+      end
+
+      def number_or_nil(value)
+        number?(value) ? value.to_d : nil
       end
     end
   end

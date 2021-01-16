@@ -3,12 +3,17 @@
 module Etl
   module Transform
     class Finnhub
+      def initialize(exchange_class: Exchange, stock_class: Stock)
+        @exchange_class = exchange_class
+        @stock_class = stock_class
+      end
+
       def company(stock, json)
         return if json.blank?
 
         stock.ipo = json['ipo']
         stock.logo = json['logo']
-        stock.exchange ||= Exchange.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
+        stock.exchange ||= exchange_class.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
 
         stock.save
       end
@@ -17,6 +22,8 @@ module Etl
         return if json.blank?
 
         stock.peers = json
+
+        stock.save
       end
 
       def quote(stock, json)
@@ -49,7 +56,7 @@ module Etl
         end
 
         stock.finnhub_rec_details = hash
-        stock.finnhub_rec = recommendation_mean(stock.finnhub_rec_details)
+        stock.finnhub_rec = recommendation_mean(hash)
         stock.save
       end
 
@@ -102,18 +109,19 @@ module Etl
         (json['earningsCalendar'] || []).each do |row|
           next if stock && stock.symbol != row['symbol']
 
-          stock = Stock.find_by(symbol: row['symbol'])
-          next unless stock
+          s = stock
+          s ||= stock_class.find_by(symbol: row['symbol'])
+          next unless s
 
           date = Date.parse(row['date'])
-          if stock.next_earnings_date.nil? ||
-             (date.future? && stock.next_earnings_date >= date)
-            stock.next_earnings_date = date
-            stock.next_earnings_hour = row['hour']
-            stock.next_earnings_est_eps = row['epsEstimate']
+          if s.next_earnings_date.nil? ||
+             (date.future? && s.next_earnings_date >= date)
+            s.next_earnings_date = date
+            s.next_earnings_hour = row['hour']
+            s.next_earnings_est_eps = row['epsEstimate']
           end
 
-          details = (stock.next_earnings_details ||= [])
+          details = (s.next_earnings_details ||= [])
           details.reject! { |d| d['date'] == row['date'] }
 
           details << {
@@ -127,7 +135,7 @@ module Etl
             year: row['year']
           }
 
-          stock.save!
+          s.save
         end
       end
 
@@ -142,8 +150,10 @@ module Etl
           total += data[0] + data[1] + data[2] + data[3] + data[4]
         end
 
-        value.to_f / total
+        (value.to_f / total).round(2)
       end
+
+      attr_accessor :exchange_class, :stock_class
     end
   end
 end

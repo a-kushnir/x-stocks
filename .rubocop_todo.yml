@@ -39,14 +39,6 @@ Lint/SafeNavigationChain:
     - 'lib/etl/transform/yahoo.rb'
     - 'lib/xlsx/dividends.rb'
 
-# Offense count: 8
-Lint/UriEscapeUnescape:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/positions_helper.rb'
-    - 'app/helpers/services_helper.rb'
-    - 'app/helpers/stocks_helper.rb'
-
 # Offense count: 32
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:

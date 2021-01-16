@@ -5,9 +5,9 @@ module Etl
     class Yahoo
       BASE_URL = 'https://finance.yahoo.com'
 
-      def initialize(data_loader, uri: URI, json: JSON)
+      def initialize(data_loader, cgi: CGI, json: JSON)
         @data_loader = data_loader
-        @uri = uri
+        @cgi = cgi
         @json = json
       end
 
@@ -20,7 +20,7 @@ module Etl
       private
 
       def summary_url(symbol)
-        "#{BASE_URL}/quote/#{uri.escape(symbol)}?p=#{uri.escape(symbol)}"
+        "#{BASE_URL}/quote/#{cgi.escape(symbol)}?p=#{cgi.escape(symbol)}"
       end
 
       def headers
@@ -29,7 +29,7 @@ module Etl
         }
       end
 
-      attr_reader :data_loader, :uri, :json
+      attr_reader :data_loader, :cgi, :json
     end
   end
 end

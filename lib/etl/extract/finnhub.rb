@@ -6,10 +6,10 @@ module Etl
       BASE_URL = 'https://finnhub.io/api/v1'
       TOKEN_KEY = 'FINNHUB_KEY'
 
-      def initialize(data_loader, token, uri: URI)
+      def initialize(data_loader, token, cgi: CGI)
         @data_loader = data_loader
         @token = token
-        @uri = uri
+        @cgi = cgi
       end
 
       def company(stock)
@@ -47,38 +47,38 @@ module Etl
       private
 
       def company_url(symbol)
-        "#{BASE_URL}/stock/profile2?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/profile2?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def peers_url(symbol)
-        "#{BASE_URL}/stock/peers?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/peers?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def quote_url(symbol)
-        "#{BASE_URL}/quote?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/quote?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def recommendation_url(symbol)
-        "#{BASE_URL}/stock/recommendation?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/recommendation?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def price_target_url(symbol)
-        "#{BASE_URL}/stock/price-target?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/price-target?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def earnings_url(symbol)
-        "#{BASE_URL}/stock/earnings?symbol=#{uri.escape(symbol)}&token=#{token}"
+        "#{BASE_URL}/stock/earnings?symbol=#{cgi.escape(symbol)}&token=#{token}"
       end
 
       def metric_url(symbol)
-        "#{BASE_URL}/stock/metric?symbol=#{uri.escape(symbol)}&metric=all&token=#{token}"
+        "#{BASE_URL}/stock/metric?symbol=#{cgi.escape(symbol)}&metric=all&token=#{token}"
       end
 
       def earnings_calendar_url(from, to)
         "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
       end
 
-      attr_reader :data_loader, :token, :uri
+      attr_reader :data_loader, :token, :cgi
     end
   end
 end

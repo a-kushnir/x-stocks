@@ -2,11 +2,11 @@
 
 module StocksHelper
   def stock_path(stock)
-    "/stocks/#{URI.escape(stock.symbol)}"
+    "/stocks/#{CGI.escape(stock.symbol)}"
   end
 
   def edit_stock_path(stock)
-    "/stocks/#{URI.escape(stock.symbol)}/edit"
+    "/stocks/#{CGI.escape(stock.symbol)}/edit"
   end
 
   def link_to_website(url)

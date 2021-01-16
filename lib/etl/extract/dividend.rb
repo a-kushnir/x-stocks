@@ -5,13 +5,13 @@ module Etl
     class Dividend
       BASE_URL = 'https://www.dividend.com/api'
 
-      def initialize(data_loader, uri: URI)
+      def initialize(data_loader, cgi: CGI)
         @data_loader = data_loader
-        @uri = uri
+        @cgi = cgi
       end
 
       def data(stock)
-        symbol = uri.escape("#{stock.symbol}--#{stock.exchange.dividend_code}")
+        symbol = cgi.escape("#{stock.symbol}--#{stock.exchange.dividend_code}")
 
         body = {
           'tm' => '3-comparison-center',
@@ -30,7 +30,7 @@ module Etl
         "#{BASE_URL}/data_set/"
       end
 
-      attr_reader :data_loader, :uri
+      attr_reader :data_loader, :cgi
     end
   end
 end

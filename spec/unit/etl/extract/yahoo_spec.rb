@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/yahoo'
 
 describe Etl::Extract::Yahoo do
-  subject(:extractor) { described_class.new(data_loader, uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, cgi: cgi) }
 
   let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/yahoo.html") }
 
@@ -19,10 +19,10 @@ describe Etl::Extract::Yahoo do
     data_loader
   end
 
-  let(:uri) do
-    uri = OpenStruct.new(escape: nil)
-    allow(uri).to receive(:escape).with('SYMBOL').and_return('SYMBOL')
-    uri
+  let(:cgi) do
+    cgi = OpenStruct.new(escape: nil)
+    allow(cgi).to receive(:escape).with('SYMBOL').and_return('SYMBOL')
+    cgi
   end
 
   let(:stock) { OpenStruct.new(symbol: 'SYMBOL') }

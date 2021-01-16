@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/finnhub'
 
 describe Etl::Extract::Finnhub do
-  subject(:extractor) { described_class.new(data_loader, 'TOKEN', uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, 'TOKEN', cgi: cgi) }
 
   let(:data_loader) do
     data_loader = OpenStruct.new(get_json: nil)
@@ -12,10 +12,10 @@ describe Etl::Extract::Finnhub do
     data_loader
   end
 
-  let(:uri) do
-    uri = OpenStruct.new(escape: nil)
-    allow(uri).to receive(:escape).with('SYMBOL').and_return('SYMBOL')
-    uri
+  let(:cgi) do
+    cgi = OpenStruct.new(escape: nil)
+    allow(cgi).to receive(:escape).with('SYMBOL').and_return('SYMBOL')
+    cgi
   end
 
   let(:stock) { OpenStruct.new(symbol: 'SYMBOL') }

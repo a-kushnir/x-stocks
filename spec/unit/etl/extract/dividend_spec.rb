@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/dividend'
 
 describe Etl::Extract::Dividend do
-  subject(:extractor) { described_class.new(data_loader, uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, cgi: cgi) }
 
   let(:data_loader) do
     url = 'https://www.dividend.com/api/data_set/'
@@ -21,10 +21,10 @@ describe Etl::Extract::Dividend do
     data_loader
   end
 
-  let(:uri) do
-    uri = OpenStruct.new(escape: nil)
-    allow(uri).to receive(:escape).with('SYMBOL--DIV_CODE').and_return('SYMBOL--DIV_CODE')
-    uri
+  let(:cgi) do
+    cgi = OpenStruct.new(escape: nil)
+    allow(cgi).to receive(:escape).with('SYMBOL--DIV_CODE').and_return('SYMBOL--DIV_CODE')
+    cgi
   end
 
   let(:exchange) { OpenStruct.new(dividend_code: 'DIV_CODE') }

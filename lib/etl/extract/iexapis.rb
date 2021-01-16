@@ -6,10 +6,10 @@ module Etl
       BASE_URL = 'https://cloud.iexapis.com/stable'
       TOKEN_KEY = 'IEXAPIS_KEY'
 
-      def initialize(data_loader, token, uri: URI)
+      def initialize(data_loader, token, cgi: CGI)
         @data_loader = data_loader
         @token = token
-        @uri = uri
+        @cgi = cgi
       end
 
       def company(stock)
@@ -39,30 +39,30 @@ module Etl
       private
 
       def company_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/company?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/company?token=#{token}"
       end
 
       def dividends_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/dividends?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/dividends?token=#{token}"
       end
 
       def dividends_1m_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/dividends/1m?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/dividends/1m?token=#{token}"
       end
 
       def dividends_3m_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/dividends/3m?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/dividends/3m?token=#{token}"
       end
 
       def dividends_6m_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/dividends/6m?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/dividends/6m?token=#{token}"
       end
 
       def dividends_next_url(symbol)
-        "#{BASE_URL}/stock/#{uri.escape(symbol)}/dividends/next?token=#{token}"
+        "#{BASE_URL}/stock/#{cgi.escape(symbol)}/dividends/next?token=#{token}"
       end
 
-      attr_reader :data_loader, :token, :uri
+      attr_reader :data_loader, :token, :cgi
     end
   end
 end

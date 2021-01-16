@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/dividend'
 
 describe Etl::Extract::Dividend do
-  subject { described_class.new(data_loader, uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, uri: uri) }
 
   let(:data_loader) do
     url = 'https://www.dividend.com/api/data_set/'
@@ -32,11 +32,11 @@ describe Etl::Extract::Dividend do
 
   describe '#data' do
     it 'returns a hash' do
-      expect(subject.data(stock)).to eq({ result: true })
+      expect(extractor.data(stock)).to eq({ result: true })
     end
 
     it 'calls post_json' do
-      subject.data(stock)
+      extractor.data(stock)
       expect(data_loader).to have_received(:post_json)
     end
   end

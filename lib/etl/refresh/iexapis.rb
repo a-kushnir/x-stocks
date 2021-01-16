@@ -9,15 +9,15 @@ module Etl
         Service[:weekly_iexapis].runnable?(1.day)
       end
 
-      def weekly_all_stocks!(force: false, &block)
+      def weekly_all_stocks!(force: false)
         Service.lock(:weekly_iexapis, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
-            block.call message if block_given?
+            yield message if block_given?
             weekly_one_stock!(stock, token_store: token_store, logger: logger)
             sleep(PAUSE)
           end
-          block.call completed_message if block_given?
+          yield completed_message if block_given?
         end
       end
 

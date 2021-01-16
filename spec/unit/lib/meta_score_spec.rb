@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'meta_score'
 
 describe MetaScore do
-  subject { described_class.new }
+  subject(:meta_score) { described_class.new }
 
   describe '#calculate' do
     context 'when no data available' do
@@ -13,7 +13,7 @@ describe MetaScore do
       it 'returns nils' do
         score = nil
         details = nil
-        expect(subject.calculate(stock)).to eq([score, details])
+        expect(meta_score.calculate(stock)).to eq([score, details])
       end
     end
 
@@ -47,7 +47,7 @@ describe MetaScore do
           }
         }
 
-        expect(subject.calculate(stock)).to eq([score, details])
+        expect(meta_score.calculate(stock)).to eq([score, details])
       end
 
       context 'when payout is negative' do
@@ -63,7 +63,7 @@ describe MetaScore do
             }
           }
 
-          expect(subject.calculate(stock)).to eq([score, details])
+          expect(meta_score.calculate(stock)).to eq([score, details])
         end
       end
 
@@ -80,7 +80,7 @@ describe MetaScore do
             }
           }
 
-          expect(subject.calculate(stock)).to eq([score, details])
+          expect(meta_score.calculate(stock)).to eq([score, details])
         end
       end
     end

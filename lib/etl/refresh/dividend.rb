@@ -9,14 +9,14 @@ module Etl
         Service[:weekly_dividend].runnable?(1.day)
       end
 
-      def weekly_all_stocks!(force: false, &block)
+      def weekly_all_stocks!(force: false)
         Service.lock(:weekly_dividend, force: force) do |logger|
           each_stock_with_message do |stock, message|
-            block.call message if block_given?
+            yield message if block_given?
             weekly_one_stock!(stock, logger: logger)
             sleep(PAUSE)
           end
-          block.call completed_message if block_given?
+          yield completed_message if block_given?
         end
       end
 

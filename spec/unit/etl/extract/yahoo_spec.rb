@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/yahoo'
 
 describe Etl::Extract::Yahoo do
-  subject { described_class.new(data_loader, uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, uri: uri) }
 
   let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/yahoo.html") }
 
@@ -29,15 +29,15 @@ describe Etl::Extract::Yahoo do
 
   describe '#summary' do
     it 'returns a hash' do
-      expect(subject.summary(stock)).to be_kind_of(Hash)
+      expect(extractor.summary(stock)).to be_kind_of(Hash)
     end
 
     it 'returns a hash with 2 keys' do
-      expect(subject.summary(stock).keys).to eq(%w[context plugins])
+      expect(extractor.summary(stock).keys).to eq(%w[context plugins])
     end
 
     it 'calls get_text' do
-      subject.summary(stock)
+      extractor.summary(stock)
       expect(data_loader).to have_received(:get_text)
     end
   end

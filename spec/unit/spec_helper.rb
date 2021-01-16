@@ -37,3 +37,9 @@ def mock_model(attributes = {})
 
   model
 end
+
+def safe_exec
+  yield
+rescue Exception
+  nil
+end

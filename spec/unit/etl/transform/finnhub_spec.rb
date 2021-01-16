@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/transform/finnhub'
 
 describe Etl::Transform::Finnhub do
-  subject(:data_saver) { described_class.new(exchange_class: exchange_class, stock_class: stock_class) }
+  subject(:transformer) { described_class.new(exchange_class: exchange_class, stock_class: stock_class) }
 
   let(:exchange_class) { nil }
   let(:stock_class) { nil }
@@ -28,7 +28,7 @@ describe Etl::Transform::Finnhub do
     end
 
     it 'saves data into model' do
-      data_saver.company(stock, json)
+      transformer.company(stock, json)
 
       calls = {
         ipo: '1980-01-01',
@@ -41,7 +41,7 @@ describe Etl::Transform::Finnhub do
     end
 
     it 'searches exchange by finnhub_code' do
-      data_saver.company(stock, json)
+      transformer.company(stock, json)
       expect(exchange_class).to have_received(:search_by).with(:finnhub_code, 'NYSE')
     end
   end
@@ -50,7 +50,7 @@ describe Etl::Transform::Finnhub do
     let(:json) { %w[PEER1 PEER2] }
 
     it 'saves data into model' do
-      data_saver.peers(stock, json)
+      transformer.peers(stock, json)
 
       calls = {
         peers: %w[PEER1 PEER2],
@@ -73,7 +73,7 @@ describe Etl::Transform::Finnhub do
     end
 
     it 'saves data into model' do
-      data_saver.quote(stock, json)
+      transformer.quote(stock, json)
 
       calls = {
         current_price: 100.11,
@@ -110,7 +110,7 @@ describe Etl::Transform::Finnhub do
       end
 
       it 'saves data into model' do
-        data_saver.recommendation(stock, json)
+        transformer.recommendation(stock, json)
 
         calls = {
           finnhub_rec: 2.04,
@@ -136,7 +136,7 @@ describe Etl::Transform::Finnhub do
       end
 
       it 'saves data into model' do
-        data_saver.price_target(stock, json)
+        transformer.price_target(stock, json)
 
         calls = {
           finnhub_price_target: { high: 500, low: 166, mean: 387.03, median: 417.5 },
@@ -166,7 +166,7 @@ describe Etl::Transform::Finnhub do
       end
 
       it 'saves data into model' do
-        data_saver.earnings(stock, json)
+        transformer.earnings(stock, json)
 
         calls = {
           earnings: [
@@ -201,7 +201,7 @@ describe Etl::Transform::Finnhub do
       end
 
       it 'saves data into model' do
-        data_saver.metric(stock, json)
+        transformer.metric(stock, json)
 
         calls = {
           finnhub_beta: 1.2989,
@@ -253,7 +253,7 @@ describe Etl::Transform::Finnhub do
       end
 
       it 'saves data into model' do
-        data_saver.earnings_calendar(json, stock)
+        transformer.earnings_calendar(json, stock)
 
         calls = {
           symbol: 'AAPL',

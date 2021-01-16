@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/iexapis'
 
 describe Etl::Extract::Iexapis do
-  subject { described_class.new(data_loader, 'TOKEN', uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, 'TOKEN', uri: uri) }
 
   let(:data_loader) do
     data_loader = OpenStruct.new(get_json: nil)
@@ -24,11 +24,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/company?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.company(stock)).to eq({ result: true })
+      expect(extractor.company(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.company(stock)
+      extractor.company(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -37,11 +37,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/dividends?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.dividends(stock)).to eq({ result: true })
+      expect(extractor.dividends(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.dividends(stock)
+      extractor.dividends(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -50,11 +50,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/dividends/1m?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.dividends_1m(stock)).to eq({ result: true })
+      expect(extractor.dividends_1m(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.dividends_1m(stock)
+      extractor.dividends_1m(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -63,11 +63,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/dividends/3m?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.dividends_3m(stock)).to eq({ result: true })
+      expect(extractor.dividends_3m(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.dividends_3m(stock)
+      extractor.dividends_3m(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -76,11 +76,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/dividends/6m?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.dividends_6m(stock)).to eq({ result: true })
+      expect(extractor.dividends_6m(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.dividends_6m(stock)
+      extractor.dividends_6m(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -89,11 +89,11 @@ describe Etl::Extract::Iexapis do
     let(:url) { 'https://cloud.iexapis.com/stable/stock/SYMBOL/dividends/next?token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.dividends_next(stock)).to eq({ result: true })
+      expect(extractor.dividends_next(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.dividends_next(stock)
+      extractor.dividends_next(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end

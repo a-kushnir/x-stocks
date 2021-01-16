@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/transform/dividend'
 
 describe Etl::Transform::Dividend do
-  subject(:data_saver) { described_class.new }
+  subject(:transformer) { described_class.new }
 
   let(:stock) { mock_model }
 
@@ -23,7 +23,7 @@ describe Etl::Transform::Dividend do
     end
 
     it 'saves data into model' do
-      data_saver.data(stock, json)
+      transformer.data(stock, json)
 
       calls = {
         dividend_growth_3y: 5.6,

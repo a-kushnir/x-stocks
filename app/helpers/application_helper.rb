@@ -13,7 +13,7 @@ module ApplicationHelper
     number = number.to_s
     if number.blank? || number !~ /[1-9]/i
       'text-muted'
-    elsif number =~ /-/i
+    elsif /-/i.match?(number)
       'text-danger'
     else
       'text-success'
@@ -24,7 +24,7 @@ module ApplicationHelper
     number = number.to_s
     if number.blank? || number !~ /[1-9]/i
       nil
-    elsif number =~ /-/i
+    elsif /-/i.match?(number)
       content_tag(:i, { class: 'fas fa-caret-down text-danger' }) {}
     else
       content_tag(:i, { class: 'fas fa-caret-up text-success' }) {}

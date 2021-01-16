@@ -18,8 +18,8 @@ module Etl
         text_to_list(data_loader.get_text(nasdaq100_url))
       end
 
-      def dowjones
-        text_to_list(data_loader.get_text(dowjones_url))
+      def dow_jones
+        text_to_list(data_loader.get_text(dow_jones_url))
       end
 
       private
@@ -32,7 +32,7 @@ module Etl
         "#{BASE_URL}/nasdaq100"
       end
 
-      def dowjones_url
+      def dow_jones_url
         "#{BASE_URL}/dowjones"
       end
 

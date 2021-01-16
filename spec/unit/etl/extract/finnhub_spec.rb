@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/finnhub'
 
 describe Etl::Extract::Finnhub do
-  subject { described_class.new(data_loader, 'TOKEN', uri: uri) }
+  subject(:extractor) { described_class.new(data_loader, 'TOKEN', uri: uri) }
 
   let(:data_loader) do
     data_loader = OpenStruct.new(get_json: nil)
@@ -24,11 +24,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/profile2?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.company(stock)).to eq({ result: true })
+      expect(extractor.company(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.company(stock)
+      extractor.company(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -37,11 +37,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/peers?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.peers(stock)).to eq({ result: true })
+      expect(extractor.peers(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.peers(stock)
+      extractor.peers(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -50,11 +50,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/quote?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.quote(stock)).to eq({ result: true })
+      expect(extractor.quote(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.quote(stock)
+      extractor.quote(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -63,11 +63,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/recommendation?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.recommendation(stock)).to eq({ result: true })
+      expect(extractor.recommendation(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.recommendation(stock)
+      extractor.recommendation(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -76,11 +76,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/price-target?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.price_target(stock)).to eq({ result: true })
+      expect(extractor.price_target(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.price_target(stock)
+      extractor.price_target(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -89,11 +89,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/earnings?symbol=SYMBOL&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.earnings(stock)).to eq({ result: true })
+      expect(extractor.earnings(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.earnings(stock)
+      extractor.earnings(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -102,11 +102,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/stock/metric?symbol=SYMBOL&metric=all&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.metric(stock)).to eq({ result: true })
+      expect(extractor.metric(stock)).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.metric(stock)
+      extractor.metric(stock)
       expect(data_loader).to have_received(:get_json)
     end
   end
@@ -115,11 +115,11 @@ describe Etl::Extract::Finnhub do
     let(:url) { 'https://finnhub.io/api/v1/calendar/earnings?from=2020-01-01&to=2020-06-01&token=TOKEN' }
 
     it 'returns a hash' do
-      expect(subject.earnings_calendar(Date.new(2020, 1, 1), Date.new(2020, 6, 1))).to eq({ result: true })
+      expect(extractor.earnings_calendar(Date.new(2020, 1, 1), Date.new(2020, 6, 1))).to eq({ result: true })
     end
 
     it 'calls get_json' do
-      subject.earnings_calendar(Date.new(2020, 1, 1), Date.new(2020, 6, 1))
+      extractor.earnings_calendar(Date.new(2020, 1, 1), Date.new(2020, 6, 1))
       expect(data_loader).to have_received(:get_json)
     end
   end

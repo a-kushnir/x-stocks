@@ -13,15 +13,15 @@ module Etl
         Service[:stock_prices].runnable?(1.hour)
       end
 
-      def hourly_all_stocks!(force: false, &block)
+      def hourly_all_stocks!(force: false)
         Service.lock(:stock_prices, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
-            block.call message if block_given?
+            yield message if block_given?
             hourly_one_stock!(stock, token_store: token_store, logger: logger)
             sleep(PAUSE_SHORT)
           end
-          block.call completed_message if block_given?
+          yield completed_message if block_given?
         end
       end
 
@@ -46,15 +46,15 @@ module Etl
         Service[:daily_finnhub].runnable?(1.day)
       end
 
-      def daily_all_stocks!(force: false, &block)
+      def daily_all_stocks!(force: false)
         Service.lock(:daily_finnhub, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
-            block.call message if block_given?
+            yield message if block_given?
             daily_one_stock!(stock, token_store: token_store, logger: logger)
             sleep(PAUSE_LONG)
           end
-          block.call completed_message if block_given?
+          yield completed_message if block_given?
         end
       end
 

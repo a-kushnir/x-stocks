@@ -3,6 +3,8 @@
 module Etl
   module Transform
     class Yahoo
+      RECOMMENDATIONS = %w[strongBuy buy hold sell strongSell].freeze
+
       def summary(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')
 
@@ -35,8 +37,8 @@ module Etl
 
         result = {}
         month = Date.today.at_beginning_of_month - 3.months
-        data.reverse.each do |stat|
-          result[month.to_s] = %w[strongBuy buy hold sell strongSell].map { |key| stat[key] }
+        data.reverse_each do |stat|
+          result[month.to_s] = RECOMMENDATIONS.map { |key| stat[key] }
           month += 1.month
         end
 

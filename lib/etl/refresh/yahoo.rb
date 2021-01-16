@@ -9,14 +9,14 @@ module Etl
         Service[:daily_yahoo].runnable?(1.day)
       end
 
-      def daily_all_stocks!(force: false, &block)
+      def daily_all_stocks!(force: false)
         Service.lock(:daily_yahoo, force: force) do |logger|
           each_stock_with_message do |stock, message|
-            block.call message if block_given?
+            yield message if block_given?
             daily_one_stock!(stock, logger: logger)
             sleep(PAUSE)
           end
-          block.call completed_message if block_given?
+          yield completed_message if block_given?
         end
       end
 

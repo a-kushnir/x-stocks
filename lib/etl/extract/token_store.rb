@@ -9,10 +9,11 @@ module Etl
 
       attr_reader :key, :tokens
 
-      def initialize(key, logger = nil, env: ENV)
+      def initialize(key, logger = nil, env: ENV, kernel: Kernel)
         @logger = logger
         @key = key
         @env = env
+        @kernel = kernel
       end
 
       def try_token
@@ -28,7 +29,7 @@ module Etl
           rescue Exception
             disable_token(token)
             token = random_token!
-            sleep(PAUSE)
+            kernel.sleep(PAUSE)
           end
         end
       end
@@ -36,7 +37,7 @@ module Etl
       def random_token
         load_tokens!
 
-        @tokens[rand(@tokens.size)] if @tokens.present?
+        @tokens[kernel.rand(@tokens.size)] if @tokens.present?
       end
 
       def random_token!
@@ -77,7 +78,7 @@ module Etl
         logger&.log_info(value)
       end
 
-      attr_reader :logger, :env
+      attr_reader :logger, :env, :kernel
     end
   end
 end

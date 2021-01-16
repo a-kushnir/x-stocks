@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/extract/fear_n_greed'
 
 describe Etl::Extract::FearNGreed do
-  subject { described_class.new(data_loader) }
+  subject(:extractor) { described_class.new(data_loader) }
 
   let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/fear_n_greed.html") }
 
@@ -19,11 +19,11 @@ describe Etl::Extract::FearNGreed do
   describe '#image_url' do
     it 'returns a hash' do
       url = 'http://markets.money.cnn.com/Marketsdata/uploadhandler/z678f7d0azf0418f2a1cdc44b58068df6f8eaed267.png'
-      expect(subject.image_url).to eq(url)
+      expect(extractor.image_url).to eq(url)
     end
 
     it 'calls get_text' do
-      subject.image_url
+      extractor.image_url
       expect(data_loader).to have_received(:get_text)
     end
   end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide access to background services
 class ServicesController < ApplicationController
   include ActionController::Live
 

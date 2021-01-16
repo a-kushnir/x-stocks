@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Stock Active Record Model
 class Stock < ApplicationRecord
   DAYS_IN_YEAR = 365.25
 

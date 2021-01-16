@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Extracts and transforms data from cloud.iexapis.com
     class Iexapis < Base
       PAUSE = 1.0 / 30 # Limit up to 30 requests per second
 

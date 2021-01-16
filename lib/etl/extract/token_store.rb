@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Stores and manages API tokens
     class TokenStore
       # Support for key_0, key_1, etc.
       SUFFIX_REGEX = /^_\d+$/.freeze

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide stock information
 class StocksController < ApplicationController
   include StocksHelper
 

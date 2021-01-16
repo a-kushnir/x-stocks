@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Cleans backtrace to make it more readable
 class Backtrace
   def self.clean(backtrace)
     bc = ActiveSupport::BacktraceCleaner.new

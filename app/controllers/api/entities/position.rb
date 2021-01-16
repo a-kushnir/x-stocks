@@ -2,6 +2,7 @@
 
 module API
   module Entities
+    # Position Entity Definitions
     class Position < API::Entities::Base
       expose(:symbol) { |model, _| model.stock.symbol }
       expose(:exchange) { |model, _| model.stock.exchange.code }

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide user profile functions
 class RegistrationsController < Devise::RegistrationsController
   def regenerate
     current_user.regenerate_api_key!

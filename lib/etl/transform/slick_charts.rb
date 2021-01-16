@@ -2,7 +2,8 @@
 
 module Etl
   module Transform
-    class Slickcharts
+    # Transforms data extracted from www.slickcharts.com
+    class SlickCharts
       def sp500(list)
         return if list.blank?
 
@@ -19,7 +20,7 @@ module Etl
         Stock.unscoped.where.not(id: stock_ids).update_all(nasdaq100: false)
       end
 
-      def dowjones(list)
+      def dow_jones(list)
         return if list.blank?
 
         stock_ids = Stock.unscoped.where(symbol: list).pluck(:id)

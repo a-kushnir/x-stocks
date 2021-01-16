@@ -2,6 +2,7 @@
 
 module Etl
   module Transform
+    # Transforms data extracted from finance.yahoo.com
     class Yahoo
       RECOMMENDATIONS = %w[strongBuy buy hold sell strongSell].freeze
 

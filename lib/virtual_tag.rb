@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Allows to filter stocks using conditions
 class VirtualTag
   attr_reader :name, :description, :fa_icon, :sort_order
 

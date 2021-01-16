@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Provides easy access to Server-Sent Events browser feature
 class EventStream
   # Requires "include ActionController::Live" in controller
   def self.run(response)

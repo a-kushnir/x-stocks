@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide dividend information for user's portfolio
 class DividendsController < ApplicationController
   helper :stocks
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide home page information
 class HomeController < ApplicationController
   def index
     @page_title = 'Home'

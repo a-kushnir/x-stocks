@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from money.cnn.com
     class FearNGreed
       BASE_URL = 'https://money.cnn.com/data/fear-and-greed/'
       REGEX = /id="needleChart[^<]+image:url\(&#39;([^<]+)&#39;\);/.freeze

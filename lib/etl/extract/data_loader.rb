@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Loads data in different formats using http and https protocols
     class DataLoader
       attr_reader :logger
 

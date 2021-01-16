@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller to provide position information for user's portfolio
 class PositionsController < ApplicationController
   def index
     @positions = Position

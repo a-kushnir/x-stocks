@@ -2,6 +2,7 @@
 
 module Etl
   module Transform
+    # Transforms data extracted from finnhub.io
     class Finnhub
       def initialize(exchange_class: Exchange, stock_class: Stock)
         @exchange_class = exchange_class

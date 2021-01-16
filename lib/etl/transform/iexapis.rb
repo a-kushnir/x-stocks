@@ -2,6 +2,7 @@
 
 module Etl
   module Transform
+    # Transforms data extracted from cloud.iexapis.com
     class Iexapis
       def company(stock, json)
         return if json.blank?

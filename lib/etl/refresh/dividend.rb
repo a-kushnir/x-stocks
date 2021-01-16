@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Extracts and transforms data from dividend.com
     class Dividend < Base
       PAUSE = 1.0 # Limit up to 1 request per second
 

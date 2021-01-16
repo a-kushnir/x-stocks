@@ -2,6 +2,7 @@
 
 module API
   module Entities
+    # Stock Entity Definitions
     class Stock < API::Entities::Base
       expose :symbol
       expose(:exchange) { |model, _| model.exchange.code }

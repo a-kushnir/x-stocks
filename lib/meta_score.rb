@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Calculates stock score using multiple parameters
 class MetaScore
   def calculate(stock)
     details = {}

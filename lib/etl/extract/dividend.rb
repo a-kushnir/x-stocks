@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from dividend.com
     class Dividend
       BASE_URL = 'https://www.dividend.com/api'
 

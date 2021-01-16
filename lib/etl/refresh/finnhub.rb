@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Extracts and transforms data from finnhub.io
     class Finnhub < Base
       PAUSE_SHORT = 1.0 / 10  # Limit up to 10 requests per second
       PAUSE_LONG = 1.0 / 3    # Limit up to 3 requests per second

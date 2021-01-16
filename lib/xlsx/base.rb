@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Xlsx
+  # Contains shared methods for worksheet generation
   class Base
     BASE_FORMAT = { font_name: 'Calibri' }.freeze
     HEADER_FORMAT = { bg_color: 'F2F2F2', b: true }.freeze

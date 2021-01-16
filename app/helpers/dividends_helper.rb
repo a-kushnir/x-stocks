@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Helper methods for DividendsController
 module DividendsHelper
   def dividends_allocation
     positions = @positions.reject { |pos| (pos.est_annual_income || 0).zero? }

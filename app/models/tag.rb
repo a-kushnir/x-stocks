@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Tag Active Record Model
 class Tag < ApplicationRecord
   belongs_to :stock
 

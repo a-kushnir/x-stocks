@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Runs background services
 class ServiceRunner
   attr_reader :name, :lookup_code, :service_code, :schedule_code, :arguments, :proc
 
@@ -130,7 +131,7 @@ class ServiceRunner
 
     ServiceRunner.new('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 'slickcharts', { service_code: 'slickcharts' },
                       lambda do |_args, &block|
-                        Etl::Refresh::Slickcharts.new.all_stocks!(&block)
+                        Etl::Refresh::SlickCharts.new.all_stocks!(&block)
                       end),
 
     ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', { service_code: 'weekly_finnhub', schedule_code: 'Weekly' },

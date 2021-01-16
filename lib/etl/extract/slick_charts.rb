@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from www.slickcharts.com
     class SlickCharts
       BASE_URL = 'https://www.slickcharts.com'
       LIST_REGEX = %r{<td><a href="/symbol/(.+)">(.+)</a></td>}i.freeze

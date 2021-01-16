@@ -2,6 +2,7 @@
 
 module API
   module Entities
+    # Portfolio Entity Definitions
     class Portfolio < API::Entities::Base
       with_options(format_with: :float, documentation: { type: Float }) do
         expose :total_cost

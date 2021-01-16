@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module API
+  # Root API class
   class Root < Grape::API
     format :json
 

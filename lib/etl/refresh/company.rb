@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Extracts and transforms company data from multiple sources
     class Company
       def one_stock!(stock, logger: nil)
         iexapis_ts = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
@@ -28,7 +29,7 @@ module Etl
         safe_exec { Etl::Refresh::Finnhub.new.daily_one_stock!(stock, token_store: finnhub_ts, logger: logger, immediate: true) }
         safe_exec { Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, token_store: iexapis_ts, logger: logger, immediate: true) }
         safe_exec { Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger) }
-        safe_exec { Etl::Refresh::Slickcharts.new.all_stocks! }
+        safe_exec { Etl::Refresh::SlickCharts.new.all_stocks! }
         safe_exec { Etl::Refresh::Finnhub.new.weekly_all_stocks! }
       end
 

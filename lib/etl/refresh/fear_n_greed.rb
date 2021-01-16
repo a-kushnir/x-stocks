@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Extracts and transforms data from money.cnn.com
     class FearNGreed
       def image_url(logger: nil)
         stored_image_url = '/img/fear-and-greed.png'

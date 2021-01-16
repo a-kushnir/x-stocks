@@ -2,6 +2,7 @@
 
 module Etl
   module Refresh
+    # Base methods for extracting and transforming data
     class Base
       def stock_message(stock)
         {

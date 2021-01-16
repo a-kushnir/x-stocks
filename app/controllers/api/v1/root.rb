@@ -2,6 +2,7 @@
 
 module API
   module V1
+    # Root V1 API class
     module Root
       extend ActiveSupport::Concern
 

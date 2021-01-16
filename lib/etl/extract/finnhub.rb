@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from finnhub.io
     class Finnhub
       BASE_URL = 'https://finnhub.io/api/v1'
       TOKEN_KEY = 'FINNHUB_KEY'

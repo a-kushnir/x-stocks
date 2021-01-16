@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from finance.yahoo.com
     class Yahoo
       BASE_URL = 'https://finance.yahoo.com'
 

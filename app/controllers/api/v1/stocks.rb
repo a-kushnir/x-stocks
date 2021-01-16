@@ -2,6 +2,7 @@
 
 module API
   module V1
+    # Stocks API endpoints
     class Stocks < Grape::API
       include API::V1::Defaults
 

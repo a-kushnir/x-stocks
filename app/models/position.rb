@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Position Active Record Model
 class Position < ApplicationRecord
   belongs_to :user
   belongs_to :stock, optional: true

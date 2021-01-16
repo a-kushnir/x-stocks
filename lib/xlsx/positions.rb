@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Xlsx
+  # Generates Positions worksheet
   class Positions < Base
     def generate(file_name, positions)
       positions = positions.sort_by { |position| position.stock.symbol }

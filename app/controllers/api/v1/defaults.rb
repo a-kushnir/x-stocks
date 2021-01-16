@@ -2,6 +2,7 @@
 
 module API
   module V1
+    # Default V1 API settings
     module Defaults
       extend ActiveSupport::Concern
 

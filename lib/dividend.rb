@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Calculates dividend calendar
 class Dividend
   def date_range
     from_date = Date.today.at_beginning_of_month

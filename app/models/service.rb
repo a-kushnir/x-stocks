@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Service Active Record Model
 class Service < ApplicationRecord
   attr_accessor :text_size_limit
 

@@ -94,10 +94,6 @@ RSpec/ExampleLength:
 RSpec/NestedGroups:
   Max: 4
 
-# Offense count: 67
-Style/Documentation:
-  Enabled: false
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: allowed_in_returns, forbidden

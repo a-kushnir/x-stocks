@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Helper methods for all application controllers
 module ApplicationHelper
   def stock_path(stock)
     "/stocks/#{CGI.escape(stock.symbol)}"

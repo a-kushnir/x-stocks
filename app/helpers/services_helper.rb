@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Helper methods for ServicesController
 module ServicesHelper
   def run_service_path(service_runner)
     "/services/#{CGI.escape(service_runner.lookup_code)}/run"

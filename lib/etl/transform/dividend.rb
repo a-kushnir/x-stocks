@@ -2,6 +2,7 @@
 
 module Etl
   module Transform
+    # Transforms data extracted from dividend.com
     class Dividend
       def data(stock, json)
         json ||= {}

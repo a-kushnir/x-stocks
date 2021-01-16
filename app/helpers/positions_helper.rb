@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Helper methods for PositionsController
 module PositionsHelper
   def position_path(position)
     "/positions/#{CGI.escape(position.stock.symbol)}"

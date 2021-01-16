@@ -2,6 +2,7 @@
 
 module API
   module V1
+    # Exchanges API endpoints
     class Exchanges < Grape::API
       include API::V1::Defaults
 

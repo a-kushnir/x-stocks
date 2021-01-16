@@ -11,3 +11,7 @@ AllCops:
   Exclude:
     - db/schema.rb
     - node_modules/**/*
+
+Style/Documentation:
+  Exclude:
+    - db/migrate/*

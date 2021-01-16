@@ -2,6 +2,7 @@
 
 module Etl
   module Extract
+    # Extracts data from cloud.iexapis.com
     class Iexapis
       BASE_URL = 'https://cloud.iexapis.com/stable'
       TOKEN_KEY = 'IEXAPIS_KEY'

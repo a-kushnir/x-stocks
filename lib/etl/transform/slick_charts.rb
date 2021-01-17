@@ -4,29 +4,31 @@ module Etl
   module Transform
     # Transforms data extracted from www.slickcharts.com
     class SlickCharts
-      def sp500(list)
-        return if list.blank?
-
-        stock_ids = Stock.unscoped.where(symbol: list).pluck(:id)
-        Stock.unscoped.where(id: stock_ids).update_all(sp500: true)
-        Stock.unscoped.where.not(id: stock_ids).update_all(sp500: false)
+      def initialize(stock_class: Stock)
+        @stock_class = stock_class
       end
 
-      def nasdaq100(list)
-        return if list.blank?
-
-        stock_ids = Stock.unscoped.where(symbol: list).pluck(:id)
-        Stock.unscoped.where(id: stock_ids).update_all(nasdaq100: true)
-        Stock.unscoped.where.not(id: stock_ids).update_all(nasdaq100: false)
+      def sp500(symbols)
+        update(symbols, :sp500) unless symbols.blank?
       end
 
-      def dow_jones(list)
-        return if list.blank?
-
-        stock_ids = Stock.unscoped.where(symbol: list).pluck(:id)
-        Stock.unscoped.where(id: stock_ids).update_all(dowjones: true)
-        Stock.unscoped.where.not(id: stock_ids).update_all(dowjones: false)
+      def nasdaq100(symbols)
+        update(symbols, :nasdaq100) unless symbols.blank?
       end
+
+      def dow_jones(symbols)
+        update(symbols, :dowjones) unless symbols.blank?
+      end
+
+      private
+
+      def update(symbols, column)
+        stock_ids = stock_class.where(symbol: symbols).pluck(:id)
+        stock_class.where(id: stock_ids).update_all(column => true)
+        stock_class.where.not(id: stock_ids).update_all(column => false)
+      end
+
+      attr_reader :stock_class
     end
   end
 end

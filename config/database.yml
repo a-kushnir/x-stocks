@@ -27,7 +27,7 @@ development:
   port: 5432
   database: <%= ENV['X_STOCKS_DATABASE_DATABASE'] || 'x_stocks_development' %>
   username: <%= ENV['X_STOCKS_DATABASE_USERNAME'] || 'x_stocks' %>
-  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] %>
+  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] || 'x_stocks' %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -65,7 +65,7 @@ test:
   port: 5432
   database: <%= ENV['X_STOCKS_DATABASE_DATABASE'] || 'x_stocks_test' %>
   username: <%= ENV['X_STOCKS_DATABASE_USERNAME'] || 'x_stocks' %>
-  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] %>
+  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] || 'x_stocks' %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

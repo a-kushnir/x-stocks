@@ -57,6 +57,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  host: localhost
+  port: 5432
   database: <%= ENV['X_STOCKS_DATABASE_DATABASE'] || 'x_stocks_test' %>
   username: <%= ENV['X_STOCKS_DATABASE_USERNAME'] || 'x_stocks' %>
   password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] %>

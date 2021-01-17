@@ -15,3 +15,6 @@ AllCops:
 Style/Documentation:
   Exclude:
     - db/migrate/*
+
+Layout/LineLength:
+  Max: 512

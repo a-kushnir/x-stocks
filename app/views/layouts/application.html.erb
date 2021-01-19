@@ -40,11 +40,13 @@
 
     <footer class="footer navbar-dark bg-dark">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row text-nowrap">
           <div class="col">
             <span class="text-muted">xStocks &copy; <%= Date.today.year %> Andrew K.</span>
           </div>
-          <%= render partial: '/services/run' if current_user %>
+          <div class="col">
+            <%= render partial: '/services/run' if current_user %>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/a-kushnir/ocular.rb
+  revision: bd75535b763d547a472f823999604f7c1b869405
+  specs:
+    scrutinizer-ocular (1.0.0)
+      simplecov (>= 0.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -286,8 +293,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scrutinizer-ocular (1.0.1)
-      simplecov (>= 0.7)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -372,7 +377,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sass-rails (>= 6)
-  scrutinizer-ocular
+  scrutinizer-ocular!
   selenium-webdriver
   simplecov
   turbolinks (~> 5)

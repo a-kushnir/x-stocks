@@ -32,7 +32,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'rspec', require: false
   gem 'rspec-rails', require: false
-  gem 'scrutinizer-ocular', require: false
+  gem 'scrutinizer-ocular', require: false, git: 'https://github.com/a-kushnir/ocular.rb'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'

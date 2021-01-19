@@ -1,0 +1,37 @@
+build:
+  environment:
+    ruby: '2.6.6'
+    variables:
+      'X_STOCKS_DATABASE_DATABASE': 'scrutinizer'
+      'X_STOCKS_DATABASE_USERNAME': 'scrutinizer'
+      'X_STOCKS_DATABASE_PASSWORD': 'scrutinizer'
+      'DB_DATABASE': 'scrutinizer'
+      'DB_USERNAME': 'scrutinizer'
+      'DB_PASSWORD': 'scrutinizer'
+      'DB_CONNECTION': 'pgsql'
+      'DB_PORT': '5432'
+  nodes:
+    analysis:
+      tests:
+        override:
+          - ruby-scrutinizer-run
+          - js-scrutinizer-run
+          - rubocop-run
+    coverage:
+      services:
+        postgres: '10'
+      tests:
+        override:
+          - command: 'bundle exec rspec'
+            environment:
+              'SCRUTINIZER_CC_FILE': 'my-coverage'
+            coverage:
+              file: 'my-coverage'
+              format: 'rb-cc'
+
+filter:
+  paths:
+    - app/*
+    - config/*
+    - lib/*
+    - public/*

@@ -4,7 +4,7 @@ module Etl
   module Transform
     # Transforms data extracted from finnhub.io
     class Finnhub
-      def initialize(exchange_class: Exchange, stock_class: Stock)
+      def initialize(exchange_class: XStocks::Exchange, stock_class: Stock)
         @exchange_class = exchange_class
         @stock_class = stock_class
       end
@@ -14,7 +14,7 @@ module Etl
 
         stock.ipo = json['ipo']
         stock.logo = json['logo']
-        stock.exchange ||= exchange_class.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
+        stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
 
         stock.save
       end

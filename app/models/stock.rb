@@ -11,7 +11,7 @@ class Stock < ApplicationRecord
     'monthly' => 12
   }.freeze
 
-  belongs_to :exchange, optional: true
+  belongs_to :exchange, optional: true, class_name: 'XStocks::AR::Exchange'
   has_many :positions
   has_many :tags, dependent: :destroy do
     def by_key(key)

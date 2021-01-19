@@ -6,7 +6,7 @@
 </h2>
 
 <% if @stock.exchange %>
-  <small class="text-muted"><%= @stock.exchange %></small>
+  <small class="text-muted"><%= @stock.exchange.name %> (<%= @stock.exchange.code %>)</small>
 <% end %>
 
 <%

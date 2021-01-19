@@ -16,7 +16,7 @@ module API
                { code: 401, message: 'Unauthorized' }
              ]
         get do
-          exchanges = Exchange.all
+          exchanges = XStocks::AR::Exchange.all
           present exchanges, with: API::Entities::Exchange
         end
 
@@ -32,7 +32,7 @@ module API
           requires :code, type: String, desc: 'Stock exchange code for the report. Example: NYSE'
         end
         get ':code' do
-          exchange = Exchange.find_by(code: params[:code]&.upcase)
+          exchange = XStocks::Exchange.new.find_by(code: params[:code]&.upcase)
           present exchange, with: API::Entities::Exchange
         end
       end

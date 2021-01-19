@@ -28,10 +28,6 @@ module XStocks
       config.value
     end
 
-    def to_s
-      key
-    end
-
     private
 
     attr_reader :ar_config_class

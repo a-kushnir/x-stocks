@@ -11,8 +11,6 @@
 Flexport/NewGlobalModel:
   Exclude:
     - 'app/models/application_record.rb'
-    - 'app/models/config.rb'
-    - 'app/models/exchange.rb'
     - 'app/models/position.rb'
     - 'app/models/service.rb'
     - 'app/models/stock.rb'

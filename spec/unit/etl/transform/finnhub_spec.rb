@@ -14,7 +14,7 @@ describe Etl::Transform::Finnhub do
     let(:exchange_class) do
       exchange = OpenStruct.new(search_by: nil)
       allow(exchange).to receive(:search_by).with(:finnhub_code, 'NYSE').and_return('NYSE_EXCHANGE')
-      exchange
+      OpenStruct.new(new: exchange)
     end
 
     let(:stock) { mock_model(exchange: nil) }
@@ -42,7 +42,7 @@ describe Etl::Transform::Finnhub do
 
     it 'searches exchange by finnhub_code' do
       transformer.company(stock, json)
-      expect(exchange_class).to have_received(:search_by).with(:finnhub_code, 'NYSE')
+      expect(exchange_class.new).to have_received(:search_by).with(:finnhub_code, 'NYSE')
     end
   end
 

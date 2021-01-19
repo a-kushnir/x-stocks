@@ -13,7 +13,7 @@ describe Etl::Transform::Iexapis do
 
   describe '#company' do
     let(:stock_class) { mock_model }
-    let(:exchange_class) { mock_model }
+    let(:exchange_class) { OpenStruct.new(new: mock_model) }
     let(:tag_class) { mock_model }
     let(:stock) { mock_model(exchange: nil) }
 
@@ -76,7 +76,7 @@ describe Etl::Transform::Iexapis do
 
     it 'uses exchange model' do
       transformer.company(stock, json)
-      expect(exchange_class).to eq({ search_by: [:iexapis_code, 'NASDAQ'] })
+      expect(exchange_class.new).to eq({ search_by: [:iexapis_code, 'NASDAQ'] })
     end
 
     it 'uses tag model' do

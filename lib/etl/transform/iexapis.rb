@@ -4,7 +4,7 @@ module Etl
   module Transform
     # Transforms data extracted from cloud.iexapis.com
     class Iexapis
-      def initialize(stock_class: Stock, exchange_class: Exchange, tag_class: Tag)
+      def initialize(stock_class: Stock, exchange_class: XStocks::Exchange, tag_class: Tag)
         @stock_class = stock_class
         @exchange_class = exchange_class
         @tag_class = tag_class
@@ -14,7 +14,7 @@ module Etl
         return if json.blank?
 
         stock.company_name = json['companyName']
-        stock.exchange ||= exchange_class.search_by(:iexapis_code, json['exchange']) if json['exchange'].present?
+        stock.exchange ||= exchange_class.new.search_by(:iexapis_code, json['exchange']) if json['exchange'].present?
         stock.industry = json['industry']
         stock.website = json['website']
         stock.description = json['description'] if stock.description.blank?

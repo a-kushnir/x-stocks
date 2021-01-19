@@ -39,3 +39,4 @@ yarn-debug.log*
 /.idea
 /.generators
 /.rakeTasks
+/coverage

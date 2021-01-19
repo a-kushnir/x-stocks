@@ -79,17 +79,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 13
 
-# Offense count: 19
-# Configuration parameters: Max.
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/unit/etl/extract/token_store_spec.rb'
-    - 'spec/unit/etl/transform/dividend_spec.rb'
-    - 'spec/unit/etl/transform/finnhub_spec.rb'
-    - 'spec/unit/lib/dividend_spec.rb'
-    - 'spec/unit/lib/meta_score_spec.rb'
-    - 'spec/unit/etl/transform/yahoo_spec.rb'
-
 # Offense count: 2
 RSpec/NestedGroups:
   Max: 4

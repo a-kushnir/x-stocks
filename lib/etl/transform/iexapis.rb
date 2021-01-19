@@ -4,11 +4,17 @@ module Etl
   module Transform
     # Transforms data extracted from cloud.iexapis.com
     class Iexapis
+      def initialize(stock_class: Stock, exchange_class: Exchange, tag_class: Tag)
+        @stock_class = stock_class
+        @exchange_class = exchange_class
+        @tag_class = tag_class
+      end
+
       def company(stock, json)
         return if json.blank?
 
         stock.company_name = json['companyName']
-        stock.exchange ||= Exchange.search_by(:iexapis_code, json['exchange']) if json['exchange'].present?
+        stock.exchange ||= exchange_class.search_by(:iexapis_code, json['exchange']) if json['exchange'].present?
         stock.industry = json['industry']
         stock.website = json['website']
         stock.description = json['description'] if stock.description.blank?
@@ -28,7 +34,7 @@ module Etl
 
         return unless stock.save
 
-        ::Tag.batch_update(stock, :company_tag, json['tags'])
+        tag_class.batch_update(stock, :company_tag, json['tags'])
       end
 
       def dividends(stock, json)
@@ -55,25 +61,11 @@ module Etl
         stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
         last_div = stock.periodic_dividend_details.last
+        stock.dividend_frequency = last_div&.dig('frequency')
+        stock.dividend_frequency_num = stock_class.dividend_frequencies[(stock.dividend_frequency || '').downcase]
+        stock.dividend_amount = last_div&.dig('amount')
+        stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
 
-        stock.dividend_frequency = begin
-                                     last_div['frequency']
-                                   rescue StandardError
-                                     nil
-                                   end
-        num = Stock::DIVIDEND_FREQUENCIES[(stock.dividend_frequency || '').downcase]
-        stock.dividend_frequency_num = num
-
-        stock.dividend_amount = begin
-                                  last_div['amount']
-                                rescue StandardError
-                                  nil
-                                end
-        stock.est_annual_dividend = begin
-                                      stock.dividend_frequency_num * stock.dividend_amount
-                                    rescue StandardError
-                                      nil
-                                    end
         stock.update_dividends!
       end
 
@@ -87,6 +79,10 @@ module Etl
 
         stock.save!
       end
+
+      private
+
+      attr_reader :stock_class, :exchange_class, :tag_class
     end
   end
 end

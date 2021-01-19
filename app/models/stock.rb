@@ -36,6 +36,10 @@ class Stock < ApplicationRecord
   serialize :next_earnings_details, JSON
   serialize :metascore_details, JSON
 
+  def self.dividend_frequencies
+    DIVIDEND_FREQUENCIES
+  end
+
   def to_s
     if company_name.present?
       "#{company_name} (#{symbol})"

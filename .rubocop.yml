@@ -13,9 +13,15 @@ AllCops:
     - node_modules/**/*
     - vendor/bundle/**/*
 
+Layout/LineLength:
+  Max: 512
+
+RSpec/ExampleLength:
+  Max: 50
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 20
+
 Style/Documentation:
   Exclude:
     - db/migrate/*
-
-Layout/LineLength:
-  Max: 512

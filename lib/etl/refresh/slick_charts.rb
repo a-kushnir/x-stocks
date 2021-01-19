@@ -5,7 +5,7 @@ module Etl
     # Extracts and transforms data from www.slickcharts.com
     class SlickCharts < Base
       def all_stocks!
-        Service.lock(:slickcharts, force: true) do |logger|
+        XStocks::Service.new.lock(:slickcharts, force: true) do |logger|
           data_loader = Etl::Extract::DataLoader.new(logger)
 
           yield processing_message 0 if block_given?

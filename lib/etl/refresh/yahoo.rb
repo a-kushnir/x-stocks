@@ -7,11 +7,11 @@ module Etl
       PAUSE = 1.0 # Limit up to 1 request per second
 
       def daily_all_stocks?
-        Service[:daily_yahoo].runnable?(1.day)
+        XStocks::Service.new[:daily_yahoo].runnable?(1.day)
       end
 
       def daily_all_stocks!(force: false)
-        Service.lock(:daily_yahoo, force: force) do |logger|
+        XStocks::Service.new.lock(:daily_yahoo, force: force) do |logger|
           each_stock_with_message do |stock, message|
             yield message if block_given?
             daily_one_stock!(stock, logger: logger)

@@ -3,7 +3,7 @@
 module XStocks
   module AR
     # Tag Active Record Model
-    class Tag < ApplicationRecord
+    class Tag < XStocks::AR::ApplicationRecord
       belongs_to :stock
 
       validates :key, presence: true

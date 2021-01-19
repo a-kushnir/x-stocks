@@ -11,11 +11,11 @@ module Etl
       # Hourly #
 
       def hourly_all_stocks?
-        Service[:stock_prices].runnable?(1.hour)
+        XStocks::Service.new[:stock_prices].runnable?(1.hour)
       end
 
       def hourly_all_stocks!(force: false)
-        Service.lock(:stock_prices, force: force) do |logger|
+        XStocks::Service.new.lock(:stock_prices, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             yield message if block_given?
@@ -44,11 +44,11 @@ module Etl
       # Daily #
 
       def daily_all_stocks?
-        Service[:daily_finnhub].runnable?(1.day)
+        XStocks::Service.new[:daily_finnhub].runnable?(1.day)
       end
 
       def daily_all_stocks!(force: false)
-        Service.lock(:daily_finnhub, force: force) do |logger|
+        XStocks::Service.new.lock(:daily_finnhub, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           each_stock_with_message do |stock, message|
             yield message if block_given?
@@ -95,11 +95,11 @@ module Etl
       # Weekly #
 
       def weekly_all_stocks?
-        Service[:weekly_finnhub].runnable?(1.day)
+        XStocks::Service.new[:weekly_finnhub].runnable?(1.day)
       end
 
       def weekly_all_stocks!(force: false)
-        Service.lock(:weekly_finnhub, force: force) do |logger|
+        XStocks::Service.new.lock(:weekly_finnhub, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
           earnings_calendar(token_store, logger: logger)
         end

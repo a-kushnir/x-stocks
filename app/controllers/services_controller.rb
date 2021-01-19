@@ -38,7 +38,7 @@ class ServicesController < ApplicationController
 
   def run_all
     EventStream.run(response) do |stream|
-      if Service.locked?
+      if XStocks::Service.new.locked?
         # Just wait
 
       elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?

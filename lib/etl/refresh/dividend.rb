@@ -7,11 +7,11 @@ module Etl
       PAUSE = 1.0 # Limit up to 1 request per second
 
       def weekly_all_stocks?
-        Service[:weekly_dividend].runnable?(1.day)
+        XStocks::Service.new[:weekly_dividend].runnable?(1.day)
       end
 
       def weekly_all_stocks!(force: false)
-        Service.lock(:weekly_dividend, force: force) do |logger|
+        XStocks::Service.new.lock(:weekly_dividend, force: force) do |logger|
           each_stock_with_message do |stock, message|
             yield message if block_given?
             weekly_one_stock!(stock, logger: logger)

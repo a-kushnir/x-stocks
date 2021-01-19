@@ -22,7 +22,7 @@ class ServiceRunner
   end
 
   def service
-    Service.find_by(key: service_code) if service_code.present?
+    XStocks::AR::Service.find_by(key: service_code) if service_code.present?
   end
 
   def run(args, &block)
@@ -47,7 +47,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:hourly_one_finnhub, force: true) do |logger|
+                        XStocks::Service.new.lock(:hourly_one_finnhub, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, logger: logger, &block)
                         end
@@ -63,7 +63,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:daily_one_yahoo, force: true) do |logger|
+                        XStocks::Service.new.lock(:daily_one_yahoo, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Yahoo.new.daily_one_stock!(stock, logger: logger)
                         end
@@ -79,7 +79,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:daily_one_finnhub, force: true) do |logger|
+                        XStocks::Service.new.lock(:daily_one_finnhub, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Finnhub.new.daily_one_stock!(stock, logger: logger)
                         end
@@ -95,7 +95,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:weekly_one_iexapis, force: true) do |logger|
+                        XStocks::Service.new.lock(:weekly_one_iexapis, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, logger: logger, immediate: true, &block)
                         end
@@ -111,7 +111,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:weekly_one_dividend, force: true) do |logger|
+                        XStocks::Service.new.lock(:weekly_one_dividend, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger)
                         end
@@ -122,7 +122,7 @@ class ServiceRunner
                       lambda do |args, &block|
                         stock = Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
-                        Service.lock(:company_information, force: true) do |logger|
+                        XStocks::Service.new.lock(:company_information, force: true) do |logger|
                           logger.text_size_limit = nil
                           Etl::Refresh::Company.new.one_stock!(stock, logger: logger)
                         end

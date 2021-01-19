@@ -12,7 +12,6 @@ Flexport/NewGlobalModel:
   Exclude:
     - 'app/models/application_record.rb'
     - 'app/models/position.rb'
-    - 'app/models/service.rb'
     - 'app/models/stock.rb'
     - 'app/models/user.rb'
 
@@ -20,7 +19,7 @@ Flexport/NewGlobalModel:
 Lint/RescueException:
   Exclude:
     - 'app/controllers/positions_controller.rb'
-    - 'app/models/service.rb'
+    - 'app/models/x_stocks/service.rb'
     - 'lib/etl/extract/token_store.rb'
     - 'lib/etl/refresh/company.rb'
     - 'lib/etl/refresh/fear_n_greed.rb'

@@ -3,7 +3,7 @@
 module XStocks
   module AR
     # Exchange Active Record Model
-    class Exchange < ApplicationRecord
+    class Exchange < XStocks::AR::ApplicationRecord
       validates :name, presence: true, uniqueness: true
       validates :code, presence: true, uniqueness: true
     end

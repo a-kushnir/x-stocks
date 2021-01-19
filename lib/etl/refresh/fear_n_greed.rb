@@ -10,7 +10,7 @@ module Etl
 
         begin
           expires_in = File.exist?(stored_image_path) ? 1.hour : nil
-          Config.cached(:fear_n_greed_image_url, expires_in) do
+          XStocks::Config.new.cached(:fear_n_greed_image_url, expires_in) do
             data_loader = Etl::Extract::DataLoader.new(logger)
             extractor = Etl::Extract::FearNGreed.new(data_loader)
             source_image_url = extractor.image_url

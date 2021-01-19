@@ -2,7 +2,7 @@
   <strong>Related Tags</strong><br>
   <% [:company_tag, :dividend_tag, :safe_dividend_tag, :dividend_growth_tag].each do |key| %>
     <% @stock.tags.by_key(key).each do |tag| %>
-      <%= link_to tag, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
+      <%= link_to tag.name, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'badge badge-pill badge-primary' %>
     <% end %>
   <% end %>
 

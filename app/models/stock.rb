@@ -13,7 +13,7 @@ class Stock < ApplicationRecord
 
   belongs_to :exchange, optional: true, class_name: 'XStocks::AR::Exchange'
   has_many :positions
-  has_many :tags, dependent: :destroy do
+  has_many :tags, dependent: :destroy, class_name: 'XStocks::AR::Tag' do
     def by_key(key)
       where(key: key)
     end

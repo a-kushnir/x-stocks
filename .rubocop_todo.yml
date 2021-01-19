@@ -14,7 +14,6 @@ Flexport/NewGlobalModel:
     - 'app/models/position.rb'
     - 'app/models/service.rb'
     - 'app/models/stock.rb'
-    - 'app/models/tag.rb'
     - 'app/models/user.rb'
 
 # Offense count: 8

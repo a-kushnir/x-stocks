@@ -14,7 +14,7 @@ describe Etl::Transform::Iexapis do
   describe '#company' do
     let(:stock_class) { mock_model }
     let(:exchange_class) { OpenStruct.new(new: mock_model) }
-    let(:tag_class) { mock_model }
+    let(:tag_class) { OpenStruct.new(new: mock_model) }
     let(:stock) { mock_model(exchange: nil) }
 
     let(:json) do
@@ -82,7 +82,7 @@ describe Etl::Transform::Iexapis do
     it 'uses tag model' do
       transformer.company(stock, json)
       calls = { batch_update: [expected_stock, :company_tag, ['Electronic Technology', 'Telecommunications Equipment']] }
-      expect(tag_class).to eq(calls)
+      expect(tag_class.new).to eq(calls)
     end
   end
 

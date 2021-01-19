@@ -4,7 +4,9 @@ module Etl
   module Transform
     # Transforms data extracted from cloud.iexapis.com
     class Iexapis
-      def initialize(stock_class: Stock, exchange_class: XStocks::Exchange, tag_class: Tag)
+      def initialize(stock_class: Stock,
+                     exchange_class: XStocks::Exchange,
+                     tag_class: XStocks::Tag)
         @stock_class = stock_class
         @exchange_class = exchange_class
         @tag_class = tag_class
@@ -34,7 +36,7 @@ module Etl
 
         return unless stock.save
 
-        tag_class.batch_update(stock, :company_tag, json['tags'])
+        tag_class.new.batch_update(stock, :company_tag, json['tags'])
       end
 
       def dividends(stock, json)

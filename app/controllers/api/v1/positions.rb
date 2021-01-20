@@ -52,7 +52,7 @@ module API
           rescue StandardError
             nil
           end
-          relation = Position.where(user: current_user).where.not(shares: nil)
+          relation = XStocks::AR::Position.where(user: current_user).where.not(shares: nil)
           position = relation.where(stock_id: stock.id).first
           error!('Unknown Symbol', 404) unless position
           market_value = relation.sum(:market_value)

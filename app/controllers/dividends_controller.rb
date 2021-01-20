@@ -5,7 +5,7 @@ class DividendsController < ApplicationController
   helper :stocks
 
   def index
-    @positions = Position
+    @positions = XStocks::AR::Position
                  .where(user: current_user)
                  .where.not(shares: nil)
                  .all

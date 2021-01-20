@@ -12,7 +12,7 @@ module API
         helpers do
           def current_user
             token = params['token'] || headers['X-Stocks-Token']
-            @current_user ||= User.find_by_api_key(token) if token.present?
+            @current_user ||= XStocks::AR::User.find_by_api_key(token) if token.present?
           end
 
           def authorize!

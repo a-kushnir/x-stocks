@@ -168,7 +168,8 @@ class CreateTables < ActiveRecord::Migration[6.0]
 
     reversible do |dir|
       dir.up do
-        User.create!(email: 'admin@admin.com', password: 'admin!')
+        user = XStocks::AR::User.new(email: 'admin@admin.com', password: 'admin!')
+        XStocks::User.new.save(user)
 
         exchanges = [
           {

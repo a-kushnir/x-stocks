@@ -5,8 +5,10 @@ class AddUserAPIKey < ActiveRecord::Migration[6.0]
     add_column :users, :api_key, :string
     add_index :users, :api_key, unique: true
 
-    User.reset_column_information
-    User.all.each(&:save) # Generates API tokens
+    XStocks::AR::User.reset_column_information
+    XStocks::AR::User.all.each do |user|
+      XStocks::User.new.save(user) # Generates API tokens
+    end
   end
 
   def down

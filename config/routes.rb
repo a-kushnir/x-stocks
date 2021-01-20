@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   mount API::Root => '/api'
 
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, class_name: XStocks::AR::User, controllers: { registrations: 'registrations' }
   devise_scope :user do
     post '/registrations/regenerate' => 'registrations#regenerate'
   end

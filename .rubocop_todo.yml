@@ -75,10 +75,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 13
 
-# Offense count: 2
-RSpec/NestedGroups:
-  Max: 4
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: allowed_in_returns, forbidden

@@ -49,39 +49,39 @@ describe MetaScore do
 
         expect(meta_score.calculate(stock)).to eq([score, details])
       end
+    end
 
-      context 'when payout is negative' do
-        let(:stock) { OpenStruct.new(payout_ratio: -31.1) }
+    context 'when payout is negative' do
+      let(:stock) { OpenStruct.new(payout_ratio: -31.1) }
 
-        it 'returns score and details' do
-          score = 11
-          details = {
-            payout_ratio: {
-              score: 11,
-              value: -31.1,
-              weight: 2
-            }
+      it 'returns score and details' do
+        score = 11
+        details = {
+          payout_ratio: {
+            score: 11,
+            value: -31.1,
+            weight: 2
           }
+        }
 
-          expect(meta_score.calculate(stock)).to eq([score, details])
-        end
+        expect(meta_score.calculate(stock)).to eq([score, details])
       end
+    end
 
-      context 'when payout is over a hundred percent' do
-        let(:stock) { OpenStruct.new(payout_ratio: 131.1) }
+    context 'when payout is over a hundred percent' do
+      let(:stock) { OpenStruct.new(payout_ratio: 131.1) }
 
-        it 'returns score and details' do
-          score = 20
-          details = {
-            payout_ratio: {
-              score: 20,
-              value: 131.1,
-              weight: 2
-            }
+      it 'returns score and details' do
+        score = 20
+        details = {
+          payout_ratio: {
+            score: 20,
+            value: 131.1,
+            weight: 2
           }
+        }
 
-          expect(meta_score.calculate(stock)).to eq([score, details])
-        end
+        expect(meta_score.calculate(stock)).to eq([score, details])
       end
     end
   end

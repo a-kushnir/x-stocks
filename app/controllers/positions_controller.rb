@@ -3,7 +3,7 @@
 # Controller to provide position information for user's portfolio
 class PositionsController < ApplicationController
   def index
-    @positions = Position
+    @positions = XStocks::AR::Position
                  .where(user: current_user)
                  .where.not(shares: nil)
                  .all
@@ -23,8 +23,8 @@ class PositionsController < ApplicationController
     @position = find_position
     not_found && return unless @position
 
-    if @position.update(position_params)
-      @position.destroy if @position.shares.blank? && @position.note.blank?
+    @position.attributes = position_params
+    if XStocks::Position.new.save(@position)
       render partial: 'show', layout: nil
     else
       render partial: 'edit', layout: nil
@@ -37,11 +37,13 @@ class PositionsController < ApplicationController
 
   def find_position
     stock = Stock.find_by(symbol: params[:id])
-    Position.find_or_initialize_by(user: current_user, stock: stock) if stock
+    XStocks::AR::Position.find_or_initialize_by(user: current_user, stock: stock) if stock
   end
 
   def position_params
-    params.require(:position).permit(:shares, :average_price, :note)
+    params
+      .require(:x_stocks_ar_position)
+      .permit(:shares, :average_price, :note)
   end
 
   def generate_xlsx

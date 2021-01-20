@@ -8,7 +8,7 @@
 <div id="positions-table-container">
   <%= render partial: 'shared/column', locals: {columns: @columns} %>
 <%
-  positions = Position.where(user: current_user)
+  positions = XStocks::AR::Position.where(user: current_user)
   market_value = positions.sum(:market_value)
 %>
 <table id="positions-table" class="table table-sm table-hover table-override">

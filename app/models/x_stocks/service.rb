@@ -3,9 +3,9 @@
 module XStocks
   # Service Business Model
   class Service
-    def initialize(service = nil, ar_service_class: XStocks::AR::Service)
+    def initialize(service = nil, service_ar_class: XStocks::AR::Service)
       @service = service
-      @ar_service_class = ar_service_class
+      @service_ar_class = service_ar_class
     end
 
     def fast_update?
@@ -20,7 +20,7 @@ module XStocks
     end
 
     def lock(key, force: false)
-      service = ar_service_class.find_or_create_by!(key: key)
+      service = service_ar_class.find_or_create_by!(key: key)
       return if !force && locked_one?(service)
       return unless lock!(service)
 
@@ -45,13 +45,13 @@ module XStocks
 
     def [](key)
       self.class.new(
-        ar_service_class.select('locked_at, last_run_at').find_or_initialize_by(key: key),
-        ar_service_class: ar_service_class
+        service_ar_class.select('locked_at, last_run_at').find_or_initialize_by(key: key),
+        service_ar_class: service_ar_class
       )
     end
 
     def locked?
-      ar_service_class.where('locked_at > ?', 10.minutes.ago).exists?
+      service_ar_class.where('locked_at > ?', 10.minutes.ago).exists?
     end
 
     def runnable?(period)
@@ -62,7 +62,7 @@ module XStocks
 
     def lock!(service)
       rows_updated =
-        ar_service_class
+        service_ar_class
         .where(id: service.id, locked_at: service.locked_at)
         .update_all(locked_at: DateTime.now)
 
@@ -73,6 +73,6 @@ module XStocks
       service.locked_at && service.locked_at > 10.minutes.ago
     end
 
-    attr_reader :service, :ar_service_class
+    attr_reader :service, :service_ar_class
   end
 end

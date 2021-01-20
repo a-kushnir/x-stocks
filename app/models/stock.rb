@@ -12,7 +12,7 @@ class Stock < ApplicationRecord
   }.freeze
 
   belongs_to :exchange, optional: true, class_name: 'XStocks::AR::Exchange'
-  has_many :positions
+  has_many :positions, class_name: 'XStocks::AR::Position'
   has_many :tags, dependent: :destroy, class_name: 'XStocks::AR::Tag' do
     def by_key(key)
       where(key: key)
@@ -69,7 +69,7 @@ class Stock < ApplicationRecord
                                  rescue StandardError
                                    nil
                                  end
-    ::Position.update_prices!(self)
+    XStocks::Position.new.calculate_stock_prices(self)
     save!
   end
 
@@ -79,7 +79,7 @@ class Stock < ApplicationRecord
                                    rescue StandardError
                                      nil
                                    end
-    ::Position.update_dividends!(self)
+    XStocks::Position.new.calculate_stock_dividends(self)
     save!
   end
 

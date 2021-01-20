@@ -13,7 +13,7 @@ class StocksController < ApplicationController
     @stocks = @stocks.where(id: stock_ids) if stock_ids.present?
     @stocks = @stocks.all
 
-    @positions = Position.where(stock: @stocks, user: current_user).all
+    @positions = XStocks::AR::Position.where(stock: @stocks, user: current_user).all
 
     @columns = columns
 
@@ -30,7 +30,7 @@ class StocksController < ApplicationController
     rescue StandardError
       nil
     end
-    @position = Position.find_or_initialize_by(stock: @stock, user: current_user)
+    @position = XStocks::AR::Position.find_or_initialize_by(stock: @stock, user: current_user)
 
     set_page_title
   end

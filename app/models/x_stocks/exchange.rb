@@ -3,18 +3,18 @@
 module XStocks
   # Exchange Business Model
   class Exchange
-    def initialize(ar_exchange_class: XStocks::AR::Exchange)
-      @ar_exchange_class = ar_exchange_class
+    def initialize(exchange_ar_class: XStocks::AR::Exchange)
+      @exchange_ar_class = exchange_ar_class
     end
 
     def search_by(column, value)
-      ar_exchange_class.all.detect do |exchange|
+      exchange_ar_class.all.detect do |exchange|
         exchange[column] && exchange[column]&.upcase == value&.upcase
       end
     end
 
     private
 
-    attr_reader :ar_exchange_class
+    attr_reader :exchange_ar_class
   end
 end

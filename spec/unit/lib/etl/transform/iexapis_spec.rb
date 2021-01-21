@@ -4,15 +4,15 @@ require 'unit/spec_helper'
 require 'etl/transform/iexapis'
 
 describe Etl::Transform::Iexapis do
-  subject(:transformer) { described_class.new(stock_class: stock_class, exchange_class: exchange_class, tag_class: tag_class) }
+  subject(:transformer) { described_class.new(stock_class: stock_class, exchange_class: exchange_class, tag_class: tag_class, dividend_frequencies: dividend_frequencies) }
 
-  let(:stock_class) {}
+  let(:stock_class) { OpenStruct.new(new: mock_model) }
   let(:exchange_class) {}
   let(:tag_class) {}
-  let(:stock) {}
+  let(:dividend_frequencies) {}
+  let(:stock) { mock_model }
 
   describe '#company' do
-    let(:stock_class) { mock_model }
     let(:exchange_class) { OpenStruct.new(new: mock_model) }
     let(:tag_class) { OpenStruct.new(new: mock_model) }
     let(:stock) { mock_model(exchange: nil) }
@@ -64,8 +64,7 @@ describe Etl::Transform::Iexapis do
         city: 'Cupertino',
         zip: '95014-2083',
         country: 'US',
-        phone: '1.408.974.3123',
-        save: []
+        phone: '1.408.974.3123'
       }
     end
 
@@ -122,20 +121,18 @@ describe Etl::Transform::Iexapis do
     end
 
     describe '#dividends' do
-      let(:stock_class) { mock_model(dividend_frequencies: { 'quarterly' => 4 }) }
-      let(:stock) { mock_model(periodic_dividend_details: dividend_details) }
+      let(:dividend_frequencies) { { 'quarterly' => 4 } }
+      let(:stock_class) { OpenStruct.new(new: mock_model(periodic_dividend_details: dividend_details)) }
 
       it 'saves data into model' do
         transformer.dividends(stock, json)
 
         calls = {
           dividend_details: dividend_details,
-          periodic_dividend_details: dividend_details,
           dividend_frequency: 'quarterly',
           dividend_frequency_num: 4,
           dividend_amount: 0.709195854935075,
-          est_annual_dividend: 2.8367834197403,
-          'update_dividends!': []
+          est_annual_dividend: 2.8367834197403
         }
 
         expect(stock).to eq(calls)
@@ -143,16 +140,13 @@ describe Etl::Transform::Iexapis do
     end
 
     describe '#next_dividend' do
-      let(:stock) { mock_model }
-
       it 'saves data into model' do
         transformer.next_dividend(stock, json)
 
         calls = {
           next_div_ex_date: '2020-10-28',
           next_div_payment_date: '2020-11-06',
-          next_div_amount: 0.7091958549350751,
-          'save!': []
+          next_div_amount: 0.7091958549350751
         }
 
         expect(stock).to eq(calls)

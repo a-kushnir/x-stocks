@@ -6,8 +6,9 @@ module Etl
     class Yahoo
       RECOMMENDATIONS = %w[strongBuy buy hold sell strongSell].freeze
 
-      def initialize(date: Date)
+      def initialize(date: Date, stock_model: XStocks::Stock)
         @date = date
+        @stock_model = stock_model
       end
 
       def summary(stock, json)
@@ -24,7 +25,7 @@ module Etl
         description = summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary')
         stock.description = description if description.present?
 
-        stock.update_dividends!
+        stock_model.new.save(stock)
       end
 
       private
@@ -46,7 +47,7 @@ module Etl
         result
       end
 
-      attr_reader :date
+      attr_reader :date, :stock_model
     end
   end
 end

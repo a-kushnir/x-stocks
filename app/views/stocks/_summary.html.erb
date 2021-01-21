@@ -1,4 +1,4 @@
-<% div_suspended = @stock.div_suspended? %>
+<% div_suspended = XStocks::Stock.new.div_suspended?(@stock) %>
 <h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
   <% if @stock.price_change %>
     <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
@@ -31,7 +31,8 @@
     right_table << {label: 'Dividend Growth 5Y', value: "#{change_icon(@stock.dividend_growth_5y)} #{number_to_percentage(@stock.dividend_growth_5y, precision: 2)}".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
     right_table << {label: 'Years of Dividend Growth', value: @stock.dividend_growth_years} if @stock.dividend_growth_years
   end
-  right_table << {label: 'Dividend Change', value: "#{change_icon(@stock.div_change_pct)} #{number_to_percentage(@stock.div_change_pct, precision: 1)}".html_safe, class: delta_class(@stock.div_change_pct)} if @stock.div_change_pct
+  div_change_pct = XStocks::Stock.new.div_change_pct(@stock)
+  right_table << {label: 'Dividend Change', value: "#{change_icon(div_change_pct)} #{number_to_percentage(div_change_pct, precision: 1)}".html_safe, class: delta_class(div_change_pct)} if div_change_pct
   right_table << {label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})"} if @stock.dividend_rating
   right_table << {label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2)} unless @stock.payout_ratio.to_f.zero?
 %>

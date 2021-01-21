@@ -4,7 +4,10 @@ require 'unit/spec_helper'
 require 'dividend'
 
 describe Dividend do
-  subject(:calculator) { described_class.new }
+  subject(:calculator) { described_class.new(stock_class: stock_class) }
+
+  let(:stock_class) { OpenStruct.new(new: stock_model) }
+  let(:stock_model) {}
 
   describe '#date_range' do
     it 'returns date range' do
@@ -27,13 +30,8 @@ describe Dividend do
     let(:div_suspended?) { false }
     let(:dividend_frequency) { 'annual' }
 
-    let(:stock) do
-      OpenStruct.new(
-        periodic_dividend_details: periodic_dividend_details,
-        div_suspended?: div_suspended?,
-        dividend_frequency: dividend_frequency
-      )
-    end
+    let(:stock) { OpenStruct.new(dividend_frequency: dividend_frequency) }
+    let(:stock_model) { mock_model(periodic_dividend_details: periodic_dividend_details, div_suspended?: div_suspended?) }
 
     context 'when no dividend information' do
       let(:periodic_dividend_details) { [] }

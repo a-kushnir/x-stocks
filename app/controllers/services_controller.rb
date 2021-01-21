@@ -6,7 +6,7 @@ class ServicesController < ApplicationController
 
   def index
     @service_runners = ServiceRunner.all
-    @stocks = Stock.all
+    @stocks = XStocks::AR::Stock.all
 
     @columns = columns
 

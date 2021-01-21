@@ -9,8 +9,8 @@ class StocksController < ApplicationController
 
     stock_ids = handle_tag_param
 
-    @stocks = Stock
-    @stocks = @stocks.where(id: stock_ids) if stock_ids.present?
+    @stocks = XStocks::AR::Stock
+    @stocks = @stocks.where(id: stock_ids) if @tag
     @stocks = @stocks.all
 
     @positions = XStocks::AR::Position.where(stock: @stocks, user: current_user).all
@@ -36,14 +36,14 @@ class StocksController < ApplicationController
   end
 
   def new
-    @stock = Stock.new
+    @stock = XStocks::AR::Stock.new
     set_page_title
   end
 
   def create
-    @stock = Stock.new(stock_params)
+    @stock = XStocks::AR::Stock.new(stock_params)
 
-    if @stock.save
+    if XStocks::Stock.new.save(@stock)
       XStocks::Service.new.lock(:company_information, force: true) do |logger|
         logger.text_size_limit = nil
         Etl::Refresh::Company.new.one_stock!(@stock, logger: logger)
@@ -68,12 +68,12 @@ class StocksController < ApplicationController
   private
 
   def set_page_title
-    @page_title = @stock.new_record? ? 'New Stock' : @stock.to_s
+    @page_title = @stock.new_record? ? 'New Stock' : XStocks::Stock.new.to_s(@stock)
     @page_menu_item = :stocks
   end
 
   def find_stock
-    Stock.find_by(symbol: params[:id])
+    XStocks::AR::Stock.find_by(symbol: params[:id])
   end
 
   def stock_params
@@ -84,13 +84,13 @@ class StocksController < ApplicationController
     value = params[:goto]
     return false if value.blank?
 
-    stock = Stock.find_by(symbol: value.upcase)
+    stock = XStocks::AR::Stock.find_by(symbol: value.upcase)
     if stock
       redirect_to stock_path(stock)
       return true
     end
 
-    stocks = Stock.where('company_name ILIKE ?', "%#{value.downcase}%").all
+    stocks = XStocks::AR::Stock.where('company_name ILIKE ?', "%#{value.downcase}%").all
     if stocks.count == 1
       redirect_to stock_path(stocks.first)
       return true
@@ -110,10 +110,10 @@ class StocksController < ApplicationController
       if virtual_tag
         virtual_tag.find_stock_ids(current_user)
       else
-        Tag.where(name: @tag).pluck(:stock_id)
+        XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
       end
 
-    @tag = nil unless stock_ids.present?
+    @tag = nil if stock_ids.blank? && !virtual_tag
     stock_ids
   end
 

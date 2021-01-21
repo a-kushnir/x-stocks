@@ -4,12 +4,14 @@ module Etl
   module Transform
     # Transforms data extracted from cloud.iexapis.com
     class Iexapis
-      def initialize(stock_class: Stock,
+      def initialize(stock_class: XStocks::Stock,
                      exchange_class: XStocks::Exchange,
-                     tag_class: XStocks::Tag)
+                     tag_class: XStocks::Tag,
+                     dividend_frequencies: XStocks::Stock::Dividends::DIVIDEND_FREQUENCIES)
         @stock_class = stock_class
         @exchange_class = exchange_class
         @tag_class = tag_class
+        @dividend_frequencies = dividend_frequencies
       end
 
       def company(stock, json)
@@ -34,7 +36,7 @@ module Etl
         stock.country = json['country']
         stock.phone = json['phone']
 
-        return unless stock.save
+        return unless stock_class.new.save(stock)
 
         tag_class.new.batch_update(stock, :company_tag, json['tags'])
       end
@@ -62,13 +64,13 @@ module Etl
         stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
         stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
 
-        last_div = stock.periodic_dividend_details.last
+        last_div = stock_class.new.periodic_dividend_details(stock).last
         stock.dividend_frequency = last_div&.dig('frequency')
-        stock.dividend_frequency_num = stock_class.dividend_frequencies[(stock.dividend_frequency || '').downcase]
+        stock.dividend_frequency_num = dividend_frequencies[(stock.dividend_frequency || '').downcase]
         stock.dividend_amount = last_div&.dig('amount')
         stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
 
-        stock.update_dividends!
+        stock_class.new.save(stock)
       end
 
       def next_dividend(stock, json)
@@ -79,12 +81,12 @@ module Etl
         stock.next_div_payment_date = json&.dig('paymentDate')
         stock.next_div_amount = json&.dig('amount')
 
-        stock.save!
+        stock_class.new.save(stock)
       end
 
       private
 
-      attr_reader :stock_class, :exchange_class, :tag_class
+      attr_reader :stock_class, :exchange_class, :tag_class, :dividend_frequencies
     end
   end
 end

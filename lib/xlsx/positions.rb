@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xlsx
+module XLSX
   # Generates Positions worksheet
   class Positions < Base
     def generate(file_name, positions)
@@ -54,17 +54,9 @@ module Xlsx
         position.total_cost,
         position.market_value,
         position.gain_loss,
-        begin
-          position.gain_loss_pct / 100
-        rescue StandardError
-          nil
-        end,
+        safe_exec { position.gain_loss_pct / 100 },
         position.est_annual_income,
-        begin
-          position.market_value / market_value
-        rescue StandardError
-          nil
-        end
+        safe_exec { position.market_value / market_value }
       ]
     end
 
@@ -83,11 +75,7 @@ module Xlsx
         total_cost,
         market_value,
         gain_loss,
-        begin
-          gain_loss / total_cost
-        rescue StandardError
-          nil
-        end,
+        safe_exec { gain_loss / total_cost },
         positions.sum { |p| p.est_annual_income.to_d },
         1
       ].flatten
@@ -99,6 +87,12 @@ module Xlsx
         Array.new(3, styles[:header_money]),
         styles[:header_percent], styles[:header_money], styles[:header_percent]
       ].flatten
+    end
+
+    def safe_exec
+      yield
+    rescue StandardError
+      nil
     end
   end
 end

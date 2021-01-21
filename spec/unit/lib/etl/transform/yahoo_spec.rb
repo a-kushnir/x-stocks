@@ -4,9 +4,10 @@ require 'unit/spec_helper'
 require 'etl/transform/yahoo'
 
 describe Etl::Transform::Yahoo do
-  subject(:transformer) { described_class.new(date: date) }
+  subject(:transformer) { described_class.new(date: date, stock_model: stock_model) }
 
   let(:date) { OpenStruct.new(today: Date.new(2020, 1, 11)) }
+  let(:stock_model) { OpenStruct.new(new: mock_model) }
   let(:stock) { mock_model(symbol: 'AAPL') }
 
   describe '#summary' do
@@ -35,7 +36,7 @@ describe Etl::Transform::Yahoo do
       { 'context' => { 'dispatcher' => { 'stores' => stores } } }
     end
 
-    it 'saves data into model' do
+    it 'stores data into model' do
       transformer.summary(stock, json)
 
       calls = {
@@ -47,8 +48,7 @@ describe Etl::Transform::Yahoo do
         yahoo_rec_details: { '2019-10-01' => [3, 3, 5, 4, 1], '2019-11-01' => [6, 3, 1, 0, 0] },
         est_annual_dividend: 4.33,
         yahoo_discount: 0.71,
-        description: 'Apple Inc. designs, manufactures, and markets...',
-        'update_dividends!': []
+        description: 'Apple Inc. designs, manufactures, and markets...'
       }
 
       expect(stock).to eq(calls)

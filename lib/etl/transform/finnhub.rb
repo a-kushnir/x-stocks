@@ -4,9 +4,12 @@ module Etl
   module Transform
     # Transforms data extracted from finnhub.io
     class Finnhub
-      def initialize(exchange_class: XStocks::Exchange, stock_class: Stock)
+      def initialize(exchange_class: XStocks::Exchange,
+                     stock_class: XStocks::Stock,
+                     stock_ar_class: XStocks::AR::Stock)
         @exchange_class = exchange_class
         @stock_class = stock_class
+        @stock_ar_class = stock_ar_class
       end
 
       def company(stock, json)
@@ -16,7 +19,7 @@ module Etl
         stock.logo = json['logo']
         stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
 
-        stock.save
+        stock_class.new.save(stock)
       end
 
       def peers(stock, json)
@@ -24,7 +27,7 @@ module Etl
 
         stock.peers = json
 
-        stock.save
+        stock_class.new.save(stock)
       end
 
       def quote(stock, json)
@@ -36,7 +39,7 @@ module Etl
         stock.day_low_price = json['l']
         stock.day_high_price = json['h']
 
-        stock.update_prices!
+        stock_class.new.save(stock)
       end
 
       def recommendation(stock, json)
@@ -58,7 +61,8 @@ module Etl
 
         stock.finnhub_rec_details = hash
         stock.finnhub_rec = recommendation_mean(hash)
-        stock.save
+
+        stock_class.new.save(stock)
       end
 
       def price_target(stock, json)
@@ -74,7 +78,7 @@ module Etl
             }
           end
 
-        stock.save
+        stock_class.new.save(stock)
       end
 
       def earnings(stock, json)
@@ -87,7 +91,7 @@ module Etl
             end
           end
 
-        stock.save
+        stock_class.new.save(stock)
       end
 
       def metric(stock, json)
@@ -111,7 +115,7 @@ module Etl
           next if stock && stock.symbol != row['symbol']
 
           s = stock
-          s ||= stock_class.find_by(symbol: row['symbol'])
+          s ||= stock_ar_class.find_by(symbol: row['symbol'])
           next unless s
 
           date = Date.parse(row['date'])
@@ -154,7 +158,7 @@ module Etl
         (value.to_f / total).round(2)
       end
 
-      attr_accessor :exchange_class, :stock_class
+      attr_accessor :exchange_class, :stock_class, :stock_ar_class
     end
   end
 end

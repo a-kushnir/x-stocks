@@ -4,10 +4,11 @@ require 'unit/spec_helper'
 require 'etl/transform/finnhub'
 
 describe Etl::Transform::Finnhub do
-  subject(:transformer) { described_class.new(exchange_class: exchange_class, stock_class: stock_class) }
+  subject(:transformer) { described_class.new(exchange_class: exchange_class, stock_class: stock_class, stock_ar_class: stock_ar_class) }
 
   let(:exchange_class) { nil }
-  let(:stock_class) { nil }
+  let(:stock_class) { OpenStruct.new(new: mock_model) }
+  let(:stock_ar_class) { nil }
   let(:stock) { mock_model }
 
   describe '#company' do
@@ -33,8 +34,7 @@ describe Etl::Transform::Finnhub do
       calls = {
         ipo: '1980-01-01',
         logo: 'https://static.finnhub.io/logo/url_to_a_logo.png',
-        exchange: 'NYSE_EXCHANGE',
-        save: []
+        exchange: 'NYSE_EXCHANGE'
       }
 
       expect(stock).to eq(calls)
@@ -53,8 +53,7 @@ describe Etl::Transform::Finnhub do
       transformer.peers(stock, json)
 
       calls = {
-        peers: %w[PEER1 PEER2],
-        save: []
+        peers: %w[PEER1 PEER2]
       }
 
       expect(stock).to eq(calls)
@@ -80,8 +79,7 @@ describe Etl::Transform::Finnhub do
         prev_close_price: 100.55,
         open_price: 100.44,
         day_low_price: 100.33,
-        day_high_price: 100.22,
-        update_prices!: []
+        day_high_price: 100.22
       }
 
       expect(stock).to eq(calls)
@@ -117,8 +115,7 @@ describe Etl::Transform::Finnhub do
           finnhub_rec_details: {
             Date.new(2020, 2, 1) => [13, 17, 13, 5, 0],
             Date.new(2020, 3, 1) => [13, 24, 7, 0, 0]
-          },
-          save: []
+          }
         }
 
         expect(stock).to eq(calls)
@@ -139,8 +136,7 @@ describe Etl::Transform::Finnhub do
         transformer.price_target(stock, json)
 
         calls = {
-          finnhub_price_target: { high: 500, low: 166, mean: 387.03, median: 417.5 },
-          save: []
+          finnhub_price_target: { high: 500, low: 166, mean: 387.03, median: 417.5 }
         }
 
         expect(stock).to eq(calls)
@@ -172,8 +168,7 @@ describe Etl::Transform::Finnhub do
           earnings: [
             { 'actual' => 2.56, 'estimate' => 2.38, 'period' => '2019-03-31' },
             { 'actual' => 4.21, 'estimate' => 4.15, 'period' => '2018-12-31' }
-          ],
-          save: []
+          ]
         }
 
         expect(stock).to eq(calls)

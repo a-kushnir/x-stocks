@@ -87,8 +87,9 @@
         <td class="text-right">
           <%= number_to_percentage(stock.est_annual_dividend_pct, precision: 2) rescue nil %>
         </td>
-        <td class="text-right <%= delta_class(stock.div_change_pct) %>">
-          <%= number_to_percentage(stock.div_change_pct, precision: 1) rescue nil %>
+        <% div_change_pct = XStocks::Stock.new.div_change_pct(stock) %>
+        <td class="text-right <%= delta_class(div_change_pct) %>">
+          <%= number_to_percentage(div_change_pct, precision: 1) rescue nil %>
         </td>
         <td class="text-right">
           <%= number_to_percentage(stock.payout_ratio, precision: 2) if stock.payout_ratio && !stock.payout_ratio.zero? %>

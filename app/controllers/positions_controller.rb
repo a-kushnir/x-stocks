@@ -36,7 +36,7 @@ class PositionsController < ApplicationController
   private
 
   def find_position
-    stock = Stock.find_by(symbol: params[:id])
+    stock = XStocks::AR::Stock.find_by(symbol: params[:id])
     XStocks::AR::Position.find_or_initialize_by(user: current_user, stock: stock) if stock
   end
 
@@ -48,7 +48,7 @@ class PositionsController < ApplicationController
 
   def generate_xlsx
     send_tmp_file('Positions.xlsx') do |file_name|
-      Xlsx::Positions.new.generate(file_name, @positions)
+      XLSX::Positions.new.generate(file_name, @positions)
     end
   end
 

@@ -1,7 +1,7 @@
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <%= link_to 'See All', "/stocks?order=4-#{order}", class: 'float-right', style: 'margin-top: 10px; margin-right: 5px;' %>
   <h3><%= title %></h3>
-  <% stocks = Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
+  <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
   <table class="table table-sm" style="margin-bottom: 7px;">
     <tbody>
     <% stocks.each_with_index do |stock, index| %>

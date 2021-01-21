@@ -30,7 +30,7 @@
   </thead>
   <tbody>
   <% estimates.each do |position, est| %>
-  <% div_suspended = position.stock.div_suspended? %>
+  <% div_suspended = XStocks::Stock.new.div_suspended?(position.stock) %>
   <tr>
     <td class="text-nowrap border-right" data-search="<%= position.stock.symbol %>" data-sort="<%= position.stock.symbol %>">
       <% if position.note.present? %>

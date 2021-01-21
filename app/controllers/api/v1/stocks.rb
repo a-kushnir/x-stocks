@@ -16,7 +16,7 @@ module API
                { code: 401, message: 'Unauthorized' }
              ]
         get do
-          Stock.order(:symbol).pluck([:symbol])
+          XStocks::AR::Stock.order(:symbol).pluck([:symbol])
         end
 
         desc 'Returns company information.',
@@ -31,7 +31,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/company' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           present stock, with: API::Entities::Stock, type: :company
         end
@@ -48,7 +48,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/quote' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           begin
             Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)
@@ -70,7 +70,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol/earnings' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           present stock, with: API::Entities::Stock, type: :earnings
         end
@@ -87,7 +87,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
         end
         get ':symbol/dividends' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           present stock, with: API::Entities::Stock, type: :dividends
         end
@@ -104,7 +104,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report Ex: AAPL'
         end
         get ':symbol/recommendations' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           present stock, with: API::Entities::Stock, type: :recommendations
         end

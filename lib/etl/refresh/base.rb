@@ -12,7 +12,7 @@ module Etl
       end
 
       def each_stock_with_message
-        stocks = Stock.random.all.to_a
+        stocks = XStocks::AR::Stock.random.all.to_a
         stocks.each_with_index do |stock, index|
           yield stock, {
             message: "Processing #{stock.symbol} (#{index + 1} out of #{stocks.size})",

@@ -12,9 +12,13 @@ module XStocks
         relation.update_all('gain_loss_pct = gain_loss / total_cost * 100')
       end
 
+      def div_suspended?(stock)
+        XStocks::Stock.new.div_suspended?(stock)
+      end
+
       def calculate_stock_dividends(stock)
         relation = position_ar_class.where(stock: stock)
-        relation.update_all(est_annual_dividend: stock.div_suspended? ? nil : stock.est_annual_dividend)
+        relation.update_all(est_annual_dividend: div_suspended?(stock) ? nil : stock.est_annual_dividend)
         relation.update_all('est_annual_income = est_annual_dividend * shares')
       end
 
@@ -27,7 +31,7 @@ module XStocks
       end
 
       def calculate_position_dividends(position)
-        position.est_annual_dividend = position.stock.div_suspended? ? nil : position.stock.est_annual_dividend
+        position.est_annual_dividend = div_suspended?(position.stock) ? nil : position.stock.est_annual_dividend
         position.est_annual_income = safe_exec { position.est_annual_dividend * position.shares }
       end
 

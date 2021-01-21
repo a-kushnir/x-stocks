@@ -4,7 +4,7 @@ require 'unit/spec_helper'
 require 'etl/transform/slick_charts'
 
 describe Etl::Transform::SlickCharts do
-  subject(:transformer) { described_class.new(stock_class: stock) }
+  subject(:transformer) { described_class.new(stock_ar_class: stock) }
 
   let(:stock) do
     stock = OpenStruct.new(where: nil, pluck: nil, update_all: nil, not: nil)

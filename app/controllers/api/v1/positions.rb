@@ -45,7 +45,7 @@ module API
           requires :symbol, type: String, desc: 'Stock symbol for the report. Example: AAPL'
         end
         get ':symbol' do
-          stock = Stock.find_by(symbol: params[:symbol])
+          stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           begin
             Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)

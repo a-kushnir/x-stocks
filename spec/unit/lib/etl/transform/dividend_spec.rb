@@ -4,8 +4,9 @@ require 'unit/spec_helper'
 require 'etl/transform/dividend'
 
 describe Etl::Transform::Dividend do
-  subject(:transformer) { described_class.new }
+  subject(:transformer) { described_class.new(stock_class: stock_class) }
 
+  let(:stock_class) { OpenStruct.new(new: mock_model) }
   let(:stock) { mock_model }
 
   describe '#data' do
@@ -22,17 +23,30 @@ describe Etl::Transform::Dividend do
       }
     end
 
-    it 'saves data into model' do
+    it 'stores data into model' do
       transformer.data(stock, json)
 
       calls = {
         dividend_growth_3y: 5.6,
         dividend_growth_years: 17,
-        dividend_rating: nil,
-        save: []
+        dividend_rating: nil
       }
 
       expect(stock).to eq(calls)
+    end
+
+    it 'saves stock' do
+      transformer.data(stock, json)
+
+      calls = {
+        save: [{
+          dividend_growth_3y: 5.6,
+          dividend_growth_years: 17,
+          dividend_rating: nil
+        }]
+      }
+
+      expect(stock_class.new).to eq(calls)
     end
   end
 end

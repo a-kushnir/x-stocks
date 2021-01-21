@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xlsx
+module XLSX
   # Generates Dividend worksheet
   class Dividends < Base
     def generate(file_name, positions)
@@ -52,41 +52,26 @@ module Xlsx
     end
 
     def data_row(div, months, position, est)
-      div_suspended = position.stock.div_suspended?
+      div_suspended = XStocks::Stock.new.div_suspended?(position.stock)
 
       row = [
         position.stock.symbol,
         if div_suspended
           'Suspended'
         else
-          begin
-                                                position.stock.est_annual_dividend_pct / 100
-          rescue StandardError
-            nil
-                                              end
+          safe_exec { position.stock.est_annual_dividend_pct / 100 }
         end,
-        begin
-          (position.stock.dividend_rating * 20).to_i
-        rescue StandardError
-          nil
-        end
+        safe_exec { (position.stock.dividend_rating * 20).to_i }
       ]
 
       div.months.each_with_index do |month, index|
-        amount = begin
-                   est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares
-                 rescue StandardError
-                   nil
-                 end
+        amount = safe_exec { est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares }
         months[index] += amount if amount
         row << amount
       end
 
-      begin
-        row << est.map { |e| e[:amount] }.sum * position.shares
-      rescue StandardError
-        nil
-      end
+      safe_exec { row << est.map { |e| e[:amount] }.sum * position.shares }
+
       row
     end
 
@@ -100,6 +85,12 @@ module Xlsx
 
     def footer_style(styles)
       [Array.new(3, styles[:header_right]), Array.new(13, styles[:header_money])].flatten
+    end
+
+    def safe_exec
+      yield
+    rescue StandardError
+      nil
     end
   end
 end

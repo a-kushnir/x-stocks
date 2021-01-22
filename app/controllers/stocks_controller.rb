@@ -77,7 +77,7 @@ class StocksController < ApplicationController
   end
 
   def stock_params
-    params.require(:stock).permit(:symbol)
+    params.require(:x_stocks_ar_stock).permit(:symbol)
   end
 
   def handle_goto_param?

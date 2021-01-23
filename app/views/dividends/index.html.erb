@@ -44,7 +44,7 @@
       <% offset = position.note.present? ? 32 : 0 %>
       <%= link_to position.stock.symbol, stock_path(position.stock), style: "padding-top: 10px; margin-right: #{offset}px;" %>
     </td>
-    <td class="text-right" data-sort="<%= number_with_precision(position.stock.est_annual_dividend_pct, precision: 2) %>">
+    <td class="text-right" data-sort="<%= div_suspended ? 0 : number_with_precision(position.stock.est_annual_dividend_pct, precision: 2) %>">
       <%= div_suspended ?
             '<strong class="float-right text-danger">Suspended</strong>'.html_safe :
             number_to_percentage(position.stock.est_annual_dividend_pct, precision: 2) %>

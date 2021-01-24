@@ -143,16 +143,14 @@ class StocksController < ApplicationController
   end
 
   def data(stocks)
-    data = []
-
     model = XStocks::Stock.new
 
     positions = XStocks::AR::Position.where(stock: stocks, user: current_user).all
     positions = positions.index_by(&:id)
 
-    stocks.each do |stock|
+    stocks.map do |stock|
       position = positions[stock.id]
-      data << [
+      [
         [stock.symbol, stock.logo, position&.note.presence],
         stock.company_name,
         stock.current_price,
@@ -171,7 +169,5 @@ class StocksController < ApplicationController
         [stock.metascore, model.metascore_details(stock)]
       ]
     end
-
-    data
   end
 end

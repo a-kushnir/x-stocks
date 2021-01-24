@@ -269,6 +269,8 @@ const Formats = {
 
 function unpackData(table, data, formats) {
   const tbody = $(table).find('tbody');
+  if (tbody.children().length > 0) return;
+
   data.forEach(function (row) {
     const tr = $('<tr>');
     row.forEach(function (value, index) {

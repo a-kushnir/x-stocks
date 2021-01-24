@@ -9,40 +9,16 @@ const FormatMethods = {
     return formatter.format(value);
   },
 
-  percent0: function(value) {
+  percentFixed: function(value, fractionDigits) {
     if (value === null) return '';
 
-    return `${Number(value).toFixed(0)}%`;
+    return `${FormatMethods.numberFixed(value, fractionDigits)}%`;
   },
 
-  percent1: function(value) {
+  numberFixed: function(value, fractionDigits) {
     if (value === null) return '';
 
-    return `${Number(value).toFixed(1)}%`;
-  },
-
-  percent2: function(value) {
-    if (value === null) return '';
-
-    return `${Number(value).toFixed(2)}%`;
-  },
-
-  number0: function(value) {
-    if (value === null) return '';
-
-    return Number(value).toFixed(0);
-  },
-
-  number1: function(value) {
-    if (value === null) return '';
-
-    return Number(value).toFixed(1);
-  },
-
-  number2: function(value) {
-    if (value === null) return '';
-
-    return Number(value).toFixed(2);
+    return Number(value).toLocaleString(undefined, {minimumFractionDigits: fractionDigits});
   },
 
   plusSign: function(value) {
@@ -177,40 +153,40 @@ const Formats = {
   percent0: function(value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.percent0(value))
+      .text(FormatMethods.percentFixed(value, 0))
   },
 
   percentDelta0: function(value) {
     return $('<td>')
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
-      .text(FormatMethods.plusSign(value) + FormatMethods.percent0(value))
+      .text(FormatMethods.plusSign(value) + FormatMethods.percentFixed(value, 0))
   },
 
   percent1: function(value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.percent1(value))
+      .text(FormatMethods.percentFixed(value, 1))
   },
 
   percentDelta1: function(value) {
     return $('<td>')
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
-      .text(FormatMethods.plusSign(value) + FormatMethods.percent1(value))
+      .text(FormatMethods.plusSign(value) + FormatMethods.percentFixed(value, 1))
   },
 
   percent2: function(value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.percent2(value))
+      .text(FormatMethods.percentFixed(value, 2))
   },
 
   percentDelta2: function(value) {
     return $('<td>')
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
-      .text(FormatMethods.plusSign(value) + FormatMethods.percent2(value))
+      .text(FormatMethods.plusSign(value) + FormatMethods.percentFixed(value, 2))
   },
 
   recommendation: function(value) {
@@ -222,7 +198,7 @@ const Formats = {
       .append($('<small>')
         .text(FormatMethods.recommendationHint(value))
       )
-      .append(` ${FormatMethods.number2(value)}`);
+      .append(` ${FormatMethods.numberFixed(value, 2)}`);
   },
 
   safety: function(value) {
@@ -235,7 +211,7 @@ const Formats = {
         .text(FormatMethods.safetyHint(value))
       )
       .append(' ')
-      .append(` ${FormatMethods.number1(value)}`);
+      .append(` ${FormatMethods.numberFixed(value, 1)}`);
   },
 
   metaScore: function(value) {
@@ -266,22 +242,28 @@ const Formats = {
       .text($.format.date(value, 'MMM, d yyyy'))
   },
 
+  number: function (value) {
+    return $('<td>')
+      .addClass('text-right')
+      .text(Number(value).toLocaleString())
+  },
+
   number0: function (value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.number0(value))
+      .text(FormatMethods.numberFixed(value, 0))
   },
 
   number1: function (value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.number1(value))
+      .text(FormatMethods.numberFixed(value, 1))
   },
 
   number2: function (value) {
     return $('<td>')
       .addClass('text-right')
-      .text(FormatMethods.number2(value))
+      .text(FormatMethods.numberFixed(value, 2))
   }
 }
 

@@ -9,14 +9,12 @@ class StocksController < ApplicationController
 
     stock_ids = handle_tag_param
 
-    @stocks = XStocks::AR::Stock
-    @stocks = @stocks.where(id: stock_ids) if @tag
-    @stocks = @stocks.all.to_a
-
-    @positions = XStocks::AR::Position.where(stock: @stocks, user: current_user).all
+    stocks = XStocks::AR::Stock
+    stocks = stocks.where(id: stock_ids) if @tag
+    stocks = stocks.all.to_a
 
     @columns = columns
-    @data = data
+    @data = data(stocks)
 
     @page_title = 'Stocks'
     @page_menu_item = :stocks
@@ -144,17 +142,15 @@ class StocksController < ApplicationController
     columns
   end
 
-  def data
+  def data(stocks)
     data = []
 
     model = XStocks::Stock.new
 
-    positions = {}
-    @positions.each do |position|
-      positions[position.stock_id] = position
-    end
+    positions = XStocks::AR::Position.where(stock: stocks, user: current_user).all
+    positions = positions.index_by(&:id)
 
-    @stocks.each do |stock|
+    stocks.each do |stock|
       position = positions[stock.id]
       data << [
         [stock.symbol, stock.logo, position&.note.presence],

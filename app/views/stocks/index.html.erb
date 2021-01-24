@@ -37,27 +37,28 @@
 <% end %>
 
 <script>
-  const data = <%= @data.to_json.html_safe %>;
-  const formats = [
-    Formats.symbol,         // Symbol
-    Formats.text,           // Company
-    Formats.currency,       // Price
-    Formats.currencyDelta,  // Change
-    Formats.percentDelta2,  // Change %
-    Formats.percentDelta0,  // Fair Value
-    Formats.currency,       // Est. Annual Div.
-    Formats.percent2,       // Est. Yield %
-    Formats.percentDelta1,  // Div. Change %
-    Formats.number2,        // P/E Ratio
-    Formats.percent2,       // Payout %
-    Formats.recommendation, // Yahoo Rec.
-    Formats.recommendation, // Finnhub Rec.
-    Formats.safety,         // Div. Safety
-    Formats.date,           // Ex. Date
-    Formats.metaScore,      // Score
-  ]
-
   document.addEventListener("turbolinks:load", () => {
+
+    const data = <%= @data.to_json.html_safe %>;
+    const formats = [
+      Formats.symbol,         // Symbol
+      Formats.text,           // Company
+      Formats.currency,       // Price
+      Formats.currencyDelta,  // Change
+      Formats.percentDelta2,  // Change %
+      Formats.percentDelta0,  // Fair Value
+      Formats.currency,       // Est. Annual Div.
+      Formats.percent2,       // Est. Yield %
+      Formats.percentDelta1,  // Div. Change %
+      Formats.number2,        // P/E Ratio
+      Formats.percent2,       // Payout %
+      Formats.recommendation, // Yahoo Rec.
+      Formats.recommendation, // Finnhub Rec.
+      Formats.safety,         // Div. Safety
+      Formats.date,           // Ex. Date
+      Formats.metaScore,      // Score
+    ]
+
     unpackData('#stocks-table', data, formats);
     dataTable("#stocks-table", {order: [0, 'asc']}, <%= default_columns %>);
   })

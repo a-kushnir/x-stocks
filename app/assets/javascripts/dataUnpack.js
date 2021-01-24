@@ -266,14 +266,26 @@ const Formats = {
       .text($.format.date(value, 'MMM, d yyyy'))
   },
 
-  number: function (value) {
+  number0: function (value) {
     return $('<td>')
       .addClass('text-right')
-      .text(value)
+      .text(FormatMethods.number0(value))
   },
+
+  number1: function (value) {
+    return $('<td>')
+      .addClass('text-right')
+      .text(FormatMethods.number1(value))
+  },
+
+  number2: function (value) {
+    return $('<td>')
+      .addClass('text-right')
+      .text(FormatMethods.number2(value))
+  }
 }
 
-function unpackData(table, data) {
+function unpackData(table, data, formats) {
   const tbody = $(table).find('tbody');
   data.forEach(function (row) {
     const tr = $('<tr>');

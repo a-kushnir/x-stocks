@@ -133,6 +133,7 @@ class StocksController < ApplicationController
     columns << { label: 'Est. Annual Div.', index: index += 1, default: true }
     columns << { label: 'Est. Field %', index: index += 1, default: true }
     columns << { label: 'Div. Change %', index: index += 1 }
+    columns << { label: 'P/E Ratio', index: index += 1 }
     columns << { label: 'Payout %', index: index += 1 }
     columns << { label: 'Yahoo Rec.', index: index += 1, default: true }
     columns << { label: 'Finnhub Rec.', index: index += 1, default: true }
@@ -164,7 +165,8 @@ class StocksController < ApplicationController
         stock.yahoo_discount,
         stock.est_annual_dividend,
         stock.est_annual_dividend_pct,
-        model.div_change_pct(stock).round(1),
+        model.div_change_pct(stock)&.round(1),
+        stock.pe_ratio_ttm&.round(2),
         stock.payout_ratio,
         stock.yahoo_rec,
         stock.finnhub_rec,

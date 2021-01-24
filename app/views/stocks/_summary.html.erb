@@ -15,7 +15,7 @@
   left_table << {label: 'Open', value: number_to_currency(@stock.open_price)} if @stock.open_price
   left_table << {label: "Day's Range", value: "#{number_to_currency(@stock.day_low_price)} - #{number_to_currency(@stock.day_high_price)}"} if @stock.day_low_price && @stock.day_high_price
   left_table << {label: '52 Week Range', value: "#{number_to_currency(@stock.week_52_low)} - #{number_to_currency(@stock.week_52_high)}"} if @stock.week_52_low && @stock.week_52_high
-  left_table << {label: 'PE Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2)} if @stock.week_52_low && @stock.pe_ratio_ttm
+  left_table << {label: 'P/E Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2)} if @stock.week_52_low && @stock.pe_ratio_ttm
   left_table << {label: 'Outstanding Shares', value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true)} if @stock.outstanding_shares
   left_table << {label: 'Market Cap', value: number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true)} if @stock.market_capitalization
   left_table << {label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i), help: 'Fair Value is the appropriate price for the shares of a company, based on its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate. Estimated return represents the projected annual return you might expect after purchasing shares in the company and holding them over the default time horizon of 5 years, based on the EPS growth rate that we have projected.'} if @stock.yahoo_discount

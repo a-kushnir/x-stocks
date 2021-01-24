@@ -44,6 +44,8 @@ module XStocks
             rescue StandardError
               0
             end
+          else
+            0
           end
         end
       end

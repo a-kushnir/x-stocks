@@ -71,3 +71,32 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, tab
 table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before {
   right: 0.6em;
 }
+
+
+.dataTable {
+  td.format-as-symbol {
+    div.symbol-note {
+      padding: 0 6px;
+      margin-bottom: 0;
+    }
+    div.symbol-logo {
+      width: 48px;
+      display: inline-block;
+      margin-right: 10px;
+
+      img {
+        max-height: 24px;
+        max-width: 48px;
+      }
+    }
+
+    a {
+      padding-top: 10px;
+      margin-right: 0;
+
+      &.has-note {
+        margin-right: 32px;
+      }
+    }
+  }
+}

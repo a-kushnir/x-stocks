@@ -37,7 +37,42 @@ module XStocks
         stock.metascore, stock.metascore_details = result(details)
       end
 
+      def metascore_details(stock)
+        return unless stock.metascore_details
+
+        stock.metascore_details.map do |k, v|
+          case k
+          when 'yahoo_rec'
+            "#{v['score']}: Yahoo Rec. #{v['value']} #{rec_human(v['value'])}"
+          when 'finnhub_rec'
+            "#{v['score']}: Finnhub Rec. #{v['value']} #{rec_human(v['value'])}"
+          when 'payout_ratio'
+            "#{v['score']}: Payout #{v['value']}%"
+          when 'div_safety'
+            "#{v['score']}: Div Safety #{v['value']}"
+          else
+            "#{v['score']}: #{k} #{v['value']}"
+          end
+        end.join("\n")
+      end
+
       private
+
+      def rec_human(value)
+        if value.nil?
+          nil
+        elsif value <= 1.5
+          'Str. Buy'
+        elsif value <= 2.5
+          'Buy'
+        elsif value < 3.5
+          'Hold'
+        elsif value < 4.5
+          'Sell'
+        else
+          'Str. Sell'
+        end
+      end
 
       def index?(stock)
         stock.issue_type == 'et'

@@ -11,11 +11,12 @@ class StocksController < ApplicationController
 
     @stocks = XStocks::AR::Stock
     @stocks = @stocks.where(id: stock_ids) if @tag
-    @stocks = @stocks.all
+    @stocks = @stocks.all.to_a
 
     @positions = XStocks::AR::Position.where(stock: @stocks, user: current_user).all
 
     @columns = columns
+    @data = data
 
     @page_title = 'Stocks'
     @page_menu_item = :stocks
@@ -140,5 +141,39 @@ class StocksController < ApplicationController
     columns << { label: 'Score', index: index + 1, default: true }
 
     columns
+  end
+
+  def data
+    data = []
+
+    model = XStocks::Stock.new
+
+    positions = {}
+    @positions.each do |position|
+      positions[position.stock_id] = position
+    end
+
+    @stocks.each do |stock|
+      position = positions[stock.id]
+      data << [
+        [stock.symbol, stock.logo, position&.note.presence],
+        stock.company_name,
+        stock.current_price,
+        stock.price_change,
+        stock.price_change_pct,
+        stock.yahoo_discount,
+        stock.est_annual_dividend,
+        stock.est_annual_dividend_pct,
+        model.div_change_pct(stock).round(1),
+        stock.payout_ratio,
+        stock.yahoo_rec,
+        stock.finnhub_rec,
+        stock.dividend_rating,
+        stock.next_div_ex_date && !stock.next_div_ex_date.past? ? stock.next_div_ex_date : nil,
+        [stock.metascore, model.metascore_details(stock)]
+      ]
+    end
+
+    data
   end
 end

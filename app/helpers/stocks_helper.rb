@@ -114,25 +114,6 @@ module StocksHelper
     amount && amount.to_s == amount.round(2).to_s ? 2 : 4
   end
 
-  def metascore_details(stock)
-    return unless stock.metascore_details
-
-    stock.metascore_details.map do |k, v|
-      case k
-      when 'yahoo_rec'
-        "#{v['score']}: Yahoo Rec. #{v['value']} #{rec_human(v['value'])}"
-      when 'finnhub_rec'
-        "#{v['score']}: Finnhub Rec. #{v['value']} #{rec_human(v['value'])}"
-      when 'payout_ratio'
-        "#{v['score']}: Payout #{v['value']}%"
-      when 'div_safety'
-        "#{v['score']}: Div Safety #{v['value']}"
-      else
-        "#{v['score']}: #{k} #{v['value']}"
-      end
-    end.join("\n")
-  end
-
   def metascore_color(value)
     if value > 80
       'rec-str-buy'

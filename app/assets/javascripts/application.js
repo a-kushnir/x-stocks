@@ -3,6 +3,9 @@
 //= require checkbox-menu
 //= require bootstrap-select
 //= require local-store
+//= require dateFormat
+//= require jquery.dateFormat
+//= require dataUnpack
 
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');

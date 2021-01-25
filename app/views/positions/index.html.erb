@@ -52,7 +52,7 @@
 </div>
 
 <script>
-  document.addEventListener("turbolinks:load", () => {
+  document.addEventListener('turbolinks:load', () => {
     const data = <%= @data.to_json.html_safe %>;
     const formats = [
       // Position
@@ -84,16 +84,16 @@
     ]
 
     unpackData('#positions-table', data, formats);
-    dataTable("#positions-table", {
-      order: [0, "asc"],
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+    dataTable('#positions-table', {
+      order: [0, 'asc'],
+      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']]
     }, <%= default_columns %>);
 
     destroy_all_charts();
     <% values, labels = position_allocation %>
-    allocation_chart("#position_allocation", <%= json values %>, <%= json labels %>);
+    allocation_chart('#position_allocation', <%= json values %>, <%= json labels %>);
     <% values, labels, symbols = sector_allocation %>
-    allocation_chart("#sector_allocation", <%= json values %>, <%= json labels %>, <%= json symbols %>);
+    allocation_chart('#sector_allocation', <%= json values %>, <%= json labels %>, <%= json symbols %>);
   })
 
   function refresh_page() {

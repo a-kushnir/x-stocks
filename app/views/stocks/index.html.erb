@@ -37,7 +37,7 @@
 <% end %>
 
 <script>
-  document.addEventListener("turbolinks:load", () => {
+  document.addEventListener('turbolinks:load', () => {
 
     const data = <%= @data.to_json.html_safe %>;
     const formats = [
@@ -60,9 +60,7 @@
     ]
 
     unpackData('#stocks-table', data, formats);
-    dataTable("#stocks-table", {order: [0, 'asc']}, <%= default_columns %>);
-
-    $('body').resize();
+    dataTable('#stocks-table', {order: [0, 'asc']}, <%= default_columns %>);
   })
 
   function refresh_page() {

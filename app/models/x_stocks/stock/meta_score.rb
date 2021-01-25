@@ -34,6 +34,11 @@ module XStocks
           details[:div_safety] = { value: stock.dividend_rating.to_f, score: value, weight: 4 }
         end
 
+        if stock.yahoo_discount
+          value = convert(-50..+50, 0..100, stock.yahoo_discount)
+          details[:yahoo_discount] = { value: stock.yahoo_discount.to_f, score: value, weight: 1 }
+        end
+
         stock.metascore, stock.metascore_details = result(details)
       end
 
@@ -41,17 +46,20 @@ module XStocks
         return unless stock.metascore_details
 
         stock.metascore_details.map do |k, v|
+          score, value = %w[score value].map { |item| v[item] }
           case k
           when 'yahoo_rec'
-            "#{v['score']}: Yahoo Rec. #{v['value']} #{rec_human(v['value'])}"
+            "#{score}: #{'%.2f' % value.to_f} (#{rec_human(value)}) Yahoo Rec."
           when 'finnhub_rec'
-            "#{v['score']}: Finnhub Rec. #{v['value']} #{rec_human(v['value'])}"
+            "#{score}: #{'%.2f' % value} (#{rec_human(value)}) Finnhub Rec."
           when 'payout_ratio'
-            "#{v['score']}: Payout #{v['value']}%"
+            "#{score}: #{'%.2f' % value}% Payout"
           when 'div_safety'
-            "#{v['score']}: Div Safety #{v['value']}"
+            "#{score}: #{'%.1f' % value} (#{safety_human(value)}) Div. Safety"
+          when 'yahoo_discount'
+            "#{score}: #{'+' if value > 0}#{'%.0f' % value}% Fair Value"
           else
-            "#{v['score']}: #{k} #{v['value']}"
+            "#{score}: #{k} #{value}"
           end
         end.join("\n")
       end
@@ -71,6 +79,22 @@ module XStocks
           'Sell'
         else
           'Str. Sell'
+        end
+      end
+
+      def safety_human(value)
+        if value.nil?
+          nil
+        elsif value >= 4.5
+          'Very Safe'
+        elsif value >= 3.5
+          'Safe'
+        elsif value >= 2.5
+          'Borderline'
+        elsif value >= 1.5
+          'Unsafe'
+        else
+          'Very Unsafe'
         end
       end
 

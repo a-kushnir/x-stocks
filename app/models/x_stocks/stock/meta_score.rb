@@ -46,18 +46,20 @@ module XStocks
         return unless stock.metascore_details
 
         stock.metascore_details.map do |k, v|
-          score, value = %w[score value].map { |item| v[item] }
+          score = v['score']
+          value = v['value']
+
           case k
           when 'yahoo_rec'
-            "#{score}: #{'%.2f' % value.to_f} (#{rec_human(value)}) Yahoo Rec."
+            "#{score}: #{format('%<value>.2f', value: value.to_f)} (#{rec_human(value)}) Yahoo Rec."
           when 'finnhub_rec'
-            "#{score}: #{'%.2f' % value} (#{rec_human(value)}) Finnhub Rec."
+            "#{score}: #{format('%<value>.2f', value: value.to_f)} (#{rec_human(value)}) Finnhub Rec."
           when 'payout_ratio'
-            "#{score}: #{'%.2f' % value}% Payout"
+            "#{score}: #{format('%<value>.2f', value: value.to_f)}% Payout"
           when 'div_safety'
-            "#{score}: #{'%.1f' % value} (#{safety_human(value)}) Div. Safety"
+            "#{score}: #{format('%<value>.1f', value: value.to_f)} (#{safety_human(value)}) Div. Safety"
           when 'yahoo_discount'
-            "#{score}: #{'+' if value > 0}#{'%.0f' % value}% Fair Value"
+            "#{score}: #{'+' if value.positive?}#{format('%<value>.0f', value: value.to_f)}% Fair Value"
           else
             "#{score}: #{k} #{value}"
           end

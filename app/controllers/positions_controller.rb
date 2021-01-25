@@ -144,13 +144,16 @@ class PositionsController < ApplicationController
     market_value = positions.map(&:market_value).compact.sum || 0
     gain_loss = market_value - total_cost
     gain_loss_pct = total_cost.positive? ? gain_loss / total_cost * 100 : 0
+    est_annual_income = positions.map(&:est_annual_income).compact.sum
+    yield_on_value = market_value.positive? ? (est_annual_income / market_value) * 100 : 0
 
     {
       total_cost: total_cost,
       market_value: market_value,
       gain_loss: gain_loss,
       gain_loss_pct: gain_loss_pct,
-      est_annual_income: positions.map(&:est_annual_income).compact.sum
+      est_annual_income: est_annual_income,
+      yield_on_value: yield_on_value,
     }
   end
 end

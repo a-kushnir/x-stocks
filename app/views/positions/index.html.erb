@@ -28,7 +28,9 @@
       <th class="text-right <%= delta_class(@summary[:gain_loss_pct]) %>"><%= delta_number(number_to_percentage(@summary[:gain_loss_pct], precision: 2)) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:est_annual_income]) %></th>
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
-      <th colspan="14"></th>
+      <th colspan="5"></th>
+      <th class="text-right"><%= number_to_percentage(@summary[:yield_on_value], precision: 2) %></th>
+      <th colspan="8"></th>
     </tr>
   </tfoot>
 </table>
@@ -80,7 +82,7 @@
       Formats.percent2,       // Payout %
       Formats.recommendation, // Yahoo Rec.
       Formats.recommendation, // Finnhub Rec.
-      Formats.safety,         // Div. Safety
+      Formats.safetyAlt,      // Div. Safety
       Formats.date,           // Ex. Date
       Formats.metaScore,      // Score
     ]

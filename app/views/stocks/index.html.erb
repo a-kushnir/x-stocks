@@ -8,21 +8,13 @@
   <thead class="thead-light">
     <tr>
       <th class="text-left">Symbol</th>
-      <th>Company</th>
-      <th class="no-search text-right">Price</th>
-      <th class="no-search text-right">Change</th>
-      <th class="no-search text-right">Change&nbsp;%</th>
-      <th class="no-search text-right">Fair Value</th>
-      <th class="no-search text-right">Est. Annual Div.</th>
-      <th class="no-search text-right">Est. Yield %</th>
-      <th class="no-search text-right">Div. Change %</th>
-      <th class="no-search text-right">P/E Ratio</th>
-      <th class="no-search text-right">Payout %</th>
-      <th class="no-search text-right">Yahoo Rec.</th>
-      <th class="no-search text-right">Finnhub Rec.</th>
-      <th class="no-search text-right">Div. Safety</th>
-      <th class="no-search text-right">Ex Date</th>
-      <th class="no-search text-right">Score</th>
+      <% @columns.each do |column| %>
+        <% if column[:label] == 'Company' %>
+          <th><%= column[:label] %></th>
+        <% else %>
+          <th class="no-search text-right text-nowrap"><%= column[:label] %></th>
+        <% end %>
+      <% end %>
     </tr>
   </thead>
 

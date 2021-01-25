@@ -12,7 +12,7 @@
     <tr>
       <th class="text-center border-right">Symbol</th>
       <% @columns.each do |column| %>
-        <th class="no-search text-right text-nowrap"><%= column[:label] %></th>
+        <th class="<%= 'no-search' unless column[:searchable] %> text-<%= column[:align] || 'right' %> text-nowrap"><%= column[:label] %></th>
       <% end %>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
   <tfoot class="thead-light">
     <tr>
       <th class="text-right border-right">Total</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
       <th class="text-right"><%= number_to_currency(@summary[:total_cost]) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:market_value]) %></th>
       <th class="text-right <%= delta_class(@summary[:gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:gain_loss])) %></th>
@@ -55,8 +55,10 @@
   document.addEventListener('turbolinks:load', () => {
     const data = <%= @data.to_json.html_safe %>;
     const formats = [
-      // Position
+      // Stock
       Formats.symbol,         // Symbol
+      Formats.text,           // Company
+      // Position
       Formats.number,         // Shares
       Formats.currency,       // Average Price
       Formats.currency,       // Market Price

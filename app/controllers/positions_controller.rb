@@ -57,32 +57,35 @@ class PositionsController < ApplicationController
   def columns
     columns = []
 
-    # Position
-    columns << { label: 'Shares', index: index = 1, default: true }
-    columns << { label: 'Average Price', index: index += 1, default: true }
-    columns << { label: 'Market Price', index: index += 1, default: true }
-    columns << { label: 'Total Cost', index: index += 1, default: true }
-    columns << { label: 'Market Value', index: index += 1, default: true }
-    columns << { label: 'Gain/Loss', index: index += 1, default: true }
-    columns << { label: 'Gain/Loss %', index: index += 1, default: true }
-    columns << { label: 'Annual Dividend', index: index += 1, default: true }
-    columns << { label: 'Diversity %', index: index += 1, default: true }
     # Stock
-    columns << { label: 'Price', index: index += 1 }
-    columns << { label: 'Change', index: index += 1 }
-    columns << { label: 'Change %', index: index += 1 }
-    columns << { label: 'Fair Value', index: index += 1 }
-    columns << { label: 'Est. Annual Div.', index: index += 1 }
-    columns << { label: 'Est. Field %', index: index += 1 }
-    columns << { label: 'Div. Change %', index: index += 1 }
-    columns << { label: 'P/E Ratio', index: index += 1 }
-    columns << { label: 'Payout %', index: index += 1 }
-    columns << { label: 'Yahoo Rec.', index: index += 1 }
-    columns << { label: 'Finnhub Rec.', index: index += 1 }
-    columns << { label: 'Div. Safety', index: index += 1 }
-    columns << { label: 'Ex Date', index: index += 1 }
-    columns << { label: 'Score', index: index + 1 }
+    columns << { label: 'Company', align: 'left', searchable: true, default: true }
+    # Position
+    columns << { label: 'Shares', default: true }
+    columns << { label: 'Average Price', default: true }
+    columns << { label: 'Market Price', default: true }
+    columns << { label: 'Total Cost', default: true }
+    columns << { label: 'Market Value', default: true }
+    columns << { label: 'Gain/Loss', default: true }
+    columns << { label: 'Gain/Loss %', default: true }
+    columns << { label: 'Annual Dividend', default: true }
+    columns << { label: 'Diversity %', default: true }
+    # Stock
+    columns << { label: 'Price' }
+    columns << { label: 'Change' }
+    columns << { label: 'Change %' }
+    columns << { label: 'Fair Value' }
+    columns << { label: 'Est. Annual Div.' }
+    columns << { label: 'Est. Field %' }
+    columns << { label: 'Div. Change %' }
+    columns << { label: 'P/E Ratio' }
+    columns << { label: 'Payout %' }
+    columns << { label: 'Yahoo Rec.' }
+    columns << { label: 'Finnhub Rec.' }
+    columns << { label: 'Div. Safety' }
+    columns << { label: 'Ex Date' }
+    columns << { label: 'Score', align: 'center' }
 
+    columns.each_with_index { |column, index| column[:index] = index + 1 }
     columns
   end
 
@@ -99,8 +102,10 @@ class PositionsController < ApplicationController
       diversity = position.market_value && market_value ? (position.market_value / market_value * 100).round(2) : nil
 
       [
-        # Position
+        # Stock
         [stock.symbol, stock.logo, position.note.presence],
+        stock.company_name,
+        # Position
         position.shares&.to_f,
         position.average_price&.to_f,
         position.market_price&.to_f,

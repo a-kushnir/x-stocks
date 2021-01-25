@@ -7,13 +7,9 @@
 <table id="stocks-table" class="table table-sm table-hover table-override">
   <thead class="thead-light">
     <tr>
-      <th class="text-left">Symbol</th>
+      <th class="text-left border-right">Symbol</th>
       <% @columns.each do |column| %>
-        <% if column[:label] == 'Company' %>
-          <th><%= column[:label] %></th>
-        <% else %>
-          <th class="no-search text-right text-nowrap"><%= column[:label] %></th>
-        <% end %>
+        <th class="<%= 'no-search' unless column[:searchable] %> text-<%= column[:align] || 'right' %> text-nowrap"><%= column[:label] %></th>
       <% end %>
     </tr>
   </thead>

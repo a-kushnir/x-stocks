@@ -123,22 +123,23 @@ class StocksController < ApplicationController
   def columns
     columns = []
 
-    columns << { label: 'Company', index: index = 1, default: true }
-    columns << { label: 'Price', index: index += 1, default: true }
-    columns << { label: 'Change', index: index += 1, default: true }
-    columns << { label: 'Change %', index: index += 1, default: true }
-    columns << { label: 'Fair Value', index: index += 1, default: true }
-    columns << { label: 'Est. Annual Div.', index: index += 1, default: true }
-    columns << { label: 'Est. Field %', index: index += 1, default: true }
-    columns << { label: 'Div. Change %', index: index += 1 }
-    columns << { label: 'P/E Ratio', index: index += 1 }
-    columns << { label: 'Payout %', index: index += 1 }
-    columns << { label: 'Yahoo Rec.', index: index += 1, default: true }
-    columns << { label: 'Finnhub Rec.', index: index += 1, default: true }
-    columns << { label: 'Div. Safety', index: index += 1, default: true }
-    columns << { label: 'Ex Date', index: index += 1 }
-    columns << { label: 'Score', index: index + 1, default: true }
+    columns << { label: 'Company', align: 'left', searchable: true, default: true }
+    columns << { label: 'Price', default: true }
+    columns << { label: 'Change', default: true }
+    columns << { label: 'Change %', default: true }
+    columns << { label: 'Fair Value', default: true }
+    columns << { label: 'Est. Annual Div.', default: true }
+    columns << { label: 'Est. Field %', default: true }
+    columns << { label: 'Div. Change %' }
+    columns << { label: 'P/E Ratio' }
+    columns << { label: 'Payout %' }
+    columns << { label: 'Yahoo Rec.', default: true }
+    columns << { label: 'Finnhub Rec.', default: true }
+    columns << { label: 'Div. Safety', default: true }
+    columns << { label: 'Ex Date' }
+    columns << { label: 'Score', align: 'center', default: true }
 
+    columns.each_with_index { |column, index| column[:index] = index + 1 }
     columns
   end
 

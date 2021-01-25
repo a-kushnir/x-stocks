@@ -219,7 +219,7 @@ const Formats = {
     if (score === null) return $('<td>');
 
     return $('<td>')
-      .addClass('text-right')
+      .addClass('text-center')
       .attr('data-sort', score)
       .attr('data-toggle', 'tooltip')
       .attr('data-placement', 'left')

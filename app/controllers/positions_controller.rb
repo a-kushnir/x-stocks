@@ -67,7 +67,7 @@ class PositionsController < ApplicationController
     columns << { label: 'Market Value', default: true }
     columns << { label: 'Gain/Loss', default: true }
     columns << { label: 'Gain/Loss %', default: true }
-    columns << { label: 'Annual Dividend', default: true }
+    columns << { label: 'Annual Div.', default: true }
     columns << { label: 'Diversity %', default: true }
     # Stock
     columns << { label: 'Price' }
@@ -75,7 +75,7 @@ class PositionsController < ApplicationController
     columns << { label: 'Change %' }
     columns << { label: 'Fair Value' }
     columns << { label: 'Est. Annual Div.' }
-    columns << { label: 'Est. Field %' }
+    columns << { label: 'Est. Yield %' }
     columns << { label: 'Div. Change %' }
     columns << { label: 'P/E Ratio' }
     columns << { label: 'Payout %' }
@@ -99,6 +99,7 @@ class PositionsController < ApplicationController
 
     positions.map do |position|
       stock = stocks[position.stock_id]
+      div_suspended = model.div_suspended?(stock)
       diversity = position.market_value && market_value ? (position.market_value / market_value * 100).round(2) : nil
 
       [
@@ -120,8 +121,8 @@ class PositionsController < ApplicationController
         stock.price_change&.to_f,
         stock.price_change_pct&.to_f,
         stock.yahoo_discount&.to_f,
-        stock.est_annual_dividend&.to_f,
-        stock.est_annual_dividend_pct&.to_f,
+        value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
+        value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         model.div_change_pct(stock)&.round(1),
         stock.pe_ratio_ttm&.to_f&.round(2),
         stock.payout_ratio&.to_f,
@@ -132,6 +133,10 @@ class PositionsController < ApplicationController
         [stock.metascore, model.metascore_details(stock)]
       ]
     end
+  end
+
+  def value_or_warning(div_suspended, value)
+    div_suspended ? 'Sus.' : value
   end
 
   def summary(positions)

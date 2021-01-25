@@ -134,13 +134,34 @@ const Formats = {
 
   text: function(value) {
     return $('<td>')
+      .addClass('text-nowrap')
       .text(value)
+  },
+
+  warn: function(value) {
+    if (value === null) return $('<td>');
+
+    return $('<td>')
+      .attr('data-sort', 0)
+      .append($('<strong>')
+        .addClass('float-right')
+        .addClass('text-danger')
+        .text(value)
+      );
   },
 
   currency: function (value) {
     return $('<td>')
+      .attr('data-sort', value)
       .addClass('text-right')
       .text(FormatMethods.currency(value))
+  },
+
+  currencyOrWarn: function(value) {
+    if (value === null) return $('<td>');
+    return isNaN(value) ?
+      Formats.warn(value) :
+      Formats.currency(value);
   },
 
   currencyDelta: function(value) {
@@ -178,6 +199,7 @@ const Formats = {
 
   percent2: function(value) {
     return $('<td>')
+      .attr('data-sort', value)
       .addClass('text-right')
       .text(FormatMethods.percentFixed(value, 2))
   },
@@ -187,6 +209,13 @@ const Formats = {
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
       .text(FormatMethods.plusSign(value) + FormatMethods.percentFixed(value, 2))
+  },
+
+  percentOrWarn2: function(value) {
+    if (value === null) return $('<td>');
+    return isNaN(value) ?
+      Formats.warn(value) :
+      Formats.percent2(value);
   },
 
   recommendation: function(value) {
@@ -214,6 +243,21 @@ const Formats = {
       .append(` ${FormatMethods.numberFixed(value, 1)}`);
   },
 
+  safetyAlt: function(value) {
+    if (value === null) return $('<td>');
+
+    const score = FormatMethods.numberFixed(value * 20, 0);
+    return $('<td>')
+      .addClass('text-center')
+      .attr('data-sort', value)
+      .append($('<span>')
+        .addClass('badge')
+        .addClass('badge-dark')
+        .addClass(FormatMethods.metaScoreClass(score))
+        .text(score)
+      )
+  },
+
   metaScore: function(value) {
     const [score, details] = value;
     if (score === null) return $('<td>');
@@ -238,6 +282,7 @@ const Formats = {
     value = new Date(`${value}T00:00:00`);
     return $('<td>')
       .addClass('text-right')
+      .addClass('text-nowrap')
       .attr('data-sort', $.format.date(value, 'yyyy-MM-dd'))
       .text($.format.date(value, 'MMM, d yyyy'))
   },
@@ -269,7 +314,7 @@ const Formats = {
 
 function unpackData(table, data, formats) {
   const tbody = $(table).find('tbody');
-  if (tbody.children().length > 0) return;
+  // if (tbody.children().length > 0) return; TODO!!!
 
   data.forEach(function (row) {
     const tr = $('<tr>');

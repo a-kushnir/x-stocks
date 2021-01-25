@@ -129,7 +129,7 @@ class StocksController < ApplicationController
     columns << { label: 'Change %', default: true }
     columns << { label: 'Fair Value', default: true }
     columns << { label: 'Est. Annual Div.', default: true }
-    columns << { label: 'Est. Field %', default: true }
+    columns << { label: 'Est. Yield %', default: true }
     columns << { label: 'Div. Change %' }
     columns << { label: 'P/E Ratio' }
     columns << { label: 'Payout %' }
@@ -151,6 +151,7 @@ class StocksController < ApplicationController
 
     stocks.map do |stock|
       position = positions[stock.id]
+      div_suspended = model.div_suspended?(stock)
       [
         [stock.symbol, stock.logo, position&.note.presence],
         stock.company_name,
@@ -158,8 +159,8 @@ class StocksController < ApplicationController
         stock.price_change&.to_f,
         stock.price_change_pct&.to_f,
         stock.yahoo_discount&.to_f,
-        stock.est_annual_dividend&.to_f,
-        stock.est_annual_dividend_pct&.to_f,
+        value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
+        value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         model.div_change_pct(stock)&.round(1),
         stock.pe_ratio_ttm&.to_f&.round(2),
         stock.payout_ratio&.to_f,
@@ -170,5 +171,9 @@ class StocksController < ApplicationController
         [stock.metascore, model.metascore_details(stock)]
       ]
     end
+  end
+
+  def value_or_warning(div_suspended, value)
+    div_suspended ? 'Sus.' : value
   end
 end

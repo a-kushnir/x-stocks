@@ -14,21 +14,23 @@ module Etl
       def summary(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')
 
-        stock.outstanding_shares = summary&.dig('StreamDataStore', 'quoteData', stock.symbol, 'sharesOutstanding', 'raw')
-        stock.payout_ratio = to_pct(summary&.dig('QuoteSummaryStore', 'summaryDetail', 'payoutRatio', 'raw'))
-        stock.yahoo_beta = summary&.dig('QuoteSummaryStore', 'defaultKeyStatistics', 'beta', 'raw')
-        stock.yahoo_rec = summary&.dig('QuoteSummaryStore', 'financialData', 'recommendationMean', 'raw')
-        stock.yahoo_rec_details = to_rec(summary&.dig('QuoteSummaryStore', 'recommendationTrend', 'trend'))
-        stock.est_annual_dividend = summary&.dig('QuoteSummaryStore', 'summaryDetail', 'dividendRate', 'raw')
-        stock.yahoo_discount = summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')
-
-        description = summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary')
-        stock.description = description if description.present?
+        set(stock, :outstanding_shares, summary&.dig('StreamDataStore', 'quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
+        set(stock, :payout_ratio, to_pct(summary&.dig('QuoteSummaryStore', 'summaryDetail', 'payoutRatio', 'raw')))
+        set(stock, :yahoo_beta, summary&.dig('QuoteSummaryStore', 'defaultKeyStatistics', 'beta', 'raw'))
+        set(stock, :yahoo_rec, summary&.dig('QuoteSummaryStore', 'financialData', 'recommendationMean', 'raw'))
+        set(stock, :yahoo_rec_details, to_rec(summary&.dig('QuoteSummaryStore', 'recommendationTrend', 'trend')))
+        set(stock, :est_annual_dividend, summary&.dig('QuoteSummaryStore', 'summaryDetail', 'dividendRate', 'raw'))
+        set(stock, :yahoo_discount, summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount'))
+        set(stock, :description, summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary'))
 
         stock_model.new.save(stock)
       end
 
       private
+
+      def set(stock, attribute, value)
+        stock[attribute] = value if value
+      end
 
       def to_pct(value)
         value ? value.to_f * 100 : nil

@@ -29,6 +29,18 @@ module XStocks
           details[:payout_ratio] = { value: stock.payout_ratio.to_f, score: value, weight: 2 }
         end
 
+        if !stock.pe_ratio_ttm.to_f.zero? && !index?(stock)
+          value = if stock.pe_ratio_ttm.negative?
+                    0
+                  elsif stock.payout_ratio < 20
+                    convert(0..20, 100..80, stock.pe_ratio_ttm)
+                  else
+                    convert(20..50, 80..0, stock.pe_ratio_ttm)
+                  end
+
+          details[:pe_ratio_ttm] = { value: stock.pe_ratio_ttm.to_f, score: value, weight: 1 }
+        end
+
         if stock.dividend_rating
           value = convert(0..5, 0..100, stock.dividend_rating)
           details[:div_safety] = { value: stock.dividend_rating.to_f, score: value, weight: 4 }
@@ -56,12 +68,14 @@ module XStocks
             "#{score}: #{format('%<value>.2f', value: value.to_f)} (#{rec_human(value)}) Finnhub Rec."
           when 'payout_ratio'
             "#{score}: #{format('%<value>.2f', value: value.to_f)}% Payout"
+          when 'pe_ratio_ttm'
+            "#{score}: #{format('%<value>.2f', value: value.to_f)} P/E Ratio"
           when 'div_safety'
             "#{score}: #{format('%<value>.1f', value: value.to_f)} (#{safety_human(value)}) Div. Safety"
           when 'yahoo_discount'
             "#{score}: #{'+' if value.positive?}#{format('%<value>.0f', value: value.to_f)}% Fair Value"
           else
-            "#{score}: #{k} #{value}"
+            "#{score}: #{value} #{k}"
           end
         end.join("\n")
       end

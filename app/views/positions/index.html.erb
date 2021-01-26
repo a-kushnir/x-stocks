@@ -30,7 +30,15 @@
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
       <th colspan="5"></th>
       <th class="text-right"><%= number_to_percentage(@summary[:yield_on_value], precision: 2) %></th>
-      <th colspan="8"></th>
+      <th colspan="5"></th>
+      <th class="text-center">
+        <% if @summary[:dividend_rating] %>
+          <span class="badge badge-dark <%= meta_score_class(@summary[:dividend_rating] * 20) %>">
+            <%= (@summary[:dividend_rating] * 20).to_i %>
+          </span>
+        <% end %>
+      </th>
+      <th colspan="2"></th>
     </tr>
   </tfoot>
 </table>

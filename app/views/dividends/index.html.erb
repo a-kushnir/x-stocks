@@ -24,7 +24,13 @@
       <th></th>
       <th class="text-right"><%= number_to_percentage(@summary[:yield_on_value], precision: 2) %></th>
       <th></th>
-      <th></th>
+      <th class="text-center">
+        <% if @summary[:dividend_rating] %>
+          <span class="badge badge-dark <%= meta_score_class(@summary[:dividend_rating] * 20) %>">
+            <%= (@summary[:dividend_rating] * 20).to_i %>
+          </span>
+        <% end %>
+      </th>
       <th class="text-right"><%= number_to_currency(@summary[:total_cost]) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:market_value]) %></th>
       <th class="text-right <%= delta_class(@summary[:gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:gain_loss])) %></th>

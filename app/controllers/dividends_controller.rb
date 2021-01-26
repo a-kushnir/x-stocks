@@ -67,49 +67,56 @@ class DividendsController < ApplicationController
     stocks = XStocks::AR::Stock.where(id: positions.map(&:stock_id)).all
     stocks = stocks.index_by(&:id)
 
-    market_value = positions.sum(&:market_value)
+    total_market_value = positions.sum(&:market_value)
+    month_amounts = months.map { 0 }
+    avg_dividend_rating = XStocks::Position::AvgDividendRating.new
 
     data = []
-    month_amounts = months.map { 0 }
-
     positions.each do |position|
       stock = stocks[position.stock_id]
       div_suspended = model.div_suspended?(stock)
-      diversity = position.market_value && market_value ? (position.market_value / market_value * 100).round(2) : nil
       estimates = dividend.estimate(stock)
+      avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 
-      result =
-        [
-          # Stock
-          [stock.symbol, stock.logo, position.note.presence],
-          stock.company_name,
-          value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-          model.div_change_pct(stock)&.round(1),
-          stock.dividend_rating&.to_f,
-          # Position
-          position.total_cost&.to_f,
-          position.market_value&.to_f,
-          position.gain_loss&.to_f,
-          position.gain_loss_pct&.to_f,
-          diversity&.to_f
-        ]
-      # Dividends
       months.each_with_index do |month, index|
         amount = month_dividends(estimates, div_suspended, position, month)
-        result << amount
         month_amounts[index] += amount if amount
       end
-      result << value_or_warning(div_suspended, annual_dividends(estimates, div_suspended, position))
 
-      data << result
+      data << row(stock, position, months, estimates, div_suspended, total_market_value)
     end
 
     summary = {
       month_amounts: month_amounts,
-      total_amount: month_amounts.sum
+      total_amount: month_amounts.sum,
+      dividend_rating: avg_dividend_rating.value
     }
 
     [data, summary(positions, summary)]
+  end
+
+  def row(stock, position, months, estimates, div_suspended, total_market_value)
+    model = XStocks::Stock.new
+    diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
+
+    result =
+      [
+        # Stock
+        [stock.symbol, stock.logo, position.note.presence],
+        stock.company_name,
+        value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
+        model.div_change_pct(stock)&.round(1),
+        stock.dividend_rating&.to_f,
+        # Position
+        position.total_cost&.to_f,
+        position.market_value&.to_f,
+        position.gain_loss&.to_f,
+        position.gain_loss_pct&.to_f,
+        diversity&.to_f
+      ]
+    # Dividends
+    months.each { |month| result << month_dividends(estimates, div_suspended, position, month) }
+    result << value_or_warning(div_suspended, annual_dividends(estimates, div_suspended, position))
   end
 
   def month_dividends(estimates, div_suspended, position, month)

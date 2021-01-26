@@ -114,7 +114,7 @@ module StocksHelper
     amount && amount.to_s == amount.round(2).to_s ? 2 : 4
   end
 
-  def metascore_color(value)
+  def meta_score_class(value)
     if value > 80
       'rec-str-buy'
     elsif value > 60

@@ -32,7 +32,7 @@ module XStocks
         if !stock.pe_ratio_ttm.to_f.zero? && !index?(stock)
           value = if stock.pe_ratio_ttm.negative?
                     0
-                  elsif stock.payout_ratio < 20
+                  elsif stock.pe_ratio_ttm < 20
                     convert(0..20, 100..80, stock.pe_ratio_ttm)
                   else
                     convert(20..50, 80..0, stock.pe_ratio_ttm)

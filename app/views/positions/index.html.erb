@@ -96,6 +96,7 @@
     ]
 
     unpackData('#positions-table', data, formats);
+    $('[data-toggle="tooltip"]').tooltip();
     dataTable('#positions-table', {
       order: [0, 'asc'],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']]

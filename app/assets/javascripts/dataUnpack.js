@@ -314,7 +314,9 @@ const Formats = {
 
 function unpackData(table, data, formats) {
   const tbody = $(table).find('tbody');
-  if (tbody.children().length > 0) return;
+  if (tbody.children().length > 0) {
+    tbody.html('')
+  }
 
   data.forEach(function (row) {
     const tr = $('<tr>');

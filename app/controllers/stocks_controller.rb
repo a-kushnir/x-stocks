@@ -59,9 +59,7 @@ class StocksController < ApplicationController
 
   def processing
     EventStream.run(response) do |stream|
-      @stock = find_stock
-      return unless @stock
-
+      @stock = XStocks::AR::Stock.find_by!(symbol: params[:id])
       XStocks::Service.new.lock(:company_information, force: true) do |logger|
         logger.text_size_limit = nil
         Etl::Refresh::Company.new.one_stock!(@stock, logger: logger) do |status|

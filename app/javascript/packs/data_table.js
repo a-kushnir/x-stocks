@@ -87,7 +87,7 @@ window.dataTable = function(table, options = {}, defaultColumns = []) {
         options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
         options['columns'] = loadColumns(table, defaultColumns);
         options['autoWidth'] = false;
-        options['dom'] = "<'row'<'col-12'<'float-left'f><'float-right'l>>><'row overflow-y-auto'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
+        options['dom'] = "<'row'<'col-12'<'float-left'f><'float-right'l>>><'row overflow-x-auto'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
 
         table.dataTable(options);
     }

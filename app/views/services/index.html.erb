@@ -26,7 +26,8 @@
         <%= form_tag(run_service_path(service_runner)) do %>
           <% (service_runner.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
-              <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }), class: 'selectpicker', data: {live_search: true}) %>
+              <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }),
+                             class: 'selectpicker', data: {live_search: true, container: 'body'}) %>
             <% end %>
           <% end %>
         <% end %>

@@ -21,6 +21,15 @@
   content: '<';
 }
 
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+.overflow-x-visible {
+  overflow-x: visible !important;
+}
 .overflow-y-auto {
   overflow-y: auto !important;
+}
+.overflow-y-visible {
+  overflow-y: visible !important;
 }

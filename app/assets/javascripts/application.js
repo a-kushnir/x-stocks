@@ -6,6 +6,7 @@
 //= require dateFormat
 //= require jquery.dateFormat
 //= require dataUnpack
+//= require service-runner
 
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');

@@ -2,6 +2,7 @@
 
 # Controller to provide stock information
 class StocksController < ApplicationController
+  include ActionController::Live
   include StocksHelper
 
   def index
@@ -43,15 +44,30 @@ class StocksController < ApplicationController
     @stock = XStocks::AR::Stock.new(stock_params)
 
     if XStocks::Stock.new.save(@stock)
-      XStocks::Service.new.lock(:company_information, force: true) do |logger|
-        logger.text_size_limit = nil
-        Etl::Refresh::Company.new.one_stock!(@stock, logger: logger)
-      end
-
-      redirect_to stock_path(@stock)
+      redirect_to action: 'initializing', id: @stock.symbol
     else
       set_page_title
       render action: 'new'
+    end
+  end
+
+  def initializing
+    set_page_title
+    @stock = find_stock
+    not_found unless @stock
+  end
+
+  def processing
+    EventStream.run(response) do |stream|
+      @stock = find_stock
+      return unless @stock
+
+      XStocks::Service.new.lock(:company_information, force: true) do |logger|
+        logger.text_size_limit = nil
+        Etl::Refresh::Company.new.one_stock!(@stock, logger: logger) do |status|
+          stream.write(status)
+        end
+      end
     end
   end
 
@@ -71,7 +87,7 @@ class StocksController < ApplicationController
   private
 
   def set_page_title
-    @page_title = @stock.new_record? ? 'New Stock' : XStocks::Stock.new.to_s(@stock)
+    @page_title = @stock.nil? || @stock.new_record? ? 'New Stock' : XStocks::Stock.new.to_s(@stock)
     @page_menu_item = :stocks
   end
 

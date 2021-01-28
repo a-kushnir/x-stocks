@@ -124,7 +124,7 @@ class ServiceRunner
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:company_information, force: true) do |logger|
                           logger.text_size_limit = nil
-                          Etl::Refresh::Company.new.one_stock!(stock, logger: logger)
+                          Etl::Refresh::Company.new.one_stock!(stock, logger: logger, &block)
                         end
                         block.call completed_message
                       end),

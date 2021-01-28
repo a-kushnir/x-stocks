@@ -3,11 +3,10 @@ let esRunning = null;
 let esError = false;
 let esComponent = null;
 
-function runService(sender) {
+function runService(form) {
   if (esRunning) return;
   esRunning = true;
 
-  const form = $(sender).parents('tr').find('form');
   const control = $('#service-runner');
 
   setMessage('Connecting to server...');
@@ -18,8 +17,10 @@ function runService(sender) {
   }, 2000);
 
   esError = false;
+  let messageReceived = false;
   esComponent = submitEventSource(form, {
     message: function(data) {
+      messageReceived = true;
       setProgress(data.percent, true);
       setMessage(data.message);
     },
@@ -36,7 +37,7 @@ function runService(sender) {
       setMessage('Retrieving information...');
     },
     closed: function() {
-      serviceStopped();
+      serviceStopped(messageReceived);
     }
   })
 }
@@ -50,10 +51,17 @@ function stopService() {
   }
 }
 
-function serviceStopped() {
+function serviceStopped(messageReceived) {
   if (!esError) {
     const control = $('#service-runner');
     control.delay(3000).slideUp();
+    if (messageReceived) {
+      if (typeof(onServiceRunSuccess) === 'function') { onServiceRunSuccess(); }
+    } else {
+      if (typeof(onServiceRunFailed) === 'function') { onServiceRunFailed(); }
+    }
+  } else {
+    if (typeof(onServiceRunFailed) === 'function') { onServiceRunFailed(); }
   }
   esRunning = false;
   esComponent = null;

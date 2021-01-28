@@ -10,6 +10,10 @@ module StocksHelper
     "/stocks/#{CGI.escape(stock.symbol)}/edit"
   end
 
+  def processing_stock_path(stock)
+    "/stocks/#{CGI.escape(stock.symbol)}/processing"
+  end
+
   def link_to_website(url)
     link_to url.sub(%r{^https?://(www.)?}, ''), url if url
   end

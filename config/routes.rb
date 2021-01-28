@@ -10,7 +10,12 @@ Rails.application.routes.draw do
     post '/registrations/regenerate' => 'registrations#regenerate'
   end
 
-  resources :stocks, except: %i[edit update], id: /.*/
+  resources :stocks, except: %i[edit update], id: /.*/ do
+    member do
+      get :initializing
+      get :processing
+    end
+  end
   resources :positions, only: %i[index update]
   resources :dividends, only: [:index]
 
@@ -21,6 +26,7 @@ Rails.application.routes.draw do
       get :error
     end
     collection do
+      # GET Required by Server-Sent Events feature
       get :run, to: 'services#run_all'
     end
   end

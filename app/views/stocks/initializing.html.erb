@@ -1,0 +1,31 @@
+<div class="row justify-content-center my-form-row">
+  <div class="col-12">
+    <%= bootstrap_form_for @stock, scope: :stock, url: processing_stock_path(@stock), local: true, html: {class: 'my-form mx-auto'} do |form| %>
+      <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, disabled: true %>
+      <div class="my-button-group-centered">
+        <%= link_to 'Back', back_url, class: 'btn btn-outline-dark disabled' %>
+        <%= form.submit 'Save', class: 'btn btn-primary', disabled: true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'shared/service_runner' %>
+<script>
+  function redirectToStock() {
+    const symbol = $('#x_stocks_ar_stock_symbol').val().trim().toUpperCase();
+    window.location.replace(`/stocks/${symbol}`);
+  }
+
+  function onServiceRunSuccess() {
+    redirectToStock();
+  }
+
+  function onServiceRunFailed() {
+    const control = $('#service-runner');
+    control.delay(3000).slideUp();
+    setTimeout(redirectToStock, 3500);
+  }
+
+  runService($('.my-form'));
+</script>

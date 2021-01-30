@@ -2,12 +2,13 @@
 
 # Calculates dividend calendar
 class Dividend
-  def initialize(stock_class: XStocks::Stock)
+  def initialize(stock_class: XStocks::Stock, date: date)
     @stock_class = stock_class
+    @date = date
   end
 
   def date_range
-    from_date = Date.today.at_beginning_of_month
+    from_date = date.today.at_beginning_of_month
     to_date = from_date + 1.year - 1.day
     @date_range ||= [from_date, to_date]
   end
@@ -81,5 +82,5 @@ class Dividend
 
   private
 
-  attr_reader :stock_class
+  attr_reader :stock_class, :date
 end

@@ -14,6 +14,7 @@ module Etl
         response = http_get(url)
         validate!(response, url)
         return unless response.is_a?(Net::HTTPSuccess)
+        return if response.body.size.zero?
 
         File.open(path, 'wb') { |file| file << response.body }
       end

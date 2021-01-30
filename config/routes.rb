@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     post '/registrations/regenerate' => 'registrations#regenerate'
   end
 
+  get 'home/fear_n_greed_image', to: 'home#fear_n_greed_image'
+
   resources :stocks, except: %i[edit update], id: /.*/ do
     member do
       get :initializing

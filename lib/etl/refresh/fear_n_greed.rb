@@ -4,7 +4,7 @@ module Etl
   module Refresh
     # Extracts and transforms data from money.cnn.com
     class FearNGreed
-      def image_url(logger: nil)
+      def image_path(logger: nil)
         stored_image_url = '/img/fear-and-greed.png'
         stored_image_path = "#{Rails.root}/public#{stored_image_url}"
 
@@ -15,13 +15,16 @@ module Etl
             extractor = Etl::Extract::FearNGreed.new(data_loader)
             source_image_url = extractor.image_url
 
-            extractor.download(stored_image_path, source_image_url) unless source_image_url.blank?
+            if source_image_url.present?
+              loader = Etl::Extract::DataLoader.new(logger)
+              loader.download(stored_image_path, source_image_url)
+            end
           end
         rescue Exception => e
           logger&.log_error(e)
         end
 
-        stored_image_url
+        stored_image_path
       end
     end
   end

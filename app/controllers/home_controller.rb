@@ -5,6 +5,10 @@ class HomeController < ApplicationController
   def index
     @page_title = 'Home'
     @page_menu_item = :home
-    @fear_n_greed_image_url = Etl::Refresh::FearNGreed.new.image_url
+  end
+
+  def fear_n_greed_image
+    image_path = Etl::Refresh::FearNGreed.new.image_path
+    send_file(image_path, type: 'image/png', disposition: 'inline')
   end
 end

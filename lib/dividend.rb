@@ -2,7 +2,7 @@
 
 # Calculates dividend calendar
 class Dividend
-  def initialize(stock_class: XStocks::Stock, date: date)
+  def initialize(stock_class: XStocks::Stock, date: Date)
     @stock_class = stock_class
     @date = date
   end

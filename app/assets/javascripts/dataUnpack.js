@@ -277,13 +277,16 @@ const Formats = {
   },
 
   date: function (value) {
-    if (value === null) return $('<td>');
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
 
     value = new Date(`${value}T00:00:00`);
     return $('<td>')
       .addClass('text-right')
       .addClass('text-nowrap')
-      .attr('data-sort', $.format.date(value, 'yyyy-MM-dd'))
+      .attr('data-sort', $.format.date(value, 'yyyyMMdd'))
       .text($.format.date(value, 'MMM, d yyyy'))
   },
 

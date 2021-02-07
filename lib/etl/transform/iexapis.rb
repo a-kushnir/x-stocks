@@ -25,7 +25,6 @@ module Etl
         stock.ceo = json['CEO']
         stock.security_name = json['securityName']
         stock.issue_type = json['issueType']
-        stock.sector = json['sector']
         stock.primary_sic_code = json['primarySicCode']
         stock.employees = json['employees']
         stock.address = json['address']

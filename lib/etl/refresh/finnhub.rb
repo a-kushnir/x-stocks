@@ -109,6 +109,22 @@ module Etl
         weekly_all_stocks! if weekly_all_stocks?
       end
 
+      def company_all_stocks!(force: false)
+        XStocks::Service.new.lock(:company_finnhub, force: force) do |logger|
+          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+          data_loader = Etl::Extract::DataLoader.new(logger)
+          each_stock_with_message do |stock, message|
+            yield message if block_given?
+            token_store.try_token do |token|
+              json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
+              Etl::Transform::Finnhub.new.company(stock, json) if json
+            end
+            sleep(PAUSE_SHORT)
+          end
+          yield completed_message if block_given?
+        end
+      end
+
       private
 
       def earnings_calendar(token_store, logger: nil, stock: nil)

@@ -137,6 +137,11 @@ class ServiceRunner
     ServiceRunner.new('Update upcoming earnings [Finnhub]', 'upcoming_earnings', { service_code: 'weekly_finnhub', schedule_code: 'Weekly' },
                       lambda do |_args, &block|
                         Etl::Refresh::Finnhub.new.weekly_all_stocks!(force: true, &block)
-                      end)
+                      end),
+
+    ServiceRunner.new('Update company information [Finnhub]', 'company_finnhub', { service_code: 'company_finnhub' },
+                    lambda do |_args, &block|
+                      Etl::Refresh::Finnhub.new.company_all_stocks!(force: true, &block)
+                    end)
   ].freeze
 end

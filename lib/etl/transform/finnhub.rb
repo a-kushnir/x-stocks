@@ -18,6 +18,7 @@ module Etl
         stock.ipo = json['ipo']
         stock.logo = json['logo']
         stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
+        stock.sector = json['finnhubIndustry']
 
         stock_class.new.save(stock)
       end

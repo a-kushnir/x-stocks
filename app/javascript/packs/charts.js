@@ -364,6 +364,14 @@ window.recommendation_mean_chart = function(canvas, value) {
     });
 }
 
+function copyString(str) {
+    return `${str}`;
+}
+function truncateLabel(str, n) {
+    const s = copyString(str);
+    return (s.length > n + 3) ? `${s.substr(0, n-1)}…` : s;
+}
+
 window.allocation_chart = function(canvas, values, labels, symbols = null) {
     canvas = $(canvas);
     if (canvas.length === 0) return;
@@ -378,7 +386,7 @@ window.allocation_chart = function(canvas, values, labels, symbols = null) {
             symbols: symbols,
             backgroundColor: chart_office_colors,
         }],
-        labels: labels
+        labels: labels.map(label => truncateLabel(label, 12))
     };
 
     new Chart(canvas, {
@@ -394,7 +402,7 @@ window.allocation_chart = function(canvas, values, labels, symbols = null) {
             tooltips: {
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.labels[tooltipItem.index];
+                        const label = labels[tooltipItem.index];
                         const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 
                         let share = Number(value / total * 100);

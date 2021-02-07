@@ -24,7 +24,8 @@ describe Etl::Transform::Finnhub do
       {
         'ipo' => '1980-01-01',
         'logo' => 'https://static.finnhub.io/logo/url_to_a_logo.png',
-        'exchange' => 'NYSE'
+        'exchange' => 'NYSE',
+        'finnhubIndustry' => 'Technology'
       }
     end
 
@@ -34,7 +35,8 @@ describe Etl::Transform::Finnhub do
       calls = {
         ipo: '1980-01-01',
         logo: 'https://static.finnhub.io/logo/url_to_a_logo.png',
-        exchange: 'NYSE_EXCHANGE'
+        exchange: 'NYSE_EXCHANGE',
+        sector: 'Technology'
       }
 
       expect(stock).to eq(calls)

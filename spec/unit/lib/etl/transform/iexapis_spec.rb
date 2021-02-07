@@ -55,7 +55,6 @@ describe Etl::Transform::Iexapis do
         ceo: 'Timothy Donald Cook',
         security_name: 'Apple Inc.',
         issue_type: 'cs',
-        sector: 'Electronic Technology',
         primary_sic_code: 3663,
         employees: 132_000,
         address: 'One Apple Park Way',

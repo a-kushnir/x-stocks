@@ -91,20 +91,21 @@ module StocksHelper
   end
 
   def position_allocation
-    positions = @positions.reject { |pos| (pos.market_value || 0).zero? }
+    positions = @positions.reject { |position| (position.market_value || 0).zero? }
     positions = positions.sort_by(&:market_value).reverse
-    values = positions.map { |p| p.market_value.to_f }
-    labels = positions.map { |p| p.stock.symbol }
+    values = positions.map { |position| position.market_value.to_f }
+    labels = positions.map { |position| @stocks_by_id[position.stock_id].symbol }
     [values, labels]
   end
 
   def sector_allocation
     sectors = {}
     positions = @positions.reject { |pos| (pos.market_value || 0).zero? }
-    positions.each do |pos|
-      sector = sectors[pos.stock.sector] ||= { sector: pos.stock.sector, value: 0, symbols: [] }
-      sector[:value] += pos.market_value
-      sector[:symbols] << pos.stock.symbol
+    positions.each do |position|
+      stock = @stocks_by_id[position.stock_id]
+      sector = sectors[stock.sector] ||= { sector: stock.sector, value: 0, symbols: [] }
+      sector[:value] += position.market_value
+      sector[:symbols] << stock.symbol
     end
     sectors = sectors.values
     sectors = sectors.sort_by { |sector| -sector[:value] }

@@ -92,14 +92,14 @@ class PositionsController < ApplicationController
     model = XStocks::Stock.new
 
     stocks = XStocks::AR::Stock.where(id: positions.map(&:stock_id)).all
-    stocks = stocks.index_by(&:id)
+    @stocks_by_id = stocks.index_by(&:id)
 
     total_market_value = positions.sum(&:market_value)
     avg_dividend_rating = XStocks::Position::AvgDividendRating.new
 
     data = []
     positions.each do |position|
-      stock = stocks[position.stock_id]
+      stock = @stocks_by_id[position.stock_id]
       div_suspended = model.div_suspended?(stock)
       avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 

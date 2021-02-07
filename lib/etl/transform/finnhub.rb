@@ -13,12 +13,14 @@ module Etl
       end
 
       def company(stock, json)
-        return if json.blank?
+        stock.sector ||= 'N/A'
 
-        stock.ipo = json['ipo']
-        stock.logo = json['logo']
-        stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
-        stock.sector = json['finnhubIndustry'].presence || 'N/A'
+        if json.present?
+          stock.ipo = json['ipo']
+          stock.logo = json['logo']
+          stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
+          stock.sector = json['finnhubIndustry'].presence || 'N/A'
+        end
 
         stock_class.new.save(stock)
       end

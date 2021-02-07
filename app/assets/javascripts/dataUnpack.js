@@ -121,7 +121,6 @@ const Formats = {
         .addClass('text-center')
         .append($('<img>')
           .attr('src', logo ? logo : '/img/no-logo.png')
-          .attr('alt', `${symbol} Logo`)
         )
       )
 

@@ -2,7 +2,7 @@
 <div class="row justify-content-center my-form-row">
   <div class="col-6">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'my-form mx-auto'}) do |f| %>
+<%= form_for(resource, as: resource_name, url: user_session_path(back_url: params[:back_url]), html: {class: 'my-form mx-auto'}) do |f| %>
 
   <div class="form-group">
     <%= f.label :email, class: 'col-form-label' %>

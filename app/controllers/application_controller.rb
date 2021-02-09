@@ -20,6 +20,17 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authenticate_user!(*args)
+    if user_signed_in? || self.is_a?(DeviseController)
+      super(*args)
+    else
+      raise
+    end
+  rescue
+    redirect_to new_user_session_path(request.get? ? { back_url: request.path } : {})
+    false
+  end
+
   def internal_error(error = nil, layout: 'application')
     @page_title = '500 Internal Server Error'
     @error = error

@@ -44,7 +44,7 @@ window.dividends_month_chart = function(canvas, data) {
                     ticks: {
                         beginAtZero: true,
                         callback: function (value, index, values) {
-                            return '$' + value;
+                            return formatCurrency(value);
                         }
                     },
                 }]
@@ -411,9 +411,9 @@ window.allocation_chart = function(canvas, values, labels, symbols = null) {
                         else if (share >= 0.1) share = share.toFixed(2);
 
                         const symbols = data.datasets[tooltipItem.datasetIndex].symbols;
-                        const symbol = symbols !== null ? ' (' + symbols[tooltipItem.index] + ')' : '';
+                        const symbol = symbols !== null ? ` (${symbols[tooltipItem.index]})` : '';
 
-                        return label + symbol + ': $' + Number(value).toFixed(2) + ' (' + share + '%)';
+                        return `${label}${symbol}: ${formatCurrency(value)} (${share}%)`;
                     }
                 }
             },

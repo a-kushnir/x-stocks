@@ -8,6 +8,8 @@ module XStocks
         stock.price_change = safe_exec { stock.current_price - stock.prev_close_price }
         stock.price_change_pct = safe_exec { stock.price_change / stock.prev_close_price * 100 }
         stock.market_capitalization = safe_exec { stock.outstanding_shares * stock.current_price }
+        stock.pe_ratio_ttm = safe_exec { stock.current_price / stock.eps_ttm }
+
         calculate_stock_dividends(stock)
       end
 

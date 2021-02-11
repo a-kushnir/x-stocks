@@ -109,7 +109,6 @@ module Etl
         stock.eps_growth_3y = data['epsGrowth3Y']
         stock.eps_growth_5y = data['epsGrowth5Y']
         stock.eps_ttm = data['epsInclExtraItemsTTM']
-        stock.pe_ratio_ttm = data['peInclExtraTTM']
       end
 
       def earnings_calendar(json, stock = nil)

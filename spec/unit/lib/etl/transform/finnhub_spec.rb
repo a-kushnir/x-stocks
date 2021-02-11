@@ -191,8 +191,7 @@ describe Etl::Transform::Finnhub do
             'dividendGrowthRate5Y' => 9.83445,
             'epsGrowth3Y' => 12.47869,
             'epsGrowth5Y' => 7.28691,
-            'epsInclExtraItemsTTM' => 3.26679,
-            'peInclExtraTTM' => 39.48218
+            'epsInclExtraItemsTTM' => 3.26679
           }
         }
       end
@@ -209,8 +208,7 @@ describe Etl::Transform::Finnhub do
           dividend_growth_5y: 9.83445,
           eps_growth_3y: 12.47869,
           eps_growth_5y: 7.28691,
-          eps_ttm: 3.26679,
-          pe_ratio_ttm: 39.48218
+          eps_ttm: 3.26679
         }
 
         expect(stock).to eq(calls)

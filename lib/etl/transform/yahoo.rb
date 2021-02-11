@@ -38,7 +38,7 @@ module Etl
           low: financial_data.dig('targetLowPrice', 'raw'),
           mean: financial_data.dig('targetMeanPrice', 'raw'),
           median: financial_data.dig('targetMedianPrice', 'raw')
-        }
+        }.compact
       end
 
       def set(stock, attribute, value)

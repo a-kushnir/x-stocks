@@ -21,7 +21,7 @@ module XStocks
       'ps' => 'Preferred Stock',
       'ut' => 'Unit',
       'temp' => 'Temporary'
-    }
+    }.freeze
 
     def destroyable?(stock)
       !stock.positions.exists?
@@ -44,7 +44,7 @@ module XStocks
     end
 
     def issue_type(stock)
-      ISSUE_TYPES.fetch(stock.issue_type) { 'Unknown' }
+      ISSUE_TYPES.fetch(stock.issue_type, 'Unknown')
     end
 
     def to_s(stock)

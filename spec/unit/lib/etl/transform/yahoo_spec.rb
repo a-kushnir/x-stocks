@@ -19,7 +19,13 @@ describe Etl::Transform::Yahoo do
         'QuoteSummaryStore' => {
           'summaryDetail' => { 'payoutRatio' => { 'raw' => 0.72 }, 'dividendRate' => { 'raw' => 4.33 } },
           'defaultKeyStatistics' => { 'beta' => { 'raw' => 0.34 } },
-          'financialData' => { 'recommendationMean' => { 'raw' => 1.77 } },
+          'financialData' => {
+            'recommendationMean' => { 'raw' => 1.77 },
+            'targetHighPrice' => { 'raw' => 175 },
+            'targetLowPrice' => { 'raw' => 83 },
+            'targetMeanPrice' => { 'raw' => 151.75 },
+            'targetMedianPrice' => { 'raw' => 157 }
+          },
           'recommendationTrend' => { 'trend' => [
             { 'strongBuy' => 6, 'buy' => 3, 'hold' => 1, 'sell' => 0, 'strongSell' => 0 },
             { 'strongBuy' => 3, 'buy' => 3, 'hold' => 5, 'sell' => 4, 'strongSell' => 1 }
@@ -48,6 +54,7 @@ describe Etl::Transform::Yahoo do
         yahoo_rec_details: { '2019-10-01' => [3, 3, 5, 4, 1], '2019-11-01' => [6, 3, 1, 0, 0] },
         est_annual_dividend: 4.33,
         yahoo_discount: 0.71,
+        yahoo_price_target: { high: 175, low: 83, mean: 151.75, median: 157 },
         description: 'Apple Inc. designs, manufactures, and markets...'
       }
 

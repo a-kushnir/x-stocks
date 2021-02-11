@@ -140,8 +140,8 @@ class ServiceRunner
                       end),
 
     ServiceRunner.new('Update company information [Finnhub]', 'company_finnhub', { service_code: 'company_finnhub' },
-                    lambda do |_args, &block|
-                      Etl::Refresh::Finnhub.new.company_all_stocks!(force: true, &block)
-                    end)
+                      lambda do |_args, &block|
+                        Etl::Refresh::Finnhub.new.company_all_stocks!(force: true, &block)
+                      end)
   ].freeze
 end

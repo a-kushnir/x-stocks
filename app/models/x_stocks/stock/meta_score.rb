@@ -17,7 +17,7 @@ module XStocks
           details[:finnhub_rec] = { value: stock.finnhub_rec.to_f, score: value, weight: 2 }
         end
 
-        if !stock.payout_ratio.to_f.zero? && !index?(stock)
+        if !stock.payout_ratio.to_f.zero? && common_stock?(stock)
           value = if stock.payout_ratio.negative?
                     convert(-50..0, 0..30, stock.payout_ratio)
                   elsif stock.payout_ratio < 75
@@ -29,7 +29,7 @@ module XStocks
           details[:payout_ratio] = { value: stock.payout_ratio.to_f, score: value, weight: 2 }
         end
 
-        if !stock.pe_ratio_ttm.to_f.zero? && !index?(stock)
+        if !stock.pe_ratio_ttm.to_f.zero? && common_stock?(stock)
           value = if stock.pe_ratio_ttm.negative?
                     0
                   elsif stock.pe_ratio_ttm < 20
@@ -112,10 +112,6 @@ module XStocks
         else
           'Very Unsafe'
         end
-      end
-
-      def index?(stock)
-        stock.issue_type == 'et'
       end
 
       def lerp(min, max, value)

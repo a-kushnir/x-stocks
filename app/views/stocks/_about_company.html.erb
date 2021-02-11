@@ -5,7 +5,7 @@
   </p>
 <% end %>
 
-<% if @stock.description.present? %>
+<% if @stock.employees.present? %>
   <p>
     <strong>Employees:</strong>
     <%= number_with_delimiter(@stock.employees, delimiter: ',') %>
@@ -18,3 +18,8 @@
     <%= link_to_website @stock.website %>
   </p>
 <% end %>
+
+<p>
+  <strong>Issue Type:</strong>
+  <%= XStocks::Stock.new.issue_type(@stock) %>
+</p>

@@ -7,6 +7,22 @@ module XStocks
     include XStocks::Stock::MetaScore
     include XStocks::Stock::Dividends
 
+    ISSUE_TYPES = {
+      'ad' => 'ADR (American Depositary Receipt)',
+      're' => 'REIT (Real Estate Investment Trust)',
+      'ce' => 'CEF (Closed-End Fund)',
+      'si' => 'Secondary Issue',
+      'lp' => 'Limited Partnerships',
+      'cs' => 'Common Stock',
+      'et' => 'ETF (Exchange Traded Fund)',
+      'wt' => 'Warrant',
+      'oef' => 'OEF (Open-End Fund)',
+      'cef' => 'CEF (Closed-End Fund)',
+      'ps' => 'Preferred Stock',
+      'ut' => 'Unit',
+      'temp' => 'Temporary'
+    }
+
     def destroyable?(stock)
       !stock.positions.exists?
     end
@@ -21,6 +37,14 @@ module XStocks
       position = XStocks::Position.new
       position.calculate_stock_prices(stock)
       position.calculate_stock_dividends(stock)
+    end
+
+    def common_stock?(stock)
+      %w[cs].include?(stock.issue_type)
+    end
+
+    def issue_type(stock)
+      ISSUE_TYPES.fetch(stock.issue_type) { 'Unknown' }
     end
 
     def to_s(stock)

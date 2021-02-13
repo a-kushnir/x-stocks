@@ -74,12 +74,6 @@ module Etl
         end
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(data_loader, token).earnings(stock)
-          Etl::Transform::Finnhub.new.earnings(stock, json) if json
-          sleep(PAUSE_LONG) unless immediate
-        end
-
-        token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).metric(stock)
           Etl::Transform::Finnhub.new.metric(stock, json) if json
         end

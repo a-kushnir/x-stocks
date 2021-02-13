@@ -5,7 +5,7 @@ module API
     # Stock Entity Definitions
     class Stock < API::Entities::Base
       expose :symbol
-      expose(:exchange) { |model, _| model.exchange.code }
+      expose(:exchange) { |model, _| model.exchange&.code }
 
       with_options(if: { type: :company }) do
         expose :company_name

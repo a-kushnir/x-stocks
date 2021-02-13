@@ -78,6 +78,7 @@ table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:
     div.symbol-note {
       padding: 0 6px;
       margin-bottom: 0;
+      height: 24px;
     }
     div.symbol-logo {
       width: 48px;
@@ -85,6 +86,7 @@ table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:
       margin-right: 10px;
 
       img {
+        vertical-align: text-top;
         max-height: 20px;
         max-width: 48px;
       }

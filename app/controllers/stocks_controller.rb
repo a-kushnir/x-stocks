@@ -41,13 +41,35 @@ class StocksController < ApplicationController
   end
 
   def create
-    @stock = XStocks::AR::Stock.new(stock_params)
+    @stock = XStocks::AR::Stock.new(create_stock_params)
 
     if XStocks::Stock.new.save(@stock)
       redirect_to action: 'initializing', id: @stock.symbol
     else
       set_page_title
       render action: 'new'
+    end
+  end
+
+  def edit
+    @stock = find_stock
+    not_found && return unless @stock
+
+    @exchanges = XStocks::AR::Exchange.all
+    set_page_title
+  end
+
+  def update
+    @stock = find_stock
+    not_found && return unless @stock
+
+    @stock.attributes = update_stock_params
+    if XStocks::Stock.new.save(@stock)
+      redirect_to action: 'show', id: @stock.symbol
+    else
+      @exchanges = XStocks::AR::Exchange.all
+      set_page_title
+      render action: 'edit'
     end
   end
 
@@ -93,8 +115,12 @@ class StocksController < ApplicationController
     XStocks::AR::Stock.find_by(symbol: params[:id])
   end
 
-  def stock_params
+  def create_stock_params
     params.require(:x_stocks_ar_stock).permit(:symbol)
+  end
+
+  def update_stock_params
+    params.require(:x_stocks_ar_stock).permit(:exchange_id)
   end
 
   def handle_goto_param?

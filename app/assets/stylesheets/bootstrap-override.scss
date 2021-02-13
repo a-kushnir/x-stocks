@@ -3,6 +3,17 @@
   height: auto;
 }
 
+.bootstrap-select {
+  button.dropdown-toggle {
+    border-color: #ced4da;
+  }
+}
+.form-control-select {
+  .bootstrap-select {
+    width: 100% !important;
+  }
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-image: none;

@@ -70,14 +70,17 @@ module Etl
           result << earnings if earnings[:eps_actual] && earnings[:quarter] && earnings[:year]
         end
 
-        quarter = earnings_chart['currentQuarterEstimateDate'].match(QUARTER_REGEX).captures[0]
-        earnings = {
-          eps_estimate: earnings_chart.dig('currentQuarterEstimate', 'raw'),
-          eps_actual: nil,
-          quarter: quarter.to_i,
-          year: earnings_chart['currentQuarterEstimateYear']
-        }
-        result << earnings if earnings[:eps_estimate] && earnings[:quarter] && earnings[:year]
+        est_date = earnings_chart['currentQuarterEstimateDate']
+        if est_date
+          quarter = est_date.match(QUARTER_REGEX).captures[0]
+          earnings = {
+            eps_estimate: earnings_chart.dig('currentQuarterEstimate', 'raw'),
+            eps_actual: nil,
+            quarter: quarter.to_i,
+            year: earnings_chart['currentQuarterEstimateYear']
+          }
+          result << earnings if earnings[:eps_estimate] && earnings[:quarter] && earnings[:year]
+        end
 
         result.presence
       end

@@ -15,7 +15,8 @@ module StocksHelper
   end
 
   def link_to_website(url)
-    link_to url.sub(%r{^https?://(www.)?}, ''), url if url
+    label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '')
+    link_to label, url if url
   end
 
   def stock_peers
@@ -139,5 +140,11 @@ module StocksHelper
       'amc' => 'After Market Close',
       'dmh' => 'During Market Hours'
     }[value] || 'Unknown'
+  end
+
+  def country_flag_img_tag(country, options)
+    size = options.delete(:size) || 64
+    link = CountryFlag.new.link(country, size: size)
+    tag(:img, { src: link }.merge(options)) if link
   end
 end

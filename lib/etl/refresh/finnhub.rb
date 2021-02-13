@@ -85,24 +85,6 @@ module Etl
         end
       end
 
-      ##########
-      # Weekly #
-
-      def weekly_all_stocks?
-        XStocks::Service.new[:weekly_finnhub].runnable?(1.day)
-      end
-
-      def weekly_all_stocks!(force: false)
-        XStocks::Service.new.lock(:weekly_finnhub, force: force) do |logger|
-          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          earnings_calendar(token_store, logger: logger)
-        end
-      end
-
-      def weekly_all_stocks
-        weekly_all_stocks! if weekly_all_stocks?
-      end
-
       def company_all_stocks!(force: false)
         XStocks::Service.new.lock(:company_finnhub, force: force) do |logger|
           token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
@@ -120,25 +102,6 @@ module Etl
       end
 
       private
-
-      def earnings_calendar(token_store, logger: nil, stock: nil)
-        date = Date.today
-        period = 1.week
-        data_loader = Etl::Extract::DataLoader.new(logger)
-
-        12.times do |index|
-          sleep(PAUSE_LONG) if index != 0
-
-          token_store.try_token do |token|
-            safe_exec do
-              json = Etl::Extract::Finnhub.new(data_loader, token).earnings_calendar(date, date + period)
-              Etl::Transform::Finnhub.new.earnings_calendar(json, stock)
-            end
-          end
-
-          date += period
-        end
-      end
 
       def safe_exec
         yield

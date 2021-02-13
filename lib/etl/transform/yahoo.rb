@@ -5,6 +5,8 @@ module Etl
     # Transforms data extracted from finance.yahoo.com
     class Yahoo
       RECOMMENDATIONS = %w[strongBuy buy hold sell strongSell].freeze
+      QUARTER_WITH_YEAR_REGEX = /(\d)Q(\d{4})/.freeze
+      QUARTER_REGEX = /(\d)/.freeze
 
       def initialize(date: Date, stock_model: XStocks::Stock)
         @date = date
@@ -13,17 +15,20 @@ module Etl
 
       def summary(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')
-        financial_data = summary&.dig('QuoteSummaryStore', 'financialData')
+        stream_data_store = summary&.dig('StreamDataStore')
+        quote_summary_store = summary&.dig('QuoteSummaryStore')
+        research_page_store = summary&.dig('ResearchPageStore')
 
-        set(stock, :outstanding_shares, summary&.dig('StreamDataStore', 'quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
-        set(stock, :payout_ratio, to_pct(summary&.dig('QuoteSummaryStore', 'summaryDetail', 'payoutRatio', 'raw')))
-        set(stock, :yahoo_beta, summary&.dig('QuoteSummaryStore', 'defaultKeyStatistics', 'beta', 'raw'))
-        set(stock, :yahoo_rec, financial_data&.dig('recommendationMean', 'raw'))
-        set(stock, :yahoo_rec_details, to_rec(summary&.dig('QuoteSummaryStore', 'recommendationTrend', 'trend')))
-        set(stock, :est_annual_dividend, summary&.dig('QuoteSummaryStore', 'summaryDetail', 'dividendRate', 'raw'))
-        set(stock, :yahoo_discount, summary&.dig('ResearchPageStore', 'technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount'))
-        set(stock, :description, summary&.dig('QuoteSummaryStore', 'summaryProfile', 'longBusinessSummary'))
-        set(stock, :yahoo_price_target, price_target(financial_data))
+        set(stock, :outstanding_shares, stream_data_store&.dig('quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
+        set(stock, :payout_ratio, to_pct(quote_summary_store&.dig('summaryDetail', 'payoutRatio', 'raw')))
+        set(stock, :yahoo_beta, quote_summary_store&.dig('defaultKeyStatistics', 'beta', 'raw'))
+        set(stock, :yahoo_rec, quote_summary_store&.dig('financialData', 'recommendationMean', 'raw'))
+        set(stock, :yahoo_rec_details, to_rec(quote_summary_store&.dig('recommendationTrend', 'trend')))
+        set(stock, :est_annual_dividend, quote_summary_store&.dig('summaryDetail', 'dividendRate', 'raw'))
+        set(stock, :yahoo_discount, research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount'))
+        set(stock, :description, quote_summary_store&.dig('summaryProfile', 'longBusinessSummary'))
+        set(stock, :yahoo_price_target, price_target(quote_summary_store&.dig('financialData')))
+        set(stock, :earnings, earnings(quote_summary_store&.dig('earnings', 'earningsChart')))
 
         stock_model.new.save(stock)
       end
@@ -39,6 +44,42 @@ module Etl
           mean: financial_data.dig('targetMeanPrice', 'raw'),
           median: financial_data.dig('targetMedianPrice', 'raw')
         }.compact
+      end
+
+      def earnings(earnings_chart)
+        return unless earnings_chart
+
+        quarterly = earnings_chart['quarterly']
+        return unless quarterly
+
+        result = []
+        quarterly.each do |data|
+          next if data['date'].blank?
+
+          match = data['date'].match(QUARTER_WITH_YEAR_REGEX)
+          quarter, year = match.captures
+          next if quarter.blank? || year.blank?
+
+          earnings = {
+            eps_estimate: data.dig('estimate', 'raw'),
+            eps_actual: data.dig('actual', 'raw'),
+            quarter: quarter.to_i,
+            year: year.to_i
+          }
+
+          result << earnings if earnings[:eps_actual] && earnings[:quarter] && earnings[:year]
+        end
+
+        quarter = earnings_chart['currentQuarterEstimateDate'].match(QUARTER_REGEX).captures[0]
+        earnings = {
+          eps_estimate: earnings_chart.dig('currentQuarterEstimate', 'raw'),
+          eps_actual: nil,
+          quarter: quarter.to_i,
+          year: earnings_chart['currentQuarterEstimateYear']
+        }
+        result << earnings if earnings[:eps_estimate] && earnings[:quarter] && earnings[:year]
+
+        result.presence
       end
 
       def set(stock, attribute, value)

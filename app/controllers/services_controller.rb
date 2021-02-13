@@ -49,7 +49,6 @@ class ServicesController < ApplicationController
         Etl::Refresh::Finnhub.new.daily_all_stocks { |status| stream.write(status) }
         Etl::Refresh::Iexapis.new.weekly_all_stocks { |status| stream.write(status) }
         Etl::Refresh::Dividend.new.weekly_all_stocks { |status| stream.write(status) }
-        Etl::Refresh::Finnhub.new.weekly_all_stocks { |status| stream.write(status) }
 
       end
     end

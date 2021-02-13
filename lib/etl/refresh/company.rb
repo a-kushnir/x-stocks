@@ -17,7 +17,7 @@ module Etl
           end
         end
 
-        yield message('Loading company information [Finnhub]', 5) if block_given?
+        yield message('Loading company information [Finnhub]', 10) if block_given?
         safe_exec do
           finnhub_ts.try_token do |token|
             json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
@@ -25,7 +25,7 @@ module Etl
           end
         end
 
-        yield message('Loading company peers [Finnhub]', 10) if block_given?
+        yield message('Loading company peers [Finnhub]', 20) if block_given?
         safe_exec do
           finnhub_ts.try_token do |token|
             json = Etl::Extract::Finnhub.new(data_loader, token).peers(stock)
@@ -33,25 +33,22 @@ module Etl
           end
         end
 
-        yield message('Update stock prices [Finnhub]', 15) if block_given?
+        yield message('Update stock prices [Finnhub]', 30) if block_given?
         safe_exec { Etl::Refresh::Finnhub.new.hourly_one_stock!(stock, token_store: finnhub_ts, logger: logger) }
 
-        yield message('Update stock information [Finnhub]', 20) if block_given?
+        yield message('Update stock information [Finnhub]', 40) if block_given?
         safe_exec { Etl::Refresh::Finnhub.new.daily_one_stock!(stock, token_store: finnhub_ts, logger: logger, immediate: true) }
 
-        yield message('Update stock information [Yahoo]', 40) if block_given?
+        yield message('Update stock information [Yahoo]', 50) if block_given?
         safe_exec { Etl::Refresh::Yahoo.new.daily_one_stock!(stock, logger: logger) }
 
-        yield message('Update stock dividends [IEX Cloud]', 60) if block_given?
+        yield message('Update stock dividends [IEX Cloud]', 70) if block_given?
         safe_exec { Etl::Refresh::Iexapis.new.weekly_one_stock!(stock, token_store: iexapis_ts, logger: logger, immediate: true) }
 
-        yield message('Update stock dividends [Dividend.com]', 70) if block_given?
+        yield message('Update stock dividends [Dividend.com]', 80) if block_given?
         safe_exec { Etl::Refresh::Dividend.new.weekly_one_stock!(stock, logger: logger) }
 
-        yield message('Update upcoming earnings [Finnhub]', 75) if block_given?
-        safe_exec { Etl::Refresh::Finnhub.new.weekly_all_stocks! }
-
-        yield message('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 95) if block_given?
+        yield message('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 90) if block_given?
         safe_exec { Etl::Refresh::SlickCharts.new.all_stocks! }
 
         yield completed_message if block_given?

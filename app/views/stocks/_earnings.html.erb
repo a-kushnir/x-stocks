@@ -1,5 +1,5 @@
 <% if @stock.earnings.present? %>
-  <% earnings = @stock.earnings.reverse %>
+  <% earnings = @stock.earnings %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4>Earnings</h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
@@ -8,9 +8,9 @@
   <script>
     document.addEventListener("turbolinks:load", () => {
       earnings_chart("#earnings_<%= @stock.symbol %>",
-        <%= json earnings.map {|e| e['estimate'] } %>,
-        <%= json earnings.map {|e| e['actual'] } %>,
-        <%= json earnings.map {|e| date = Date.parse(e['period']); "Q#{(date.month / 3.0).ceil} #{date.year}" } %>)
+        <%= json earnings.map {|e| e['eps_estimate'] } %>,
+        <%= json earnings.map {|e| e['eps_actual'] } %>,
+        <%= json earnings.map {|e| "Q#{e['quarter']} #{e['year']}" } %>)
     });
   </script>
 </div>

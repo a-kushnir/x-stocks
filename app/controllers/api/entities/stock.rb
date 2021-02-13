@@ -85,11 +85,9 @@ module API
           expose :dividend_growth_3y, as: :growth_3y
           expose :dividend_growth_5y, as: :growth_5y
           expose :dividend_growth_years, as: :growth_years
-          expose :div_suspended?, as: :suspended, format_with: :bool
           expose :next_div_ex_date, as: :next_ex_date, format_with: nil
           expose :next_div_payment_date, as: :next_payment_date, format_with: nil
           expose :next_div_amount, as: :next_amount
-          expose :div_change_pct, as: :next_amount_change_pct
           expose :dividend_amount, as: :prev_amount
           expose :current_price
           expose :est_annual_dividend, as: :est_annual_amount

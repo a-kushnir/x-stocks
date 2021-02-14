@@ -62,6 +62,7 @@
   </div>
 </div>
 
+<% content_for :head do %>
 <script>
   document.addEventListener("turbolinks:load", () => {
     const data = <%= @data.to_json.html_safe %>;
@@ -118,3 +119,4 @@
     })
   })
 </script>
+<% end %>

@@ -1,4 +1,5 @@
 function twitterWidget() {
+    if ($('.twitter-timeline').length === 0) return;
     window.twttr = (function (d, s, id) {
         var t, js, fjs = $("body");
         if (d.getElementById(id)) return;

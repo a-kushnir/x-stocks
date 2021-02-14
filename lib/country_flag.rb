@@ -9,6 +9,7 @@ class CountryFlag
     'belgium' => 'be',
     'brazil' => 'br',
     'canada' => 'ca',
+    'ca' => 'ca',
     'switzerland' => 'ch',
     'china' => 'cn',
     'czech republic' => 'cz',

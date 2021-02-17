@@ -2,6 +2,7 @@
   <div class="col-12">
     <%= bootstrap_form_for @stock, scope: :stock, url: stock_path(@stock), local: true, html: {class: 'my-form mx-auto'} do |form| %>
       <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, readonly: true %>
+      <%= form.text_field :company_name, autocomplete: :off %>
 
       <div class="form-group">
         <label class="required" for="x_stocks_ar_stock_exchange_id">Exchange</label>

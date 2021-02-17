@@ -56,3 +56,6 @@ gem 'grape-entity'
 gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
+
+gem 'sprockets-rails', '2.3.3'
+gem 'swagger_ui_engine'

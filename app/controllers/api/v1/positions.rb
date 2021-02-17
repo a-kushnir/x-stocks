@@ -17,7 +17,8 @@ module API
         get do
           portfolio = OpenStruct.new(total_cost: 0, market_value: 0, gain_loss: 0, gain_loss_pct: 0, est_annual_income: 0, positions: [])
 
-          Position.where(user: current_user).where.not(shares: nil).all.each do |position|
+          positions = XStocks::AR::Position.where(user: current_user).where.not(shares: nil).all
+          positions.each do |position|
             portfolio.total_cost += position.total_cost if position.total_cost
             portfolio.market_value += position.market_value if position.market_value
             portfolio.gain_loss += position.gain_loss if position.gain_loss

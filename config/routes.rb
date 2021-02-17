@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   mount API::Root => '/api'
+  mount SwaggerUiEngine::Engine, at: '/api_docs'
 
   devise_for :users, class_name: XStocks::AR::User, controllers: { registrations: 'registrations', sessions: 'sessions' }
   devise_scope :user do

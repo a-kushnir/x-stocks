@@ -587,6 +587,7 @@ window.financials_chart = function(canvas, revenue, earnings, labels, outstandin
                 yAxes: [{
                     display: true,
                     ticks: {
+                        beginAtZero: true,
                         callback: function(value, index, values) {
                             return commarize(value);
                         }

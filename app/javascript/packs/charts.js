@@ -492,6 +492,111 @@ window.earnings_chart = function(canvas, estimate, actual, labels) {
                 datalabels: {
                     display: false,
                 }
+            },
+        }
+    };
+
+    new Chart(canvas, config);
+}
+
+function commarize(value) {
+    if (Math.abs(value) >= 1e3) {
+        const minus = value < 0;
+        if (minus) value = -value;
+
+        const units = ["k", "M", "B", "T"];
+        const unit = Math.floor((value.toFixed(0).length - 1) / 3) * 3;
+        let num = (value / ('1e'+unit)).toFixed(2);
+        const unitname = units[Math.floor(unit / 3) - 1];
+
+        if (minus) num = `-${num}`;
+        return num + unitname;
+    }
+   return value.toLocaleString();
+}
+
+window.financials_chart = function(canvas, revenue, earnings, labels, outstandingShares) {
+    canvas = $(canvas);
+    if (canvas.length === 0) return;
+
+    const config = {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Revenue',
+                fill: false,
+                backgroundColor: '#00C073',
+                borderColor: '#00C073',
+                showLine: false,
+                pointRadius: 8,
+                pointHoverRadius: 9,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                data: revenue,
+            },{
+                label: 'Earnings',
+                backgroundColor: function(pointItem) {
+                    const value = pointItem.dataset.data[pointItem.dataIndex];
+                    return value < 0 ? '#FF333A' : '#0F69FF';
+                },
+                borderColor: function(pointItem) {
+                    const value = pointItem.dataset.data[pointItem.dataIndex];
+                    return value < 0 ? '#FF333A' : '#0F69FF';
+                },
+                showLine: false,
+                pointRadius: 8,
+                pointHoverRadius: 9,
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                data: earnings,
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        const label = data.datasets[tooltipItem.datasetIndex].label;
+                        const raw = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        const value = commarize(raw);
+
+                        if (outstandingShares) {
+                            const perShare = (raw / outstandingShares).toFixed(2);
+                            return `${label}: ${value} | ${perShare}`;
+                        } else {
+                            return `${label}: ${value}`;
+                        }
+                    }
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return commarize(value);
+                        }
+                    }
+                }]
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
+                }
             }
         }
     };

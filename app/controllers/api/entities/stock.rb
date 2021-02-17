@@ -56,6 +56,7 @@ module API
         expose :yahoo_rec, format_with: :float
         expose :yahoo_rec_details
         expose :yahoo_discount
+        expose :yahoo_price_target
         expose :finnhub_beta, format_with: :float
         expose :finnhub_price_target
         expose :finnhub_rec, format_with: :float
@@ -75,6 +76,8 @@ module API
           expose :next_earnings_hour, format_with: nil
           expose :next_earnings_est_eps
           expose :next_earnings_details, format_with: nil
+          expose :financials_yearly, format_with: nil
+          expose :financials_quarterly, format_with: nil
         end
       end
 

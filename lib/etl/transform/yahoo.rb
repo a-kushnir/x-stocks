@@ -29,6 +29,8 @@ module Etl
         set(stock, :description, quote_summary_store&.dig('summaryProfile', 'longBusinessSummary'))
         set(stock, :yahoo_price_target, price_target(quote_summary_store&.dig('financialData')))
         set(stock, :earnings, earnings(quote_summary_store&.dig('earnings', 'earningsChart')))
+        set(stock, :financials_yearly, financials_yearly(quote_summary_store&.dig('earnings', 'financialsChart')))
+        set(stock, :financials_quarterly, financials_quarterly(quote_summary_store&.dig('earnings', 'financialsChart')))
 
         stock_model.new.save(stock)
       end
@@ -83,6 +85,49 @@ module Etl
         end
 
         result.presence
+      end
+
+      def financials_yearly(financials_chart)
+        return unless financials_chart.present?
+
+        yearly = financials_chart['yearly']
+        return unless yearly.present?
+
+        yearly.map do |data|
+          next if data.dig('revenue', 'raw').blank?
+          next if data.dig('earnings', 'raw').blank?
+          next if data['date'].blank?
+
+          {
+            revenue: data.dig('revenue', 'raw'),
+            earnings: data.dig('earnings', 'raw'),
+            year: data['date']
+          }
+        end.compact.presence
+      end
+
+      def financials_quarterly(financials_chart)
+        return unless financials_chart.present?
+
+        quarterly = financials_chart['quarterly']
+        return unless quarterly.present?
+
+        quarterly.map do |data|
+          match = data['date'].match(QUARTER_WITH_YEAR_REGEX)
+          quarter, year = match.captures
+
+          next if data.dig('revenue', 'raw').blank?
+          next if data.dig('earnings', 'raw').blank?
+          next if quarter.blank?
+          next if year.blank?
+
+          {
+            revenue: data.dig('revenue', 'raw'),
+            earnings: data.dig('earnings', 'raw'),
+            quarter: quarter.to_i,
+            year: year.to_i
+          }
+        end.compact.presence
       end
 
       def set(stock, attribute, value)

@@ -23,6 +23,8 @@ module XStocks
       serialize :finnhub_rec_details, JSON
       serialize :finnhub_price_target, JSON
       serialize :earnings, JSON
+      serialize :financials_yearly, JSON
+      serialize :financials_quarterly, JSON
       serialize :dividend_details, JSON
       serialize :next_earnings_details, JSON
       serialize :metascore_details, JSON

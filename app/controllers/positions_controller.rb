@@ -6,9 +6,11 @@ class PositionsController < ApplicationController
     @positions = XStocks::AR::Position
                  .where(user: current_user)
                  .where.not(shares: nil)
-                 .all.to_a
+                 .all
+    return unless stale?(@positions)
 
     @columns = columns
+    @positions = @positions.to_a
     @data, @summary = data(@positions)
 
     @page_title = 'My Positions'

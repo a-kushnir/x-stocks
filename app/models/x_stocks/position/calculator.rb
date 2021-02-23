@@ -22,6 +22,11 @@ module XStocks
         relation.update_all('est_annual_income = est_annual_dividend * shares')
       end
 
+      def update_timestamp(stock)
+        relation = position_ar_class.where(stock: stock)
+        relation.update_all(updated_at: stock.updated_at)
+      end
+
       def calculate_position_prices(position)
         position.total_cost = safe_exec { position.average_price * position.shares }
         position.market_price = position.stock.current_price

@@ -37,6 +37,7 @@ module XStocks
       position = XStocks::Position.new
       position.calculate_stock_prices(stock)
       position.calculate_stock_dividends(stock)
+      position.update_timestamp(stock)
     end
 
     def common_stock?(stock)

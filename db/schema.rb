@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_070010) do
+ActiveRecord::Schema.define(version: 2021_02_23_150658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,10 @@ ActiveRecord::Schema.define(version: 2021_02_17_070010) do
     t.integer "metascore"
     t.string "metascore_details"
     t.string "note"
+    t.datetime "created_at", default: "2020-01-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2020-01-01 00:00:00", null: false
     t.index ["stock_id"], name: "index_positions_on_stock_id"
+    t.index ["updated_at"], name: "index_positions_on_updated_at"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
     t.index ["user_id"], name: "index_positions_on_user_id"
   end
@@ -143,6 +146,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_070010) do
     t.string "financials_quarterly"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
+    t.index ["updated_at"], name: "index_stocks_on_updated_at"
   end
 
   create_table "tags", force: :cascade do |t|

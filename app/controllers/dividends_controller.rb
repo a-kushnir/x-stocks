@@ -9,8 +9,10 @@ class DividendsController < ApplicationController
                  .where(user: current_user)
                  .where.not(shares: nil)
                  .all
+    return unless stale?(@positions)
 
     @columns = columns
+    @positions = @positions.to_a
     @data, @summary = data(@positions)
 
     @page_title = 'My Dividends'

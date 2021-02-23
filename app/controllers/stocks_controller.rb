@@ -12,10 +12,11 @@ class StocksController < ApplicationController
 
     stocks = XStocks::AR::Stock
     stocks = stocks.where(id: stock_ids) if @tag
-    stocks = stocks.all.to_a
+    stocks = stocks.all
     return unless stale?(stocks)
 
     @columns = columns
+    stocks = stocks.to_a
     @data = data(stocks)
 
     @page_title = 'Stocks'

@@ -13,6 +13,7 @@ class StocksController < ApplicationController
     stocks = XStocks::AR::Stock
     stocks = stocks.where(id: stock_ids) if @tag
     stocks = stocks.all.to_a
+    return unless stale?(stocks)
 
     @columns = columns
     @data = data(stocks)

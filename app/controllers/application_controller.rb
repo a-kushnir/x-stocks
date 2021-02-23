@@ -4,6 +4,8 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
+  etag { current_user&.id }
+
   rescue_from Exception, with: :internal_error
 
   def not_found(layout: 'application')

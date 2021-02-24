@@ -26,8 +26,8 @@ development:
   host: localhost
   port: 5432
   database: <%= ENV['X_STOCKS_DATABASE_DATABASE'] || 'x_stocks_development' %>
-  username: <%= ENV['X_STOCKS_DATABASE_USERNAME'] || 'x_stocks' %>
-  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] || 'x_stocks' %>
+  username: <%= ENV['X_STOCKS_DATABASE_USERNAME'] || '' %>
+  password: <%= ENV['X_STOCKS_DATABASE_PASSWORD'] || '' %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

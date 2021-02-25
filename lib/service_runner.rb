@@ -45,7 +45,7 @@ class ServiceRunner
 
     ServiceRunner.new('Update stock prices [Finnhub]', 'hourly_one_finnhub', { service_code: 'hourly_one_finnhub', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:hourly_one_finnhub, force: true) do |logger|
                           logger.text_size_limit = nil
@@ -61,7 +61,7 @@ class ServiceRunner
 
     ServiceRunner.new('Update stock information [Yahoo]', 'daily_one_yahoo', { service_code: 'daily_one_yahoo', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:daily_one_yahoo, force: true) do |logger|
                           logger.text_size_limit = nil
@@ -77,7 +77,7 @@ class ServiceRunner
 
     ServiceRunner.new('Update stock information [Finnhub]', 'daily_one_finnhub', { service_code: 'daily_one_finnhub', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:daily_one_finnhub, force: true) do |logger|
                           logger.text_size_limit = nil
@@ -93,7 +93,7 @@ class ServiceRunner
 
     ServiceRunner.new('Update stock dividends [IEX Cloud]', 'weekly_one_iexapis', { service_code: 'weekly_one_iexapis', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:weekly_one_iexapis, force: true) do |logger|
                           logger.text_size_limit = nil
@@ -109,7 +109,7 @@ class ServiceRunner
 
     ServiceRunner.new('Update stock dividends [Dividend.com]', 'weekly_one_dividend', { service_code: 'weekly_one_dividend', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:weekly_one_dividend, force: true) do |logger|
                           logger.text_size_limit = nil
@@ -120,7 +120,7 @@ class ServiceRunner
 
     ServiceRunner.new('Load company information [Finnhub] [IEX Cloud] [Yahoo]', 'company_information', { service_code: 'company_information', arguments: [:stock_id] },
                       lambda do |args, &block|
-                        stock = XStocks::AR::Stock.find_by!(id: args[:stock_id])
+                        stock = XStocks::Stock.find_by!(id: args[:stock_id])
                         block.call stock_message(stock)
                         XStocks::Service.new.lock(:company_information, force: true) do |logger|
                           logger.text_size_limit = nil

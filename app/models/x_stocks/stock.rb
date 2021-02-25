@@ -3,71 +3,30 @@
 module XStocks
   # Stock Business Model
   class Stock
+    extend XStocks::Stock::ARFinders
+    include XStocks::Stock::ARUpdaters
     include XStocks::Stock::Calculator
     include XStocks::Stock::Dividends
+    include XStocks::Stock::IssueType
     include XStocks::Stock::Logo
     include XStocks::Stock::MetaScore
 
-    ISSUE_TYPES = {
-      'ad' => 'ADR (American Depositary Receipt)',
-      're' => 'REIT (Real Estate Investment Trust)',
-      'ce' => 'CEF (Closed-End Fund)',
-      'si' => 'Secondary Issue',
-      'lp' => 'Limited Partnerships',
-      'cs' => 'Common Stock',
-      'et' => 'ETF (Exchange Traded Fund)',
-      'wt' => 'Warrant',
-      'oef' => 'OEF (Open-End Fund)',
-      'cef' => 'CEF (Closed-End Fund)',
-      'ps' => 'Preferred Stock',
-      'ut' => 'Unit',
-      'temp' => 'Temporary'
-    }.freeze
-
-    def destroyable?(stock)
-      !stock.positions.exists?
+    def initialize(ar_stock)
+      @ar_stock = ar_stock
     end
 
-    def destroy(stock)
-      return unless destroyable?(stock)
-
-      stock.destroy
-      delete_logo(stock)
-    end
-
-    def save(stock)
-      prepare_symbol(stock)
-      calculate_meta_score(stock)
-      calculate_stock_prices(stock)
-      calculate_stock_dividends(stock)
-      return unless stock.save
-
-      position = XStocks::Position.new
-      position.calculate_stock_prices(stock)
-      position.calculate_stock_dividends(stock)
-      position.update_timestamp(stock)
-    end
-
-    def common_stock?(stock)
-      %w[cs].include?(stock.issue_type)
-    end
-
-    def issue_type(stock)
-      ISSUE_TYPES.fetch(stock.issue_type, 'Unknown')
-    end
-
-    def to_s(stock)
-      if stock.company_name.present?
-        "#{stock.company_name} (#{stock.symbol})"
+    def to_s
+      if ar_stock.company_name.present?
+        "#{ar_stock.company_name} (#{ar_stock.symbol})"
       else
-        stock.symbol
+        ar_stock.symbol
       end
     end
 
     private
 
-    def prepare_symbol(stock)
-      stock.symbol = stock.symbol.strip.upcase
-    end
+    attr_reader :ar_stock
+
+    XStocks::ARForwarder.delegate_methods(self, :ar_stock, XStocks::AR::Stock)
   end
 end

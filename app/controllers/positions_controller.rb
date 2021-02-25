@@ -91,9 +91,7 @@ class PositionsController < ApplicationController
   end
 
   def data(positions)
-    model = XStocks::Stock.new
-
-    stocks = XStocks::AR::Stock.where(id: positions.map(&:stock_id)).all
+    stocks = XStocks::Stock.find_all(id: positions.map(&:stock_id))
     @stocks_by_id = stocks.index_by(&:id)
 
     total_market_value = positions.sum(&:market_value)
@@ -102,7 +100,7 @@ class PositionsController < ApplicationController
     data = []
     positions.each do |position|
       stock = @stocks_by_id[position.stock_id]
-      div_suspended = model.div_suspended?(stock)
+      div_suspended = stock.div_suspended?
       avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 
       data << row(stock, position, div_suspended, total_market_value)
@@ -116,7 +114,6 @@ class PositionsController < ApplicationController
   end
 
   def row(stock, position, div_suspended, total_market_value)
-    model = XStocks::Stock.new
     diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
 
     [
@@ -140,14 +137,14 @@ class PositionsController < ApplicationController
       stock.yahoo_discount&.to_f,
       value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
       value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-      model.div_change_pct(stock)&.round(1),
+      stock.div_change_pct&.round(1),
       stock.pe_ratio_ttm&.to_f&.round(2),
       stock.payout_ratio&.to_f,
       stock.yahoo_rec&.to_f,
       stock.finnhub_rec&.to_f,
       stock.dividend_rating&.to_f,
       stock.next_div_ex_date && !stock.next_div_ex_date.past? ? stock.next_div_ex_date : nil,
-      [stock.metascore, model.metascore_details(stock)]
+      [stock.metascore, stock.meta_score_details]
     ]
   end
 

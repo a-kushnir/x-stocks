@@ -4,17 +4,17 @@ module XStocks
   class Stock
     # Stock Calculator Business Model
     module Calculator
-      def calculate_stock_prices(stock)
-        stock.price_change = safe_exec { stock.current_price - stock.prev_close_price }
-        stock.price_change_pct = safe_exec { stock.price_change / stock.prev_close_price * 100 }
-        stock.market_capitalization = safe_exec { stock.outstanding_shares * stock.current_price }
-        stock.pe_ratio_ttm = safe_exec { stock.current_price / stock.eps_ttm }
+      def calculate_stock_prices
+        ar_stock.price_change = safe_exec { ar_stock.current_price - ar_stock.prev_close_price }
+        ar_stock.price_change_pct = safe_exec { ar_stock.price_change / ar_stock.prev_close_price * 100 }
+        ar_stock.market_capitalization = safe_exec { ar_stock.outstanding_shares * ar_stock.current_price }
+        ar_stock.pe_ratio_ttm = safe_exec { ar_stock.current_price / ar_stock.eps_ttm }
 
-        calculate_stock_dividends(stock)
+        calculate_stock_dividends
       end
 
-      def calculate_stock_dividends(stock)
-        stock.est_annual_dividend_pct = safe_exec { stock.est_annual_dividend / stock.current_price * 100 }
+      def calculate_stock_dividends
+        ar_stock.est_annual_dividend_pct = safe_exec { ar_stock.est_annual_dividend / ar_stock.current_price * 100 }
       end
 
       private

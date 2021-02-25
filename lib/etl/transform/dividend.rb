@@ -4,10 +4,6 @@ module Etl
   module Transform
     # Transforms data extracted from dividend.com
     class Dividend
-      def initialize(stock_class: XStocks::Stock)
-        @stock_class = stock_class
-      end
-
       def data(stock, json)
         json ||= {}
         node = json.dig('thead', 0)
@@ -17,7 +13,7 @@ module Etl
         stock.dividend_growth_3y = number_or_nil(node['growth_over_years'])
         stock.dividend_growth_years = number_or_nil(node['consective_year_of_growth'])
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       private
@@ -29,8 +25,6 @@ module Etl
       def number_or_nil(value)
         number?(value) ? value.to_d : nil
       end
-
-      attr_reader :stock_class
     end
   end
 end

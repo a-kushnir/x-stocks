@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPositionUpdateAt < ActiveRecord::Migration[6.0]
   def change
     add_column :positions, :created_at, :datetime, null: false, default: '2020-01-01'

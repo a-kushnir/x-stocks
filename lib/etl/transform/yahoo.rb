@@ -8,9 +8,8 @@ module Etl
       QUARTER_WITH_YEAR_REGEX = /(\d)Q(\d{4})/.freeze
       QUARTER_REGEX = /(\d)/.freeze
 
-      def initialize(date: Date, stock_model: XStocks::Stock)
+      def initialize(date: Date)
         @date = date
-        @stock_model = stock_model
       end
 
       def summary(stock, json)
@@ -32,7 +31,7 @@ module Etl
         set(stock, :financials_yearly, financials_yearly(quote_summary_store&.dig('earnings', 'financialsChart')))
         set(stock, :financials_quarterly, financials_quarterly(quote_summary_store&.dig('earnings', 'financialsChart')))
 
-        stock_model.new.save(stock)
+        stock.save
       end
 
       private
@@ -151,7 +150,7 @@ module Etl
         result
       end
 
-      attr_reader :date, :stock_model
+      attr_reader :date
     end
   end
 end

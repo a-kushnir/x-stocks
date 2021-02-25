@@ -43,8 +43,8 @@
   <div class="col-12">
     <%= link_to 'Back', back_url, class: 'btn btn-link' %>
     <%= link_to 'Edit', edit_stock_path(@stock), class: 'btn btn-primary' %>
-    <% if XStocks::Stock.new.destroyable?(@stock) %>
-      <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{XStocks::Stock.new.to_s(@stock)}?"} %>
+    <% if @stock.destroyable? %>
+      <%= link_to 'Delete', stock_path(@stock), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete #{@stock}?"} %>
     <% end %>
   </div>
 </div>

@@ -5,10 +5,8 @@ module Etl
     # Transforms data extracted from finnhub.io
     class Finnhub
       def initialize(exchange_class: XStocks::Exchange,
-                     stock_class: XStocks::Stock,
                      stock_ar_class: XStocks::AR::Stock)
         @exchange_class = exchange_class
-        @stock_class = stock_class
         @stock_ar_class = stock_ar_class
       end
 
@@ -20,10 +18,10 @@ module Etl
           stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
           stock.sector = json['finnhubIndustry'].presence || 'N/A'
 
-          stock_class.new.store_file(stock, json['logo'])
+          stock.store_logo(json['logo'])
         end
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def peers(stock, json)
@@ -31,7 +29,7 @@ module Etl
 
         stock.peers = json
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def quote(stock, json)
@@ -43,7 +41,7 @@ module Etl
         stock.day_low_price = json['l']
         stock.day_high_price = json['h']
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def recommendation(stock, json)
@@ -66,7 +64,7 @@ module Etl
         stock.finnhub_rec_details = hash
         stock.finnhub_rec = recommendation_mean(hash)
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def price_target(stock, json)
@@ -82,7 +80,7 @@ module Etl
             }
           end
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def earnings(stock, json)
@@ -95,7 +93,7 @@ module Etl
             end
           end
 
-        stock_class.new.save(stock)
+        stock.save
       end
 
       def metric(stock, json)
@@ -161,7 +159,7 @@ module Etl
         (value.to_f / total).round(2)
       end
 
-      attr_accessor :exchange_class, :stock_class, :stock_ar_class
+      attr_accessor :exchange_class, :stock_ar_class
     end
   end
 end

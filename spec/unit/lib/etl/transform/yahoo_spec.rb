@@ -4,10 +4,9 @@ require 'unit/spec_helper'
 require 'etl/transform/yahoo'
 
 describe Etl::Transform::Yahoo do
-  subject(:transformer) { described_class.new(date: date, stock_model: stock_model) }
+  subject(:transformer) { described_class.new(date: date) }
 
   let(:date) { OpenStruct.new(today: Date.new(2020, 1, 11)) }
-  let(:stock_model) { OpenStruct.new(new: mock_model) }
   let(:stock) { mock_model(symbol: 'AAPL') }
 
   describe '#summary' do
@@ -55,7 +54,8 @@ describe Etl::Transform::Yahoo do
         est_annual_dividend: 4.33,
         yahoo_discount: 0.71,
         yahoo_price_target: { high: 175, low: 83, mean: 151.75, median: 157 },
-        description: 'Apple Inc. designs, manufactures, and markets...'
+        description: 'Apple Inc. designs, manufactures, and markets...',
+        save: []
       }
 
       expect(stock).to eq(calls)

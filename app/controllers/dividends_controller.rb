@@ -62,11 +62,10 @@ class DividendsController < ApplicationController
   end
 
   def data(positions)
-    model = XStocks::Stock.new
     dividend = ::Dividend.new
     months = dividend.months
 
-    stocks = XStocks::AR::Stock.where(id: positions.map(&:stock_id)).all
+    stocks = XStocks::Stock.find_all(id: positions.map(&:stock_id))
     @stocks_by_id = stocks.index_by(&:id)
 
     total_market_value = positions.sum(&:market_value)
@@ -76,7 +75,7 @@ class DividendsController < ApplicationController
     data = []
     positions.each do |position|
       stock = @stocks_by_id[position.stock_id]
-      div_suspended = model.div_suspended?(stock)
+      div_suspended = stock.div_suspended?
       estimates = dividend.estimate(stock)
       avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 
@@ -98,7 +97,6 @@ class DividendsController < ApplicationController
   end
 
   def row(stock, position, months, estimates, div_suspended, total_market_value)
-    model = XStocks::Stock.new
     diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
 
     result =
@@ -107,7 +105,7 @@ class DividendsController < ApplicationController
         [stock.symbol, stock.logo, position.note.presence],
         stock.company_name,
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-        model.div_change_pct(stock)&.round(1),
+        stock.div_change_pct&.round(1),
         stock.dividend_rating&.to_f,
         # Position
         position.total_cost&.to_f,

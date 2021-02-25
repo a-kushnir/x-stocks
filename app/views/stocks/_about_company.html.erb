@@ -13,7 +13,7 @@
     <% if @stock.industry.present? %>
       <strong>Industry:</strong> <%= @stock.industry %><br>
     <% end %>
-    <strong>Issue Type:</strong> <%= XStocks::Stock.new.issue_type(@stock) %>
+    <strong>Issue Type:</strong> <%= @stock.issue_type_name %>
   </p>
   <p>
     <%= @stock.description %>

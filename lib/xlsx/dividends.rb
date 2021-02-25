@@ -24,7 +24,7 @@ module XLSX
           sheet.add_row header_row(div.months), style: header_style(styles)
 
           positions.each do |position|
-            sheet.add_row data_row(div, months, position, div.estimate(position.stock)), style: data_style(styles)
+            sheet.add_row data_row(div, months, position), style: data_style(styles)
           end
 
           sheet.add_row footer_row(months), style: footer_style(styles)
@@ -51,26 +51,28 @@ module XLSX
       [styles[:header], Array.new(15, styles[:header_right])].flatten
     end
 
-    def data_row(div, months, position, est)
-      div_suspended = XStocks::Stock.new.div_suspended?(position.stock)
+    def data_row(div, months, position)
+      stock = XStocks::Stock.new(position.stock)
+      div_suspended = stock.div_suspended?
+      estimate = div.estimate(stock)
 
       row = [
-        position.stock.symbol,
+        stock.symbol,
         if div_suspended
           'Suspended'
         else
-          safe_exec { position.stock.est_annual_dividend_pct / 100 }
+          safe_exec { stock.est_annual_dividend_pct / 100 }
         end,
-        safe_exec { (position.stock.dividend_rating * 20).to_i }
+        safe_exec { (stock.dividend_rating * 20).to_i }
       ]
 
       div.months.each_with_index do |month, index|
-        amount = safe_exec { est.detect { |e| e[:month] == month }&.dig(:amount) * position.shares }
+        amount = safe_exec { estimate.detect { |e| e[:month] == month }&.dig(:amount) * position.shares }
         months[index] += amount if amount
         row << amount
       end
 
-      safe_exec { row << est.map { |e| e[:amount] }.sum * position.shares }
+      safe_exec { row << estimate.map { |e| e[:amount] }.sum * position.shares }
 
       row
     end

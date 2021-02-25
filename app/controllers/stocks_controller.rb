@@ -16,7 +16,7 @@ class StocksController < ApplicationController
     return unless stale?(stocks)
 
     @columns = columns
-    stocks = stocks.to_a
+    stocks = stocks.map { |stock| XStocks::Stock.new(stock) }
     @data = data(stocks)
 
     @page_title = 'Stocks'
@@ -27,25 +27,22 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
-    begin
-      Etl::Refresh::Finnhub.new.hourly_one_stock!(@stock)
-    rescue StandardError
-      nil
-    end
-    @position = XStocks::AR::Position.find_or_initialize_by(stock: @stock, user: current_user)
+    safe_exec { Etl::Refresh::Finnhub.new.hourly_one_stock!(@stock) }
+    @position = XStocks::AR::Position.find_or_initialize_by(stock_id: @stock.id, user: current_user)
 
     set_page_title
   end
 
   def new
-    @stock = XStocks::AR::Stock.new
+    @stock = new_stock
     set_page_title
   end
 
   def create
-    @stock = XStocks::AR::Stock.new(create_stock_params)
+    @stock = new_stock
+    @stock.attributes = create_stock_params
 
-    if XStocks::Stock.new.save(@stock)
+    if @stock.save
       redirect_to action: 'initializing', id: @stock.symbol
     else
       set_page_title
@@ -66,7 +63,7 @@ class StocksController < ApplicationController
     not_found && return unless @stock
 
     @stock.attributes = update_stock_params
-    if XStocks::Stock.new.save(@stock)
+    if @stock.save
       redirect_to action: 'show', id: @stock.symbol
     else
       @exchanges = XStocks::AR::Exchange.all
@@ -83,7 +80,7 @@ class StocksController < ApplicationController
 
   def processing
     EventStream.run(response) do |stream|
-      @stock = XStocks::AR::Stock.find_by!(symbol: params[:id])
+      @stock = XStocks::Stock.find_by!(symbol: params[:id])
       XStocks::Service.new.lock(:company_information, force: true) do |logger|
         logger.text_size_limit = nil
         Etl::Refresh::Company.new.one_stock!(@stock, logger: logger) do |status|
@@ -94,28 +91,31 @@ class StocksController < ApplicationController
   end
 
   def destroy
-    @stock = find_stock
-    not_found && return unless @stock
+    stock = find_stock
+    not_found && return unless stock
 
-    stock = XStocks::Stock.new
-    if stock.destroyable?(@stock)
-      stock.destroy(@stock)
-      flash[:notice] = "#{stock.to_s(@stock)} stock deleted"
+    if stock.destroyable?
+      stock.destroy
+      flash[:notice] = "#{stock} stock deleted"
       redirect_to stocks_path
     else
-      redirect_to stock_path(@stock)
+      redirect_to stock_path(stock)
     end
   end
 
   private
 
   def set_page_title
-    @page_title = @stock.nil? || @stock.new_record? ? 'New Stock' : XStocks::Stock.new.to_s(@stock)
+    @page_title = @stock.nil? || @stock.new_record? ? 'New Stock' : @stock
     @page_menu_item = :stocks
   end
 
+  def new_stock
+    XStocks::Stock.new(XStocks::AR::Stock.new)
+  end
+
   def find_stock
-    XStocks::AR::Stock.find_by(symbol: params[:id])
+    XStocks::Stock.find_by_symbol(params[:id])
   end
 
   def create_stock_params
@@ -187,14 +187,12 @@ class StocksController < ApplicationController
   end
 
   def data(stocks)
-    model = XStocks::Stock.new
-
     positions = XStocks::AR::Position.where(stock: stocks, user: current_user).all
     positions = positions.index_by(&:stock_id)
 
     stocks.map do |stock|
       position = positions[stock.id]
-      div_suspended = model.div_suspended?(stock)
+      div_suspended = stock.div_suspended?
       [
         [stock.symbol, stock.logo, position&.note.presence],
         stock.company_name,
@@ -204,19 +202,25 @@ class StocksController < ApplicationController
         stock.yahoo_discount&.to_f,
         value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-        model.div_change_pct(stock)&.round(1),
+        stock.div_change_pct&.round(1),
         stock.pe_ratio_ttm&.to_f&.round(2),
         stock.payout_ratio&.to_f,
         stock.yahoo_rec&.to_f,
         stock.finnhub_rec&.to_f,
         stock.dividend_rating&.to_f,
         stock.next_div_ex_date && !stock.next_div_ex_date.past? ? stock.next_div_ex_date : nil,
-        [stock.metascore, model.metascore_details(stock)]
+        [stock.metascore, stock.meta_score_details]
       ]
     end
   end
 
   def value_or_warning(div_suspended, value)
     div_suspended ? 'Sus.' : value
+  end
+
+  def safe_exec
+    yield
+  rescue StandardError
+    nil
   end
 end

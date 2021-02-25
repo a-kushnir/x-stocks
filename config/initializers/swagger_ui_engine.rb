@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 
 SwaggerUiEngine.configure do |config|
   config.swagger_url = {
-      v1: '/api/v1/swagger_doc.json',
+    v1: '/api/v1/swagger_doc.json'
   }
 
   config.doc_expansion = 'full'

@@ -4,9 +4,8 @@ require 'unit/spec_helper'
 require 'etl/transform/iexapis'
 
 describe Etl::Transform::Iexapis do
-  subject(:transformer) { described_class.new(stock_class: stock_class, exchange_class: exchange_class, tag_class: tag_class, dividend_frequencies: dividend_frequencies) }
+  subject(:transformer) { described_class.new(exchange_class: exchange_class, tag_class: tag_class, dividend_frequencies: dividend_frequencies) }
 
-  let(:stock_class) { OpenStruct.new(new: mock_model) }
   let(:exchange_class) {}
   let(:tag_class) {}
   let(:dividend_frequencies) {}
@@ -63,7 +62,8 @@ describe Etl::Transform::Iexapis do
         city: 'Cupertino',
         zip: '95014-2083',
         country: 'US',
-        phone: '1.408.974.3123'
+        phone: '1.408.974.3123',
+        save: []
       }
     end
 
@@ -121,7 +121,7 @@ describe Etl::Transform::Iexapis do
 
     describe '#dividends' do
       let(:dividend_frequencies) { { 'quarterly' => 4 } }
-      let(:stock_class) { OpenStruct.new(new: mock_model(periodic_dividend_details: dividend_details)) }
+      let(:stock) { mock_model(periodic_dividend_details: dividend_details) }
 
       it 'saves data into model' do
         transformer.dividends(stock, json)
@@ -131,7 +131,9 @@ describe Etl::Transform::Iexapis do
           dividend_frequency: 'quarterly',
           dividend_frequency_num: 4,
           dividend_amount: 0.709195854935075,
-          est_annual_dividend: 2.8367834197403
+          est_annual_dividend: 2.8367834197403,
+          periodic_dividend_details: dividend_details,
+          save: []
         }
 
         expect(stock).to eq(calls)
@@ -145,7 +147,8 @@ describe Etl::Transform::Iexapis do
         calls = {
           next_div_ex_date: '2020-10-28',
           next_div_payment_date: '2020-11-06',
-          next_div_amount: 0.7091958549350751
+          next_div_amount: 0.7091958549350751,
+          save: []
         }
 
         expect(stock).to eq(calls)

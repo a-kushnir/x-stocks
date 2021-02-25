@@ -13,7 +13,7 @@ module XStocks
       end
 
       def div_suspended?(stock)
-        XStocks::Stock.new.div_suspended?(stock)
+        XStocks::Stock.new(stock).div_suspended?
       end
 
       def calculate_stock_dividends(stock)

@@ -6,7 +6,7 @@ module Etl
     class DataLoader
       attr_reader :logger
 
-      TEXT_CONTENT_TYPES = %w[application/json text/html]
+      TEXT_CONTENT_TYPES = %w[application/json text/html].freeze
 
       def initialize(logger)
         @logger = logger
@@ -34,7 +34,7 @@ module Etl
       end
 
       def fetch(url, headers = {}, limit: 10)
-        raise 'Too Many Redirects' if limit == 0
+        raise 'Too Many Redirects' if limit.zero?
 
         response = http_get(url, headers)
         if response.is_a?(Net::HTTPRedirection)

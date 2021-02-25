@@ -4,26 +4,26 @@ module XStocks
   class Stock
     # Stock Logo Business Model
     module Logo
-      def store_file(stock, content)
-        return stock.logo if content.blank?
+      def store_logo(content)
+        return ar_stock.logo if content.blank?
 
-        File.open(logo_path(stock), 'wb') { |file| file << content }
+        File.open(logo_path, 'wb') { |file| file << content }
 
-        stock.logo = logo_url(stock)
+        ar_stock.logo = logo_url
       end
 
-      def delete_logo(stock)
-        File.delete(logo_path(stock)) if File.exist?(logo_path(stock))
+      def delete_logo
+        File.delete(logo_path) if File.exist?(logo_path)
       end
 
       private
 
-      def logo_url(stock)
-        "/img/logos/#{stock.symbol}.png"
+      def logo_url
+        "/img/logos/#{ar_stock.symbol}.png"
       end
 
-      def logo_path(stock)
-        "#{Rails.root}/public#{logo_url(stock)}"
+      def logo_path
+        "#{Rails.root}/public#{logo_url}"
       end
     end
   end

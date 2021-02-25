@@ -10,7 +10,7 @@ module XStocks
     def batch_update(stock, key, names)
       updated_ids = []
       (names || []).each do |tag|
-        updated_ids << tag_ar_class.find_or_create_by(key: key, name: tag, stock: stock).id
+        updated_ids << tag_ar_class.find_or_create_by(key: key, name: tag, stock_id: stock.id).id
       end
       tag_ar_class.where(stock_id: stock.id, key: key).where.not(id: updated_ids).delete_all
     end

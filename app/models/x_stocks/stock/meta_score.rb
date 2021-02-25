@@ -4,60 +4,60 @@ module XStocks
   class Stock
     # Calculates stock score using multiple parameters
     module MetaScore
-      def calculate_meta_score(stock)
+      def calculate_meta_score
         details = {}
 
-        if stock.yahoo_rec
-          value = convert(4.5..1.5, 0..100, stock.yahoo_rec)
-          details[:yahoo_rec] = { value: stock.yahoo_rec.to_f, score: value, weight: 2 }
+        if ar_stock.yahoo_rec
+          value = convert(4.5..1.5, 0..100, ar_stock.yahoo_rec)
+          details[:yahoo_rec] = { value: ar_stock.yahoo_rec.to_f, score: value, weight: 2 }
         end
 
-        if stock.finnhub_rec
-          value = convert(4.5..1.5, 0..100, stock.finnhub_rec)
-          details[:finnhub_rec] = { value: stock.finnhub_rec.to_f, score: value, weight: 2 }
+        if ar_stock.finnhub_rec
+          value = convert(4.5..1.5, 0..100, ar_stock.finnhub_rec)
+          details[:finnhub_rec] = { value: ar_stock.finnhub_rec.to_f, score: value, weight: 2 }
         end
 
-        if !stock.payout_ratio.to_f.zero? && common_stock?(stock)
-          value = if stock.payout_ratio.negative?
-                    convert(-50..0, 0..30, stock.payout_ratio)
-                  elsif stock.payout_ratio < 75
-                    convert(0..75, 100..80, stock.payout_ratio)
+        if !ar_stock.payout_ratio.to_f.zero? && common_stock?
+          value = if ar_stock.payout_ratio.negative?
+                    convert(-50..0, 0..30, ar_stock.payout_ratio)
+                  elsif ar_stock.payout_ratio < 75
+                    convert(0..75, 100..80, ar_stock.payout_ratio)
                   else
-                    convert(75..150, 80..0, stock.payout_ratio)
+                    convert(75..150, 80..0, ar_stock.payout_ratio)
                   end
 
-          details[:payout_ratio] = { value: stock.payout_ratio.to_f, score: value, weight: 2 }
+          details[:payout_ratio] = { value: ar_stock.payout_ratio.to_f, score: value, weight: 2 }
         end
 
-        if !stock.pe_ratio_ttm.to_f.zero? && common_stock?(stock)
-          value = if stock.pe_ratio_ttm.negative?
+        if !ar_stock.pe_ratio_ttm.to_f.zero? && common_stock?
+          value = if ar_stock.pe_ratio_ttm.negative?
                     0
-                  elsif stock.pe_ratio_ttm < 20
-                    convert(0..20, 100..80, stock.pe_ratio_ttm)
+                  elsif ar_stock.pe_ratio_ttm < 20
+                    convert(0..20, 100..80, ar_stock.pe_ratio_ttm)
                   else
-                    convert(20..50, 80..0, stock.pe_ratio_ttm)
+                    convert(20..50, 80..0, ar_stock.pe_ratio_ttm)
                   end
 
-          details[:pe_ratio_ttm] = { value: stock.pe_ratio_ttm.to_f, score: value, weight: 1 }
+          details[:pe_ratio_ttm] = { value: ar_stock.pe_ratio_ttm.to_f, score: value, weight: 1 }
         end
 
-        if stock.dividend_rating
-          value = convert(0..5, 0..100, stock.dividend_rating)
-          details[:div_safety] = { value: stock.dividend_rating.to_f, score: value, weight: 4 }
+        if ar_stock.dividend_rating
+          value = convert(0..5, 0..100, ar_stock.dividend_rating)
+          details[:div_safety] = { value: ar_stock.dividend_rating.to_f, score: value, weight: 4 }
         end
 
-        if stock.yahoo_discount
-          value = convert(-50..+50, 0..100, stock.yahoo_discount)
-          details[:yahoo_discount] = { value: stock.yahoo_discount.to_f, score: value, weight: 1 }
+        if ar_stock.yahoo_discount
+          value = convert(-50..+50, 0..100, ar_stock.yahoo_discount)
+          details[:yahoo_discount] = { value: ar_stock.yahoo_discount.to_f, score: value, weight: 1 }
         end
 
-        stock.metascore, stock.metascore_details = result(details)
+        ar_stock.metascore, ar_stock.metascore_details = result(details)
       end
 
-      def metascore_details(stock)
-        return unless stock.metascore_details
+      def meta_score_details
+        return unless ar_stock.metascore_details
 
-        stock.metascore_details.map do |k, v|
+        ar_stock.metascore_details.map do |k, v|
           score = v['score']
           value = v['value']
 

@@ -2,8 +2,7 @@
 
 # Calculates dividend calendar
 class Dividend
-  def initialize(stock_class: XStocks::Stock, date: Date)
-    @stock_class = stock_class
+  def initialize(date: Date)
     @date = date
   end
 
@@ -27,9 +26,9 @@ class Dividend
   end
 
   def estimate(stock)
-    last_div = stock_class.new.periodic_dividend_details(stock).last
+    last_div = stock.periodic_dividend_details.last
     return nil unless last_div
-    return nil if stock_class.new.div_suspended?(stock)
+    return nil if stock.div_suspended?
 
     payment_date = Date.parse(last_div['payment_date'])
     amount = last_div['amount'].to_d
@@ -82,5 +81,5 @@ class Dividend
 
   private
 
-  attr_reader :stock_class, :date
+  attr_reader :date
 end

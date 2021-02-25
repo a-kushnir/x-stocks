@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <td>
-            <% div_change_pct = XStocks::Stock.new.div_change_pct(@stock) %>
+            <% div_change_pct = @stock.div_change_pct %>
             Change:
             <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
           </td>

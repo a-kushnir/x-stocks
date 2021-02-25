@@ -15,7 +15,7 @@ module Etl
 
       def company(stock)
         json = data_loader.get_json(company_url(stock.symbol))
-        json['logo'] = download_logo(json)
+        download_logo(json)
         json
       end
 
@@ -51,7 +51,7 @@ module Etl
 
       def download_logo(json)
         logo_url = json['logo']
-        data_loader.download(logo_url) if logo_url.present?
+        json['logo'] = data_loader.download(logo_url) if logo_url.present?
       end
 
       def company_url(symbol)

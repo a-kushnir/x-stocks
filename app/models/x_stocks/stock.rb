@@ -4,8 +4,9 @@ module XStocks
   # Stock Business Model
   class Stock
     include XStocks::Stock::Calculator
-    include XStocks::Stock::MetaScore
     include XStocks::Stock::Dividends
+    include XStocks::Stock::Logo
+    include XStocks::Stock::MetaScore
 
     ISSUE_TYPES = {
       'ad' => 'ADR (American Depositary Receipt)',
@@ -25,6 +26,13 @@ module XStocks
 
     def destroyable?(stock)
       !stock.positions.exists?
+    end
+
+    def destroy(stock)
+      return unless destroyable?(stock)
+
+      stock.destroy
+      delete_logo(stock)
     end
 
     def save(stock)

@@ -14,7 +14,9 @@ module Etl
       end
 
       def company(stock)
-        data_loader.get_json(company_url(stock.symbol))
+        json = data_loader.get_json(company_url(stock.symbol))
+        json['logo'] = download_logo(json)
+        json
       end
 
       def peers(stock)
@@ -46,6 +48,11 @@ module Etl
       end
 
       private
+
+      def download_logo(json)
+        logo_url = json['logo']
+        data_loader.download(logo_url) if logo_url.present?
+      end
 
       def company_url(symbol)
         "#{BASE_URL}/stock/profile2?symbol=#{cgi.escape(symbol)}&token=#{token}"

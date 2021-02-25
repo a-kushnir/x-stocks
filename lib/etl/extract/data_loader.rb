@@ -10,13 +10,16 @@ module Etl
         @logger = logger
       end
 
-      def download(path, url)
-        response = http_get(url)
+      def download(url, path = nil)
+        response = fetch(url)
         validate!(response, url)
         return unless response.is_a?(Net::HTTPSuccess)
-        return if response.body.size.zero?
 
-        File.open(path, 'wb') { |file| file << response.body }
+        if path
+          File.open(path, 'wb') { |file| file << response.body } unless response.body.size.zero?
+        else
+          response.body
+        end
       end
 
       def http_get(url, headers = {})
@@ -26,6 +29,17 @@ module Etl
         http = Net::HTTP.new(uri.hostname, uri.port)
         http.use_ssl = uri.scheme == 'https'
         http.request(request)
+      end
+
+      def fetch(url, headers = {}, limit: 10)
+        raise 'Too Many Redirects' if limit == 0
+
+        response = http_get(url, headers)
+        if response.is_a?(Net::HTTPRedirection)
+          fetch(response['location'], headers, limit: limit - 1)
+        else
+          response
+        end
       end
 
       def get_text(url, headers = {})

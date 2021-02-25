@@ -17,7 +17,7 @@ module Etl
 
             if source_image_url.present?
               loader = Etl::Extract::DataLoader.new(logger)
-              loader.download(stored_image_path, source_image_url)
+              loader.download(source_image_url, stored_image_path)
             end
           end
         rescue Exception => e

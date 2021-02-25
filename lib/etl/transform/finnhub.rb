@@ -17,9 +17,10 @@ module Etl
 
         if json.present?
           stock.ipo = json['ipo']
-          stock.logo = json['logo']
           stock.exchange ||= exchange_class.new.search_by(:finnhub_code, json['exchange']) if json['exchange'].present?
           stock.sector = json['finnhubIndustry'].presence || 'N/A'
+
+          XStocks::Stock.new.store_file(stock, json['logo'])
         end
 
         stock_class.new.save(stock)

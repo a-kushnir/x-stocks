@@ -97,9 +97,10 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
-    if XStocks::Stock.new.destroyable?(@stock)
-      @stock.destroy
-      flash[:notice] = "#{XStocks::Stock.new.to_s(@stock)} stock deleted"
+    stock = XStocks::Stock.new
+    if stock.destroyable?(@stock)
+      stock.destroy(@stock)
+      flash[:notice] = "#{stock.to_s(@stock)} stock deleted"
       redirect_to stocks_path
     else
       redirect_to stock_path(@stock)

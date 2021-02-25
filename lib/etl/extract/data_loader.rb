@@ -6,6 +6,8 @@ module Etl
     class DataLoader
       attr_reader :logger
 
+      TEXT_CONTENT_TYPES = %w[application/json text/html]
+
       def initialize(logger)
         @logger = logger
       end
@@ -76,7 +78,8 @@ module Etl
 
       def validate!(response, url)
         log_info("#{response.code} #{url}")
-        log_info("(#{response.body.size} bytes): #{response.body}")
+        is_text = TEXT_CONTENT_TYPES.include?(response.content_type)
+        log_info("(#{response.content_type}, #{response.body.size} bytes): #{is_text ? response.body : '<binary>'}")
         raise "#{response.code} - #{response.body}" if response.code != '200'
       end
 

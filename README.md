@@ -43,7 +43,7 @@ News, vital market information with links to Sceeners and other important pages.
 ## Stock Page
 All gathered information about a single stock.
 
-![stock-information](https://user-images.githubusercontent.com/1454297/92982322-e6860c00-f45a-11ea-9d20-d855d9140279.png)
+![stock-information](https://user-images.githubusercontent.com/1454297/109260607-b12c6b00-77bb-11eb-86e1-7c22afa8389c.png)
 
 ## My Positions
 All gathered information about user portfolio. Information can be presented in Table or Chart mode or exported to Excel format.
@@ -56,6 +56,11 @@ All gathered information about user dividends. Information can be presented in T
 
 ![divident-table](https://user-images.githubusercontent.com/1454297/92982334-f30a6480-f45a-11ea-9ce7-9855bd6fd86a.png)
 ![divident-charts](https://user-images.githubusercontent.com/1454297/92982335-f4d42800-f45a-11ea-86ca-3b1a607eefe9.png)
+
+## API Documentation
+The project has API that allows retrieving information about stocks, exhanges, and user portfolio. API Key and the documentation are available at My Profile page.
+
+![api-documentation](https://user-images.githubusercontent.com/1454297/109259195-f307e200-77b8-11eb-8a0f-7936b16daecb.png)
 
 # Requirements
 
@@ -142,4 +147,5 @@ xStocks is under the MIT license. See the [LICENSE](https://github.com/a-kushnir
 [(Back to top)](#table-of-contents)
 
 * [Live version](http://x-stocks.herokuapp.com/) on Heroku
+* [API Documentation](http://x-stocks.herokuapp.com/api_docs) on Heroku
 * [Source code](https://github.com/a-kushnir/x-stocks)

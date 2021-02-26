@@ -4,9 +4,9 @@ module API
   module Entities
     # Exchange Entity Definitions
     class Exchange < API::Entities::Base
-      expose :name
-      expose :code
-      expose :region
+      expose :name, documentation: { required: true }
+      expose :code, documentation: { required: true }
+      expose :region, documentation: { required: true }
     end
   end
 end

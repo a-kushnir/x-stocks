@@ -15,14 +15,19 @@ module API
           info: { title: 'xStocks API' },
           mount_path: '/v1/swagger_doc',
           base_path: '/api/v1',
-          doc_version: '1.0.4',
+          doc_version: XStocks::VERSION,
           add_version: false,
           hide_documentation_path: true,
           models: [
+            API::Entities::Company,
+            API::Entities::Dividends,
+            API::Entities::Earnings,
             API::Entities::Exchange,
+            API::Entities::Portfolio,
             API::Entities::Position,
-            API::Entities::Stock,
-            API::Entities::Portfolio
+            API::Entities::Quote,
+            API::Entities::Recommendation,
+            API::Entities::Stock
           ],
           schemes: ['http'],
           security_definitions: {

@@ -51,7 +51,7 @@ module Etl
 
       def download_logo(json)
         logo_url = json['logo']
-        json['logo'] = data_loader.download(logo_url) if logo_url.present?
+        json['logo'] = data_loader.get_redirect(json['logo']) if logo_url.present?
       end
 
       def company_url(symbol)

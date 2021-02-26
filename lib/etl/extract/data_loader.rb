@@ -44,6 +44,11 @@ module Etl
         end
       end
 
+      def get_redirect(url, headers = {})
+        response = http_get(url, headers)
+        response['location'] if response.is_a?(Net::HTTPRedirection)
+      end
+
       def get_text(url, headers = {})
         response = http_get(url, headers)
         validate!(response, url)

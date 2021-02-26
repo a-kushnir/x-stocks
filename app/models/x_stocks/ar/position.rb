@@ -5,7 +5,7 @@ module XStocks
     # Position Active Record Model
     class Position < XStocks::AR::ApplicationRecord
       belongs_to :user
-      belongs_to :stock, optional: true
+      belongs_to :stock, optional: true, touch: true
 
       validates :user, presence: true
       validates :stock, presence: true, uniqueness: { scope: :user }

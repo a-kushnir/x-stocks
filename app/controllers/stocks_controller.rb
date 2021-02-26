@@ -187,7 +187,7 @@ class StocksController < ApplicationController
   end
 
   def data(stocks)
-    positions = XStocks::AR::Position.where(stock: stocks, user: current_user).all
+    positions = XStocks::AR::Position.where(stock_id: stocks.map(&:id), user: current_user).all
     positions = positions.index_by(&:stock_id)
 
     stocks.map do |stock|

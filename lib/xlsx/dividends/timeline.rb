@@ -21,9 +21,9 @@ module XLSX
 
           sheet.add_row header_row, style: header_styles
 
-          positions = positions.index_by(&:stock_id)
+          @positions = positions.index_by(&:stock_id)
           timeline.each do |data|
-            sheet.add_row data_row(div, data, positions[data[:stock].id]), style: data_styles
+            sheet.add_row data_row(div, data), style: data_styles
           end
 
           sheet.add_row footer_row(timeline), style: footer_styles
@@ -34,6 +34,10 @@ module XLSX
 
       private
 
+      def position(data)
+        positions[data[:stock].id]
+      end
+
       def header_row
         ['Symbol', 'Yield', 'Safety', 'Payment Date', 'Ex Date', 'Shares', 'Amount per Share', 'Total Amount']
       end
@@ -42,7 +46,8 @@ module XLSX
         styles[:header, [:header_right] * 7]
       end
 
-      def data_row(_div, data, position)
+      def data_row(_div, data)
+        position = position(data)
         stock = XStocks::Stock.new(position.stock)
 
         [
@@ -62,7 +67,8 @@ module XLSX
       end
 
       def footer_row(timeline)
-        [[nil] * 6, 'Total', timeline.map { |data| data[:amount] }.sum].flatten
+        total_amount = timeline.map { |data| data[:amount] * position(data).shares }.sum
+        [[nil] * 6, 'Total', total_amount].flatten
       end
 
       def footer_styles
@@ -73,7 +79,7 @@ module XLSX
         [[10] * 3, [13] * 3, 15, 13].flatten
       end
 
-      attr_reader :freeze, :styles
+      attr_reader :freeze, :styles, :positions
     end
   end
 end

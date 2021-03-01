@@ -25,7 +25,7 @@ class Dividend
     results
   end
 
-  def estimate(stock)
+  def estimate(stock, include_stock: false)
     last_div = stock.periodic_dividend_details.last
     return nil unless last_div
     return nil if stock.div_suspended?
@@ -80,9 +80,15 @@ class Dividend
 
     results.each do |row|
       row[:month] = row[:payment_date].at_beginning_of_month
+      row[:stock] = stock if include_stock
     end
 
     results
+  end
+
+  def timeline(positions)
+    estimates = positions.map { |position| estimate(XStocks::Stock.new(position.stock), include_stock: true) }.compact.flatten
+    estimates.sort_by { |estimate| estimate[:payment_date] }
   end
 
   private

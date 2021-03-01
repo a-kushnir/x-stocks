@@ -25,7 +25,7 @@ describe Dividend do
   end
 
   describe '#estimate' do
-    let(:periodic_dividend_details) { [{ 'payment_date' => date.today.to_s(:db), 'amount' => 7.123456 }] }
+    let(:periodic_dividend_details) { [{ 'payment_date' => date.today.to_s(:db), 'ex_date' => (date.today - 10).to_s(:db), 'amount' => 7.123456 }] }
     let(:div_suspended?) { false }
     let(:dividend_frequency) { 'annual' }
 
@@ -52,9 +52,9 @@ describe Dividend do
 
       it 'returns estimated dividends' do
         month = date.today.at_beginning_of_month
-        payment_date = date.today
+        today = date.today
         dividends = [
-          { amount: 7.123456, month: month, payment_date: payment_date }
+          { amount: 7.123456, month: month, ex_date: today - 10, payment_date: today }
         ]
         expect(calculator.estimate(stock)).to eq(dividends)
       end
@@ -65,9 +65,9 @@ describe Dividend do
 
       it 'returns estimated dividends' do
         month = date.today.at_beginning_of_month
-        payment_date = date.today
+        today = date.today
         dividends = [
-          { amount: 7.123456, month: month, payment_date: payment_date }
+          { amount: 7.123456, month: month, ex_date: today - 10, payment_date: today }
         ]
         expect(calculator.estimate(stock)).to eq(dividends)
       end
@@ -78,10 +78,10 @@ describe Dividend do
 
       it 'returns estimated dividends' do
         month = date.today.at_beginning_of_month
-        payment_date = date.today
+        today = date.today
         dividends = [
-          { amount: 7.123456, month: month, payment_date: payment_date },
-          { amount: 7.123456, month: month + 6.month, payment_date: payment_date + 6.month }
+          { amount: 7.123456, month: month + 0.month, ex_date: today - 10 + 0.month, payment_date: today + 0.month },
+          { amount: 7.123456, month: month + 6.month, ex_date: today - 10 + 6.month, payment_date: today + 6.month }
         ]
         expect(calculator.estimate(stock)).to eq(dividends)
       end
@@ -92,12 +92,12 @@ describe Dividend do
 
       it 'returns estimated dividends' do
         month = date.today.at_beginning_of_month
-        payment_date = date.today
+        today = date.today
         dividends = [
-          { amount: 7.123456, month: month, payment_date: payment_date },
-          { amount: 7.123456, month: month + 3.month, payment_date: payment_date + 3.month },
-          { amount: 7.123456, month: month + 6.month, payment_date: payment_date + 6.month },
-          { amount: 7.123456, month: month + 9.month, payment_date: payment_date + 9.month }
+          { amount: 7.123456, month: month + 0.month, ex_date: today - 10 + 0.month, payment_date: today + 0.month },
+          { amount: 7.123456, month: month + 3.month, ex_date: today - 10 + 3.month, payment_date: today + 3.month },
+          { amount: 7.123456, month: month + 6.month, ex_date: today - 10 + 6.month, payment_date: today + 6.month },
+          { amount: 7.123456, month: month + 9.month, ex_date: today - 10 + 9.month, payment_date: today + 9.month }
         ]
         expect(calculator.estimate(stock)).to eq(dividends)
       end
@@ -108,8 +108,8 @@ describe Dividend do
 
       it 'returns estimated dividends' do
         month = date.today.at_beginning_of_month
-        payment_date = date.today
-        dividends = (0..11).map { |i| { amount: 7.123456, month: month + i.month, payment_date: payment_date + i.month } }
+        today = date.today
+        dividends = (0..11).map { |i| { amount: 7.123456, month: month + i.month, ex_date: today - 10 + i.month, payment_date: today + i.month } }
         expect(calculator.estimate(stock)).to eq(dividends)
       end
     end

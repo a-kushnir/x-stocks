@@ -31,39 +31,45 @@ class Dividend
     return nil if stock.div_suspended?
 
     payment_date = Date.parse(last_div['payment_date'])
+    ex_date = Date.parse(last_div['ex_date'])
     amount = last_div['amount'].to_d
 
     results = []
 
     case stock.dividend_frequency
     when 'annual'
-      results << { payment_date: payment_date, amount: amount }
+      results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       (2 * 1).times do
         payment_date = payment_date >> 12
-        results << { payment_date: payment_date, amount: amount }
+        ex_date = ex_date >> 12
+        results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       end
     when 'semi-annual'
-      results << { payment_date: payment_date, amount: amount }
+      results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       (2 * 2).times do
         payment_date = payment_date >> 6
-        results << { payment_date: payment_date, amount: amount }
+        ex_date = ex_date >> 6
+        results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       end
     when 'quarterly'
-      results << { payment_date: payment_date, amount: amount }
+      results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       (2 * 4).times do
         payment_date = payment_date >> 3
-        results << { payment_date: payment_date, amount: amount }
+        ex_date = ex_date >> 3
+        results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       end
     when 'monthly'
       3.times do
         payment_date = payment_date << 1
+        ex_date = ex_date << 1
       end
       (2 * 12).times do
         payment_date = payment_date >> 1
-        results << { payment_date: payment_date, amount: amount }
+        ex_date = ex_date >> 1
+        results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
       end
     else
-      results << { payment_date: payment_date, amount: amount }
+      results << { payment_date: payment_date, ex_date: ex_date, amount: amount }
     end
 
     from_date, to_date = date_range

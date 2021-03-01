@@ -1,34 +1,63 @@
 <% div = ::Dividend.new %>
 <% est = div.estimate(@stock) %>
 <% if est %>
-  <strong>Estimated Dividends</strong>
+  <h4>Dividends <small><%= est.size > 6 ? '6M' : '1Y' %> Estimate</small></h4>
 
-  <table class="table table-sm stock-dividends-table d-none d-lg-table">
+  <% est = est[0..5] %>
+  <table class="table table-sm stock-dividends-table d-none d-md-table">
     <thead>
     <tr>
-      <% div.months.each_with_index do |month, index| %>
-        <td class="text-right" style="width: 8%"><%= index == 0 || index == 11 ? month.strftime("%b'%y") : month.strftime('%b') %></td>
+      <th style="width: 8%">Month</th>
+      <% est.each do |month_est| %>
+        <% month = month_est[:month] %>
+        <th class="text-right" style="width: 8%"><%= month.strftime("%b'%y") %></th>
       <% end %>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <% div.months.each do |month| %>
-        <% amount = est.detect { |e| e[:month] == month }&.dig(:amount) %>
+      <td>Amount</td>
+      <% est.each do |month_est| %>
+        <% amount = month_est[:amount] %>
         <td class="text-right"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td text="text-nowrap">Ex Date</td>
+      <% est.each do |month_est| %>
+        <% ex_date = month_est[:ex_date] %>
+        <td class="text-right text-nowrap"><%= ex_date.strftime("%b, %d") if ex_date %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="text-nowrap">Payment Date</td>
+      <% est.each do |month_est| %>
+        <% payment_date = month_est[:payment_date] %>
+        <td class="text-right text-nowrap"><%= payment_date.strftime("%b, %d") if payment_date %></td>
       <% end %>
     </tr>
     </tbody>
   </table>
 
-  <table class="table table-sm stock-dividends-table d-lg-none">
+  <table class="table table-sm stock-dividends-table d-md-none">
+    <thead>
+    <tr>
+      <th style="width: 25%">Month</th>
+      <th class="text-right" style="width: 25%">Amount</th>
+      <th class="text-right" style="width: 25%">Ex Date</th>
+      <th class="text-right" style="width: 25%">Payment Date</th>
+    </tr>
+    </thead>
     <tbody>
       <% div.months.each_with_index do |month| %>
-      <% amount = est.detect { |e| e[:month] == month }&.dig(:amount) %>
+      <% months_est = est.detect { |e| e[:month] == month } %>
+      <% amount = months_est&.dig(:amount) %>
       <% if amount %>
         <tr>
           <td class="text-left"><%= month.strftime("%b'%y") %></td>
           <td class="text-right"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
+          <td class="text-right"><%= months_est&.dig(:ex_date).strftime("%b, %d") if months_est&.dig(:ex_date) %></td>
+          <td class="text-right"><%= months_est&.dig(:payment_date).strftime("%b, %d") if months_est&.dig(:payment_date) %></td>
         </tr>
       <% end %>
       <% end %>

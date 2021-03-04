@@ -156,8 +156,8 @@ module Etl
         return if stock.current_price.to_f.zero?
 
         value = (100 + stock.yahoo_discount) * stock.current_price / 100
-        power = Math.log10(value).round
-        value.round(3 - power)
+        power = Math.log10(value).floor
+        value.round(2 - power)
       end
 
       attr_reader :date

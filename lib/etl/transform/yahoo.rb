@@ -155,7 +155,9 @@ module Etl
         return unless stock.yahoo_discount
         return if stock.current_price.to_f.zero?
 
-        (100 + stock.yahoo_discount) * stock.current_price / 100
+        value = (100 + stock.yahoo_discount) * stock.current_price / 100
+        power = Math.log10(value).round
+        value.round(3 - power)
       end
 
       attr_reader :date

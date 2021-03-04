@@ -25,6 +25,7 @@ module Etl
         set(stock, :yahoo_rec_details, to_rec(quote_summary_store&.dig('recommendationTrend', 'trend')))
         set(stock, :est_annual_dividend, quote_summary_store&.dig('summaryDetail', 'dividendRate', 'raw'))
         set(stock, :yahoo_discount, research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount'))
+        set(stock, :yahoo_fair_price, yahoo_fair_price(stock))
         set(stock, :description, quote_summary_store&.dig('summaryProfile', 'longBusinessSummary'))
         set(stock, :yahoo_price_target, price_target(quote_summary_store&.dig('financialData')))
         set(stock, :earnings, earnings(quote_summary_store&.dig('earnings', 'earningsChart')))
@@ -148,6 +149,13 @@ module Etl
         end
 
         result
+      end
+
+      def yahoo_fair_price(stock)
+        return unless stock.yahoo_discount
+        return if stock.current_price.to_f.zero?
+
+        (100 + stock.yahoo_discount) * stock.current_price / 100
       end
 
       attr_reader :date

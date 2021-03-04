@@ -11,6 +11,7 @@ module API
       expose :yahoo_rec, format_with: :float, documentation: { type: :float }
       expose :yahoo_rec_details, documentation: { type: :object }
       expose :yahoo_discount, documentation: { type: :number }
+      expose :yahoo_fair_price, format_with: :float, documentation: { type: :float }
       expose :yahoo_price_target, documentation: { type: :object }
       expose :finnhub_beta, format_with: :float, documentation: { type: :float }
       expose :finnhub_price_target, documentation: { type: :object }

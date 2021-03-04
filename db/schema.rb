@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_150658) do
+ActiveRecord::Schema.define(version: 2021_03_04_082639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_150658) do
     t.string "yahoo_price_target"
     t.string "financials_yearly"
     t.string "financials_quarterly"
+    t.decimal "yahoo_fair_price", precision: 10, scale: 2
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
     t.index ["updated_at"], name: "index_stocks_on_updated_at"

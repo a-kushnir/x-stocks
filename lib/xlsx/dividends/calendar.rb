@@ -43,11 +43,11 @@ module XLSX
           month_names << (edge_months.include?(month) ? month.strftime("%b'%y") : month.strftime('%b'))
         end
 
-        ['Symbol', 'Yield', 'Safety', month_names, 'Total'].flatten
+        ['Symbol', 'Company', 'Yield', 'Safety', month_names, 'Total'].flatten
       end
 
       def header_styles
-        styles[:header, [:header_right] * 15]
+        styles[[:header] * 2, [:header_right] * 15]
       end
 
       def data_row(div, months, position)
@@ -57,17 +57,13 @@ module XLSX
 
         row = [
           stock.symbol,
-          if div_suspended
-            'Suspended'
-          else
-            stock.est_annual_dividend_pct ? stock.est_annual_dividend_pct / 100 : nil
-          end,
-          stock.dividend_rating ? (stock.dividend_rating * 20).to_i : nil
+          stock.company_name,
+          est_annual_dividend_pct(stock, div_suspended),
+          dividend_rating(stock)
         ]
 
         div.months.each_with_index do |month, index|
-          month_est = estimate ? estimate.detect { |e| e[:month] == month } : nil
-          amount = month_est ? month_est[:amount] * position.shares : nil
+          amount = amount(estimate, month, position)
           months[index] += amount if amount
           row << amount
         end
@@ -77,20 +73,41 @@ module XLSX
         row
       end
 
+      def est_annual_dividend_pct(stock, div_suspended)
+        if div_suspended
+          'Sus.'
+        elsif stock.est_annual_dividend_pct
+           stock.est_annual_dividend_pct / 100
+        end
+      end
+
+      def dividend_rating(stock)
+        (stock.dividend_rating * 20).to_i if stock.dividend_rating
+      end
+
+      def amount(estimate, month, position)
+        return unless estimate
+
+        month_est = estimate.detect { |e| e[:month] == month }
+        return unless month_est
+
+        month_est[:amount] * position.shares
+      end
+
       def data_styles
-        styles[:normal, :percent, :normal, [:money] * 13]
+        styles[[:normal] * 2, :percent, :normal, [:money] * 13]
       end
 
       def footer_row(months)
-        [[nil] * 2, 'Total', months, months.sum].flatten
+        [[nil] * 3, 'Total', months, months.sum].flatten
       end
 
       def footer_styles
-        styles[[:header_right] * 3, [:header_money] * 13]
+        styles[[:header] * 3, :header_right, [:header_money] * 13]
       end
 
       def column_widths
-        [[10] * 3, [13] * 13].flatten
+        [10, 25, [10] * 2, [13] * 13].flatten
       end
 
       attr_reader :freeze, :styles

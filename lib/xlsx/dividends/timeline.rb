@@ -39,11 +39,11 @@ module XLSX
       end
 
       def header_row
-        ['Symbol', 'Yield', 'Safety', 'Payment Date', 'Ex Date', 'Shares', 'Amount per Share', 'Total Amount']
+        ['Symbol', 'Company', 'Yield', 'Safety', 'Payment Date', 'Ex Date', 'Shares', 'Amount per Share', 'Total Amount']
       end
 
       def header_styles
-        styles[:header, [:header_right] * 7]
+        styles[[:header] * 2, [:header_right] * 7]
       end
 
       def data_row(_div, data)
@@ -52,6 +52,7 @@ module XLSX
 
         [
           stock.symbol,
+          stock.company_name,
           stock.est_annual_dividend_pct ? stock.est_annual_dividend_pct / 100 : nil,
           stock.dividend_rating ? (stock.dividend_rating * 20).to_i : nil,
           data[:payment_date],
@@ -63,20 +64,20 @@ module XLSX
       end
 
       def data_styles
-        styles[:normal, :percent, :normal, [:date] * 2, :normal, :money5, :money]
+        styles[[:normal] * 2, :percent, :normal, [:date] * 2, :normal, :money5, :money]
       end
 
       def footer_row(timeline)
         total_amount = timeline.map { |data| data[:amount] * position(data).shares }.sum
-        [[nil] * 6, 'Total', total_amount].flatten
+        [[nil] * 7, 'Total', total_amount].flatten
       end
 
       def footer_styles
-        styles[[:header_right] * 7, :header_money, [:header_right] * 6]
+        styles[[:header] * 7, :header_right, :header_money]
       end
 
       def column_widths
-        [[10] * 3, [13] * 3, 15, 13].flatten
+        [10, 25, [10] * 2, [13] * 3, 15, 13].flatten
       end
 
       attr_reader :freeze, :styles, :positions

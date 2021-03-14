@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <%= form.text_field :yahoo_fair_price, value: number_with_precision(@stock.yahoo_fair_price, precision: 2), autocomplete: :off %>
+      <%= form.text_field :yahoo_fair_price, value: number_with_precision(@stock.yahoo_fair_price, precision: 2), autocomplete: :off, label: 'Fair Price', prepend: '$' %>
 
       <div class="my-button-group-centered">
         <%= link_to 'Back', back_url, class: 'btn btn-outline-dark' %>

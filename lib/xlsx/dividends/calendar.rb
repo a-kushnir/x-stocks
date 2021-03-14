@@ -77,7 +77,7 @@ module XLSX
         if div_suspended
           'Sus.'
         elsif stock.est_annual_dividend_pct
-           stock.est_annual_dividend_pct / 100
+          stock.est_annual_dividend_pct / 100
         end
       end
 

@@ -20,7 +20,7 @@ module Etl
         discount = research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')
 
         stock.company_name ||= quote_summary_store&.dig('price', 'shortName')
-        stock.current_price ||= quote_summary_store&.dig('price', 'regularMarketPrice', 'raw')
+        stock.current_price ||= current_price(quote_summary_store&.dig('price', 'regularMarketPrice'))
 
         set(stock, :outstanding_shares, stream_data_store&.dig('quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
         set(stock, :payout_ratio, to_pct(quote_summary_store&.dig('summaryDetail', 'payoutRatio', 'raw')))
@@ -162,6 +162,14 @@ module Etl
         value = (100 + stock.yahoo_discount) * stock.current_price / 100
         power = Math.log10(value).floor
         value.round(2 - power)
+      end
+
+      def current_price(data)
+        if data.is_a?(Hash)
+          data['raw']
+        elsif data.is_a?(Float)
+          data
+        end
       end
 
       attr_reader :date

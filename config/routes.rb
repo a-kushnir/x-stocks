@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :services, only: [:index] do
     member do
       get :run, to: 'services#run_one'
+      post :run, to: 'services#submit_one'
       get :log
       get :error
       get :file

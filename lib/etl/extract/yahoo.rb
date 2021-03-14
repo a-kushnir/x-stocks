@@ -21,9 +21,13 @@ module Etl
         json.parse(data)
       end
 
-      def stock_list(url)
-        text = data_loader.get_text(url, headers)
-        symbols = text.scan(SYMBOL_REGEX).map(&:first)
+      def stock_list_from_url(url)
+        page = data_loader.get_text(url, headers)
+        stock_list_from_page(page)
+      end
+
+      def stock_list_from_page(page)
+        symbols = page.scan(SYMBOL_REGEX).map(&:first)
         symbols.uniq.sort
       end
 

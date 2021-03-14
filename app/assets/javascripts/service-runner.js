@@ -16,6 +16,12 @@ function runService(form) {
     scrollTop: control.offset().top
   }, 2000);
 
+  if ($(form).children('input[type=file]').length > 0) {
+    setMessage('Uploading file...');
+    $(form).submit();
+    return;
+  }
+
   esError = false;
   let messageReceived = false;
   esComponent = submitEventSource(form, {

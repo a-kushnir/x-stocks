@@ -31,23 +31,36 @@ module Etl
         Etl::Transform::Yahoo.new.summary(stock, json)
       end
 
-      def scan_page(url:)
-        XStocks::Service.new.lock(:scan_page_yahoo, force: true) do |logger|
+      def scan_url(url:)
+        XStocks::Service.new.lock(:scan_url_yahoo, force: true) do |logger|
           loader = Etl::Extract::DataLoader.new(logger)
-          symbols = Etl::Extract::Yahoo.new(loader).stock_list(url)
+          symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_url(url)
 
-          logger.init_file('scan_page_yahoo.csv', 'text/csv') if symbols.any?
-          add_csv_file_row(%w[symbol exists company_name current_price est_annual_dividend est_annual_dividend_pct discount fair_price recommendation], logger: logger)
+          logger.init_file('scan_url_yahoo.csv', 'text/csv') if symbols.any?
+          scan_symbols(symbols, loader: loader, logger: logger)
+        end
+      end
 
-          each_symbol_with_message(symbols) do |symbol, message|
-            scan_symbol(symbol, loader: loader, logger: logger)
-            yield message if block_given?
-            sleep(PAUSE)
-          end
+      def scan_file(file:)
+        XStocks::Service.new.lock(:scan_file_yahoo, force: true) do |logger|
+          loader = Etl::Extract::DataLoader.new(logger)
+          symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_page(file)
+
+          logger.init_file('scan_file_yahoo.csv', 'text/csv') if symbols.any?
+          scan_symbols(symbols, loader: loader, logger: logger)
         end
       end
 
       private
+
+      def scan_symbols(symbols, loader:, logger:)
+        add_csv_file_row(%w[symbol exists company_name current_price est_annual_dividend est_annual_dividend_pct discount fair_price recommendation], logger: logger)
+        each_symbol_with_message(symbols) do |symbol, message|
+          scan_symbol(symbol, loader: loader, logger: logger)
+          yield message if block_given?
+          sleep(PAUSE)
+        end
+      end
 
       def scan_symbol(symbol, loader:, logger:)
         json = Etl::Extract::Yahoo.new(loader).summary(symbol)

@@ -139,9 +139,14 @@ class ServiceRunner
                         Etl::Refresh::Finnhub.new.company_all_stocks!(force: true, &block)
                       end),
 
-    ServiceRunner.new('Scan page [Yahoo]', 'scan_page_yahoo', { service_code: 'scan_page_yahoo', arguments: [:url] },
+    ServiceRunner.new('Scan Stock List URL [Yahoo]', 'scan_url_yahoo', { service_code: 'scan_url_yahoo', arguments: [:url] },
                       lambda do |args, &block|
-                        Etl::Refresh::Yahoo.new.scan_page(url: args[:url], &block)
+                        Etl::Refresh::Yahoo.new.scan_url(url: args[:url], &block)
+                      end),
+
+    ServiceRunner.new('Scan Stock List File [Yahoo]', 'scan_file_yahoo', { service_code: 'scan_file_yahoo', arguments: [:file] },
+                      lambda do |args, &block|
+                        Etl::Refresh::Yahoo.new.scan_file(file: args[:file].read, &block)
                       end)
   ].freeze
 end

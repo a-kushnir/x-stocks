@@ -23,13 +23,15 @@
       <% last_run_at = serv&.last_run_at %>
       <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
-        <%= form_tag(run_service_path(service_runner)) do %>
+        <%= form_tag(run_service_path(service_runner), multipart: true) do %>
           <% (service_runner.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
               <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }),
                              class: 'selectpicker', data: {live_search: true, container: 'body'}) %>
             <% elsif arg == :url %>
               <%= text_field_tag(:url, nil, { autocomplete: :off, placeholder: 'URL' }) %>
+            <% elsif arg == :file %>
+              <%= file_field_tag(:file) %>
             <% end %>
           <% end %>
         <% end %>

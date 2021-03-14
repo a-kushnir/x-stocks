@@ -21,7 +21,7 @@
   <tfoot class="thead-light">
     <tr>
       <th class="text-right border-right">Total</th>
-      <th colspan="4"></th>
+      <th colspan="5"></th>
       <th class="text-right"><%= number_to_currency(@summary[:total_cost]) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:market_value]) %></th>
       <th class="text-right <%= delta_class(@summary[:gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:gain_loss])) %></th>

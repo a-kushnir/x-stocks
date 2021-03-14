@@ -122,14 +122,14 @@ class DividendsController < ApplicationController
   def month_dividends(estimates, div_suspended, position, month)
     return nil if div_suspended
 
-    amount = estimates.detect { |e| e[:month] == month }&.dig(:amount)
+    amount = estimates&.detect { |e| e[:month] == month }&.dig(:amount)
     (amount * position.shares).round(2).to_f if amount
   end
 
   def annual_dividends(estimates, div_suspended, position)
     return nil if div_suspended
 
-    amount = estimates.map { |estimate| estimate[:amount] }.sum
+    amount = estimates&.map { |estimate| estimate[:amount] }&.sum
     (amount * position.shares).round(2).to_f if amount
   end
 

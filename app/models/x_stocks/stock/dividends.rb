@@ -42,10 +42,10 @@ module XStocks
             begin
               100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4)
             rescue StandardError
-              0
+              nil
             end
           else
-            0
+            nil
           end
         end
       end

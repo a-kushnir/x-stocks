@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get :run, to: 'services#run_one'
       get :log
       get :error
+      get :file
     end
     collection do
       # GET Required by Server-Sent Events feature

@@ -35,6 +35,9 @@ module XStocks
         raise e
       ensure
         service.log = logger.log
+        service.file_name = logger.file_name
+        service.file_type = logger.file_type
+        service.file_content = logger.file_content
         service.last_run_at = DateTime.now
         service.locked_at = nil
         service.save!

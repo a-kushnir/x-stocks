@@ -25,19 +25,19 @@ describe Etl::Extract::Yahoo do
     cgi
   end
 
-  let(:stock) { OpenStruct.new(symbol: 'SYMBOL') }
+  let(:symbol) { 'SYMBOL' }
 
   describe '#summary' do
     it 'returns a hash' do
-      expect(extractor.summary(stock)).to be_kind_of(Hash)
+      expect(extractor.summary(symbol)).to be_kind_of(Hash)
     end
 
     it 'returns a hash with 2 keys' do
-      expect(extractor.summary(stock).keys).to eq(%w[context plugins])
+      expect(extractor.summary(symbol).keys).to eq(%w[context plugins])
     end
 
     it 'calls get_text' do
-      extractor.summary(stock)
+      extractor.summary(symbol)
       expect(data_loader).to have_received(:get_text)
     end
   end

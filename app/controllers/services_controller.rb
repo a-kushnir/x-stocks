@@ -26,13 +26,31 @@ class ServicesController < ApplicationController
 
   def log
     find_service_runner do |service_runner|
-      send_data(service_runner.service&.log, filename: 'service-log.txt', type: 'text/plain')
+      service = service_runner.service
+
+      send_data(service&.log,
+                filename: "#{params[:id]}-log.txt",
+                type: 'text/plain')
     end
   end
 
   def error
     find_service_runner do |service_runner|
-      send_data(service_runner.service&.error, filename: 'service-error.txt', type: 'text/plain')
+      service = service_runner.service
+
+      send_data(service&.error,
+                filename: "#{params[:id]}-error.txt",
+                type: 'text/plain')
+    end
+  end
+
+  def file
+    find_service_runner do |service_runner|
+      service = service_runner.service
+
+      send_data(service&.file_content,
+                filename: service&.file_name || "#{params[:id]}-file.txt",
+                type: service&.file_type || 'text/plain')
     end
   end
 

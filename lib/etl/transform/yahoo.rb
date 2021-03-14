@@ -18,6 +18,9 @@ module Etl
         quote_summary_store = summary&.dig('QuoteSummaryStore')
         research_page_store = summary&.dig('ResearchPageStore')
 
+        stock.company_name ||= quote_summary_store&.dig('price', 'shortName')
+        stock.current_price ||= quote_summary_store&.dig('price', 'regularMarketPrice', 'raw')
+
         set(stock, :outstanding_shares, stream_data_store&.dig('quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
         set(stock, :payout_ratio, to_pct(quote_summary_store&.dig('summaryDetail', 'payoutRatio', 'raw')))
         set(stock, :yahoo_beta, quote_summary_store&.dig('defaultKeyStatistics', 'beta', 'raw'))

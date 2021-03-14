@@ -6,16 +6,25 @@ module Etl
     class Yahoo
       BASE_URL = 'https://finance.yahoo.com'
 
+      DATA_REGEX = /root.App.main = ({.+});/i.freeze
+      SYMBOL_REGEX = /"symbol":"([^"]+)"/.freeze
+
       def initialize(data_loader, cgi: CGI, json: JSON)
         @data_loader = data_loader
         @cgi = cgi
         @json = json
       end
 
-      def summary(stock)
-        text = data_loader.get_text(summary_url(stock.symbol), headers)
-        data = text.match(/root.App.main = ({.*});/i).captures.first
+      def summary(symbol)
+        text = data_loader.get_text(summary_url(symbol), headers)
+        data = text.match(DATA_REGEX).captures.first
         json.parse(data)
+      end
+
+      def stock_list(url)
+        text = data_loader.get_text(url, headers)
+        symbols = text.scan(SYMBOL_REGEX).map(&:first)
+        symbols.uniq.sort
       end
 
       private

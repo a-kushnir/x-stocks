@@ -7,7 +7,7 @@ describe Etl::Transform::Yahoo do
   subject(:transformer) { described_class.new(date: date) }
 
   let(:date) { OpenStruct.new(today: Date.new(2020, 1, 11)) }
-  let(:stock) { mock_model(symbol: 'AAPL', current_price: 345.67) }
+  let(:stock) { mock_model(symbol: 'AAPL', company_name: nil, current_price: nil) }
 
   describe '#summary' do
     let(:stores) do
@@ -16,6 +16,10 @@ describe Etl::Transform::Yahoo do
           'quoteData' => { 'AAPL' => { 'sharesOutstanding' => { 'raw' => 123.45 } } }
         },
         'QuoteSummaryStore' => {
+          'price' => {
+            'shortName' => 'Apple Inc.',
+            'regularMarketPrice' => { 'raw' => 345.67 }
+          },
           'summaryDetail' => { 'payoutRatio' => { 'raw' => 0.72 }, 'dividendRate' => { 'raw' => 4.33 } },
           'defaultKeyStatistics' => { 'beta' => { 'raw' => 0.34 } },
           'financialData' => {
@@ -46,6 +50,7 @@ describe Etl::Transform::Yahoo do
 
       calls = {
         symbol: 'AAPL',
+        company_name: 'Apple Inc.',
         current_price: 345.67,
         outstanding_shares: 123.45,
         payout_ratio: 72.0,

@@ -4,11 +4,14 @@ module XStocks
   class Service
     # Service Logger Business Model
     class Logger
-      attr_reader :log
+      attr_reader :log, :file_name, :file_type, :file_content
       attr_accessor :text_size_limit
 
       def initialize
         @log = ''
+        @file_name = nil
+        @file_type = nil
+        @file_content = nil
         @text_size_limit = 512
       end
 
@@ -18,6 +21,16 @@ module XStocks
 
       def log_error(error)
         @log += "[#{DateTime.now}] ERROR Message: #{error.message}\nBacktrace:\n#{Backtrace.clean(error.backtrace).join("\n")}"
+      end
+
+      def init_file(file_name, file_type)
+        @file_name = file_name
+        @file_type = file_type
+        @file_content = ''
+      end
+
+      def append_file(file_content)
+        @file_content += file_content
       end
 
       private

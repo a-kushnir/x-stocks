@@ -137,6 +137,11 @@ class ServiceRunner
     ServiceRunner.new('Update company information [Finnhub]', 'company_finnhub', { service_code: 'company_finnhub' },
                       lambda do |_args, &block|
                         Etl::Refresh::Finnhub.new.company_all_stocks!(force: true, &block)
+                      end),
+
+    ServiceRunner.new('Scan page [Yahoo]', 'scan_page_yahoo', { service_code: 'scan_page_yahoo', arguments: [:url] },
+                      lambda do |args, &block|
+                        Etl::Refresh::Yahoo.new.scan_page(url: args[:url], &block)
                       end)
   ].freeze
 end

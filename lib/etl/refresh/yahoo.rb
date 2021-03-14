@@ -27,8 +27,48 @@ module Etl
 
       def daily_one_stock!(stock, logger: nil)
         loader = Etl::Extract::DataLoader.new(logger)
-        json = Etl::Extract::Yahoo.new(loader).summary(stock)
+        json = Etl::Extract::Yahoo.new(loader).summary(stock.symbol)
         Etl::Transform::Yahoo.new.summary(stock, json)
+      end
+
+      def scan_page(url:)
+        XStocks::Service.new.lock(:scan_page_yahoo, force: true) do |logger|
+          loader = Etl::Extract::DataLoader.new(logger)
+          symbols = Etl::Extract::Yahoo.new(loader).stock_list(url)
+
+          logger.init_file('scan_page_yahoo.csv', 'text/csv') if symbols.any?
+          add_csv_file_row(%w[symbol exists company_name current_price est_annual_dividend est_annual_dividend_pct discount recommendation], logger: logger)
+
+          each_symbol_with_message(symbols) do |symbol, message|
+            scan_symbol(symbol, loader: loader, logger: logger)
+            yield message if block_given?
+            sleep(PAUSE)
+          end
+        end
+      end
+
+      private
+
+      def scan_symbol(symbol, loader:, logger:)
+        json = Etl::Extract::Yahoo.new(loader).summary(symbol)
+        stock = OpenStruct.new(symbol: symbol)
+        Etl::Transform::Yahoo.new.summary(stock, json)
+
+        row = [
+          symbol,
+          XStocks::AR::Stock.where(symbol: symbol).exists? ? 'Yes' : nil,
+          stock.company_name,
+          stock.current_price,
+          stock.est_annual_dividend,
+          stock.current_price && stock.est_annual_dividend ? (stock.est_annual_dividend / stock.current_price * 100).round(2) : nil,
+          stock.yahoo_discount.to_i,
+          stock.yahoo_rec.to_f
+        ]
+        add_csv_file_row(row, logger: logger)
+      end
+
+      def add_csv_file_row(row, logger:)
+        logger.append_file("#{row.map { |cell| "\"#{cell.to_s.gsub('"', '""')}\"" }.join(',')}\r\n")
       end
     end
   end

@@ -11,6 +11,15 @@ module Etl
         }
       end
 
+      def each_symbol_with_message(symbols)
+        symbols.each_with_index do |symbol, index|
+          yield symbol, {
+            message: "Processing #{symbol} (#{index + 1} out of #{symbols.size})",
+            percent: index * 100 / symbols.length
+          }
+        end
+      end
+
       def each_stock_with_message
         stocks = XStocks::Stock.find_all_random
         stocks.each_with_index do |stock, index|

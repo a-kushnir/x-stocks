@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_04_082639) do
+ActiveRecord::Schema.define(version: 2021_03_14_002847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,9 @@ ActiveRecord::Schema.define(version: 2021_03_04_082639) do
     t.datetime "last_run_at"
     t.string "error"
     t.string "log"
+    t.string "file_name"
+    t.string "file_type"
+    t.string "file_content"
     t.index ["key"], name: "index_services_on_key", unique: true
   end
 

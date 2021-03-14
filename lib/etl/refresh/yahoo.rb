@@ -37,7 +37,7 @@ module Etl
           symbols = Etl::Extract::Yahoo.new(loader).stock_list(url)
 
           logger.init_file('scan_page_yahoo.csv', 'text/csv') if symbols.any?
-          add_csv_file_row(%w[symbol exists company_name current_price est_annual_dividend est_annual_dividend_pct discount recommendation], logger: logger)
+          add_csv_file_row(%w[symbol exists company_name current_price est_annual_dividend est_annual_dividend_pct discount fair_price recommendation], logger: logger)
 
           each_symbol_with_message(symbols) do |symbol, message|
             scan_symbol(symbol, loader: loader, logger: logger)
@@ -62,6 +62,7 @@ module Etl
           stock.est_annual_dividend,
           stock.current_price && stock.est_annual_dividend ? (stock.est_annual_dividend / stock.current_price * 100).round(2) : nil,
           stock.yahoo_discount.to_i,
+          stock.yahoo_fair_price,
           stock.yahoo_rec.to_f
         ]
         add_csv_file_row(row, logger: logger)

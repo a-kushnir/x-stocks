@@ -36,7 +36,7 @@ describe Etl::Transform::Yahoo do
           'summaryProfile' => { 'longBusinessSummary' => 'Apple Inc. designs, manufactures, and markets...' }
         },
         'ResearchPageStore' => {
-          'technicalInsights' => { 'AAPL' => { 'instrumentInfo' => { 'valuation' => { 'discount' => 0.71 } } } }
+          'technicalInsights' => { 'AAPL' => { 'instrumentInfo' => { 'valuation' => { 'discount' => "-21%" } } } }
         }
       }
     end
@@ -58,8 +58,8 @@ describe Etl::Transform::Yahoo do
         yahoo_rec: 1.77,
         yahoo_rec_details: { '2019-10-01' => [3, 3, 5, 4, 1], '2019-11-01' => [6, 3, 1, 0, 0] },
         est_annual_dividend: 4.33,
-        yahoo_discount: 0.71,
-        yahoo_fair_price: 348,
+        yahoo_discount: -21,
+        yahoo_fair_price: 273,
         yahoo_price_target: { high: 175, low: 83, mean: 151.75, median: 157 },
         description: 'Apple Inc. designs, manufactures, and markets...',
         save: []

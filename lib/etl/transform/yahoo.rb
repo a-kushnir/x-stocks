@@ -17,6 +17,7 @@ module Etl
         stream_data_store = summary&.dig('StreamDataStore')
         quote_summary_store = summary&.dig('QuoteSummaryStore')
         research_page_store = summary&.dig('ResearchPageStore')
+        discount = research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')
 
         stock.company_name ||= quote_summary_store&.dig('price', 'shortName')
         stock.current_price ||= quote_summary_store&.dig('price', 'regularMarketPrice', 'raw')
@@ -27,8 +28,8 @@ module Etl
         set(stock, :yahoo_rec, quote_summary_store&.dig('financialData', 'recommendationMean', 'raw'))
         set(stock, :yahoo_rec_details, to_rec(quote_summary_store&.dig('recommendationTrend', 'trend')))
         set(stock, :est_annual_dividend, quote_summary_store&.dig('summaryDetail', 'dividendRate', 'raw'))
-        set(stock, :yahoo_discount, research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')&.to_i)
-        set(stock, :yahoo_fair_price, yahoo_fair_price(stock))
+        set(stock, :yahoo_discount, discount.to_i) if discount
+        set(stock, :yahoo_fair_price, yahoo_fair_price(stock)) if discount
         set(stock, :description, quote_summary_store&.dig('summaryProfile', 'longBusinessSummary'))
         set(stock, :yahoo_price_target, price_target(quote_summary_store&.dig('financialData')))
         set(stock, :earnings, earnings(quote_summary_store&.dig('earnings', 'earningsChart')))

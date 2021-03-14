@@ -45,8 +45,12 @@ class CountryFlag
     'united states of america' => 'us'
   }.freeze
 
+  def code(country)
+    COUNTRY_FLAGS[country.to_s.downcase]
+  end
+
   def link(country, size:)
-    code = COUNTRY_FLAGS[country.to_s.downcase]
+    code = code(country)
     "#{BASE_URL}#{code}/flat/#{size}.png" if code
   end
 end

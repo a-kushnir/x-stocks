@@ -131,6 +131,18 @@ const Formats = {
       )
   },
 
+  flag: function(value) {
+    return $('<td>')
+      .attr('data-sort', value ? value : '-')
+      .append($('<div>')
+        .addClass('symbol-logo')
+        .addClass('text-center')
+        .append($('<img>')
+          .attr('src', value ? `https://www.countryflags.io/${value}/flat/24.png` : null)
+        )
+      )
+  },
+
   text: function(value) {
     return $('<td>')
       .addClass('text-nowrap')

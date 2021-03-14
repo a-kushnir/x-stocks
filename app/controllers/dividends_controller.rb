@@ -42,6 +42,7 @@ class DividendsController < ApplicationController
     columns = []
     # Stock
     columns << { label: 'Company', align: 'left', searchable: true, default: true }
+    columns << { label: 'Country', align: 'center' }
     columns << { label: 'Est. Yield %', default: true }
     columns << { label: 'Div. Change' }
     columns << { label: 'Div. Safety', align: 'center', default: true }
@@ -98,12 +99,14 @@ class DividendsController < ApplicationController
 
   def row(stock, position, months, estimates, div_suspended, total_market_value)
     diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
+    flag = CountryFlag.new
 
     result =
       [
         # Stock
         [stock.symbol, stock.logo, position.note.presence],
         stock.company_name,
+        flag.code(stock.country),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         stock.div_change_pct&.round(1),
         stock.dividend_rating&.to_f,

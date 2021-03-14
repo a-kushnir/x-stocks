@@ -60,6 +60,7 @@ class PositionsController < ApplicationController
 
     # Stock
     columns << { label: 'Company', align: 'left', searchable: true, default: true }
+    columns << { label: 'Country', align: 'center' }
     # Position
     columns << { label: 'Shares', default: true }
     columns << { label: 'Average Price', default: true }
@@ -115,11 +116,13 @@ class PositionsController < ApplicationController
 
   def row(stock, position, div_suspended, total_market_value)
     diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
+    flag = CountryFlag.new
 
     [
       # Stock
       [stock.symbol, stock.logo, position.note.presence],
       stock.company_name,
+      flag.code(stock.country),
       # Position
       position.shares&.to_f,
       position.average_price&.to_f,

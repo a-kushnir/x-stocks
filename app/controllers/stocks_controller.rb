@@ -167,6 +167,7 @@ class StocksController < ApplicationController
     columns = []
 
     columns << { label: 'Company', align: 'left', searchable: true, default: true }
+    columns << { label: 'Country', align: 'center' }
     columns << { label: 'Price', default: true }
     columns << { label: 'Change', default: true }
     columns << { label: 'Change %', default: true }
@@ -189,6 +190,7 @@ class StocksController < ApplicationController
   def data(stocks)
     positions = XStocks::AR::Position.where(stock_id: stocks.map(&:id), user: current_user).all
     positions = positions.index_by(&:stock_id)
+    flag = CountryFlag.new
 
     stocks.map do |stock|
       position = positions[stock.id]
@@ -196,6 +198,7 @@ class StocksController < ApplicationController
       [
         [stock.symbol, stock.logo, position&.note.presence],
         stock.company_name,
+        flag.code(stock.country),
         stock.current_price&.to_f,
         stock.price_change&.to_f,
         stock.price_change_pct&.to_f,

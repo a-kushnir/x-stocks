@@ -6,7 +6,7 @@ module XStocks
   # AR Forwarder Business Model
   class ARForwarder
     def self.delegate_methods(base, attr_name, ar_model)
-      methods = %i[\[\] \[\]= attributes attributes= new_record? model_name to_key]
+      methods = %i[\[\] \[\]= attributes attributes= new_record? model_name to_key errors]
 
       columns = ar_model.columns.map(&:name)
       methods += columns

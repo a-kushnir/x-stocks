@@ -16,6 +16,7 @@ module XStocks
       scope :random, -> { unscoped.order('RANDOM()') }
 
       validates :symbol, presence: true, uniqueness: true
+      validates :yahoo_fair_price, numericality: { allow_nil: true, greater_than: 0 }
 
       serialize :peers, JSON
       serialize :yahoo_rec_details, JSON

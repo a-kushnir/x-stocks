@@ -29,6 +29,11 @@ class Dividend
     last_div = stock.periodic_dividend_details.last
     return nil unless last_div
     return nil if stock.div_suspended?
+    return nil if last_div['payment_date'].blank?
+    return nil if last_div['payment_date'] == '0000-00-00'
+    return nil if last_div['ex_date'].blank?
+    return nil if last_div['ex_date'] == '0000-00-00'
+    return nil if last_div['amount'].blank?
 
     payment_date = Date.parse(last_div['payment_date'])
     ex_date = Date.parse(last_div['ex_date'])

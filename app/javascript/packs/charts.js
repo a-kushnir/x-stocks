@@ -510,7 +510,7 @@ function commarize(value) {
         const unitname = units[Math.floor(unit / 3) - 1];
 
         if (minus) num = `-${num}`;
-        return num + unitname;
+        return `${num}${unitname}`;
     }
    return value.toLocaleString();
 }

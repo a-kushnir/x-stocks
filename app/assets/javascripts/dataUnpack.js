@@ -9,6 +9,22 @@ const FormatMethods = {
     return formatter.format(value);
   },
 
+  commarize: function(value) {
+    if (Math.abs(value) >= 1e3) {
+      const minus = value < 0;
+      if (minus) value = -value;
+
+      const units = ["k", "M", "B", "T"];
+      const unit = Math.floor((value.toFixed(0).length - 1) / 3) * 3;
+      let num = (value / ('1e'+unit)).toFixed(2);
+      const unitname = units[Math.floor(unit / 3) - 1];
+
+      if (minus) num = `-${num}`;
+      return `$${num} ${unitname}`;
+    }
+    return value.toLocaleString();
+  },
+
   percentFixed: function(value, fractionDigits) {
     if (value === null) return '';
 
@@ -162,6 +178,11 @@ const Formats = {
   },
 
   currency: function (value) {
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
+
     return $('<td>')
       .attr('data-sort', value)
       .addClass('text-right')
@@ -180,6 +201,18 @@ const Formats = {
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
       .text(FormatMethods.plusSign(value) + FormatMethods.currency(value))
+  },
+
+  bigMoney: function(value) {
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
+
+    return $('<td>')
+      .attr('data-sort', value)
+      .addClass('text-right')
+      .text(FormatMethods.commarize(value))
   },
 
   percent0: function(value) {

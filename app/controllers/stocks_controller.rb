@@ -177,6 +177,7 @@ class StocksController < ApplicationController
     columns << { label: 'Div. Change %' }
     columns << { label: 'P/E Ratio' }
     columns << { label: 'Payout %' }
+    columns << { label: 'Market Cap.' }
     columns << { label: 'Yahoo Rec.', default: true }
     columns << { label: 'Finnhub Rec.', default: true }
     columns << { label: 'Div. Safety', default: true }
@@ -208,6 +209,7 @@ class StocksController < ApplicationController
         stock.div_change_pct&.round(1),
         stock.pe_ratio_ttm&.to_f&.round(2),
         stock.payout_ratio&.to_f,
+        stock.market_capitalization&.to_f,
         stock.yahoo_rec&.to_f,
         stock.finnhub_rec&.to_f,
         stock.dividend_rating&.to_f,

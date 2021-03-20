@@ -20,10 +20,10 @@ module Etl
         discount = research_page_store&.dig('technicalInsights', stock.symbol, 'instrumentInfo', 'valuation', 'discount')
 
         stock.company_name ||= quote_summary_store&.dig('price', 'shortName')
-        stock.current_price ||= current_price(quote_summary_store&.dig('price', 'regularMarketPrice'))
+        stock.current_price ||= value_to_f(quote_summary_store&.dig('price', 'regularMarketPrice'))
 
         set(stock, :outstanding_shares, stream_data_store&.dig('quoteData', stock.symbol, 'sharesOutstanding', 'raw'))
-        set(stock, :payout_ratio, to_pct(quote_summary_store&.dig('summaryDetail', 'payoutRatio', 'raw')))
+        set(stock, :payout_ratio, to_pct(value_to_f(quote_summary_store&.dig('summaryDetail', 'payoutRatio'))))
         set(stock, :yahoo_beta, quote_summary_store&.dig('defaultKeyStatistics', 'beta', 'raw'))
         set(stock, :yahoo_rec, quote_summary_store&.dig('financialData', 'recommendationMean', 'raw'))
         set(stock, :yahoo_rec_details, to_rec(quote_summary_store&.dig('recommendationTrend', 'trend')))
@@ -164,7 +164,7 @@ module Etl
         value.round(2 - power)
       end
 
-      def current_price(data)
+      def value_to_f(data)
         if data.is_a?(Hash)
           data['raw']
         elsif data.is_a?(Float)

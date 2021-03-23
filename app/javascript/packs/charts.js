@@ -206,6 +206,7 @@ window.recommendation_details_chart = function(canvas, data, min) {
                     stacked: true
                 }],
                 yAxes: [{
+                    ticks: { stepSize: min <= 1 ? 1 : null },
                     stacked: true,
                 }]
             },

@@ -62,6 +62,38 @@
     </tbody>
   </table>
 
+  <% if @position.stop_loss %>
+    <h5>Stop Loss</h5>
+    <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+      <tbody>
+        <tr>
+          <td style="border-top: none;">
+            Stop Price:
+            <strong class="float-right"><%= number_to_currency(@position.stop_loss) %></strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Estimated Credit:
+            <strong class="float-right"><%= number_to_currency(@position.stop_loss_value) %></strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Estimated Gain/Loss:
+            <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss) %>"><%= delta_number(number_to_currency(@position.stop_loss_gain_loss)) %></strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Estimated Gain/Loss %:
+            <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.stop_loss_gain_loss_pct, precision: 2)) %></strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
   <% if @position.note.present? %>
     <div class="alert alert-warning fade show">
       <i class="fas fa-thumbtack float-right"></i>

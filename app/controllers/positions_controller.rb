@@ -46,7 +46,7 @@ class PositionsController < ApplicationController
   def position_params
     params
       .require(:x_stocks_ar_position)
-      .permit(:shares, :average_price, :note)
+      .permit(:shares, :average_price, :stop_loss, :note)
   end
 
   def generate_xlsx
@@ -71,6 +71,11 @@ class PositionsController < ApplicationController
     columns << { label: 'Gain/Loss %', default: true }
     columns << { label: 'Annual Div.', default: true }
     columns << { label: 'Diversity %', default: true }
+    # Stop Loss
+    columns << { label: 'Stop Price' }
+    columns << { label: 'Est. Credit' }
+    columns << { label: 'Est. Gain/Loss' }
+    columns << { label: 'Est. Gain/Loss %' }
     # Stock
     columns << { label: 'Price' }
     columns << { label: 'Change' }
@@ -133,6 +138,11 @@ class PositionsController < ApplicationController
       position.gain_loss_pct&.to_f,
       position.est_annual_income&.to_f,
       diversity&.to_f,
+      # Stop Loss
+      position.stop_loss&.to_f,
+      position.stop_loss_value&.to_f,
+      position.stop_loss_gain_loss&.to_f,
+      position.stop_loss_gain_loss_pct&.to_f,
       # Stock
       stock.current_price&.to_f,
       stock.price_change&.to_f,
@@ -163,13 +173,22 @@ class PositionsController < ApplicationController
     est_annual_income = positions.map(&:est_annual_income).compact.sum
     yield_on_value = market_value.positive? ? (est_annual_income / market_value) * 100 : 0
 
+    stop_loss_positions = positions.select(&:stop_loss_value)
+    stop_loss_value = stop_loss_positions.map(&:stop_loss_value).sum || 0
+    stop_loss_gain_loss = stop_loss_positions.map(&:stop_loss_gain_loss).sum || 0
+    stop_loss_market_value = stop_loss_positions.sum(&:market_value) || 0
+    stop_loss_gain_loss_pct = stop_loss_market_value.positive? ? (stop_loss_gain_loss / stop_loss_market_value) * 100 : 0
+
     summary.merge({
                     total_cost: total_cost,
                     market_value: market_value,
                     gain_loss: gain_loss,
                     gain_loss_pct: gain_loss_pct,
                     est_annual_income: est_annual_income,
-                    yield_on_value: yield_on_value
+                    yield_on_value: yield_on_value,
+                    stop_loss_value: stop_loss_value,
+                    stop_loss_gain_loss: stop_loss_gain_loss,
+                    stop_loss_gain_loss_pct: stop_loss_gain_loss_pct
                   })
   end
 end

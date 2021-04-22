@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_14_002847) do
+ActiveRecord::Schema.define(version: 2021_04_21_191601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,13 @@ ActiveRecord::Schema.define(version: 2021_03_14_002847) do
     t.string "note"
     t.datetime "created_at", default: "2020-01-01 00:00:00", null: false
     t.datetime "updated_at", default: "2020-01-01 00:00:00", null: false
+    t.decimal "stop_loss_base", precision: 10, scale: 2
+    t.decimal "stop_loss", precision: 10, scale: 2
+    t.decimal "stop_loss_pct", precision: 10, scale: 2
+    t.decimal "stop_loss_value", precision: 10, scale: 2
+    t.decimal "stop_loss_gain_loss", precision: 10, scale: 2
+    t.decimal "stop_loss_gain_loss_pct", precision: 10, scale: 2
+    t.datetime "remind_at"
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["updated_at"], name: "index_positions_on_updated_at"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
@@ -128,6 +135,7 @@ ActiveRecord::Schema.define(version: 2021_03_14_002847) do
     t.string "next_earnings_hour"
     t.decimal "next_earnings_est_eps", precision: 12, scale: 4
     t.string "next_earnings_details"
+    t.string "string"
     t.decimal "yahoo_beta", precision: 10, scale: 6
     t.decimal "yahoo_rec", precision: 5, scale: 2
     t.string "yahoo_rec_details"

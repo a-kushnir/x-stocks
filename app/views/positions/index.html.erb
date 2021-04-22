@@ -28,6 +28,10 @@
       <th class="text-right <%= delta_class(@summary[:gain_loss_pct]) %>"><%= delta_number(number_to_percentage(@summary[:gain_loss_pct], precision: 2)) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:est_annual_income]) %></th>
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
+      <th></th>
+      <th class="text-right"><%= number_to_currency(@summary[:stop_loss_value]) %></th>
+      <th class="text-right <%= delta_class(@summary[:stop_loss_gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:stop_loss_gain_loss])) %></th>
+      <th class="text-right <%= delta_class(@summary[:stop_loss_gain_loss_pct]) %>"><%= delta_number(number_to_percentage(@summary[:stop_loss_gain_loss_pct], precision: 2)) %></th>
       <th colspan="5"></th>
       <th class="text-right"><%= number_to_percentage(@summary[:yield_on_value], precision: 2) %></th>
       <th colspan="5"></th>
@@ -80,6 +84,11 @@
       Formats.percentDelta2,  // Gain/Loss %
       Formats.currency,       // Annual Dividend
       Formats.percent2,       // Diversity %
+      // Stop Loss
+      Formats.currency,       // Stop Price
+      Formats.currency,       // Est. Credit
+      Formats.currencyDelta,  // Est. Gain/Loss
+      Formats.percentDelta2,  // Est. Gain/Loss %
       // Stock
       Formats.currency,       // Price
       Formats.currencyDelta,  // Change

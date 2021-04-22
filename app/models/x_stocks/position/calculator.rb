@@ -33,6 +33,9 @@ module XStocks
         position.market_value = safe_exec { position.market_price * position.shares }
         position.gain_loss = safe_exec { position.market_value - position.total_cost }
         position.gain_loss_pct = safe_exec { position.gain_loss / position.total_cost * 100 }
+        position.stop_loss_value = safe_exec { position.stop_loss * position.shares }
+        position.stop_loss_gain_loss = safe_exec { position.stop_loss_value - position.total_cost }
+        position.stop_loss_gain_loss_pct = safe_exec { position.stop_loss_gain_loss / position.total_cost * 100 }
       end
 
       def calculate_position_dividends(position)

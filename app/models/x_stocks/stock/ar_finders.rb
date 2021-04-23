@@ -5,7 +5,12 @@ module XStocks
     # Stock AR Finders Business Model
     module ARFinders
       def find_all_random
-        XStocks::AR::Stock.random.all.map { |ar_stock| XStocks::Stock.new(ar_stock) }
+        stock_ids = XStocks::AR::Position.distinct.pluck(:stock_id)
+
+        stocks = XStocks::AR::Stock.random.where(id: stock_ids).all.to_a
+        stocks += XStocks::AR::Stock.random.where.not(id: stock_ids).all.to_a
+
+        stocks.map { |ar_stock| XStocks::Stock.new(ar_stock) }
       end
 
       def find_all(*args)

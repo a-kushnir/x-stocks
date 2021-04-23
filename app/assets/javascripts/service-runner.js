@@ -34,7 +34,7 @@ function runService(form) {
       console.error(data);
       setProgress(null, false);
       const backtrace = data.backtrace.map(line => document.htmlEscape(line)).join('<br>');
-      setMessage(`Error: ${data.message}
+      setMessage(`Error: ${document.htmlEscape(data.message)}
                     <a href="#" onclick="$('#backtrace').toggle(); return false">(more)</a>
                     <div id='backtrace' style="display: none">${backtrace}<div>`);
       esError = true;

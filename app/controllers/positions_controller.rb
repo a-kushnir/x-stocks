@@ -80,6 +80,7 @@ class PositionsController < ApplicationController
     columns << { label: 'Price' }
     columns << { label: 'Change' }
     columns << { label: 'Change %' }
+    columns << { label: '52 Week Range' }
     columns << { label: 'Fair Value' }
     columns << { label: 'Est. Annual Div.' }
     columns << { label: 'Est. Yield %' }
@@ -147,6 +148,7 @@ class PositionsController < ApplicationController
       stock.current_price&.to_f,
       stock.price_change&.to_f,
       stock.price_change_pct&.to_f,
+      stock.price_range,
       stock.yahoo_discount&.to_f,
       value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
       value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

@@ -100,3 +100,16 @@ table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:
     }
   }
 }
+
+td.price-range {
+  .progress {
+    height: 4px;
+    min-width: 100px;
+  }
+  small {
+    display:inline-block;
+    width: 100%;
+    font-size: 70%;
+  }
+  padding-bottom: 0;
+}

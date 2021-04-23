@@ -25,6 +25,19 @@ const FormatMethods = {
     return value.toLocaleString();
   },
 
+  invLerp: function(min, max, value) {
+    if (min < max) {
+      if (value <= min) return 0;
+      if (value >= max) return 1;
+    }
+    else {
+      if (value >= min) return 0;
+      if (value <= max) return 1;
+    }
+
+    return (value - min) / (max - min);
+  },
+
   percentFixed: function(value, fractionDigits) {
     if (value === null) return '';
 
@@ -163,6 +176,35 @@ const Formats = {
     return $('<td>')
       .addClass('text-nowrap')
       .text(value)
+  },
+
+  range: function(value) {
+    if (value === null) return $('<td>');
+
+    const min = value[0], max = value[1], curr = value[2], change = value[3];
+
+    const curr_pct = FormatMethods.invLerp(min, max, curr) * 100;
+    const change_pct = FormatMethods.invLerp(0, max - min, change) * 100;
+
+    const progress1 = (change < 0) ? curr_pct + change_pct : curr_pct;
+    let progress2 = (change < 0) ? -change_pct : change_pct;
+    if (progress2 < 2) progress2 = 2;
+    const css_class = (change < 0) ? 'bg-danger' : 'bg-success';
+
+    return $('<td>')
+      .attr('data-sort', curr_pct ? curr_pct : '-')
+      .addClass('price-range')
+      .addClass('text-nowrap')
+      .html(
+        '<div class="progress">\n' +
+        '<div class="progress-bar" role="progressbar" style="width: ' + progress1 + '%; background-color: transparent;"></div>\n' +
+        '<div class="progress-bar ' + css_class + '" role="progressbar" style="width: ' + progress2 + '%"></div>\n' +
+        '</div>'+
+        '<small class="text-muted">' +
+        '<span class="float-left">' + FormatMethods.currency(min) + '</span>' +
+        '<span class="float-right">' + FormatMethods.currency(max) + '</span>' +
+        '</small>'
+      )
   },
 
   warn: function(value) {

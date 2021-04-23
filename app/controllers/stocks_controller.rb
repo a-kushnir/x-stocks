@@ -171,6 +171,7 @@ class StocksController < ApplicationController
     columns << { label: 'Price', default: true }
     columns << { label: 'Change', default: true }
     columns << { label: 'Change %', default: true }
+    columns << { label: '52 Week Range' }
     columns << { label: 'Fair Value', default: true }
     columns << { label: 'Est. Annual Div.', default: true }
     columns << { label: 'Est. Yield %', default: true }
@@ -203,6 +204,7 @@ class StocksController < ApplicationController
         stock.current_price&.to_f,
         stock.price_change&.to_f,
         stock.price_change_pct&.to_f,
+        stock.price_range,
         stock.yahoo_discount&.to_f,
         value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

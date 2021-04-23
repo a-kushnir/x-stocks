@@ -80,6 +80,16 @@ module XStocks
         end.join("\n")
       end
 
+      def price_range
+        result = [
+          ar_stock.week_52_low&.to_f,
+          ar_stock.week_52_high&.to_f,
+          ar_stock.current_price&.to_f,
+          ar_stock.price_change&.to_f
+        ]
+        result unless result.include?(nil)
+      end
+
       private
 
       def rec_human(value)

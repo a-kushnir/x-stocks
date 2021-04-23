@@ -2,7 +2,6 @@
 
 # Generates country flag link
 class CountryFlag
-  BASE_URL = 'https://www.countryflags.io/'
   COUNTRY_FLAGS = {
     'austria' => 'at',
     'australia' => 'au',
@@ -46,11 +45,11 @@ class CountryFlag
   }.freeze
 
   def code(country)
-    COUNTRY_FLAGS[country.to_s.downcase]
+    COUNTRY_FLAGS[country.to_s.downcase]&.upcase
   end
 
   def link(country, size:)
     code = code(country)
-    "#{BASE_URL}#{code}/flat/#{size}.png" if code
+    "/img/flags-iso/flat/#{size}/#{code}.png" if code
   end
 end

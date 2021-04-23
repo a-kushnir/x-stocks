@@ -167,7 +167,7 @@ const Formats = {
         .addClass('symbol-logo')
         .addClass('text-center')
         .append($('<img>')
-          .attr('src', value ? `https://www.countryflags.io/${value}/flat/24.png` : null)
+          .attr('src', value ? `/img/flags-iso/flat/24/${value}.png` : null)
         )
       )
   },

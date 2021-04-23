@@ -179,7 +179,7 @@ const Formats = {
   },
 
   range: function(value) {
-    if (value === null) return $('<td>');
+    if (value === null) return $('<td>').attr('data-sort', '-');
 
     const min = value[0], max = value[1], curr = value[2], change = value[3];
 
@@ -192,7 +192,7 @@ const Formats = {
     const css_class = (change < 0) ? 'bg-danger' : 'bg-success';
 
     return $('<td>')
-      .attr('data-sort', curr_pct ? curr_pct : '-')
+      .attr('data-sort', curr_pct)
       .addClass('price-range')
       .addClass('text-nowrap')
       .html(

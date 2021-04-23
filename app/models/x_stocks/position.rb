@@ -27,6 +27,7 @@ module XStocks
     def remove_zero_numbers(position)
       position.shares = nil if position.shares&.zero?
       position.average_price = nil if position.average_price&.zero?
+      position.stop_loss = nil if position.stop_loss&.zero?
     end
 
     attr_reader :position_ar_class

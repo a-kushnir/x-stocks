@@ -62,7 +62,7 @@
     </tbody>
   </table>
 
-  <% if @position.stop_loss %>
+  <% if @position.shares && @position.stop_loss %>
     <h5>Stop Loss</h5>
     <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
       <tbody>

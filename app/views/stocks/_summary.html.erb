@@ -1,13 +1,20 @@
 <% div_suspended = @stock.div_suspended? %>
-<h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
-  <% if @stock.price_change %>
-    <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
-  <% end %>
-</h2>
 
-<% if @stock.exchange %>
-  <small class="text-muted"><%= @stock.exchange.name %> (<%= @stock.exchange.code %>)</small>
-<% end %>
+<div class="row">
+  <div class="col-lg-6 col-sm-12">
+    <h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
+      <% if @stock.price_change %>
+        <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
+      <% end %>
+    </h2>
+    <% if @stock.exchange %>
+      <small class="text-muted"><%= @stock.exchange.name %> (<%= @stock.exchange.code %>)</small>
+    <% end %>
+  </div>
+  <div class="col-lg-6 col-sm-12">
+    <%= render partial: 'yahoo_tech' %>
+  </div>
+</div>
 
 <%
   left_table = []

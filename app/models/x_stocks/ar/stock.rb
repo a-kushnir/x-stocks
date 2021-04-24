@@ -21,6 +21,9 @@ module XStocks
       serialize :peers, JSON
       serialize :yahoo_rec_details, JSON
       serialize :yahoo_price_target, JSON
+      serialize :yahoo_short_outlook, JSON
+      serialize :yahoo_medium_outlook, JSON
+      serialize :yahoo_long_outlook, JSON
       serialize :finnhub_rec_details, JSON
       serialize :finnhub_price_target, JSON
       serialize :earnings, JSON

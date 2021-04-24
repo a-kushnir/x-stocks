@@ -1,6 +1,5 @@
-<% if @stock.exchange %>
+<% if @stock.exchange&.tradingview_code %>
   <div class="small-widget my-side-panel mx-auto mx-lg-0">
-    <h4>Recommendation <small>TradingView</small></h4>
 <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container mx-auto">
   <div class="tradingview-widget-container__widget"></div>
@@ -9,7 +8,7 @@
           "interval": "1D",
           "width": "300",
           "isTransparent": false,
-          "height": "370",
+          "height": "380",
           "symbol": "<%= @stock.exchange.tradingview_code %>:<%= @stock.symbol %>",
           "showIntervalTabs": true,
           "locale": "en",

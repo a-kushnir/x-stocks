@@ -30,7 +30,7 @@
     <%= render partial: 'earnings' %>
     <%= render partial: 'financials', locals: { label: 'Financials <small>Yearly</small>'.html_safe, type: 'yearly', data: @stock.financials_yearly } %>
     <%= render partial: 'financials', locals: { label: 'Financials <small>Quarterly</small>'.html_safe, type: 'quarterly', data: @stock.financials_quarterly } %>
-    <%= render partial: 'tradingview_rec' %>
+    <%= render partial: 'tradingview_tech' %>
 
     <div class="d-block d-md-none">
       <%= render partial: 'about_company' %>

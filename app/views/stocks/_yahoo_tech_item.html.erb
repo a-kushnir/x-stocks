@@ -1,0 +1,9 @@
+<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="btn btn-light d-flex flex-row w-100" style="padding-right: 4px;">
+  <div class="flex-fill text-left" style="line-height: 1.2;">
+    <%= title %><br>
+    <small class="text-muted"><%= term %></small>
+  </div>
+  <div class="flex-right" style="padding-top: 4px;">
+    <i class="fas fa-caret-<%= { 1 => 'up', 0 => 'right', -1 => 'down' }[direction] %> fa-2x text-<%= { 1 => 'success', 0 => 'muted', -1 => 'danger' }[direction] %>"></i>
+  </div>
+</a>

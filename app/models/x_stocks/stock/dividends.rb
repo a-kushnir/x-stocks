@@ -44,8 +44,6 @@ module XStocks
             rescue StandardError
               nil
             end
-          else
-            nil
           end
         end
       end

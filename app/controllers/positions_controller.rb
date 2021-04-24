@@ -176,8 +176,8 @@ class PositionsController < ApplicationController
     yield_on_value = market_value.positive? ? (est_annual_income / market_value) * 100 : 0
 
     stop_loss_positions = positions.select(&:stop_loss_value)
-    stop_loss_value = stop_loss_positions.map(&:stop_loss_value).sum || 0
-    stop_loss_gain_loss = stop_loss_positions.map(&:stop_loss_gain_loss).sum || 0
+    stop_loss_value = stop_loss_positions.sum(&:stop_loss_value) || 0
+    stop_loss_gain_loss = stop_loss_positions.sum(&:stop_loss_gain_loss) || 0
     stop_loss_market_value = stop_loss_positions.sum(&:market_value) || 0
     stop_loss_gain_loss_pct = stop_loss_market_value.positive? ? (stop_loss_gain_loss / stop_loss_market_value) * 100 : 0
 

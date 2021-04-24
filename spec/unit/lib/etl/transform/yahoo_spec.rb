@@ -36,7 +36,7 @@ describe Etl::Transform::Yahoo do
           'summaryProfile' => { 'longBusinessSummary' => 'Apple Inc. designs, manufactures, and markets...' }
         },
         'ResearchPageStore' => {
-          'technicalInsights' => { 'AAPL' => { 'instrumentInfo' => { 'valuation' => { 'discount' => "-21%" } } } }
+          'technicalInsights' => { 'AAPL' => { 'instrumentInfo' => { 'valuation' => { 'discount' => '-21%' } } } }
         }
       }
     end

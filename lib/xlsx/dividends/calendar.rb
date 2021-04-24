@@ -68,7 +68,7 @@ module XLSX
           row << amount
         end
 
-        row << (estimate ? estimate.map { |e| e[:amount] }.sum * position.shares : nil)
+        row << (estimate ? estimate.sum { |e| e[:amount] } * position.shares : nil)
 
         row
       end

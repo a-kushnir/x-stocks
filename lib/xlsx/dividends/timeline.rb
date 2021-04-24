@@ -68,7 +68,7 @@ module XLSX
       end
 
       def footer_row(timeline)
-        total_amount = timeline.map { |data| data[:amount] * position(data).shares }.sum
+        total_amount = timeline.sum { |data| data[:amount] * position(data).shares }
         [[nil] * 7, 'Total', total_amount].flatten
       end
 

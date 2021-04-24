@@ -152,8 +152,8 @@ module XStocks
 
         if meta_score_details
           meta_score_details.each_value { |v| v[:score] = v[:score].to_i }
-          value = meta_score_details.values.map { |v| v[:score] * v[:weight] }.sum
-          base = meta_score_details.values.map { |v| v[:weight] }.sum
+          value = meta_score_details.values.sum { |v| v[:score] * v[:weight] }
+          base = meta_score_details.values.sum { |v| v[:weight] }
           meta_score = value / base
         else
           meta_score = nil

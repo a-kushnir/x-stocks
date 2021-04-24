@@ -6,9 +6,9 @@ require 'etl/transform/iexapis'
 describe Etl::Transform::Iexapis do
   subject(:transformer) { described_class.new(exchange_class: exchange_class, tag_class: tag_class, dividend_frequencies: dividend_frequencies) }
 
-  let(:exchange_class) {}
-  let(:tag_class) {}
-  let(:dividend_frequencies) {}
+  let(:exchange_class) { nil }
+  let(:tag_class) { nil }
+  let(:dividend_frequencies) { nil }
   let(:stock) { mock_model }
 
   describe '#company' do

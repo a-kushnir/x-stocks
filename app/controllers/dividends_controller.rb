@@ -19,7 +19,7 @@ class DividendsController < ApplicationController
     @page_menu_item = :dividends
 
     respond_to do |format|
-      format.html {}
+      format.html { nil }
       format.xlsx { generate_xlsx }
     end
   end

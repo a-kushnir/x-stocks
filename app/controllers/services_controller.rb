@@ -26,7 +26,7 @@ class ServicesController < ApplicationController
 
   def submit_one
     find_service_runner do |service_runner|
-      service_runner.run(params) {}
+      service_runner.run(params) { nil }
 
       flash[:notice] = 'Service run complete'
       redirect_to action: 'index'

@@ -26,9 +26,9 @@ module ApplicationHelper
     if number.blank? || number !~ /[1-9]/i
       nil
     elsif /-/i.match?(number)
-      content_tag(:i, { class: 'fas fa-caret-down text-danger' }) {}
+      content_tag(:i, { class: 'fas fa-caret-down text-danger' }) { nil }
     else
-      content_tag(:i, { class: 'fas fa-caret-up text-success' }) {}
+      content_tag(:i, { class: 'fas fa-caret-up text-success' }) { nil }
     end
   end
 

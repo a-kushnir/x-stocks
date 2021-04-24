@@ -45,17 +45,17 @@ describe Etl::Extract::TokenStore do
       end
 
       it 'leaves 3 keys' do
-        token_store.try_token {}
+        token_store.try_token { nil }
         expect(token_store.tokens).to eq(%w[TOKEN TOKEN_1 TOKEN_2])
       end
 
       it 'logs events' do
-        token_store.try_token {}
+        token_store.try_token { nil }
         expect(logger).to eq(['TokenStore: loaded 3 keys for KEY'])
       end
 
       it 'calls rand method' do
-        token_store.try_token {}
+        token_store.try_token { nil }
         expect(kernel).to have_received(:rand)
       end
     end

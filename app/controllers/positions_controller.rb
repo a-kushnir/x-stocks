@@ -17,7 +17,7 @@ class PositionsController < ApplicationController
     @page_menu_item = :positions
 
     respond_to do |format|
-      format.html {}
+      format.html { nil }
       format.xlsx { generate_xlsx }
     end
   end

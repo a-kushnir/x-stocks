@@ -50,6 +50,14 @@
         </td>
       </tr>
       <% end %>
+      <% if @position.shares && @position.stock.next_div_ex_date && @position.stock.next_div_ex_date >= Date.today %>
+        <tr>
+          <td style="border-top: none;">
+            Next Dividend:
+            <strong class="float-right"><%= number_to_currency(@position.shares * @position.stock.next_div_amount) %></strong>
+          </td>
+        </tr>
+      <% end %>
       <% if @position.market_value %>
         <tr>
           <td>

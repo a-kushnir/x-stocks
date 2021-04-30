@@ -1,5 +1,16 @@
-<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="btn btn-light d-flex flex-row w-100" style="padding-right: 4px;">
-  <div class="flex-fill text-left" style="line-height: 1.2;">
+<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="btn btn-light d-flex flex-row w-100" style="padding-right: 4px;"
+   data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="
+  <%=
+    "<div class='text-nowrap w-50'>#{
+      [
+        "#{details['stateDescription']}",
+        "<strong><span>Stock:</span> #{details['score']}</strong> #{details['scoreDescription']}",
+        "<strong><span>Sector:</span> #{details['sectorScore']}</strong> #{details['sectorScoreDescription']}",
+        "<strong><span>Index:</span> #{details['indexScore']}</strong> #{details['indexScoreDescription']}"
+      ].join('<br>')
+    }</div>".html_safe
+  %>">
+  <div class="flex-fill text-left" data-placement="right" style="line-height: 1.2;">
     <%= title %><br>
     <small class="text-muted"><%= term %></small>
   </div>

@@ -3,13 +3,13 @@
   <tbody>
   <tr>
     <td>
-      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Short Term', term: '2W - 6W', direction: @stock.yahoo_short_direction, link: 'short' } %>
+      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Short Term', term: '2W - 6W', direction: @stock.yahoo_short_direction, details: @stock.yahoo_short_outlook, link: 'short' } %>
     </td>
     <td>
-      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Mid Term', term: '6W - 9M', direction: @stock.yahoo_medium_direction, link: 'intermediate' } %>
+      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Mid Term', term: '6W - 9M', direction: @stock.yahoo_medium_direction, details: @stock.yahoo_medium_outlook, link: 'intermediate' } %>
     </td>
     <td>
-      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Long Term', term: '9M+', direction: @stock.yahoo_long_direction, link: 'long' } %>
+      <%= render partial: 'stocks/yahoo_tech_item', locals: { title: 'Long Term', term: '9M+', direction: @stock.yahoo_long_direction, details: @stock.yahoo_long_outlook, link: 'long' } %>
     </td>
   </tr>
   </tbody>

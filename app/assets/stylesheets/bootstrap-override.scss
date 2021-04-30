@@ -49,3 +49,11 @@ h4 small {
   color: #6c757d;
   font-weight: 500;
 }
+
+.popover {
+  max-width: 100%;
+  .w-50 span {
+    display: inline-block;
+    width: 50px;
+  }
+}

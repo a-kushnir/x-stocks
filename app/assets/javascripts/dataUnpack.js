@@ -398,6 +398,20 @@ const Formats = {
     return $('<td>')
       .addClass('text-right')
       .text(FormatMethods.numberFixed(value, 2))
+  },
+
+  direction: function(value) {
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
+
+    const dir = value > 0 ? 'up' : (value < 0 ? 'down' : 'right');
+    const col = value > 0 ? 'success' : (value < 0 ? 'danger' : 'muted');
+    return $('<td>')
+      .addClass('text-center')
+      .attr('data-sort', value)
+      .html(`<i class='fas fa-lg fa-caret-${dir} text-${col}'> </i> ${Math.abs(value) > 1 ? Math.abs(value) : ''}`)
   }
 }
 

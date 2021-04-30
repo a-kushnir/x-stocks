@@ -3,6 +3,8 @@
 require 'rubygems'
 require 'rack/test'
 
+require 'active_support/core_ext/integer/time'
+
 require 'bundler'
 Bundler.require :default, :test
 

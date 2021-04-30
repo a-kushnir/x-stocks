@@ -13,6 +13,10 @@ module Etl
         @date = date
       end
 
+      def direction(value)
+        DIRECTIONS[value]
+      end
+
       def summary(stock, json)
         summary = json&.dig('context', 'dispatcher', 'stores')
         stream_data_store = summary&.dig('StreamDataStore')
@@ -62,7 +66,10 @@ module Etl
       private
 
       def to_dir(value)
-        DIRECTIONS[value&.dig('direction')]
+        return nil unless value
+
+        sign = DIRECTIONS[value['direction']]
+        value['score'].to_i * sign if sign
       end
 
       def price_target(financial_data)

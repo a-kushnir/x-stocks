@@ -4,17 +4,17 @@
     "<div class='text-nowrap w-50'>#{
       [
         "#{details['stateDescription']}",
-        "<strong><span>Stock:</span> #{details['score']}</strong> #{details['scoreDescription']}",
-        "<strong><span>Sector:</span> #{details['sectorScore']}</strong> #{details['sectorScoreDescription']}",
-        "<strong><span>Index:</span> #{details['indexScore']}</strong> #{details['indexScoreDescription']}"
+        "<strong><span>Stock:</span> #{up_down_tag(details['direction'])} #{details['score']}</strong> - #{details['scoreDescription']}",
+        "<strong><span>Sector:</span> #{up_down_tag(details['sectorDirection'])} #{details['sectorScore']}</strong> - #{details['sectorScoreDescription']}",
+        "<strong><span>Index:</span> #{up_down_tag(details['indexScore'])} #{details['indexScore']}</strong> - #{details['indexScoreDescription']}"
       ].join('<br>')
-    }</div>".html_safe
+    }</div>".gsub('"', "'").html_safe
   %>">
   <div class="flex-fill text-left" data-placement="right" style="line-height: 1.2;">
     <%= title %><br>
     <small class="text-muted"><%= term %></small>
   </div>
   <div class="flex-right" style="padding-top: 4px;">
-    <i class="fas fa-caret-<%= { 1 => 'up', 0 => 'right', -1 => 'down' }[direction] %> fa-2x text-<%= { 1 => 'success', 0 => 'muted', -1 => 'danger' }[direction] %>"></i>
+    <%= up_down_tag(direction, css_class: 'fa-2x') %>
   </div>
 </a>

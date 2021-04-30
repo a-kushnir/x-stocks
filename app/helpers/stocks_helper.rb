@@ -147,4 +147,11 @@ module StocksHelper
     link = CountryFlag.new.link(country, size: size)
     tag(:img, { src: link }.merge(options)) if link
   end
+
+  def up_down_tag(direction, css_class: nil)
+    direction = Etl::Transform::Yahoo.new.direction(direction) if direction.is_a?(String)
+    dir = { 1 => 'up', 0 => 'right', -1 => 'down' }[direction <=> 0]
+    col = { 1 => 'success', 0 => 'muted', -1 => 'danger' }[direction <=> 0]
+    content_tag(:i, class: "fas fa-caret-#{dir} text-#{col} #{css_class}") { '' }
+  end
 end

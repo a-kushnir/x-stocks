@@ -201,7 +201,7 @@ class StocksController < ApplicationController
       position = positions[stock.id]
       div_suspended = stock.div_suspended?
       [
-        [stock.symbol, stock.logo, position&.note.presence],
+        [stock.symbol, stock.logo_url, position&.note.presence],
         stock.company_name,
         flag.code(stock.country),
         stock.current_price&.to_f,

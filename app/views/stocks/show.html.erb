@@ -1,7 +1,7 @@
 <% content_for :page_title do %>
   <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center">
-    <% if @stock.logo.present? %>
-      <img src="<%= @stock.logo %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
+    <% if @stock.logo_url.present? %>
+      <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
     <% end %>
     <h1 class="bd-title"><%= @page_title %></h1>
   </header>

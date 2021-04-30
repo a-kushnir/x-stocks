@@ -24,8 +24,25 @@ module XStocks
         %w[cs].include?(ar_stock.issue_type)
       end
 
+      def adr?
+        %w[ad].include?(ar_stock.issue_type)
+      end
+
+      def etf?
+        %w[et].include?(ar_stock.issue_type)
+      end
+
       def issue_type_name
         ISSUE_TYPES.fetch(ar_stock.issue_type, 'Unknown')
+      end
+
+      def logo_url
+        return ar_stock.logo if ar_stock.logo.present?
+        return '/img/adr-logo.png' if adr?
+        return '/img/etf-logo.png' if etf?
+        return '/img/cs-logo.png' if common_stock?
+
+        nil
       end
     end
   end

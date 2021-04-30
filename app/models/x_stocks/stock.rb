@@ -8,7 +8,6 @@ module XStocks
     include XStocks::Stock::Calculator
     include XStocks::Stock::Dividends
     include XStocks::Stock::IssueType
-    include XStocks::Stock::Logo
     include XStocks::Stock::MetaScore
 
     def initialize(ar_stock)

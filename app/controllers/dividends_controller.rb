@@ -104,7 +104,7 @@ class DividendsController < ApplicationController
     result =
       [
         # Stock
-        [stock.symbol, stock.logo, position.note.presence],
+        [stock.symbol, stock.logo_url, position.note.presence],
         stock.company_name,
         flag.code(stock.country),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

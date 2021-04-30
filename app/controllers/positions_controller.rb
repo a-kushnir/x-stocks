@@ -129,7 +129,7 @@ class PositionsController < ApplicationController
 
     [
       # Stock
-      [stock.symbol, stock.logo, position.note.presence],
+      [stock.symbol, stock.logo_url, position.note.presence],
       stock.company_name,
       flag.code(stock.country),
       # Position

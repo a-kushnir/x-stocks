@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.6.6'
 
@@ -32,7 +32,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'rspec', require: false
   gem 'rspec-rails', require: false
-  gem 'scrutinizer-ocular', require: false, git: 'https://github.com/a-kushnir/ocular.rb'
+  gem 'scrutinizer-ocular', require: false, github: 'ocular.rb'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'
@@ -44,7 +44,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootstrap', '~> 4.5.0'
 gem 'bootstrap_form'
 gem 'bootstrap-select-rails'
-gem 'caxlsx'
+gem 'caxlsx', '>= 3.1.0'
 gem 'devise'
 gem 'font_awesome5_rails'
 gem 'jquery-datatables'
@@ -58,4 +58,4 @@ gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 
 gem 'sprockets-rails', '2.3.3'
-gem 'swagger_ui_engine'
+gem 'swagger_ui_engine', github: 'swagger_ui_engine'

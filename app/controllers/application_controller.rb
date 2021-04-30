@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
     @layout = layout
 
     respond_to do |format|
-      format.html { render file: '/errors/404', layout: layout, status: 404 }
-      format.xlsx { render file: '/errors/404', layout: layout, status: 404, formats: [:html], content_type: Mime[:html] }
+      format.html { render template: '/errors/404', layout: layout, status: 404 }
+      format.xlsx { render template: '/errors/404', layout: layout, status: 404, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 404 }
       format.any  { head 404 }
     end
@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     @layout = layout
 
     respond_to do |format|
-      format.html { render file: '/errors/500', layout: layout, status: 500 }
-      format.xlsx { render file: '/errors/500', layout: layout, status: 500, formats: [:html], content_type: Mime[:html] }
+      format.html { render template: "/errors/500", layout: layout, status: 500 }
+      format.xlsx { render template: '/errors/500', layout: layout, status: 500, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 500 }
       format.any  { head 500 }
     end

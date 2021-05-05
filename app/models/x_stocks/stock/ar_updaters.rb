@@ -26,7 +26,6 @@ module XStocks
         return unless destroyable?
 
         ar_stock.destroy
-        delete_logo
       end
 
       private

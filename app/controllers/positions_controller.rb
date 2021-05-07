@@ -164,7 +164,7 @@ class PositionsController < ApplicationController
       stock.yahoo_rec&.to_f,
       stock.finnhub_rec&.to_f,
       stock.dividend_rating&.to_f,
-      stock.next_div_ex_date && stock.next_div_ex_date > 1.month.ago ? stock.next_div_ex_date : nil,
+      stock.prev_month_ex_date? ? stock.next_div_ex_date : nil,
       [stock.metascore, stock.meta_score_details]
     ]
   end

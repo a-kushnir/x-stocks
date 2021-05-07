@@ -383,7 +383,7 @@ const Formats = {
     }
 
     value = new Date(`${value}T00:00:00`);
-    const klass = (value <= new Date()) ? 'text-muted-alt' : '';
+    const klass = (value <= future_ex_date) ? 'text-muted-alt' : '';
 
     return $('<td>')
       .addClass('text-right')

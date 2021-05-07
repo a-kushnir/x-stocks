@@ -376,6 +376,23 @@ const Formats = {
       .text($.format.date(value, 'MMM, d yyyy'))
   },
 
+  dateFuture: function (value) {
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
+
+    value = new Date(`${value}T00:00:00`);
+    const klass = (value <= new Date()) ? 'text-muted-alt' : '';
+
+    return $('<td>')
+      .addClass('text-right')
+      .addClass('text-nowrap')
+      .addClass(klass)
+      .attr('data-sort', $.format.date(value, 'yyyyMMdd'))
+      .text($.format.date(value, 'MMM, d yyyy'))
+  },
+
   number: function (value) {
     return $('<td>')
       .addClass('text-right')

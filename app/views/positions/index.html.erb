@@ -32,7 +32,7 @@
       <th class="text-right"><%= number_to_currency(@summary[:stop_loss_value]) %></th>
       <th class="text-right <%= delta_class(@summary[:stop_loss_gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:stop_loss_gain_loss])) %></th>
       <th class="text-right <%= delta_class(@summary[:stop_loss_gain_loss_pct]) %>"><%= delta_number(number_to_percentage(@summary[:stop_loss_gain_loss_pct], precision: 2)) %></th>
-      <th colspan="9"></th>
+      <th colspan="10"></th>
       <th class="text-right"><%= number_to_percentage(@summary[:yield_on_value], precision: 2) %></th>
       <th colspan="5"></th>
       <th class="text-center">
@@ -99,6 +99,7 @@
       Formats.direction,      // Short Term
       Formats.direction,      // Mid Term
       Formats.direction,      // Long Term
+      Formats.frequency,      // Div. Frequency
       Formats.currencyOrWarn, // Est. Annual Div.
       Formats.percentOrWarn2, // Est. Yield %
       Formats.percentDelta1,  // Div. Change %

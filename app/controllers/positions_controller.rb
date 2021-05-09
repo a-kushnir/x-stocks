@@ -85,6 +85,7 @@ class PositionsController < ApplicationController
     columns << { label: 'Short Term' }
     columns << { label: 'Mid Term' }
     columns << { label: 'Long Term' }
+    columns << { label: 'Div. Frequency' }
     columns << { label: 'Est. Annual Div.' }
     columns << { label: 'Est. Yield %' }
     columns << { label: 'Div. Change %' }
@@ -156,6 +157,7 @@ class PositionsController < ApplicationController
       stock.yahoo_short_direction,
       stock.yahoo_medium_direction,
       stock.yahoo_long_direction,
+      [stock.dividend_frequency&.titleize, stock.dividend_frequency_num],
       value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
       value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
       stock.div_change_pct&.round(1),

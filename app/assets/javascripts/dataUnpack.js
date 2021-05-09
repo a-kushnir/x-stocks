@@ -429,6 +429,17 @@ const Formats = {
       .addClass('text-center')
       .attr('data-sort', value)
       .html(`<i class='fas fa-lg fa-caret-${dir} text-${col}'> </i> ${Math.abs(value) > 1 ? Math.abs(value) : ''}`)
+  },
+
+  frequency: function(value) {
+    if (value === null) {
+      return $('<td>')
+        .attr('data-sort', '0');
+    }
+
+    return $('<td>')
+      .attr('data-sort', value[1])
+      .text(value[0])
   }
 }
 

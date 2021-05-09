@@ -85,6 +85,7 @@ window.dataTable = function(table, options = {}, defaultColumns = []) {
     if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
         checkboxMenu(defaultColumns);
         options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
+        options['pageLength'] = $.fn.dataTable.defaults.pageLength;
         options['columns'] = loadColumns(table, defaultColumns);
         options['dom'] = "<'row'<'col-12'<'float-left'f><'float-right'l>>><'row overflow-x-auto'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
 

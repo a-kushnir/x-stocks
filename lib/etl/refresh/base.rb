@@ -10,10 +10,10 @@ module Etl
         @logger = logger
       end
 
-      def stock_message(stock)
+      def stock_message(stock, percent: 0)
         {
           message: "Processing #{stock.symbol} (1 out of 1)",
-          percent: 0
+          percent: percent
         }
       end
 

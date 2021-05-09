@@ -50,12 +50,13 @@ module XStocks
 
       protected
 
-      def stock_message(stock)
-        Etl::Refresh::Base.new(nil).stock_message(stock)
-      end
+      extend Forwardable
+      def_delegators :base_refresh, :stock_message, :completed_message
 
-      def completed_message
-        Etl::Refresh::Base.new(nil).completed_message
+      private
+
+      def base_refresh
+        Etl::Refresh::Base.new(nil)
       end
     end
   end

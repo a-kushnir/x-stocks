@@ -1,7 +1,11 @@
 <%= render partial: 'shared/column', locals: {columns: @columns} %>
 
 <% if @tag %>
-  <p><span class="badge badge-pill badge-primary"><%= @tag %></span></p>
+  <p>
+    <span class="badge badge-pill badge-primary"><%= @tag %>
+      <a href="/services" class="badge badge-pill badge-dark" style="color: #fff;"><i class="fas fa-times"></i></a>
+    </span>
+  </p>
 <% end %>
 
 <table id="services-table" class="table table-sm table-hover table-override">
@@ -59,6 +63,6 @@
 <%= render partial: 'shared/service_runner' %>
 <script>
   document.addEventListener("turbolinks:load", () => {
-    dataTable("#services-table", {order: [0, 'asc']}, <%= default_columns %>);
+    dataTable("#services-table", {order: [0, 'asc']}, <%= default_columns %>, '<%= @tag %>');
   })
 </script>

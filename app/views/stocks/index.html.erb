@@ -1,7 +1,11 @@
 <%= render partial: 'shared/column', locals: {columns: @columns} %>
 
 <% if @tag %>
-<p><span class="badge badge-pill badge-primary"><%= @tag %></span></p>
+<p>
+  <span class="badge badge-pill badge-primary"><%= @tag %>
+    <a href="/stocks" class="badge badge-pill badge-dark" style="color: #fff;"><i class="fas fa-times"></i></a>
+  </span>
+</p>
 <% end %>
 
 <table id="stocks-table" class="table table-sm table-hover table-override">

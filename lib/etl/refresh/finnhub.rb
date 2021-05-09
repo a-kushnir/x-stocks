@@ -10,27 +10,19 @@ module Etl
       ##########
       # Hourly #
 
-      def hourly_all_stocks?
-        XStocks::Service.new[:stock_prices].runnable?(1.hour)
-      end
+      def hourly_all_stocks
+        token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
-      def hourly_all_stocks!(force: false)
-        XStocks::Service.new.lock(:stock_prices, force: force) do |logger|
-          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          each_stock_with_message do |stock, message|
-            yield message if block_given?
-            hourly_one_stock!(stock, token_store: token_store, logger: logger)
-            sleep(PAUSE_SHORT)
-          end
-          yield completed_message if block_given?
+        each_stock_with_message do |stock, message|
+          yield message if block_given?
+          hourly_one_stock(stock, token_store: token_store)
+          sleep(PAUSE_SHORT)
         end
+
+        yield completed_message if block_given?
       end
 
-      def hourly_all_stocks(&block)
-        hourly_all_stocks!(&block) if hourly_all_stocks?
-      end
-
-      def hourly_one_stock!(stock, token_store: nil, logger: nil)
+      def hourly_one_stock(stock, token_store: nil)
         token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
@@ -43,27 +35,19 @@ module Etl
       #########
       # Daily #
 
-      def daily_all_stocks?
-        XStocks::Service.new[:daily_finnhub].runnable?(1.day)
-      end
+      def daily_all_stocks
+        token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
-      def daily_all_stocks!(force: false)
-        XStocks::Service.new.lock(:daily_finnhub, force: force) do |logger|
-          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          each_stock_with_message do |stock, message|
-            yield message if block_given?
-            daily_one_stock!(stock, token_store: token_store, logger: logger)
-            sleep(PAUSE_LONG)
-          end
-          yield completed_message if block_given?
+        each_stock_with_message do |stock, message|
+          yield message if block_given?
+          daily_one_stock(stock, token_store: token_store)
+          sleep(PAUSE_LONG)
         end
+
+        yield completed_message if block_given?
       end
 
-      def daily_all_stocks(&block)
-        daily_all_stocks!(&block) if daily_all_stocks?
-      end
-
-      def daily_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
+      def daily_one_stock(stock, token_store: nil, immediate: false)
         token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 
@@ -79,20 +63,20 @@ module Etl
         end
       end
 
-      def company_all_stocks!(force: false)
-        XStocks::Service.new.lock(:company_finnhub, force: force) do |logger|
-          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-          data_loader = Etl::Extract::DataLoader.new(logger)
-          each_stock_with_message do |stock, message|
-            yield message if block_given?
-            token_store.try_token do |token|
-              json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
-              Etl::Transform::Finnhub.new.company(stock, json) if json
-            end
-            sleep(PAUSE_SHORT)
+      def company_all_stocks
+        token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+        data_loader = Etl::Extract::DataLoader.new(logger)
+
+        each_stock_with_message do |stock, message|
+          yield message if block_given?
+          token_store.try_token do |token|
+            json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
+            Etl::Transform::Finnhub.new.company(stock, json) if json
           end
-          yield completed_message if block_given?
+          sleep(PAUSE_SHORT)
         end
+
+        yield completed_message if block_given?
       end
 
       private

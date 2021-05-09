@@ -4,6 +4,12 @@ module Etl
   module Refresh
     # Base methods for extracting and transforming data
     class Base
+      attr_reader :logger
+
+      def initialize(logger)
+        @logger = logger
+      end
+
       def stock_message(stock)
         {
           message: "Processing #{stock.symbol} (1 out of 1)",

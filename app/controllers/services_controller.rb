@@ -5,7 +5,7 @@ class ServicesController < ApplicationController
   include ActionController::Live
 
   def index
-    @service_runners = ServiceRunner.all
+    @jobs = XStocks::Job.all
     @stocks = XStocks::AR::Stock.all
 
     @columns = columns
@@ -15,18 +15,16 @@ class ServicesController < ApplicationController
   end
 
   def run_one
-    find_service_runner do |service_runner|
+    find_job do |job|
       EventStream.run(response) do |stream|
-        service_runner.run(params) do |status|
-          stream.write(status)
-        end
+        perform_job(job) { |status| stream.write(status) }
       end
     end
   end
 
   def submit_one
-    find_service_runner do |service_runner|
-      service_runner.run(params) { nil }
+    find_job do |job|
+      perform_job(job) { nil }
 
       flash[:notice] = 'Service run complete'
       redirect_to action: 'index'
@@ -34,8 +32,8 @@ class ServicesController < ApplicationController
   end
 
   def log
-    find_service_runner do |service_runner|
-      service = service_runner.service
+    find_job do |job|
+      service = job.service
 
       send_data(service&.log,
                 filename: "#{params[:id]}-log.txt",
@@ -44,8 +42,8 @@ class ServicesController < ApplicationController
   end
 
   def error
-    find_service_runner do |service_runner|
-      service = service_runner.service
+    find_job do |job|
+      service = job.service
 
       send_data(service&.error,
                 filename: "#{params[:id]}-error.txt",
@@ -54,8 +52,8 @@ class ServicesController < ApplicationController
   end
 
   def file
-    find_service_runner do |service_runner|
-      service = service_runner.service
+    find_job do |job|
+      service = job.service
 
       send_data(service&.file_content,
                 filename: service&.file_name || "#{params[:id]}-file.txt",
@@ -65,32 +63,29 @@ class ServicesController < ApplicationController
 
   def run_all
     EventStream.run(response) do |stream|
-      if XStocks::Service.new.locked?
-        # Just wait
+      service = XStocks::Service.new
+      break if service.locked?
 
-      elsif Etl::Refresh::Finnhub.new.hourly_all_stocks?
-        Etl::Refresh::Finnhub.new.hourly_all_stocks { |status| stream.write(status) }
-
-      else
-        Etl::Refresh::Yahoo.new.daily_all_stocks { |status| stream.write(status) }
-        Etl::Refresh::Finnhub.new.daily_all_stocks { |status| stream.write(status) }
-        Etl::Refresh::Iexapis.new.weekly_all_stocks { |status| stream.write(status) }
-        Etl::Refresh::Dividend.new.weekly_all_stocks { |status| stream.write(status) }
-
-      end
+      service.perform_update { |status| stream.write(status) }
     end
   end
 
   private
 
-  def find_service_runner
-    service = ServiceRunner.find(params[:id])
-    if service
-      yield service
+  def find_job
+    job = XStocks::Job.find(params[:id])
+    if job
+      yield job
     else
       flash[:notice] = 'Invalid service'
       redirect_to action: 'index'
     end
+  end
+
+  def perform_job(job, &block)
+    args = params.permit(job.arguments).to_hash.symbolize_keys
+    job.force_lock = true
+    job.perform(**args, &block)
   end
 
   def columns

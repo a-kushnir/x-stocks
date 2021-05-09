@@ -6,49 +6,36 @@ module Etl
     class Yahoo < Base
       PAUSE = 1.0 # Limit up to 1 request per second
 
-      def daily_all_stocks?
-        XStocks::Service.new[:daily_yahoo].runnable?(1.day)
-      end
-
-      def daily_all_stocks!(force: false)
-        XStocks::Service.new.lock(:daily_yahoo, force: force) do |logger|
-          each_stock_with_message do |stock, message|
-            yield message if block_given?
-            daily_one_stock!(stock, logger: logger)
-            sleep(PAUSE)
-          end
-          yield completed_message if block_given?
+      def daily_all_stocks
+        each_stock_with_message do |stock, message|
+          yield message if block_given?
+          daily_one_stock(stock)
+          sleep(PAUSE)
         end
+
+        yield completed_message if block_given?
       end
 
-      def daily_all_stocks(&block)
-        daily_all_stocks!(&block) if daily_all_stocks?
-      end
-
-      def daily_one_stock!(stock, logger: nil)
+      def daily_one_stock(stock)
         loader = Etl::Extract::DataLoader.new(logger)
         json = Etl::Extract::Yahoo.new(loader).summary(stock.symbol)
         Etl::Transform::Yahoo.new.summary(stock, json)
       end
 
-      def scan_url(url:)
-        XStocks::Service.new.lock(:scan_url_yahoo, force: true) do |logger|
-          loader = Etl::Extract::DataLoader.new(logger)
-          symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_url(url)
+      def scan_url(url)
+        loader = Etl::Extract::DataLoader.new(logger)
+        symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_url(url)
 
-          logger.init_file('scan_url_yahoo.csv', 'text/csv') if symbols.any?
-          scan_symbols(symbols, loader: loader, logger: logger)
-        end
+        logger.init_file('scan_url_yahoo.csv', 'text/csv') if symbols.any?
+        scan_symbols(symbols, loader: loader, logger: logger)
       end
 
-      def scan_file(file:)
-        XStocks::Service.new.lock(:scan_file_yahoo, force: true) do |logger|
-          loader = Etl::Extract::DataLoader.new(logger)
-          symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_page(file)
+      def scan_file(file)
+        loader = Etl::Extract::DataLoader.new(logger)
+        symbols = Etl::Extract::Yahoo.new(loader).stock_list_from_page(file)
 
-          logger.init_file('scan_file_yahoo.csv', 'text/csv') if symbols.any?
-          scan_symbols(symbols, loader: loader, logger: logger)
-        end
+        logger.init_file('scan_file_yahoo.csv', 'text/csv') if symbols.any?
+        scan_symbols(symbols, loader: loader, logger: logger)
       end
 
       private

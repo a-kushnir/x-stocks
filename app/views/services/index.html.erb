@@ -13,18 +13,23 @@
   </thead>
 
   <tbody>
-  <% @service_runners.each do |service_runner| %>
-    <% serv = service_runner.service %>
+  <% @jobs.each do |job| %>
+    <% service = job.service %>
     <tr>
-      <td><%= service_runner.name %></td>
-      <td><%= service_runner.schedule_code %></td>
-      <% locked_at = serv&.locked_at %>
-      <td><%= serv ? (locked_at ? "Started #{time_ago_in_words locked_at} ago" : "Paused") : '' %></td>
-      <% last_run_at = serv&.last_run_at %>
-      <td><%= last_run_at ? "#{time_ago_in_words last_run_at} ago" : "" %></td>
       <td>
-        <%= form_tag(run_service_path(service_runner), multipart: true) do %>
-          <% (service_runner.arguments || []).each do |arg| %>
+        <%= job.name %>
+        <% job.tags.sort.each do |tag| %>
+          <%= link_to(tag, services_path(tag: tag), class: 'badge badge-pill badge-primary') %>
+        <% end %>
+      </td>
+      <td><%= job.schedule %></td>
+      <% locked_at = service&.locked_at %>
+      <td><%= service ? (locked_at ? "Started #{time_ago_in_words locked_at} ago" : "Paused") : 'Paused' %></td>
+      <% last_run_at = service&.last_run_at %>
+      <td><%= (last_run_at ? "#{time_ago_in_words last_run_at} ago" : "never").capitalize %></td>
+      <td>
+        <%= form_tag(run_service_path(job), multipart: true) do %>
+          <% (job.arguments || []).each do |arg| %>
             <% if arg == :stock_id %>
               <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }),
                              class: 'selectpicker', data: {live_search: true, container: 'body'}) %>
@@ -38,9 +43,9 @@
       </td>
       <td>
         <%= link_to 'Start', "#", class: 'btn btn-sm btn-primary', onclick: "runService($(this).parents('tr').find('form')); return false;" %>
-        <%= link_to 'Log', service_log_path(service_runner), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if serv&.log.present? %>
-        <%= link_to 'Error', service_error_path(service_runner), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if serv&.error.present? %>
-        <%= link_to 'File', service_file_path(service_runner), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if serv&.file_content.present? %>
+        <%= link_to 'Log', service_log_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.log.present? %>
+        <%= link_to 'Error', service_error_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.error.present? %>
+        <%= link_to 'File', service_file_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.file_content.present? %>
       </td>
     </tr>
   <% end %>

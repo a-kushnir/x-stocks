@@ -6,27 +6,19 @@ module Etl
     class Iexapis < Base
       PAUSE = 1.0 / 30 # Limit up to 30 requests per second
 
-      def weekly_all_stocks?
-        XStocks::Service.new[:weekly_iexapis].runnable?(1.day)
-      end
+      def weekly_all_stocks
+        token_store = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
 
-      def weekly_all_stocks!(force: false)
-        XStocks::Service.new.lock(:weekly_iexapis, force: force) do |logger|
-          token_store = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
-          each_stock_with_message do |stock, message|
-            yield message if block_given?
-            weekly_one_stock!(stock, token_store: token_store, logger: logger)
-            sleep(PAUSE)
-          end
-          yield completed_message if block_given?
+        each_stock_with_message do |stock, message|
+          yield message if block_given?
+          weekly_one_stock(stock, token_store: token_store)
+          sleep(PAUSE)
         end
+
+        yield completed_message if block_given?
       end
 
-      def weekly_all_stocks(&block)
-        weekly_all_stocks!(&block) if weekly_all_stocks?
-      end
-
-      def weekly_one_stock!(stock, token_store: nil, logger: nil, immediate: false)
+      def weekly_one_stock(stock, token_store: nil, immediate: false)
         token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY, logger)
         data_loader = Etl::Extract::DataLoader.new(logger)
 

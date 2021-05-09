@@ -3,20 +3,35 @@
 module XStocks
   # Service Business Model
   class Service
+    FAST_UPDATE_JOBS = [
+      XStocks::Jobs::FinnhubPriceAll
+    ].freeze
+    SLOW_UPDATE_JOBS = [
+      XStocks::Jobs::YahooStockAll,
+      XStocks::Jobs::FinnhubStockAll,
+      XStocks::Jobs::IexapisDividendsAll,
+      XStocks::Jobs::DividendStockAll
+    ].freeze
+
     def initialize(service = nil, service_ar_class: XStocks::AR::Service)
       @service = service
       @service_ar_class = service_ar_class
     end
 
     def fast_update?
-      Etl::Refresh::Finnhub.new.hourly_all_stocks?
+      ready?(FAST_UPDATE_JOBS)
     end
 
     def slow_update?
-      Etl::Refresh::Yahoo.new.daily_all_stocks? ||
-        Etl::Refresh::Finnhub.new.daily_all_stocks? ||
-        Etl::Refresh::Iexapis.new.weekly_all_stocks? ||
-        Etl::Refresh::Dividend.new.weekly_all_stocks?
+      ready?(SLOW_UPDATE_JOBS)
+    end
+
+    def perform_update(&block)
+      if fast_update?
+        perform(FAST_UPDATE_JOBS, &block)
+      elsif slow_update?
+        perform(SLOW_UPDATE_JOBS, &block)
+      end
     end
 
     def lock(key, force: false)
@@ -46,11 +61,8 @@ module XStocks
       true
     end
 
-    def [](key)
-      self.class.new(
-        service_ar_class.select('locked_at, last_run_at').find_or_initialize_by(key: key),
-        service_ar_class: service_ar_class
-      )
+    def self.find(lookup_code, service_ar_class: XStocks::AR::Service)
+      new(service_ar_class.find_or_initialize_by(key: lookup_code), service_ar_class: service_ar_class)
     end
 
     def locked?
@@ -62,6 +74,14 @@ module XStocks
     end
 
     private
+
+    def ready?(jobs)
+      jobs.detect { |job| job.new.ready? }
+    end
+
+    def perform(jobs, &block)
+      jobs.each { |job| job.new.perform(&block) }
+    end
 
     def lock!(service)
       rows_updated =
@@ -77,5 +97,7 @@ module XStocks
     end
 
     attr_reader :service, :service_ar_class
+
+    XStocks::ARForwarder.delegate_methods(self, :service, XStocks::AR::Service)
   end
 end

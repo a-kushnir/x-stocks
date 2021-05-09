@@ -2,19 +2,19 @@
 
 # Helper methods for ServicesController
 module ServicesHelper
-  def run_service_path(service_runner)
-    "/services/#{CGI.escape(service_runner.lookup_code)}/run"
+  def run_service_path(job)
+    "/services/#{CGI.escape(job.lookup_code)}/run"
   end
 
-  def service_log_path(service_runner)
-    "/services/#{CGI.escape(service_runner.lookup_code)}/log"
+  def service_log_path(job)
+    "/services/#{CGI.escape(job.lookup_code)}/log"
   end
 
-  def service_error_path(service_runner)
-    "/services/#{CGI.escape(service_runner.lookup_code)}/error"
+  def service_error_path(job)
+    "/services/#{CGI.escape(job.lookup_code)}/error"
   end
 
-  def service_file_path(service_runner)
-    "/services/#{CGI.escape(service_runner.lookup_code)}/file"
+  def service_file_path(job)
+    "/services/#{CGI.escape(job.lookup_code)}/file"
   end
 end

@@ -5,6 +5,8 @@ class StocksController < ApplicationController
   include ActionController::Live
   include StocksHelper
 
+  UPDATE_PRICE_TIMEOUT = 0.5 # sec
+
   def index
     return if handle_goto_param?
 
@@ -27,7 +29,7 @@ class StocksController < ApplicationController
     @stock = find_stock
     not_found && return unless @stock
 
-    safe_exec { Etl::Refresh::Finnhub.new.hourly_one_stock!(@stock) }
+    @stock.reload if update_price
     @position = XStocks::AR::Position.find_or_initialize_by(stock_id: @stock.id, user: current_user)
 
     set_page_title
@@ -81,12 +83,7 @@ class StocksController < ApplicationController
   def processing
     EventStream.run(response) do |stream|
       @stock = XStocks::Stock.find_by!(symbol: params[:id])
-      XStocks::Service.new.lock(:company_information, force: true) do |logger|
-        logger.text_size_limit = nil
-        Etl::Refresh::Company.new.one_stock!(@stock, logger: logger) do |status|
-          stream.write(status)
-        end
-      end
+      XStocks::Jobs::CompanyOne.new.perform(stock_id: @stock.id) { |status| stream.write(status) }
     end
   end
 
@@ -104,6 +101,15 @@ class StocksController < ApplicationController
   end
 
   private
+
+  def update_price
+    safe_exec do
+      Timeout::timeout(UPDATE_PRICE_TIMEOUT) do
+        XStocks::Jobs::FinnhubPriceOne.new.perform(stock_id: @stock.id) { nil }
+      end
+      true
+    end
+  end
 
   def set_page_title
     @page_title = @stock.nil? || @stock.new_record? ? 'New Stock' : @stock

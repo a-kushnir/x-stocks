@@ -16,6 +16,7 @@ require("chart.js")
 require("chartjs-plugin-datalabels")
 
 require("packs/data_refresh");
+require("packs/stock_refresh");
 require("packs/data_table");
 require("packs/twitter");
 require("packs/jcountdown");

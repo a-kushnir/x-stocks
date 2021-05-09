@@ -5,7 +5,14 @@ class ServicesController < ApplicationController
   include ActionController::Live
 
   def index
-    @jobs = XStocks::Job.all
+    @tag = params[:tag]
+    @jobs = @tag.present? ? XStocks::Job.find_by_tag(@tag) : XStocks::Job.all
+
+    if @tag.present? && @jobs.blank?
+      @tag = nil
+      @jobs = XStocks::Job.all
+    end
+
     @stocks = XStocks::AR::Stock.all
 
     @columns = columns

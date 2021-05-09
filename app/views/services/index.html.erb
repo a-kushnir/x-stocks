@@ -1,5 +1,9 @@
 <%= render partial: 'shared/column', locals: {columns: @columns} %>
 
+<% if @tag %>
+  <p><span class="badge badge-pill badge-primary"><%= @tag %></span></p>
+<% end %>
+
 <table id="services-table" class="table table-sm table-hover table-override">
   <thead class="thead-light">
   <tr>

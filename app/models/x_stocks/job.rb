@@ -14,7 +14,11 @@ module XStocks
     end
 
     def self.find(lookup_code)
-      all.detect { |service| service.lookup_code == lookup_code }
+      all.detect { |job| job.lookup_code == lookup_code }
+    end
+
+    def self.find_by_tag(tag)
+      all.select { |job| job.tags.include?(tag) }
     end
   end
 end

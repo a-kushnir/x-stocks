@@ -49,8 +49,8 @@ class DividendsController < ApplicationController
     # Position
     columns << { label: 'Total Cost' }
     columns << { label: 'Market Value' }
-    columns << { label: 'Gain/Loss' }
-    columns << { label: 'Gain/Loss %' }
+    columns << { label: 'Total Return' }
+    columns << { label: 'Total Return %' }
     columns << { label: 'Diversity %' }
     # Dividends
     month_names.each do |month_name|

@@ -35,7 +35,7 @@ module XLSX
       private
 
       def header_row
-        ['Symbol', 'Shares', 'Average Price', 'Market Price', 'Total Cost', 'Market Value', 'Gain/Loss', 'Gain/Loss %', 'Annual Dividend', 'Diversity %']
+        ['Symbol', 'Shares', 'Average Price', 'Market Price', 'Total Cost', 'Market Value', 'Total Return', 'Total Return %', 'Annual Dividend', 'Diversity %']
       end
 
       def header_styles

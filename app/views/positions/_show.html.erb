@@ -31,13 +31,13 @@
       </tr>
       <tr>
         <td>
-          Gain/Loss:
+          Total Return:
           <strong class="float-right <%= delta_class(@position.gain_loss) %>"><%= delta_number(number_to_currency(@position.gain_loss)) %></strong>
         </td>
       </tr>
       <tr>
         <td>
-          Gain/Loss %:
+          Total Return %:
           <strong class="float-right <%= delta_class(@position.gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.gain_loss_pct, precision: 2)) %></strong>
         </td>
       </tr>
@@ -88,13 +88,13 @@
         </tr>
         <tr>
           <td>
-            Estimated Gain/Loss:
+            Estimated Return:
             <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss) %>"><%= delta_number(number_to_currency(@position.stop_loss_gain_loss)) %></strong>
           </td>
         </tr>
         <tr>
           <td>
-            Estimated Gain/Loss %:
+            Estimated Return %:
             <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.stop_loss_gain_loss_pct, precision: 2)) %></strong>
           </td>
         </tr>

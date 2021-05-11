@@ -67,15 +67,17 @@ class PositionsController < ApplicationController
     columns << { label: 'Market Price', default: true }
     columns << { label: 'Total Cost', default: true }
     columns << { label: 'Market Value', default: true }
-    columns << { label: 'Gain/Loss', default: true }
-    columns << { label: 'Gain/Loss %', default: true }
+    columns << { label: "Today's Return", default: true }
+    columns << { label: "Today's Return %", default: true }
+    columns << { label: 'Total Return', default: true }
+    columns << { label: 'Total Return %', default: true }
     columns << { label: 'Annual Div.', default: true }
     columns << { label: 'Diversity %', default: true }
     # Stop Loss
     columns << { label: 'Stop Price' }
     columns << { label: 'Est. Credit' }
-    columns << { label: 'Est. Gain/Loss' }
-    columns << { label: 'Est. Gain/Loss %' }
+    columns << { label: 'Est. Return' }
+    columns << { label: 'Est. Return %' }
     # Stock
     columns << { label: 'Price' }
     columns << { label: 'Change' }
@@ -121,7 +123,7 @@ class PositionsController < ApplicationController
       dividend_rating: avg_dividend_rating.value
     }
 
-    [data, summary(positions, summary)]
+    [data, summary(@stocks_by_id, positions, summary)]
   end
 
   def row(stock, position, div_suspended, total_market_value)
@@ -139,6 +141,8 @@ class PositionsController < ApplicationController
       position.market_price&.to_f,
       position.total_cost&.to_f,
       position.market_value&.to_f,
+      stock.price_change && position.shares ? (stock.price_change * position.shares).to_f : nil,
+      stock.price_change_pct&.to_f,
       position.gain_loss&.to_f,
       position.gain_loss_pct&.to_f,
       position.est_annual_income&.to_f,
@@ -175,11 +179,13 @@ class PositionsController < ApplicationController
     div_suspended ? 'Sus.' : value
   end
 
-  def summary(positions, summary)
+  def summary(stocks_by_id, positions, summary)
     total_cost = positions.map(&:total_cost).compact.sum || 0
     market_value = positions.map(&:market_value).compact.sum || 0
-    gain_loss = market_value - total_cost
-    gain_loss_pct = total_cost.positive? ? gain_loss / total_cost * 100 : 0
+    today_return = positions.sum { |position| stocks_by_id[position.stock_id]&.price_change && position.shares ? stocks_by_id[position.stock_id].price_change * position.shares : 0 }
+    today_return_pct = total_cost.positive? ? today_return / total_cost * 100 : 0
+    total_return = market_value - total_cost
+    total_return_pct = total_cost.positive? ? total_return / total_cost * 100 : 0
     est_annual_income = positions.map(&:est_annual_income).compact.sum
     yield_on_value = market_value.positive? ? (est_annual_income / market_value) * 100 : 0
 
@@ -192,8 +198,10 @@ class PositionsController < ApplicationController
     summary.merge({
                     total_cost: total_cost,
                     market_value: market_value,
-                    gain_loss: gain_loss,
-                    gain_loss_pct: gain_loss_pct,
+                    today_return: today_return,
+                    today_return_pct: today_return_pct,
+                    total_return: total_return,
+                    total_return_pct: total_return_pct,
                     est_annual_income: est_annual_income,
                     yield_on_value: yield_on_value,
                     stop_loss_value: stop_loss_value,

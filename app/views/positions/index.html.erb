@@ -24,8 +24,10 @@
       <th colspan="5"></th>
       <th class="text-right"><%= number_to_currency(@summary[:total_cost]) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:market_value]) %></th>
-      <th class="text-right <%= delta_class(@summary[:gain_loss]) %>"><%= delta_number(number_to_currency(@summary[:gain_loss])) %></th>
-      <th class="text-right <%= delta_class(@summary[:gain_loss_pct]) %>"><%= delta_number(number_to_percentage(@summary[:gain_loss_pct], precision: 2)) %></th>
+      <th class="text-right <%= delta_class(@summary[:today_return]) %>"><%= delta_number(number_to_currency(@summary[:today_return])) %></th>
+      <th class="text-right <%= delta_class(@summary[:today_return_pct]) %>"><%= delta_number(number_to_percentage(@summary[:today_return_pct], precision: 2)) %></th>
+      <th class="text-right <%= delta_class(@summary[:total_return]) %>"><%= delta_number(number_to_currency(@summary[:total_return])) %></th>
+      <th class="text-right <%= delta_class(@summary[:total_return_pct]) %>"><%= delta_number(number_to_percentage(@summary[:total_return_pct], precision: 2)) %></th>
       <th class="text-right"><%= number_to_currency(@summary[:est_annual_income]) %></th>
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
       <th></th>
@@ -81,15 +83,17 @@
       Formats.currency,       // Market Price
       Formats.currency,       // Total Cost
       Formats.currency,       // Market Value
-      Formats.currencyDelta,  // Gain/Loss
-      Formats.percentDelta2,  // Gain/Loss %
+      Formats.currencyDelta,  // Today's Return
+      Formats.percentDelta2,  // Today's Return %
+      Formats.currencyDelta,  // Total Return
+      Formats.percentDelta2,  // Total Return %
       Formats.currency,       // Annual Dividend
       Formats.percent2,       // Diversity %
       // Stop Loss
       Formats.currency,       // Stop Price
       Formats.currency,       // Est. Credit
-      Formats.currencyDelta,  // Est. Gain/Loss
-      Formats.percentDelta2,  // Est. Gain/Loss %
+      Formats.currencyDelta,  // Est. Return
+      Formats.percentDelta2,  // Est. Return %
       // Stock
       Formats.currency,       // Price
       Formats.currencyDelta,  // Change

@@ -104,7 +104,7 @@ class StocksController < ApplicationController
 
   def update_price
     safe_exec do
-      Timeout::timeout(UPDATE_PRICE_TIMEOUT) do
+      Timeout.timeout(UPDATE_PRICE_TIMEOUT) do
         XStocks::Jobs::FinnhubPriceOne.new.perform(stock_id: @stock.id) { nil }
       end
       true

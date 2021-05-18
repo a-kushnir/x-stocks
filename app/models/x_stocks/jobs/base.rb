@@ -48,8 +48,6 @@ module XStocks
         XStocks::Service.new.lock(lookup_code, force: force_lock, &block)
       end
 
-      protected
-
       extend Forwardable
       def_delegators :base_refresh, :stock_message, :completed_message
 

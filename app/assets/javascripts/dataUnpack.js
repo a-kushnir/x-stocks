@@ -1,4 +1,8 @@
 const FormatMethods = {
+  safeLink: function(value) {
+    return String(value).replace('/', '%2F');
+  },
+
   currency: function (value) {
     if (value === null) return '';
 
@@ -155,7 +159,7 @@ const Formats = {
 
       .append($('<a>')
         .addClass(note ? 'has-note' : null)
-        .attr('href', `/stocks/${symbol}`)
+        .attr('href', `/stocks/${FormatMethods.safeLink(symbol)}`)
         .text(symbol)
       )
   },

@@ -14,7 +14,7 @@
 <script>
   function redirectToStock() {
     const symbol = $('#x_stocks_ar_stock_symbol').val().trim().toUpperCase();
-    window.location.replace(`/stocks/${symbol}`);
+    window.location.replace(`/stocks/${FormatMethods.safeLink(symbol)}`);
   }
 
   function onServiceRunSuccess() {

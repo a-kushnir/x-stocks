@@ -28,7 +28,8 @@
       <th class="text-right <%= delta_class(@summary[:today_return_pct]) %>"><%= delta_number(number_to_percentage(@summary[:today_return_pct], precision: 2)) %></th>
       <th class="text-right <%= delta_class(@summary[:total_return]) %>"><%= delta_number(number_to_currency(@summary[:total_return])) %></th>
       <th class="text-right <%= delta_class(@summary[:total_return_pct]) %>"><%= delta_number(number_to_percentage(@summary[:total_return_pct], precision: 2)) %></th>
-      <th class="text-right"><%= number_to_currency(@summary[:est_annual_income]) %></th>
+      <th class="text-right"><%= number_to_currency(@summary[:next_div]) %></th>
+      <th class="text-right"><%= number_to_currency(@summary[:est_annual_div]) %></th>
       <th class="text-right"><%= number_to_percentage(100, precision: 2) %></th>
       <th></th>
       <th class="text-right"><%= number_to_currency(@summary[:stop_loss_value]) %></th>
@@ -87,7 +88,8 @@
       Formats.percentDelta2,  // Today's Return %
       Formats.currencyDelta,  // Total Return
       Formats.percentDelta2,  // Total Return %
-      Formats.currency,       // Annual Dividend
+      Formats.currency,       // Next Div.
+      Formats.currency,       // Annual Div.
       Formats.percent2,       // Diversity %
       // Stop Loss
       Formats.currency,       // Stop Price

@@ -3,12 +3,14 @@ const FormatMethods = {
     return String(value).replace('/', '%2F');
   },
 
-  currency: function (value) {
+  currency: function (value, minimumFractionDigits, maximumFractionDigits) {
     if (value === null) return '';
 
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
+      minimumFractionDigits: minimumFractionDigits,
+      maximumFractionDigits: maximumFractionDigits
     });
     return formatter.format(value);
   },
@@ -223,7 +225,7 @@ const Formats = {
       );
   },
 
-  currency: function (value) {
+  currency: function (value, minimumFractionDigits, maximumFractionDigits) {
     if (value === null) {
       return $('<td>')
         .attr('data-sort', '0');
@@ -232,7 +234,7 @@ const Formats = {
     return $('<td>')
       .attr('data-sort', value)
       .addClass('text-right')
-      .text(FormatMethods.currency(value))
+      .text(FormatMethods.currency(value, minimumFractionDigits, maximumFractionDigits))
   },
 
   currencyOrWarn: function(value) {
@@ -247,6 +249,13 @@ const Formats = {
       .addClass('text-right')
       .addClass(FormatMethods.deltaClass(value))
       .text(FormatMethods.plusSign(value) + FormatMethods.currency(value))
+  },
+
+  currencyDiv: function(value) {
+    if (value === null) return $('<td>');
+    return isNaN(value) ?
+      Formats.warn(value) :
+      Formats.currency(value, undefined, 4);
   },
 
   bigMoney: function(value) {

@@ -113,7 +113,13 @@ $ rails s
 * Add environment variable FINNHUB_KEY with the copied value
 * You can use multiple keys to overcome free account limitations, use variables like FINNHUB_KEY_2, FINNHUB_KEY_3 and so on
 
-### IEX Cloud
+### Polygon Stock API
+* Sign up on https://polygon.io/
+* Copy API Key (example: ABabcd4U2aBc1or234rYO_HELPMEhaha)
+* Add environment variable POLYGON_KEY with the copied value
+* You can use multiple keys to overcome free account limitations, use variables like POLYGON_KEY_2, POLYGON_KEY_3 and so on
+
+### IEX Cloud API
 * Sign up on https://iexcloud.io/
 * Copy API Token (example: pk_e735a31e0a593e7db8c38c9ce04632e7)
 * Add environment variable IEXAPIS_KEY with the copied value

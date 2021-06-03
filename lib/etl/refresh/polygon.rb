@@ -4,7 +4,7 @@ module Etl
   module Refresh
     # Extracts and transforms data from polygon.io
     class Polygon < Base
-      PAUSE = 1.0 / 3 # Limit up to 3 requests per second
+      PAUSE = 60.0 / 10 # Limit up to 10 requests per minute
 
       def weekly_all_stocks
         token_store = Etl::Extract::TokenStore.new(Etl::Extract::Polygon::TOKEN_KEY, logger)

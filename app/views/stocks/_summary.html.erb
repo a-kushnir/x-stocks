@@ -51,6 +51,8 @@ HELP
   right_table << {label: 'Dividend Change', value: "#{change_icon(div_change_pct)} #{number_to_percentage(div_change_pct, precision: 1)}".html_safe, class: delta_class(div_change_pct)} if div_change_pct
   right_table << {label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})"} if @stock.dividend_rating
   right_table << {label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2)} unless @stock.payout_ratio.to_f.zero?
+  right_table << {label: 'Support', value: number_to_currency(@stock.yahoo_support)} unless @stock.yahoo_support.to_f.zero?
+  right_table << {label: 'Resistance', value: number_to_currency(@stock.yahoo_resistance)} unless @stock.yahoo_resistance.to_f.zero?
 %>
 
 <table class="table table-sm stock-summary-table d-none d-lg-table">

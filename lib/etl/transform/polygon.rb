@@ -13,7 +13,7 @@ module Etl
       def dividends(stock, json)
         return if json&.dig('status') != 'OK'
 
-        details = json.dig('results').map do |row|
+        details = json['results'].map do |row|
           {
             'ex_date' => row['exDate'],
             'payment_date' => row['paymentDate'],
@@ -37,7 +37,7 @@ module Etl
         stock.dividend_amount = last_div&.dig('amount')
         stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
 
-        # TODO Calc Next Div
+        # TODO: Calc Next Div
 
         stock.save
       end
@@ -46,7 +46,7 @@ module Etl
 
       def detect_div_frequency(details)
         dates = details.map { |detail| detail['ex_date'] }
-        periods = dates.each_cons(2).map { |a,b| (Date.parse(a) - Date.parse(b)).to_i }
+        periods = dates.each_cons(2).map { |a, b| (Date.parse(a) - Date.parse(b)).to_i }
 
         frequencies = periods.map do |period|
           dividend_frequencies.detect do |_name, freq|
@@ -54,7 +54,7 @@ module Etl
           end&.first
         end
 
-        frequency = frequencies.compact.group_by { |freq| freq }.max_by {|_, freq| freq.size }&.first
+        frequency = frequencies.compact.group_by { |freq| freq }.max_by { |_, freq| freq.size }&.first
 
         frequencies.each_with_index do |freq, index|
           if freq == frequency
@@ -71,7 +71,7 @@ module Etl
       end
 
       def range(base, delta)
-        (base-delta)..(base+delta)
+        (base - delta)..(base + delta)
       end
 
       attr_reader :stock_ar_class, :dividend_frequencies

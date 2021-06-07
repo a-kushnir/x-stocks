@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'math'
+
 module XStocks
   class Stock
     # Calculates stock score using multiple parameters
@@ -124,27 +126,9 @@ module XStocks
         end
       end
 
-      def lerp(min, max, value)
-        value = 0 if value.negative?
-        value = 1 if value > 1
-        min + (max - min) * value.to_f
-      end
-
-      def inv_lerp(min, max, value)
-        if min < max
-          return 0 if value <= min
-          return 1 if value >= max
-        else
-          return 0 if value >= min
-          return 1 if value <= max
-        end
-
-        (value - min).to_f / (max - min)
-      end
-
       def convert(src_range, dst_range, value)
-        value = inv_lerp(src_range.begin, src_range.end, value)
-        lerp(dst_range.begin, dst_range.end, value)
+        value = Math.inv_lerp(src_range.begin, src_range.end, value)
+        Math.lerp(dst_range.begin, dst_range.end, value)
       end
 
       def result(meta_score_details)

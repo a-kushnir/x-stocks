@@ -190,12 +190,11 @@ const Formats = {
     const min = value[0], max = value[1], curr = value[2], change = value[3];
 
     const curr_pct = FormatMethods.invLerp(min, max, curr) * 100;
-    const change_pct = FormatMethods.invLerp(0, max - min, change) * 100;
-
-    const progress1 = (change < 0) ? curr_pct + change_pct : curr_pct;
-    let progress2 = (change < 0) ? -change_pct : change_pct;
-    if (progress2 < 2) progress2 = 2;
-    const css_class = (change < 0) ? 'bg-danger' : 'bg-success';
+    const points = change > 0 ? [curr - change, curr] : [curr, curr - change];
+    const progress1 = FormatMethods.invLerp(min, max, points[0]) * 100;
+    let progress2 = FormatMethods.invLerp(min, max, points[1]) * 100 - progress1;
+    if (progress2 < 2) progress2 = 2; // Min width is 2%
+    const css_class = (change < 0) ? 'bg-danger' : 'bg-success'
 
     const progress = `<div class="progress">
       <div class="progress-bar" role="progressbar" style="width: ${progress1}%; background-color: transparent;"></div>

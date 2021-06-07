@@ -37,6 +37,7 @@ HELP
   left_table << {label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i)} if @stock.yahoo_discount
 
   right_table = []
+  right_table << {label: 'Support / Resistance', value: "#{number_to_currency(@stock.yahoo_support)} - #{number_to_currency(@stock.yahoo_resistance)}"} if !@stock.yahoo_support.to_f.zero? && !@stock.yahoo_resistance.to_f.zero?
   right_table << {label: 'EPS (TTM)', value: number_with_precision(@stock.eps_ttm, precision: 2)} if @stock.eps_ttm
   right_table << {label: 'EPS Growth 5Y', value: "#{change_icon(@stock.eps_growth_5y)} #{number_to_percentage(@stock.eps_growth_5y, precision: 2)}".html_safe, class: delta_class(@stock.eps_growth_5y)} if @stock.eps_growth_5y
   if div_suspended
@@ -51,8 +52,6 @@ HELP
   right_table << {label: 'Dividend Change', value: "#{change_icon(div_change_pct)} #{number_to_percentage(div_change_pct, precision: 1)}".html_safe, class: delta_class(div_change_pct)} if div_change_pct
   right_table << {label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1)} (#{safety_human(@stock.dividend_rating)})"} if @stock.dividend_rating
   right_table << {label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2)} unless @stock.payout_ratio.to_f.zero?
-  right_table << {label: 'Support', value: number_to_currency(@stock.yahoo_support)} unless @stock.yahoo_support.to_f.zero?
-  right_table << {label: 'Resistance', value: number_to_currency(@stock.yahoo_resistance)} unless @stock.yahoo_resistance.to_f.zero?
 %>
 
 <table class="table table-sm stock-summary-table d-none d-lg-table">

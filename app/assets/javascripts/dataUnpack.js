@@ -184,7 +184,7 @@ const Formats = {
       .text(value)
   },
 
-  range: function(value) {
+  priceRange: function(value) {
     if (value === null) return $('<td>').attr('data-sort', '-');
 
     const min = value[0], max = value[1], curr = value[2], change = value[3];
@@ -197,20 +197,20 @@ const Formats = {
     if (progress2 < 2) progress2 = 2;
     const css_class = (change < 0) ? 'bg-danger' : 'bg-success';
 
+    const progress = `<div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: ${progress1}%; background-color: transparent;"></div>
+      <div class="progress-bar ${css_class}" role="progressbar" style="width: ${progress2}%"></div>
+      </div>`;
+    const label = `<small>
+      <span class="float-left">${FormatMethods.currency(min)}</span>
+      <span class="float-right">${FormatMethods.currency(max)}</span>
+      </small>`;
+
     return $('<td>')
       .attr('data-sort', curr_pct)
       .addClass('price-range')
       .addClass('text-nowrap')
-      .html(
-        '<div class="progress">\n' +
-        '<div class="progress-bar" role="progressbar" style="width: ' + progress1 + '%; background-color: transparent;"></div>\n' +
-        '<div class="progress-bar ' + css_class + '" role="progressbar" style="width: ' + progress2 + '%"></div>\n' +
-        '</div>'+
-        '<small class="text-muted">' +
-        '<span class="float-left">' + FormatMethods.currency(min) + '</span>' +
-        '<span class="float-right">' + FormatMethods.currency(max) + '</span>' +
-        '</small>'
-      )
+      .html(progress + label);
   },
 
   warn: function(value) {

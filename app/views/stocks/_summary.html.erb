@@ -28,8 +28,8 @@ HELP
   left_table = []
   left_table << {label: 'Previous Close', value: number_to_currency(@stock.prev_close_price)} if @stock.prev_close_price
   left_table << {label: 'Open', value: number_to_currency(@stock.open_price)} if @stock.open_price
-  left_table << {label: "Day's Range", value: "#{number_to_currency(@stock.day_low_price)} - #{number_to_currency(@stock.day_high_price)}"} if @stock.day_low_price && @stock.day_high_price
-  left_table << {label: '52 Week Range', value: "#{number_to_currency(@stock.week_52_low)} - #{number_to_currency(@stock.week_52_high)}"} if @stock.week_52_low && @stock.week_52_high
+  left_table << {label: "Day's Range", value: render_range(@stock.day_low_price, @stock.day_high_price, @stock.current_price, @stock.price_change)} if @stock.day_low_price && @stock.day_high_price
+  left_table << {label: '52 Week Range', value: render_range(@stock.week_52_low, @stock.week_52_high, @stock.current_price, @stock.price_change)} if @stock.week_52_low && @stock.week_52_high
   left_table << {label: 'P/E Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2)} if @stock.week_52_low && @stock.pe_ratio_ttm
   left_table << {label: 'Outstanding Shares', value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true)} if @stock.outstanding_shares
   left_table << {label: 'Market Cap', value: number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true)} if @stock.market_capitalization
@@ -37,7 +37,7 @@ HELP
   left_table << {label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i)} if @stock.yahoo_discount
 
   right_table = []
-  right_table << {label: 'Support / Resistance', value: "#{number_to_currency(@stock.yahoo_support)} - #{number_to_currency(@stock.yahoo_resistance)}"} if !@stock.yahoo_support.to_f.zero? && !@stock.yahoo_resistance.to_f.zero?
+  right_table << {label: 'Support / Resistance', value: render_range(@stock.yahoo_support, @stock.yahoo_resistance, @stock.current_price, @stock.price_change)} if !@stock.yahoo_support.to_f.zero? && !@stock.yahoo_resistance.to_f.zero?
   right_table << {label: 'EPS (TTM)', value: number_with_precision(@stock.eps_ttm, precision: 2)} if @stock.eps_ttm
   right_table << {label: 'EPS Growth 5Y', value: "#{change_icon(@stock.eps_growth_5y)} #{number_to_percentage(@stock.eps_growth_5y, precision: 2)}".html_safe, class: delta_class(@stock.eps_growth_5y)} if @stock.eps_growth_5y
   if div_suspended

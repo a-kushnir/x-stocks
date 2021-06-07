@@ -154,4 +154,38 @@ module StocksHelper
     col = { 1 => 'success', 0 => 'muted', -1 => 'danger' }[direction <=> 0]
     content_tag(:i, class: "fas fa-caret-#{dir} text-#{col} #{css_class}") { '' }
   end
+
+  def render_range(min, max, curr, change)
+    curr_pct = inv_lerp(min, max, curr) * 100
+    change_pct = inv_lerp(0, max - min, change) * 100
+
+    progress1 = (change < 0) ? curr_pct + change_pct : curr_pct
+    progress2 = (change < 0) ? -change_pct : change_pct
+    progress2 = 2 if (progress2 < 2)
+    css_class = (change < 0) ? 'bg-danger' : 'bg-success'
+
+    progress = "<div class='progress'>
+      <div class='progress-bar' role='progressbar' style='width: #{progress1}%; background-color: transparent;'></div>
+      <div class='progress-bar #{css_class}' role='progressbar' style='width: #{progress2}%'></div>
+      </div>"
+
+    label = "<small>
+      <span class='float-left'>#{number_to_currency(min)}</span>
+      <span class='float-right'>#{number_to_currency(max)}</span>
+      </small>"
+
+    "<div class='price-range'>#{label}#{progress}</div>".html_safe
+  end
+
+  def inv_lerp(min, max, value)
+    if min < max
+      return 0 if value <= min
+      return 1 if value >= max
+    else
+      return 0 if value >= min
+      return 1 if value <= max
+    end
+
+    (value - min).to_f / (max - min)
+  end
 end

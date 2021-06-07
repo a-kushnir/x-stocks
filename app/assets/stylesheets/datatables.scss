@@ -110,6 +110,26 @@ td.price-range {
     display:inline-block;
     width: 100%;
     font-size: 70%;
+    span {
+      font-weight: bold;
+    }
   }
+  padding-bottom: 0;
+}
+
+div.price-range {
+  .progress {
+    height: 4px;
+    min-width: 150px;
+  }
+  small {
+    display:inline-block;
+    width: 100%;
+    span {
+      font-weight: bold;
+    }
+  }
+  padding-top: 2px;
+  line-height: 16px;
   padding-bottom: 0;
 }

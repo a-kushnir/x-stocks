@@ -10,6 +10,10 @@ module Etl
         @logger = logger
       end
 
+      def loader
+        @loader ||= Etl::Extract::DataLoader.new(logger)
+      end
+
       def stock_message(stock, percent: 0)
         {
           message: "Processing #{stock.symbol} (1 out of 1)",
@@ -48,6 +52,14 @@ module Etl
           message: 'Completed',
           percent: 100
         }
+      end
+
+      def init_csv_file(file_name)
+        logger.init_file(file_name, 'text/csv')
+      end
+
+      def add_csv_file_row(row)
+        logger.append_file("#{row.map { |cell| "\"#{cell.to_s.gsub('"', '""')}\"" }.join(',')}\r\n")
       end
     end
   end

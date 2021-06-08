@@ -47,6 +47,10 @@ module Etl
         data_loader.get_json(earnings_calendar_url(from, to))
       end
 
+      def candle(symbol, from, to, resolution)
+        data_loader.get_json(candle_url(symbol, from, to, resolution))
+      end
+
       private
 
       def download_logo(json)
@@ -84,6 +88,10 @@ module Etl
 
       def earnings_calendar_url(from, to)
         "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
+      end
+
+      def candle_url(symbol, from, to, resolution)
+        "#{BASE_URL}/stock/candle?symbol=#{cgi.escape(symbol)}&resolution=#{resolution}&from=#{from.to_time.to_i}&to=#{to.to_time.to_i}&token=#{token}"
       end
 
       attr_reader :data_loader, :token, :cgi

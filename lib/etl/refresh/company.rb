@@ -7,12 +7,11 @@ module Etl
       def one_stock(stock)
         iexapis_ts = Etl::Extract::TokenStore.new(Etl::Extract::Iexapis::TOKEN_KEY)
         finnhub_ts = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
-        data_loader = Etl::Extract::DataLoader.new(logger)
 
         yield message('Loading company information [IEX Cloud]', 0) if block_given?
         safe_exec do
           iexapis_ts.try_token do |token|
-            json = Etl::Extract::Iexapis.new(data_loader, token).company(stock)
+            json = Etl::Extract::Iexapis.new(loader, token).company(stock)
             Etl::Transform::Iexapis.new.company(stock, json)
           end
         end
@@ -20,7 +19,7 @@ module Etl
         yield message('Loading company information [Finnhub]', 10) if block_given?
         safe_exec do
           finnhub_ts.try_token do |token|
-            json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
+            json = Etl::Extract::Finnhub.new(loader, token).company(stock)
             Etl::Transform::Finnhub.new.company(stock, json)
           end
         end
@@ -28,7 +27,7 @@ module Etl
         yield message('Loading company peers [Finnhub]', 20) if block_given?
         safe_exec do
           finnhub_ts.try_token do |token|
-            json = Etl::Extract::Finnhub.new(data_loader, token).peers(stock)
+            json = Etl::Extract::Finnhub.new(loader, token).peers(stock)
             Etl::Transform::Finnhub.new.peers(stock, json)
           end
         end

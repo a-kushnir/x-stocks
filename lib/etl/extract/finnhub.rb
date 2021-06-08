@@ -47,8 +47,8 @@ module Etl
         data_loader.get_json(earnings_calendar_url(from, to))
       end
 
-      def candle(symbol, from, to, resolution)
-        data_loader.get_json(candle_url(symbol, from, to, resolution))
+      def candle(stock, from, to, resolution)
+        data_loader.get_json(candle_url(stock.symbol, from, to, resolution))
       end
 
       private

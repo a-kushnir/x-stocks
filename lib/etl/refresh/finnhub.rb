@@ -24,10 +24,9 @@ module Etl
 
       def hourly_one_stock(stock, token_store: nil)
         token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-        data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(data_loader, token).quote(stock)
+          json = Etl::Extract::Finnhub.new(loader, token).quote(stock)
           Etl::Transform::Finnhub.new.quote(stock, json) if json
         end
       end
@@ -49,34 +48,52 @@ module Etl
 
       def daily_one_stock(stock, token_store: nil, immediate: false)
         token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-        data_loader = Etl::Extract::DataLoader.new(logger)
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(data_loader, token).recommendation(stock)
+          json = Etl::Extract::Finnhub.new(loader, token).recommendation(stock)
           Etl::Transform::Finnhub.new.recommendation(stock, json) if json
           sleep(PAUSE_LONG) unless immediate
         end
 
         token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(data_loader, token).metric(stock)
+          json = Etl::Extract::Finnhub.new(loader, token).metric(stock)
           Etl::Transform::Finnhub.new.metric(stock, json) if json
         end
       end
 
       def company_all_stocks
         token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
-        data_loader = Etl::Extract::DataLoader.new(logger)
 
         each_stock_with_message do |stock, message|
           yield message if block_given?
           token_store.try_token do |token|
-            json = Etl::Extract::Finnhub.new(data_loader, token).company(stock)
+            json = Etl::Extract::Finnhub.new(loader, token).company(stock)
             Etl::Transform::Finnhub.new.company(stock, json) if json
           end
           sleep(PAUSE_SHORT)
         end
 
         yield completed_message if block_given?
+      end
+
+      def analyze_one_stock(stock, token_store: nil)
+        token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
+
+        token_store.try_token do |token|
+          now = DateTime.now.beginning_of_hour
+          json = Etl::Extract::Finnhub.new(loader, token).candle(stock, now - 30.days, now, 60)
+
+          if json
+            init_csv_file("#{stock.symbol}_analysis.csv")
+            add_csv_file_row(%w(time event price ma60))
+            results = XStocks::Analyze::Candle.new.analyze(json['c'], json['t'])
+            results.each do |item|
+              add_csv_file_row(item.values_at(:time, :event, :price, :ma60))
+            end
+          end
+
+          sleep(PAUSE_LONG)
+        end
       end
 
       private

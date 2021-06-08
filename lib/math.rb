@@ -24,4 +24,8 @@ module Math
 
     (value - min).to_f / (max - min)
   end
+
+  def self.moving_average(array, length, precision)
+    array.each_cons(length).map { |e| e.reduce(&:+).fdiv(length).round(precision) }
+  end
 end

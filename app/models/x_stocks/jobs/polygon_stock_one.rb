@@ -25,7 +25,7 @@ module XStocks
       end
 
       def arguments
-        [:stock_id]
+        { stock_id: select_tag(values: stock_values, include_blank: '') }
       end
     end
   end

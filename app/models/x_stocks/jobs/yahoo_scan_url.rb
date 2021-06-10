@@ -19,7 +19,7 @@ module XStocks
       end
 
       def arguments
-        [:url]
+        { url: text_field_tag(placeholder: 'URL') }
       end
     end
   end

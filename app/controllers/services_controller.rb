@@ -90,7 +90,7 @@ class ServicesController < ApplicationController
   end
 
   def perform_job(job, &block)
-    args = params.permit(job.arguments).to_hash.symbolize_keys
+    args = params.permit(job.arguments.keys).to_hash.symbolize_keys
     job.force_lock = true
     job.perform(**args, &block)
   end

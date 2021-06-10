@@ -12,10 +12,14 @@ module XStocks
         ['Finnhub']
       end
 
-      def perform(&block)
+      def perform(resolution:, &block)
         lock do |logger|
-          Etl::Refresh::Finnhub.new(logger).tech_indicators(60, &block)
+          Etl::Refresh::Finnhub.new(logger).tech_indicators(resolution, &block)
         end
+      end
+
+      def arguments
+        { resolution: select_tag(values: %w[1 5 15 30 60 D W M], selected: '60') }
       end
     end
   end

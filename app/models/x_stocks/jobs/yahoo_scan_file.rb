@@ -19,7 +19,7 @@ module XStocks
       end
 
       def arguments
-        [:file]
+        { file: file_field_tag }
       end
     end
   end

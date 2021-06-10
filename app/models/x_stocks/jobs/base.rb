@@ -31,7 +31,7 @@ module XStocks
       end
 
       def arguments
-        []
+        {}
       end
 
       def service
@@ -50,6 +50,25 @@ module XStocks
 
       extend Forwardable
       def_delegators :base_refresh, :stock_message, :completed_message
+
+      protected
+
+      def text_field_tag(placeholder: nil)
+        { text: { placeholder: placeholder } }
+      end
+
+      def file_field_tag
+        { file: true }
+      end
+
+      def select_tag(values:, include_blank: nil, selected: nil)
+        values = [include_blank] + values unless include_blank.nil?
+        { select: { values: values, selected: selected } }
+      end
+
+      def stock_values
+        XStocks::AR::Stock.order(:symbol).all.map { |s| ["#{s.symbol} - #{s.company_name}", s.id] }
+      end
 
       private
 

@@ -35,14 +35,20 @@
       <td><%= (last_run_at ? "#{time_ago_in_words last_run_at} ago" : "never").capitalize %></td>
       <td>
         <%= form_tag(run_service_path(job), multipart: true) do %>
-          <% (job.arguments || []).each do |arg| %>
-            <% if arg == :stock_id %>
-              <%= select_tag(:stock_id, options_for_select([[]] + @stocks.map { |p| [ "#{p.symbol} - #{p.company_name}", p.id ] }),
-                             class: 'selectpicker', data: {live_search: true, container: 'body'}) %>
-            <% elsif arg == :url %>
-              <%= text_field_tag(:url, nil, { autocomplete: :off, placeholder: 'URL' }) %>
-            <% elsif arg == :file %>
-              <%= file_field_tag(:file) %>
+          <% Hash(job.arguments).each do |name, input| %>
+            <% Hash(input).each do |type, args| %>
+              <%=
+                case type
+                when :select
+                  select_tag(name, options_for_select(args[:values], args[:selected]), class: 'selectpicker', data: {live_search: true, container: 'body'})
+                when :text
+                  text_field_tag(:url, nil, { autocomplete: :off, placeholder: args[:placeholder] })
+                when :file
+                  file_field_tag(:file)
+                else
+                  # skip
+                end
+              %>
             <% end %>
           <% end %>
         <% end %>

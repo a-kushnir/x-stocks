@@ -85,7 +85,7 @@ module Etl
 
           if json
             init_csv_file("#{stock.symbol}_analysis.csv")
-            add_csv_file_row(%w(time event price ma60))
+            add_csv_file_row(%w[time event price ma60])
             results = XStocks::Analyze::Candle.new.analyze(json['c'], json['t'])
             results.each do |item|
               add_csv_file_row(item.values_at(:time, :event, :price, :ma60))
@@ -100,22 +100,24 @@ module Etl
         token_store = Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY, logger)
 
         init_csv_file("#{DateTime.now.strftime('%b-%d-%Hh')}_tech_indicators_#{resolution}.csv")
-        add_csv_file_row(%w(symbol buy neutral sell signal adx trending))
+        add_csv_file_row(%w[symbol buy neutral sell signal adx trending])
 
         each_stock_with_message do |stock, message|
           yield message if block_given?
           token_store.try_token do |token|
             json = Etl::Extract::Finnhub.new(loader, token).tech_indicator(stock, resolution)
 
-            row = [
-              stock.symbol,
-              json.dig('technicalAnalysis', 'count', 'buy'),
-              json.dig('technicalAnalysis', 'count', 'neutral'),
-              json.dig('technicalAnalysis', 'count', 'sell'),
-              json.dig('technicalAnalysis', 'signal'),
-              json.dig('trend', 'adx'),
-              json.dig('trend', 'trending'),
-            ] if json.present?
+            if json.present?
+              row = [
+                stock.symbol,
+                json.dig('technicalAnalysis', 'count', 'buy'),
+                json.dig('technicalAnalysis', 'count', 'neutral'),
+                json.dig('technicalAnalysis', 'count', 'sell'),
+                json.dig('technicalAnalysis', 'signal'),
+                json.dig('trend', 'adx'),
+                json.dig('trend', 'trending')
+              ]
+            end
             add_csv_file_row(row) if row && row.compact.size > 1
           end
           sleep(PAUSE_SHORT)

@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 module XStocks
@@ -36,12 +35,12 @@ module XStocks
 
         prices.each_with_index do |price, index|
           ma_index = index - size + 1
-          next if ma_index < 0
+          next if ma_index.negative?
 
           new_ma_over = ma[ma_index] > price
 
           event =
-            if ma_index > 0 && ma_over != new_ma_over
+            if ma_index.positive? && ma_over != new_ma_over
               new_ma_over ? 'Sell' : 'Buy'
             end
 
@@ -59,7 +58,7 @@ module XStocks
       end
 
       def time(timestamp)
-        zone = "America/Denver"
+        zone = 'America/Denver'
         datetime = Time.at(timestamp).in_time_zone(zone).to_datetime
         datetime.strftime('%Y-%m-%d %H:%M')
       end

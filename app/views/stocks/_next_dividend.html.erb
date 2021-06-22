@@ -7,14 +7,27 @@
       <span class="jcountdown" data-target="<%= (next_div_ex_date + 6.hours) %>"></span>
     </div>
 
+    <%
+      next_div_amount = @stock.next_div_amount
+      estimate = false
+      unless next_div_amount.positive?
+        value = ::Dividend.new.estimate(@stock)&.first&.dig(:amount)
+        if value.positive?
+          next_div_amount = value
+          estimate = true
+        end
+      end
+    %>
     <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
       <tbody>
+        <% if next_div_amount.positive? %>
         <tr>
-          <td style="border-top: none;">
-            Amount:
-            <strong class="float-right"><%= number_to_currency(@stock.next_div_amount, precision: dividend_precision(@stock.next_div_amount)) %></strong>
+          <td>
+            <%= 'Est. ' if estimate %>Amount:
+            <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
           </td>
         </tr>
+        <% end %>
         <tr>
           <td>
             <% div_change_pct = @stock.div_change_pct %>

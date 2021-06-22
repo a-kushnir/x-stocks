@@ -58,6 +58,12 @@
   background-color: #F3F5F6;
 }
 
+.my-side-panel {
+  tr:first-child td {
+    border-top-width: 0;
+  }
+}
+
 @media (min-width: 768px) {
   .my-side-panel {
     max-width: 300px;

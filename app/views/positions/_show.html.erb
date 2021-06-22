@@ -3,7 +3,7 @@
     <tbody>
       <% if @position.shares %>
       <tr>
-        <td style="border-top: none;">
+        <td>
           Shares:
           <strong class="float-right"><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
         </td>
@@ -51,10 +51,22 @@
       </tr>
       <% end %>
       <% if @position.shares && @position.stock.next_div_ex_date && @position.stock.next_div_ex_date >= Date.today %>
+
+        <%
+          next_div_amount = @position.stock.next_div_amount
+          estimate = false
+          unless next_div_amount.positive?
+            value = ::Dividend.new.estimate(XStocks::Stock.new(@position.stock))&.first&.dig(:amount)
+            if value.positive?
+              next_div_amount = value
+              estimate = true
+            end
+          end
+        %>
         <tr>
           <td>
-            Next Dividend:
-            <strong class="float-right"><%= number_to_currency(@position.shares * @position.stock.next_div_amount) %></strong>
+            <%= 'Est. ' if estimate %>Next Dividend:
+            <strong class="float-right"><%= number_to_currency(@position.shares * next_div_amount) %></strong>
           </td>
         </tr>
       <% end %>

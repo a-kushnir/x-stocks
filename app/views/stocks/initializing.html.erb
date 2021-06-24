@@ -21,7 +21,7 @@
 
     function redirectToTheStock() {
     const symbol = $('#x_stocks_ar_stock_symbol').val().trim().toUpperCase();
-    window.location.replace(`/stocks/${FormatMethods.safeLink(symbol)}`);
+    window.location.replace(`/stocks/${FormatMethods.safeLink(symbol)}?save_and_show=`);
   }
 
   function onServiceRunSuccess() {

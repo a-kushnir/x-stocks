@@ -1,5 +1,10 @@
 <% content_for :page_title do %>
-  <%= render partial: 'update' %>
+  <% if params[:save_and_show] %>
+    <%= render partial: 'new_button' %>
+  <% else %>
+    <%= render partial: 'update_button' %>
+  <% end %>
+
   <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center">
     <% if @stock.logo_url.present? %>
       <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>

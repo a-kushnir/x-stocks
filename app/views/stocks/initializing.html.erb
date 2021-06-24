@@ -3,8 +3,11 @@
     <%= bootstrap_form_for @stock, scope: :stock, url: processing_stock_path(@stock), local: true, html: {class: 'my-form mx-auto'} do |form| %>
       <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, disabled: true %>
       <div class="my-button-group-centered">
-        <%= link_to 'Back', back_url, class: 'btn btn-outline-dark disabled' %>
-        <%= form.submit 'Save', class: 'btn btn-primary', disabled: true %>
+        <%= link_to back_url, class: 'btn btn-outline-dark disabled', style: 'margin-right: 0; margin-left: 0;' do %>
+          <i class="fas fa-arrow-left"></i> Back
+        <% end %>
+        <button class="btn btn-primary" disabled="disabled" name="save_and_show"><i class="fas fa-cloud-upload-alt"></i> Save & Show</button>
+        <button class="btn btn-secondary" disabled="disabled" name="save_only"><i class="fas fa-cloud-upload-alt"></i> Save</button>
       </div>
     <% end %>
   </div>
@@ -12,13 +15,17 @@
 
 <%= render partial: 'shared/service_runner' %>
 <script>
-  function redirectToStock() {
+    function redirectToNewStock() {
+        window.location.replace('/stocks/new');
+    }
+
+    function redirectToTheStock() {
     const symbol = $('#x_stocks_ar_stock_symbol').val().trim().toUpperCase();
     window.location.replace(`/stocks/${FormatMethods.safeLink(symbol)}`);
   }
 
   function onServiceRunSuccess() {
-    redirectToStock();
+    <%= params[:save_and_show] ? 'redirectToTheStock();' : 'redirectToNewStock();' %>
   }
 
   function onServiceRunFailed() {

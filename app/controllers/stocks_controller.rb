@@ -45,7 +45,7 @@ class StocksController < ApplicationController
     @stock.attributes = create_stock_params
 
     if @stock.save
-      redirect_to action: 'initializing', id: @stock.symbol
+      redirect_to({action: 'initializing', id: @stock.symbol}.merge(initialize_params))
     else
       set_page_title
       render action: 'new'
@@ -81,8 +81,9 @@ class StocksController < ApplicationController
   end
 
   def processing
+    @stock = XStocks::Stock.find_by!(symbol: params[:id])
+    flash[:notice] = "#{@stock} stock added"
     EventStream.run(response) do |stream|
-      @stock = XStocks::Stock.find_by!(symbol: params[:id])
       XStocks::Jobs::CompanyOne.new.perform(stock_id: @stock.id) { |status| stream.write(status) }
     end
   end
@@ -101,6 +102,10 @@ class StocksController < ApplicationController
   end
 
   private
+
+  def initialize_params
+    params.permit(:save_and_show, :save_only).slice(:save_and_show, :save_only)
+  end
 
   def update_price
     safe_exec do

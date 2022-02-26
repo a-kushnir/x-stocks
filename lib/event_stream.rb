@@ -19,6 +19,8 @@ class EventStream
 
   def initialize(response)
     response.headers['Content-Type'] = 'text/event-stream'
+    response.headers['Last-Modified'] = Time.now.httpdate # Disables eTag middleware buffering
+    response.headers['X-Accel-Buffering'] = 'no' # Turn off buffering in nginx
     @sse = ActionController::Live::SSE.new(response.stream, event: 'message')
   end
 

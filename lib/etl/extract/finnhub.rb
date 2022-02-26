@@ -91,7 +91,7 @@ module Etl
       end
 
       def earnings_calendar_url(from, to)
-        "#{BASE_URL}/calendar/earnings?from=#{from.to_s(:db)}&to=#{to.to_s(:db)}&token=#{token}"
+        "#{BASE_URL}/calendar/earnings?from=#{from.to_fs(:db)}&to=#{to.to_fs(:db)}&token=#{token}"
       end
 
       def candle_url(symbol, from, to, resolution)

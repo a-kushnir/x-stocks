@@ -3,14 +3,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
-ruby '2.6.6'
+ruby '2.7.5'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '>= 5.3.2'
-gem 'rack', '<2.2'
-gem 'rails', '>= 6.1.3.2'
+gem 'rails', '>= 7.0.2.2'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'

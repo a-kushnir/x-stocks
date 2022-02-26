@@ -25,7 +25,7 @@ describe Dividend do
   end
 
   describe '#estimate' do
-    let(:periodic_dividend_details) { [{ 'payment_date' => date.today.to_s(:db), 'ex_date' => (date.today - 10).to_s(:db), 'amount' => 7.123456 }] }
+    let(:periodic_dividend_details) { [{ 'payment_date' => date.today.to_fs(:db), 'ex_date' => (date.today - 10).to_fs(:db), 'amount' => 7.123456 }] }
     let(:div_suspended?) { false }
     let(:dividend_frequency) { 'annual' }
 

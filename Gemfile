@@ -5,14 +5,17 @@ git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.7.5'
 
-gem 'bootsnap', '>= 1.4.2', require: false
-gem 'jbuilder', '~> 2.7'
-gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '>= 5.3.2'
 gem 'rails', '>= 7.0.2.2'
-gem 'sass-rails', '>= 6'
-gem 'turbolinks', '~> 5'
-gem 'webpacker', '~> 4.0'
+gem 'sass-rails', require: false
+gem 'sprockets-rails'
+gem 'importmap-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
+
+gem 'bootsnap', '>= 1.4.2', require: false
+# gem 'jbuilder', '~> 2.7' # TODO ???
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '>= 5.6.2'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -48,7 +51,7 @@ gem 'devise'
 gem 'font_awesome5_rails'
 gem 'jquery-datatables'
 gem 'jquery-rails'
-gem 'nokogiri', '>= 1.11.6'
+gem 'nokogiri', '>= 1.13.3'
 
 gem 'grape'
 gem 'grape-entity'
@@ -56,5 +59,4 @@ gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 
-gem 'sprockets-rails', '2.3.3'
 gem 'swagger_ui_engine', github: 'swagger_ui_engine'

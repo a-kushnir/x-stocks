@@ -45,7 +45,7 @@ class StocksController < ApplicationController
     @stock.attributes = create_stock_params
 
     if @stock.save
-      redirect_to({action: 'initializing', id: @stock.symbol}.merge(initialize_params))
+      redirect_to({ action: 'initializing', id: @stock.symbol }.merge(initialize_params))
     else
       set_page_title
       render action: 'new'

@@ -88,8 +88,8 @@ GEM
       execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
-    bootsnap (1.4.6)
-      msgpack (~> 1.0)
+    bootsnap (1.10.3)
+      msgpack (~> 1.2)
     bootstrap (4.5.0)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
@@ -149,8 +149,8 @@ GEM
       dry-logic (~> 1.0, >= 1.0.2)
     erubi (1.10.0)
     execjs (2.7.0)
-    ffi (1.13.1)
-    ffi (1.13.1-x64-mingw32)
+    ffi (1.15.5)
+    ffi (1.15.5-x64-mingw32)
     font_awesome5_rails (1.3.0)
       railties (>= 4.2)
     globalid (1.0.0)
@@ -176,9 +176,10 @@ GEM
     htmlentities (4.3.4)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
+    importmap-rails (1.0.3)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     io-wait (0.2.1)
-    jbuilder (2.10.0)
-      activesupport (>= 5.0.0)
     jquery-datatables (1.10.20)
     jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
@@ -194,8 +195,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.15.0)
-    msgpack (1.3.3)
-    msgpack (1.3.3-x64-mingw32)
+    msgpack (1.4.5)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -226,8 +226,8 @@ GEM
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
-    pg (1.2.3)
-    pg (1.2.3-x64-mingw32)
+    pg (1.3.3)
+    pg (1.3.3-x64-mingw32)
     popper_js (1.16.0)
     public_suffix (4.0.6)
     puma (5.6.2)
@@ -236,8 +236,6 @@ GEM
     rack (2.2.3)
     rack-accept (0.4.5)
       rack (>= 0.4)
-    rack-proxy (0.6.5)
-      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (7.0.2.2)
@@ -344,20 +342,22 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.2)
-    sprockets (3.7.2)
+    sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (2.3.3)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      sprockets (>= 2.8, < 4.0)
+    sprockets-rails (3.4.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      sprockets (>= 3.0.0)
+    stimulus-rails (1.0.4)
+      railties (>= 6.0.0)
     strscan (3.0.1)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (1.0.1)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2020.1)
@@ -375,10 +375,6 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webpacker (4.3.0)
-      activesupport (>= 4.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -405,12 +401,12 @@ DEPENDENCIES
   grape-swagger
   grape-swagger-entity
   grape-swagger-representable
-  jbuilder (~> 2.7)
+  importmap-rails
   jquery-datatables
   jquery-rails
-  nokogiri (>= 1.11.6)
+  nokogiri (>= 1.13.3)
   pg (>= 0.18, < 2.0)
-  puma (>= 5.3.2)
+  puma (>= 5.6.2)
   rails (>= 7.0.2.2)
   rspec
   rspec-rails
@@ -419,17 +415,17 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sass-rails (>= 6)
+  sass-rails
   scrutinizer-ocular!
   selenium-webdriver
   simplecov
-  sprockets-rails (= 2.3.3)
+  sprockets-rails
+  stimulus-rails
   swagger_ui_engine!
-  turbolinks (~> 5)
+  turbo-rails
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
-  webpacker (~> 4.0)
 
 RUBY VERSION
    ruby 2.7.5p203

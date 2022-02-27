@@ -1,12 +1,12 @@
 //= require datatables
-//= require eventsource
-//= require checkbox-menu
+//= require eventsource.js
+//= require checkbox-menu.js
 //= require bootstrap-select
-//= require local-store
-//= require dateFormat
-//= require jquery.dateFormat
-//= require dataUnpack
-//= require service-runner
+//= require local-store.js
+//= require dateFormat.js
+//= require jquery.dateFormat.js
+//= require dataUnpack.js
+//= require service-runner.js
 
 $(document).on('turbolinks:load', function() {
     $(window).trigger('load.bs.select.data-api');

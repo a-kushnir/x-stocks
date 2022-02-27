@@ -1,16 +1,30 @@
 {
   "name": "x_stocks",
+  "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js  --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
+    "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
+    "build:css:watch": "TAILWIND_MODE=watch yarn build:css --watch --verbose",
+    "lint": "eslint app/javascript spec/javascript",
+    "lint:fix": "eslint app/javascript spec/javascript --fix",
+    "lint:watch": "esw app/javascript spec/javascript --watch"
+  },
   "dependencies": {
+    "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/turbo-rails": "^7.1.1",
     "@rails/actioncable": "^7.0.2-2",
     "@rails/activestorage": "^7.0.2-2",
     "@rails/ujs": "^6.0.0",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.6.1",
     "chart.js": "^2.9.3",
-    "chartjs-plugin-datalabels": "^0.7.0",
-    "jquery": "^3.6.0",
-    "popper.js": "^1.16.1"
+    "jquery": "^3.6.0"
   },
-  "version": "0.1.0",
-  "devDependencies": {}
+  "devDependencies": {
+    "esbuild": "^0.14.14",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-watch": "^8.0.0"
+  }
 }

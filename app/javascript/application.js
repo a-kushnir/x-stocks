@@ -3,10 +3,9 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 // Legacy
-import "jquery"
+import "bootstrap"
 import "chart"
 import "chartjs-plugin-datalabels"
-import "bootstrap"
 import "legacy/data_table"
 import "legacy/bootstrap"
 import "legacy/money_format"

@@ -16,7 +16,7 @@ window.destroy_all_charts = function () {
     }
 }
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("turbo:load", () => {
     destroy_all_charts();
 })
 

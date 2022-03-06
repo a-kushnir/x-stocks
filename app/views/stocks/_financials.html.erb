@@ -1,10 +1,11 @@
-<% if data.present? %>
+<% financials = XStocks::Charts::Financials.new(@stock, details) %>
+<% if financials.data? %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
     <canvas width="280" height="220"
             data-controller="financials-chart"
-            data-financials-chart-value='<%= json financials_chart_data(@stock, data) %>'>
+            data-financials-chart-value='<%= json financials.data %>'>
     </canvas>
   </div>
 </div>

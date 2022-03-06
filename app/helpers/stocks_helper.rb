@@ -57,57 +57,6 @@ module StocksHelper
     end
   end
 
-  def rec_min_visible_value(details)
-    details.values.map(&:sum).max / 10
-  rescue StandardError
-    1
-  end
-
-  def rec_graph_data(details)
-    {
-      labels: details.keys.map { |date| Date.parse(date).strftime('%b') },
-      datasets:
-        [{
-          label: 'Strong Sell',
-          backgroundColor: '#FF333A',
-          data: details.values.map { |value| value[4] }
-        }, {
-          label: 'Sell',
-          backgroundColor: '#FFA33E',
-          data: details.values.map { |value| value[3] }
-        }, {
-          label: 'Hold',
-          backgroundColor: '#FFDC48',
-          data: details.values.map { |value| value[2] }
-        }, {
-          label: 'Buy',
-          backgroundColor: '#00C073',
-          data: details.values.map { |value| value[1] }
-        }, {
-          label: 'Strong Buy',
-          backgroundColor: '#008F88',
-          data: details.values.map { |value| value[0] }
-        }]
-    }
-  end
-
-  def earnings_chart_data(earnings)
-    {
-      labels: earnings.map {|e| "Q#{e['quarter']} #{e['year']}" },
-      estimate: earnings.map {|e| e['eps_estimate'] },
-      actual: earnings.map {|e| e['eps_actual'] }
-    }
-  end
-
-  def financials_chart_data(stock, financial_data)
-    {
-        labels: financial_data.map {|e| e['quarter'] ? "Q#{e['quarter']} #{e['year']}" : e['year'] },
-        revenue: financial_data.map {|e| e['revenue'] },
-        earnings: financial_data.map {|e| e['earnings'] },
-        shares: stock.outstanding_shares
-    }
-  end
-
   def position_allocation
     positions = @positions.reject { |position| (position.market_value || 0).zero? }
     positions = positions.sort_by(&:market_value).reverse

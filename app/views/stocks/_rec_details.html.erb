@@ -1,21 +1,21 @@
-<% has_details = details.present? && details.detect {|_, v| v.detect {|i| !i.zero? }} %>
-<% if mean.present? || has_details %>
+<% recommendation_details = XStocks::Charts::RecommendationDetails.new(details) %>
+<% recommendation_mean = XStocks::Charts::RecommendationMean.new(mean) %>
+<% if recommendation_details.data? || recommendation_mean.data? %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
-  <% if has_details %>
+  <% if recommendation_details.data? %>
     <div style="width: 260px; height: 200px;" class="mx-auto">
       <canvas width="260" height="200"
               data-controller="recommendation-details-chart"
-              data-recommendation-details-chart-value='<%= json rec_graph_data(details) %>'
-              data-recommendation-details-chart-min-value="<%= rec_min_visible_value(details) %>">
+              data-recommendation-details-chart-value='<%= json recommendation_details.data %>'>
       </canvas>
     </div>
   <% end %>
-  <% if mean.present? %>
+  <% if recommendation_mean.data? %>
     <div style="display: block; width: 280px; height: 85px; margin-top: -5px;" class="mx-auto">
       <canvas width="280" height="85"
               data-controller="recommendation-mean-chart"
-              data-recommendation-mean-chart-value="<%= number_with_precision(mean, precision: 2) %>">
+              data-recommendation-mean-chart-value="<%= recommendation_mean.data %>">
       </canvas>
     </div>
   <% end %>

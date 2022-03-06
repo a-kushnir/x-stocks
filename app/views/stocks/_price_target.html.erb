@@ -1,20 +1,12 @@
-<% if target_price.present? %>
+<% price_target = XStocks::Charts::PriceTarget.new(@stock, details) %>
+<% if price_target.data? %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
-
-<div style="display: block; width: 280px; height: 85px; margin-top: 15px;" class="mx-auto">
-  <canvas id="<%= id %>_canvas" width="280" height="85" class="chartjs-render-monitor"></canvas>
-</div>
-
-  <script>
-    document.addEventListener("turbo:load", () => {
-      price_target_chart($("#<%= id %>_canvas"), <%= json({
-        low: target_price['low'],
-        high: target_price['high'],
-        mean: target_price['mean'],
-        current: @stock.current_price.to_f
-      }) %>)
-    });
-  </script>
+  <div style="display: block; width: 280px; height: 85px; margin-top: 15px;" class="mx-auto">
+    <canvas width="280" height="85"
+            data-controller="price-target-chart"
+            data-price-target-chart-value='<%= json price_target.data %>'>
+    </canvas>
+  </div>
 </div>
 <% end %>

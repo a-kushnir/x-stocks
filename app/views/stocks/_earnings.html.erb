@@ -1,10 +1,11 @@
-<% if @stock.earnings.present? %>
+<% earnings = XStocks::Charts::Earnings.new(@stock.earnings) %>
+<% if earnings.data? %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
-  <h4>Earnings <small>Yahoo</small></h4>
+  <h4><%= label %></h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
     <canvas width="280" height="220"
             data-controller="earnings-chart"
-            data-earnings-chart-value='<%= json earnings_chart_data(@stock.earnings) %>'>
+            data-earnings-chart-value='<%= json earnings.data %>'>
     </canvas>
   </div>
 </div>

@@ -14,16 +14,15 @@ export default class extends ApplicationController {
     return JSON.parse(this.element.dataset.recommendationDetailsChartValue);
   }
 
-  get min() {
-    return JSON.parse(this.element.dataset.recommendationDetailsChartMinValue);
-  }
-
   render() {
-    const min = this.min;
+    const { labels, datasets, min } = this.data;
 
     new Chart(this.element, {
       type: 'bar',
-      data: this.data,
+      data: {
+        labels: labels,
+        datasets: datasets
+      },
       options: {
         scales: {
           xAxes: [{

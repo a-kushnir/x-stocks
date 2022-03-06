@@ -5,12 +5,12 @@ git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.7.5'
 
+gem 'importmap-rails'
 gem 'rails', '>= 7.0.2.2'
 gem 'sass-rails', require: false
 gem 'sprockets-rails'
-gem 'importmap-rails'
-gem 'turbo-rails'
 gem 'stimulus-rails'
+gem 'turbo-rails'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 # gem 'jbuilder', '~> 2.7' # TODO ???

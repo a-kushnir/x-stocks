@@ -1,0 +1,79 @@
+div.dataTables_wrapper div.dataTables_info {
+  padding-top: 0.55em; }
+div.dataTables_wrapper div.dataTables_filter {
+  text-align: left; }
+div.dataTables_wrapper div.dataTables_length {
+  text-align: right; }
+
+.table.table-override {
+  border-bottom: 1px solid #dee2e6; }
+  .table.table-override .thead-light th {
+    background-color: #f3f5f6; }
+  .table.table-override thead th {
+    border-bottom: 0 solid #dee2e6; }
+  .table.table-override button.dropdown-toggle {
+    padding: 2px 12px; }
+    .table.table-override button.dropdown-toggle::after {
+      color: #343a40 !important; }
+
+.table-hover tbody tr:hover {
+  background-color: #f3f5f6; }
+
+table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before {
+  right: 0.6em; }
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+  right: 0.2em; }
+
+table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting {
+  padding-right: 20px; }
+
+table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
+  bottom: 0.7em; }
+
+table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before {
+  right: 0.6em; }
+
+.dataTable td.format-as-symbol div.symbol-note {
+  padding: 0 6px;
+  margin-bottom: 0;
+  height: 24px; }
+.dataTable td.format-as-symbol div.symbol-logo {
+  width: 48px;
+  display: inline-block;
+  margin-right: 10px; }
+  .dataTable td.format-as-symbol div.symbol-logo img {
+    max-height: 20px;
+    max-width: 48px; }
+.dataTable td.format-as-symbol a {
+  padding-top: 10px;
+  margin-right: 0; }
+  .dataTable td.format-as-symbol a.has-note {
+    margin-right: 32px; }
+
+td.price-range {
+  padding-bottom: 0; }
+  td.price-range .progress {
+    height: 4px;
+    min-width: 100px; }
+  td.price-range small {
+    display: inline-block;
+    width: 100%;
+    font-size: 70%; }
+    td.price-range small span {
+      font-weight: bold; }
+
+div.price-range {
+  padding-top: 2px;
+  line-height: 16px;
+  padding-bottom: 0; }
+  div.price-range .progress {
+    height: 4px;
+    min-width: 150px; }
+  div.price-range small {
+    display: inline-block;
+    width: 100%; }
+    div.price-range small span {
+      font-weight: bold; }
+
+/*# sourceMappingURL=datatables.css.map */

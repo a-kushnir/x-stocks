@@ -7,7 +7,7 @@
       <canvas id="<%= id %>_details_canvas_<%= @stock.symbol %>" width="260" height="200"></canvas>
     </div>
     <script>
-      document.addEventListener("turbolinks:load", () => {
+      document.addEventListener("turbo:load", () => {
         recommendation_details_chart($("#<%= id %>_details_canvas_<%= @stock.symbol %>"),
           <%= json rec_graph_data(details) %>,
           <%= rec_min_visible_value(details) %>
@@ -20,7 +20,7 @@
       <canvas id="<%= id %>_mean_canvas_<%= @stock.symbol %>" width="280" height="85" class="chartjs-render-monitor"></canvas>
     </div>
     <script>
-      document.addEventListener("turbolinks:load", () => {
+      document.addEventListener("turbo:load", () => {
         recommendation_mean_chart($("#<%= id %>_mean_canvas_<%= @stock.symbol %>"),
           '<%= number_with_precision(mean, precision: 2) %>',
         )

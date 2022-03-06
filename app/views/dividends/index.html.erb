@@ -64,7 +64,7 @@
 
 <% content_for :head do %>
 <script>
-  document.addEventListener("turbolinks:load", () => {
+  document.addEventListener("turbo:load", () => {
     const data = <%= @data.to_json.html_safe %>;
     const formats = [
       // Stock

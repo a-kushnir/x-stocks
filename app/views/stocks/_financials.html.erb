@@ -5,7 +5,7 @@
     <canvas id="financials_<%= type %>_<%= @stock.symbol %>" width="280" height="220"></canvas>
   </div>
   <script>
-    document.addEventListener("turbolinks:load", () => {
+    document.addEventListener("turbo:load", () => {
       financials_chart("#financials_<%= type %>_<%= @stock.symbol %>",
         <%= json data.map {|e| e['revenue'] } %>,
         <%= json data.map {|e| e['earnings'] } %>,

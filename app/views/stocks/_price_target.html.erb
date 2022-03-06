@@ -7,7 +7,7 @@
 </div>
 
   <script>
-    document.addEventListener("turbolinks:load", () => {
+    document.addEventListener("turbo:load", () => {
       price_target_chart($("#<%= id %>_canvas"), <%= json({
         low: target_price['low'],
         high: target_price['high'],

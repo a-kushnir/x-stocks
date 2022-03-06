@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'net/http'
+
 module Etl
   module Extract
     # Loads data in different formats using http and https protocols

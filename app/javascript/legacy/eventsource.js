@@ -12,7 +12,7 @@ function submitEventSource(form, options) {
     return runEventSource(url, options);
 }
 
-function runEventSource(url, options) {
+window.runEventSource = function(url, options) {
     if (options.data) {
         const uri = new URL(url);
         options.data.forEach(function (param) {

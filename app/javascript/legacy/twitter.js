@@ -9,4 +9,4 @@ function twitterWidget() {
         return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f)  }  });
     }(document, "script", "twitter-wjs"));
 };
-$(document).on('turbolinks:load', twitterWidget);
+$(document).on('turbo:load', twitterWidget);

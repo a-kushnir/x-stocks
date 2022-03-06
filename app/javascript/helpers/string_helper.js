@@ -1,0 +1,15 @@
+export function commarize(value) {
+  if (Math.abs(value) >= 1e3) {
+    const minus = value < 0;
+    if (minus) value = -value;
+
+    const units = ["k", "M", "B", "T"];
+    const unit = Math.floor((value.toFixed(0).length - 1) / 3) * 3;
+    let num = (value / ('1e'+unit)).toFixed(2);
+    const unit_name = units[Math.floor(unit / 3) - 1];
+
+    if (minus) num = `-${num}`;
+    return `${num}${unit_name}`;
+  }
+  return value.toLocaleString();
+}

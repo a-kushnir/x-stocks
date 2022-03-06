@@ -1,4 +1,5 @@
 import ApplicationController from "controllers/application_controller";
+import { destroy_chart } from "helpers/chart_helper";
 
 export default class extends ApplicationController {
   connect() {
@@ -6,12 +7,7 @@ export default class extends ApplicationController {
   }
 
   disconnect() {
-    for (const key in Chart.instances) {
-      const chart = Chart.instances[key];
-      if (chart.canvas === this.element) {
-        chart.destroy();
-      }
-    }
+    destroy_chart(this.element);
   }
 
   get data() {

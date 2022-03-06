@@ -99,6 +99,15 @@ module StocksHelper
     }
   end
 
+  def financials_chart_data(stock, financial_data)
+    {
+        labels: financial_data.map {|e| e['quarter'] ? "Q#{e['quarter']} #{e['year']}" : e['year'] },
+        revenue: financial_data.map {|e| e['revenue'] },
+        earnings: financial_data.map {|e| e['earnings'] },
+        shares: stock.outstanding_shares
+    }
+  end
+
   def position_allocation
     positions = @positions.reject { |position| (position.market_value || 0).zero? }
     positions = positions.sort_by(&:market_value).reverse

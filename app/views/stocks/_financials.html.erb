@@ -2,16 +2,10 @@
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
-    <canvas id="financials_<%= type %>_<%= @stock.symbol %>" width="280" height="220"></canvas>
+    <canvas width="280" height="220"
+            data-controller="financials-chart"
+            data-financials-chart-value='<%= json financials_chart_data(@stock, data) %>'>
+    </canvas>
   </div>
-  <script>
-    document.addEventListener("turbo:load", () => {
-      financials_chart("#financials_<%= type %>_<%= @stock.symbol %>",
-        <%= json data.map {|e| e['revenue'] } %>,
-        <%= json data.map {|e| e['earnings'] } %>,
-        <%= json data.map {|e| e['quarter'] ? "Q#{e['quarter']} #{e['year']}" : e['year'] } %>,
-        <%= @stock.outstanding_shares %>)
-    });
-  </script>
 </div>
 <% end %>

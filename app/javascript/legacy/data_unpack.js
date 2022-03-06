@@ -121,7 +121,7 @@ const FormatMethods = {
   }
 }
 
-const Formats = {
+window.Formats = {
   symbol: function(value) {
     const [symbol, logo, note] = value;
 
@@ -455,7 +455,7 @@ const Formats = {
   }
 }
 
-function unpackData(table, data, formats) {
+window.unpackData = function(table, data, formats) {
   const tbody = $(table).find('tbody');
   if (tbody.children().length > 0) return;
 

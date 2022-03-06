@@ -1,5 +1,5 @@
 
-function submitEventSource(form, options) {
+window.submitEventSource = function(form, options) {
     form = $(form);
 
     const url = form[0].action;

@@ -1,9 +1,12 @@
-
 let esRunning = null;
 let esError = false;
 let esComponent = null;
 
-function runService(form) {
+function htmlEscape(value) {
+  return $('<div>').text(value).html();
+}
+
+window.runService = function(form) {
   if (esRunning) return;
   esRunning = true;
 
@@ -33,8 +36,8 @@ function runService(form) {
     error: function(data) {
       console.error(data);
       setProgress(null, false);
-      const backtrace = data.backtrace.map(line => document.htmlEscape(line)).join('<br>');
-      setMessage(`Error: ${document.htmlEscape(data.message)}
+      const backtrace = data.backtrace.map(line => htmlEscape(line)).join('<br>');
+      setMessage(`Error: ${htmlEscape(data.message)}
                     <a href="#" onclick="$('#backtrace').toggle(); return false">(more)</a>
                     <div id='backtrace' style="display: none">${backtrace}<div>`);
       esError = true;

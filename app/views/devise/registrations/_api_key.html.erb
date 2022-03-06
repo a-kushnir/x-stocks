@@ -1,7 +1,7 @@
 <div class="row justify-content-center my-form-row">
   <div class="col-6">
   <h3 class="text-center">API Key</h3>
-    <%= form_for(resource, as: resource_name, url: '/registrations/regenerate', html: { method: :post, class: 'my-form mx-auto' }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: '/registrations/regenerate', html: { method: :post, class: 'my-form mx-auto', id: 'edit_api_key' }) do |f| %>
       <div class="input-group">
         <%= f.text_field :api_key, readonly: true, class: 'form-control' %>
         <div class="input-group-append">

@@ -30,7 +30,7 @@
 
 <% content_for :head do %>
 <script>
-  const future_ex_date = new Date('<%= XStocks::Stock::Dividends.future_ex_date %>T00:00:00');
+  window.future_ex_date = new Date('<%= XStocks::Stock::Dividends.future_ex_date %>T00:00:00');
   document.addEventListener("turbo:load", () => {
     const data = <%= @data.to_json.html_safe %>;
     const formats = [

@@ -29,3 +29,5 @@ class LocalStorage {
         this.setString(key, value ? value.toString() : null);
     }
 }
+
+window.LocalStorage = LocalStorage;

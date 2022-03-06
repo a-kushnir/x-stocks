@@ -1,5 +1,5 @@
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("turbo:load", () => {
     const options = {}
 
     const url = new URL(document.URL);
@@ -84,6 +84,14 @@ window.dataTable = function(table, options = {}, defaultColumns = []) {
     table = $(table);
     if (table.length > 0 && !$.fn.dataTable.isDataTable(table)) {
         checkboxMenu(defaultColumns);
+
+        $.fn.dataTable.orderOrSaved = function (order) {
+            $.fn.dataTable.defaults.defaultOrder = order.slice();
+            let result = $.fn.dataTable.defaults.order;
+            if (result === undefined || result === null || result.length === 0) result = order;
+            return result;
+        };
+
         options['order'] = $.fn.dataTable.orderOrSaved(options['order']);
         options['pageLength'] = $.fn.dataTable.defaults.pageLength;
         options['columns'] = loadColumns(table, defaultColumns);

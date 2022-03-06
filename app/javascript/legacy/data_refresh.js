@@ -27,5 +27,5 @@ function update_prices() {
     })
 }
 
-document.addEventListener("turbolinks:load", update_prices);
+document.addEventListener("turbo:load", update_prices);
 $(document).ready(update_prices);

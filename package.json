@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js  --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
+    "build": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
     "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
     "build:css:watch": "TAILWIND_MODE=watch yarn build:css --watch --verbose",
     "lint": "eslint app/javascript spec/javascript",

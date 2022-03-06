@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('turbo:load', function() {
     $(".checkbox-menu").on("change", "input[type='checkbox']", function(e) {
         $(this).closest("li").toggleClass("active", this.checked);
 

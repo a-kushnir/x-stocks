@@ -1,17 +1,11 @@
 <% if @stock.earnings.present? %>
-  <% earnings = @stock.earnings %>
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4>Earnings <small>Yahoo</small></h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
-    <canvas id="earnings_<%= @stock.symbol %>" width="280" height="220"></canvas>
+    <canvas width="280" height="220"
+            data-controller="earnings-chart"
+            data-earnings-chart-value='<%= json earnings_chart_data(@stock.earnings) %>'>
+    </canvas>
   </div>
-  <script>
-    document.addEventListener("turbo:load", () => {
-      earnings_chart("#earnings_<%= @stock.symbol %>",
-        <%= json earnings.map {|e| e['eps_estimate'] } %>,
-        <%= json earnings.map {|e| e['eps_actual'] } %>,
-        <%= json earnings.map {|e| "Q#{e['quarter']} #{e['year']}" } %>)
-    });
-  </script>
 </div>
 <% end %>

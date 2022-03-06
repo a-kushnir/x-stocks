@@ -91,6 +91,14 @@ module StocksHelper
     }
   end
 
+  def earnings_chart_data(earnings)
+    {
+      labels: earnings.map {|e| "Q#{e['quarter']} #{e['year']}" },
+      estimate: earnings.map {|e| e['eps_estimate'] },
+      actual: earnings.map {|e| e['eps_actual'] }
+    }
+  end
+
   def position_allocation
     positions = @positions.reject { |position| (position.market_value || 0).zero? }
     positions = positions.sort_by(&:market_value).reverse

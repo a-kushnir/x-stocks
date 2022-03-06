@@ -14,20 +14,20 @@ export default class extends ApplicationController {
     }
   }
 
-  get value() {
+  get data() {
     return parseFloat(this.element.dataset.recommendationMeanChartValue);
   }
 
   render() {
     const data = {
       datasets: [{
-        label: this.value,
+        label: this.data,
         xAxisID: 'x-axis-1',
         yAxisID: 'y-axis-1',
         borderColor: '#0F69FF',
         backgroundColor: '#0F69FF',
         data: [{
-          x: this.value,
+          x: this.data,
           y: 0,
         }]
       }, {

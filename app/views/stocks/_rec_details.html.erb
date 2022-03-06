@@ -4,16 +4,12 @@
   <h4><%= label %></h4>
   <% if has_details %>
     <div style="width: 260px; height: 200px;" class="mx-auto">
-      <canvas id="<%= id %>_details_canvas_<%= @stock.symbol %>" width="260" height="200"></canvas>
+      <canvas width="260" height="200"
+              data-controller="recommendation-details-chart"
+              data-recommendation-details-chart-value='<%= json rec_graph_data(details) %>'
+              data-recommendation-details-chart-min-value="<%= rec_min_visible_value(details) %>">
+      </canvas>
     </div>
-    <script>
-      document.addEventListener("turbo:load", () => {
-        recommendation_details_chart($("#<%= id %>_details_canvas_<%= @stock.symbol %>"),
-          <%= json rec_graph_data(details) %>,
-          <%= rec_min_visible_value(details) %>
-        );
-      })
-    </script>
   <% end %>
   <% if mean.present? %>
     <div style="display: block; width: 280px; height: 85px; margin-top: -5px;" class="mx-auto">

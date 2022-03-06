@@ -183,46 +183,6 @@ window.price_target_chart = function(canvas, data) {
     }
 }
 
-window.recommendation_details_chart = function(canvas, data, min) {
-    canvas = $(canvas);
-    if (canvas.length === 0) return;
-
-    new Chart(canvas, {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    ticks: { stepSize: min <= 1 ? 1 : null },
-                    stacked: true,
-                }]
-            },
-            legend: {
-                position: 'right',
-                reverse: true,
-                labels: {
-                    boxWidth: 12
-                }
-            },
-            plugins: {
-                datalabels: {
-                    display: true,
-                    color: 'white',
-                    font: {
-                        weight: 'bold'
-                    },
-                    formatter: function(value, context) {
-                        return value >= min && value > 0 ? Math.round(value) : null;
-                    }
-                }
-            }
-        },
-    });
-}
-
 function copyString(str) {
     return `${str}`;
 }
@@ -283,79 +243,6 @@ window.allocation_chart = function(canvas, values, labels, symbols = null) {
             }
         }
     });
-}
-
-window.earnings_chart = function(canvas, estimate, actual, labels) {
-    canvas = $(canvas);
-    if (canvas.length === 0) return;
-
-    const config = {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Actual',
-                backgroundColor: function(pointItem) {
-                    const est = pointItem.chart.data.datasets[1].data[pointItem.dataIndex];
-                    const act = pointItem.dataset.data[pointItem.dataIndex];
-                    return est > act ? '#FF333A' : '#00C073';
-                },
-                borderColor: function(pointItem) {
-                    const est = pointItem.chart.data.datasets[1].data[pointItem.dataIndex];
-                    const act = pointItem.dataset.data[pointItem.dataIndex];
-                    return est > act ? '#FF333A' : '#00C073';
-                },
-                showLine: false,
-                pointRadius: 8,
-                pointHoverRadius: 9,
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 2,
-                data: actual,
-                fill: false,
-            }, {
-                label: 'Estimate',
-                fill: false,
-                pointHoverBackgroundColor: 'white',
-                backgroundColor: 'white',
-                borderColor: '#0F69FF',
-                showLine: false,
-                pointRadius: 8,
-                pointHoverRadius: 9,
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 2,
-                data: estimate,
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: false
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                }],
-                yAxes: [{
-                    display: true,
-                }]
-            },
-            plugins: {
-                datalabels: {
-                    display: false,
-                }
-            },
-        }
-    };
-
-    new Chart(canvas, config);
 }
 
 function commarize(value) {

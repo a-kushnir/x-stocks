@@ -490,3 +490,5 @@ var DateFormat = {};
     };
   }());
 }(DateFormat));
+
+window.$.format = DateFormat.format;

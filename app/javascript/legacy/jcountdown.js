@@ -62,3 +62,12 @@
     self.find('span.jctdn-secs div').html(secs > 9 ? secs : '0' + secs);
   }
 })(jQuery);
+
+document.addEventListener("turbo:load", () => {
+  $(".jcountdown").each(function (index, item) {
+    $(item).setCountdown({
+      targetDate: $(item).data('target'),
+      itemLabels: ['day', 'hr', 'min', 'sec']
+    });
+  });
+})

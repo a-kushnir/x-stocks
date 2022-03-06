@@ -125,7 +125,6 @@
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']]
     }, <%= default_columns %>);
 
-    destroy_all_charts();
     <% values, labels = position_allocation %>
     allocation_chart('#position_allocation', <%= json values %>, <%= json labels %>);
     <% values, labels, symbols = sector_allocation %>

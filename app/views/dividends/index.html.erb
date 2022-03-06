@@ -109,7 +109,6 @@
       end
       values, labels = dividends_allocation
     %>
-    destroy_all_charts();
     allocation_chart("#dividends_allocation", <%= json values %>, <%= json labels %>);
     dividends_month_chart('#monthly_dividends', {
       labels: <%= json month_names %>,

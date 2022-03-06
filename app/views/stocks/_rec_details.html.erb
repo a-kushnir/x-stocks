@@ -17,15 +17,11 @@
   <% end %>
   <% if mean.present? %>
     <div style="display: block; width: 280px; height: 85px; margin-top: -5px;" class="mx-auto">
-      <canvas id="<%= id %>_mean_canvas_<%= @stock.symbol %>" width="280" height="85" class="chartjs-render-monitor"></canvas>
+      <canvas width="280" height="85"
+              data-controller="recommendation-mean-chart"
+              data-recommendation-mean-chart-value="<%= number_with_precision(mean, precision: 2) %>">
+      </canvas>
     </div>
-    <script>
-      document.addEventListener("turbo:load", () => {
-        recommendation_mean_chart($("#<%= id %>_mean_canvas_<%= @stock.symbol %>"),
-          '<%= number_with_precision(mean, precision: 2) %>',
-        )
-      })
-    </script>
   <% end %>
 </div>
 <% end %>

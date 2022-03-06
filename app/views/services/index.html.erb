@@ -55,9 +55,9 @@
       </td>
       <td>
         <%= link_to 'Start', "#", class: 'btn btn-sm btn-primary', onclick: "runService($(this).parents('tr').find('form')); return false;" %>
-        <%= link_to 'Log', service_log_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.log.present? %>
-        <%= link_to 'Error', service_error_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.error.present? %>
-        <%= link_to 'File', service_file_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbolinks: false } if service&.file_content.present? %>
+        <%= link_to 'Log', service_log_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.log.present? %>
+        <%= link_to 'Error', service_error_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.error.present? %>
+        <%= link_to 'File', service_file_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.file_content.present? %>
       </td>
     </tr>
   <% end %>
@@ -66,7 +66,7 @@
 
 <%= render partial: 'shared/service_runner' %>
 <script>
-  document.addEventListener("turbolinks:load", () => {
+  document.addEventListener("turbo:load", () => {
     dataTable("#services-table", {order: [0, 'asc']}, <%= default_columns %>, '<%= @tag %>');
   })
 </script>

@@ -1,7 +1,7 @@
 <div class="row justify-content-center my-form-row">
   <div class="col-12">
   <%= bootstrap_form_for @stock, scope: :stock, url: stocks_url, local: true, html: {class: 'my-form mx-auto'} do |form| %>
-    <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off %>
+    <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, autofocus: true %>
 
     <div class="my-button-group-centered">
       <%= link_to back_url, class: 'btn btn-outline-dark', style: 'margin-right: 0; margin-left: 0;' do %>
@@ -13,9 +13,3 @@
   <% end %>
   </div>
 </div>
-
-<script>
-  document.addEventListener('turbolinks:load', () => {
-    document.getElementById('x_stocks_ar_stock_symbol')?.focus();
-  })
-</script>

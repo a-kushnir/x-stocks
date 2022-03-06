@@ -6,7 +6,7 @@
     <canvas id="earnings_<%= @stock.symbol %>" width="280" height="220"></canvas>
   </div>
   <script>
-    document.addEventListener("turbolinks:load", () => {
+    document.addEventListener("turbo:load", () => {
       earnings_chart("#earnings_<%= @stock.symbol %>",
         <%= json earnings.map {|e| e['eps_estimate'] } %>,
         <%= json earnings.map {|e| e['eps_actual'] } %>,

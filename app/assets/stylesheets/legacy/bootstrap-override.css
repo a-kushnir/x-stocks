@@ -1,0 +1,52 @@
+.dropdown.bootstrap-select.form-control {
+  height: auto; }
+
+.bootstrap-select button.dropdown-toggle {
+  border-color: #ced4da; }
+
+.form-control-select .bootstrap-select {
+  width: 100% !important; }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  height: 48px; }
+
+.carousel-control-next-icon:after,
+.carousel-control-prev-icon:after {
+  font-size: 32px;
+  font-weight: bold;
+  color: #007bff; }
+
+.carousel-control-next-icon:after {
+  content: '>'; }
+
+.carousel-control-prev-icon:after {
+  content: '<'; }
+
+.overflow-x-auto {
+  overflow-x: auto !important; }
+
+.overflow-x-visible {
+  overflow-x: visible !important; }
+
+.overflow-y-auto {
+  overflow-y: auto !important; }
+
+.overflow-y-visible {
+  overflow-y: visible !important; }
+
+h4 small {
+  color: #6c757d;
+  font-weight: 500; }
+
+.popover {
+  max-width: 100%; }
+  .popover .w-50 span {
+    display: inline-block;
+    width: 50px; }
+
+.text-muted-alt {
+  color: #bbc0c4 !important; }
+
+/*# sourceMappingURL=bootstrap-override.css.map */

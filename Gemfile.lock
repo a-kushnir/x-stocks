@@ -179,6 +179,9 @@ GEM
     importmap-rails (1.0.3)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
+    inline_svg (1.8.0)
+      activesupport (>= 3.0)
+      nokogiri (>= 1.6)
     io-wait (0.2.1)
     jquery-datatables (1.10.20)
     jquery-rails (4.4.0)
@@ -402,6 +405,7 @@ DEPENDENCIES
   grape-swagger-entity
   grape-swagger-representable
   importmap-rails
+  inline_svg
   jquery-datatables
   jquery-rails
   nokogiri (>= 1.13.3)

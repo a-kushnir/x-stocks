@@ -52,6 +52,7 @@ gem 'font_awesome5_rails'
 gem 'jquery-datatables'
 gem 'jquery-rails'
 gem 'nokogiri', '>= 1.13.3'
+gem 'inline_svg'
 
 gem 'grape'
 gem 'grape-entity'

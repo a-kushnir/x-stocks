@@ -2,10 +2,12 @@
   <div class="col-6">
   <h3 class="text-center">API Key</h3>
     <%= form_for(resource, as: resource_name, url: '/registrations/regenerate', html: { method: :post, class: 'my-form mx-auto', id: 'edit_api_key' }) do |f| %>
-      <div class="input-group">
-        <%= f.text_field :api_key, readonly: true, class: 'form-control' %>
+      <div class="input-group" data-controller="clipboard">
+        <%= f.text_field :api_key, readonly: true, class: 'form-control', data: { clipboard_target: 'input' } %>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('#user_api_key')"><i class="far fa-copy"></i></button>
+          <button class="btn btn-outline-secondary" style="padding-top: 2px; padding-left: 10px; padding-right: 10px;" type="button" data-action="click->clipboard#copy">
+            <%= inline_svg('svg/content-copy.svg', size: '18*18') %>
+          </button>
         </div>
       </div>
 

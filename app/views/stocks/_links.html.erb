@@ -8,10 +8,10 @@
              ["https://seekingalpha.com/symbol/#{@stock.symbol}", "Seeking Alpha (#{@stock.symbol})"],
              ["https://robinhood.com/stocks/#{@stock.symbol}", "Robinhood (#{@stock.symbol})"],
              ["https://www.webull.com/quote/#{@stock.exchange&.webull_code}-#{@stock.symbol.downcase}", "Webull (#{@stock.symbol})"],
-         ].each do |link| %>
+         ].each_with_index do |link, index| %>
         <li class="nav-item">
           <a class="nav-link" href="<%= link[0] %>" style="height: 40px;">
-            <i class="fas fa-external-link-alt text-center" style="width: 19px; padding-right: 3px;"></i> <%= link[1] %>
+            <%= inline_svg('svg/external-link.svg', size: '24*24') %> <%= link[1] %>
           </a>
         </li>
       <% end %>

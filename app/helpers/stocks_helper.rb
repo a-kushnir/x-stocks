@@ -89,11 +89,13 @@ module StocksHelper
     tag(:img, { src: link }.merge(options)) if link
   end
 
-  def up_down_tag(direction, css_class: nil)
+  def up_down_tag(direction, size: '16*16')
+    return unless direction
+
     direction = Etl::Transform::Yahoo.new.direction(direction) if direction.is_a?(String)
-    dir = { 1 => 'up', 0 => 'right', -1 => 'down' }[direction <=> 0]
-    col = { 1 => 'success', 0 => 'muted', -1 => 'danger' }[direction <=> 0]
-    content_tag(:i, class: "fas fa-caret-#{dir} text-#{col} #{css_class}") { '' }
+    icon = { 1 => 'svg/caret-up', 0 => 'svg/caret-right', -1 => 'svg/caret-down' }[direction <=> 0]
+    color = { 1 => 'text-success', 0 => 'text-muted', -1 => 'text-danger' }[direction <=> 0]
+    inline_svg(icon, size: size, class: color)
   end
 
   def render_range(min, max, curr, change)

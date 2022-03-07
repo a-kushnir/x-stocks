@@ -21,14 +21,14 @@ module ApplicationHelper
     end
   end
 
-  def change_icon(number)
+  def change_icon(number, size: '16*16')
     number = number.to_s
     if number.blank? || number !~ /[1-9]/i
       nil
     elsif /-/i.match?(number)
-      content_tag(:i, { class: 'fas fa-caret-down text-danger' }) { nil }
+      inline_svg('svg/caret-down', size: size, style: 'vertical-align: -0.125em;', class: 'text-danger')
     else
-      content_tag(:i, { class: 'fas fa-caret-up text-success' }) { nil }
+      inline_svg('svg/caret-up', size: size, style: 'vertical-align: -0.125em;', class: 'text-success')
     end
   end
 

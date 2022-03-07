@@ -118,14 +118,17 @@ window.Formats = {
         .addClass('alert')
         .addClass('alert-warning')
         .addClass('float-right')
-        .append(
-          $('<i>')
-            .addClass('fas')
-            .addClass('fa-thumbtack')
-            .attr('data-toggle', 'tooltip')
-            .attr('data-placement', 'right')
-            .attr('title', note)
-        )
+        .attr('data-toggle', 'tooltip')
+        .attr('data-placement', 'right')
+        .attr('title', note)
+      /*.append(
+        $('<i>')
+          .addClass('fas')
+          .addClass('fa-thumbtack')
+          .attr('data-toggle', 'tooltip')
+          .attr('data-placement', 'right')
+          .attr('title', note)
+      )*/ // TODO Restore Comment Icon
     }
 
     return $('<td>')
@@ -421,12 +424,13 @@ window.Formats = {
         .attr('data-sort', '0');
     }
 
-    const dir = value > 0 ? 'up' : (value < 0 ? 'down' : 'right');
+    // const dir = value > 0 ? 'up' : (value < 0 ? 'down' : 'right');
+    const dir = value > 0 ? '+' : (value < 0 ? '-' : '');
     const col = value > 0 ? 'success' : (value < 0 ? 'danger' : 'muted');
     return $('<td>')
-      .addClass('text-center')
+      .addClass(`text-center text-${col}`)
       .attr('data-sort', value)
-      .html(`<i class='fas fa-lg fa-caret-${dir} text-${col}'> </i> ${Math.abs(value) > 1 ? Math.abs(value) : ''}`)
+      .html(`${dir}${Math.abs(value) > 1 ? Math.abs(value) : ''}`) // TODO: Restore caret-up/down icon (dir)
   },
 
   frequency: function(value) {

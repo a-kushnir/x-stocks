@@ -20,6 +20,10 @@ module XStocks
         }
       end
 
+      def render(width:, height:)
+        ChartTag.for('earnings', width: width, height: height, data: data)
+      end
+
       private
 
       attr_reader :earnings

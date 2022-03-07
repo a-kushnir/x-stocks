@@ -20,6 +20,10 @@ module XStocks
         }
       end
 
+      def render(width:, height:)
+        ChartTag.for('recommendation-details', width: width, height: height, data: data)
+      end
+
       private
 
       def labels

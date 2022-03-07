@@ -57,31 +57,6 @@ module StocksHelper
     end
   end
 
-  def position_allocation
-    positions = @positions.reject { |position| (position.market_value || 0).zero? }
-    positions = positions.sort_by(&:market_value).reverse
-    values = positions.map { |position| position.market_value.to_f }
-    labels = positions.map { |position| @stocks_by_id[position.stock_id].symbol }
-    [values, labels]
-  end
-
-  def sector_allocation
-    sectors = {}
-    positions = @positions.reject { |pos| (pos.market_value || 0).zero? }
-    positions.each do |position|
-      stock = @stocks_by_id[position.stock_id]
-      sector = sectors[stock.sector] ||= { sector: stock.sector, value: 0, symbols: [] }
-      sector[:value] += position.market_value
-      sector[:symbols] << stock.symbol
-    end
-    sectors = sectors.values
-    sectors = sectors.sort_by { |sector| -sector[:value] }
-    values = sectors.map { |sector| sector[:value].to_f }
-    labels = sectors.map { |sector| sector[:sector] }
-    symbols = sectors.map { |sector| sector[:symbols].join(', ') }
-    [values, labels, symbols]
-  end
-
   def dividend_precision(amount)
     amount && amount.to_s == amount.round(2).to_s ? 2 : 4
   end

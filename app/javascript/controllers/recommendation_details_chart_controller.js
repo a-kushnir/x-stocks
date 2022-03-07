@@ -17,7 +17,7 @@ export default class extends ApplicationController {
   render() {
     const { labels, datasets, min } = this.data;
 
-    new Chart(this.element, {
+    const config = {
       type: 'bar',
       data: {
         labels: labels,
@@ -52,7 +52,9 @@ export default class extends ApplicationController {
             }
           }
         }
-      },
-    });
+      }
+    };
+
+    new Chart(this.element, config);
   }
 }

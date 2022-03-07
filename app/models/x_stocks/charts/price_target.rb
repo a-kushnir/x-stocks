@@ -22,6 +22,10 @@ module XStocks
         }
       end
 
+      def render(width:, height:)
+        ChartTag.for('price-target', width: width, height: height, data: data)
+      end
+
       private
 
       attr_reader :stock, :details

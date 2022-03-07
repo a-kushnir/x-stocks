@@ -3,10 +3,7 @@
 <div class="small-widget my-side-panel mx-auto mx-lg-0">
   <h4><%= label %></h4>
   <div style="width: 280px; height: 220px;" class="mx-auto">
-    <canvas width="280" height="220"
-            data-controller="financials-chart"
-            data-financials-chart-value='<%= json financials.data %>'>
-    </canvas>
+    <%= financials.render(width: 280, height: 220) %>
   </div>
 </div>
 <% end %>

@@ -79,7 +79,7 @@ export default class extends ApplicationController {
       }]
     };
 
-    Chart.Scatter(this.element, {
+    const config = {
       data: data,
       options: {
         responsive: true,
@@ -140,6 +140,8 @@ export default class extends ApplicationController {
           }
         }
       }
-    });
+    };
+
+    Chart.Scatter(this.element, config);
   }
 }

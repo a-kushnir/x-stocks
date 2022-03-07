@@ -51,22 +51,7 @@
 </table>
 </div>
 
-<div id="positions-charts-container">
-  <div class="row">
-    <div class="col-xl-6">
-      <div class="border rounded mx-md-auto float-xl-right" style="width: 580px; height: 443px; padding-bottom: 15px; margin-bottom: 15px;">
-        <h4 class="text-center">Stock allocation</h4>
-        <canvas id="position_allocation" width="580" height="400"></canvas>
-      </div>
-    </div>
-    <div class="col-xl-6">
-      <div class="border rounded mx-md-auto float-xl-left" style="width: 580px; height: 443px; padding-bottom: 15px;">
-        <h4 class="text-center">Sector allocation</h4>
-        <canvas id="sector_allocation" width="580" height="400"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render partial: 'charts' %>
 
 <% content_for :head do %>
 <script>
@@ -124,11 +109,6 @@
       order: [0, 'asc'],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']]
     }, <%= default_columns %>);
-
-    <% values, labels = position_allocation %>
-    allocation_chart('#position_allocation', <%= json values %>, <%= json labels %>);
-    <% values, labels, symbols = sector_allocation %>
-    allocation_chart('#sector_allocation', <%= json values %>, <%= json labels %>, <%= json symbols %>);
   })
 </script>
 <% end %>

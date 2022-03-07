@@ -91,7 +91,9 @@ HELP
       <% if row %>
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
-          <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
+          <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
+            <%= inline_svg('svg/question-circle', size: '16*16', style: 'margin-bottom: 4px;') %>
+          </span>
         <% end %>
       <% end %>
     </td>

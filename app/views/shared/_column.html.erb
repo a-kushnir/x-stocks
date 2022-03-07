@@ -1,7 +1,7 @@
 <div class="dropdown float-right">
   <button class="btn btn-outline-dark dropdown-toggle dropdown-button" type="button"
-          id="ddColumns" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    <i class="fa fa-cog text-center"></i>
+          id="ddColumns" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding-top: 0; padding-bottom: 3px;">
+    <%= inline_svg('svg/cog', size: '20*20') %>
   </button>
   <ul class="dropdown-menu checkbox-menu allow-focus dropdown-menu-right" aria-labelledby="ddColumns">
     <% columns.each do |column| %>

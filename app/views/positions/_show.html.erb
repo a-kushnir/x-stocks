@@ -116,7 +116,7 @@
 
   <% if @position.note.present? %>
     <div class="alert alert-warning fade show">
-      <i class="fas fa-thumbtack float-right"></i>
+      <%= inline_svg('svg/comment-text-outline', size: '24*24', class: 'float-right') %>
       <%= multiline_text_to_html(@position.note) %>
     </div>
   <% end %>

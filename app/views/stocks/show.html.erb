@@ -15,32 +15,32 @@
 
 <div class="row">
   <div class="col-md-8">
-    <%= render partial: 'tradingview_chart' %>
-    <%= render partial: 'summary' %>
-    <%= render partial: 'dividends' %>
+    <%= render partial: 'stocks/widgets/tradingview_chart' %>
+    <%= render partial: 'stocks/widgets/summary' %>
+    <%= render partial: 'stocks/widgets/dividends' %>
 
     <div class="d-none d-md-block">
-      <%= render partial: 'about_company' %>
-      <%= render partial: 'tags' %>
+      <%= render partial: 'stocks/widgets/about_company' %>
+      <%= render partial: 'stocks/widgets/tags' %>
     </div>
   </div>
 
   <div class="col-md-4">
-    <%= render partial: 'my_position' %>
-    <%= render partial: 'next_dividend' %>
-    <%= render partial: 'next_earnings' %>
-    <%= render partial: 'links' %>
-    <%= render partial: 'rec_details', locals: { label: 'Recommendation <small>Finnhub</small>'.html_safe, details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
-    <%= render partial: 'rec_details', locals: { label: 'Recommendation <small>Yahoo</small>'.html_safe, details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
-    <%= render partial: 'price_target', locals: { label: 'Price Targets <small>Yahoo</small>'.html_safe, details: @stock.yahoo_price_target } %>
-    <%= render partial: 'earnings', locals: { label: 'Earnings <small>Yahoo</small>'.html_safe } %>
-    <%= render partial: 'financials', locals: { label: 'Financials <small>Yearly</small>'.html_safe, details: @stock.financials_yearly } %>
-    <%= render partial: 'financials', locals: { label: 'Financials <small>Quarterly</small>'.html_safe, details: @stock.financials_quarterly } %>
-    <%= render partial: 'tradingview_tech' %>
+    <%= render partial: 'stocks/widgets/my_position' %>
+    <%= render partial: 'stocks/widgets/next_dividend' %>
+    <%= render partial: 'stocks/widgets/next_earnings' %>
+    <%= render partial: 'stocks/widgets/links' %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small>Finnhub</small>'.html_safe, details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small>Yahoo</small>'.html_safe, details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
+    <%= render partial: 'stocks/widgets/price_target', locals: { label: 'Price Targets <small>Yahoo</small>'.html_safe, details: @stock.yahoo_price_target } %>
+    <%= render partial: 'stocks/widgets/earnings', locals: { label: 'Earnings <small>Yahoo</small>'.html_safe } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small>Yearly</small>'.html_safe, details: @stock.financials_yearly } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small>Quarterly</small>'.html_safe, details: @stock.financials_quarterly } %>
+    <%= render partial: 'stocks/widgets/tradingview_tech' %>
 
     <div class="d-block d-md-none">
-      <%= render partial: 'about_company' %>
-      <%= render partial: 'tags' %>
+      <%= render partial: 'stocks/widgets/about_company' %>
+      <%= render partial: 'stocks/widgets/tags' %>
     </div>
   </div>
 </div>

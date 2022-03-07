@@ -2,18 +2,6 @@
 
 # Helper methods for StocksController
 module StocksHelper
-  def stock_path(stock)
-    "/stocks/#{CGI.escape(stock.symbol)}"
-  end
-
-  def edit_stock_path(stock)
-    "/stocks/#{CGI.escape(stock.symbol)}/edit"
-  end
-
-  def processing_stock_path(stock)
-    "/stocks/#{CGI.escape(stock.symbol)}/processing"
-  end
-
   def link_to_website(url)
     label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '')
     link_to label, url if url

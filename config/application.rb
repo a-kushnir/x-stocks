@@ -32,5 +32,11 @@ module XStocks
     # Auto-load API and its subdirectories
     config.paths.add 'app/api', glob: '**/*.rb'
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
+    # The SameSite attribute of the Set-Cookie HTTP response header allows you to declare if your cookie should be restricted to a first-party or same-site context.
+    # Lax: Cookies are not sent on normal cross-site sub-requests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site (i.e., when following a link).
+    # Strict: Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.
+    # None: Cookies will be sent in all contexts, i.e. in responses to both first-party and cross-origin requests. If SameSite=None is set, the cookie Secure attribute must also be set (or the cookie will be blocked).
+    config.action_dispatch.cookies_same_site_protection = 'Strict'
   end
 end

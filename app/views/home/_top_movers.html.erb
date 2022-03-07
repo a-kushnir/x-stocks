@@ -7,7 +7,7 @@
     <% stocks.each_with_index do |stock, index| %>
       <tr>
         <td style="<%= index == 0 ? 'border-top: none;' : nil %>">
-          <%= link_to stock.symbol, stock_path(stock) %>
+          <%= link_to stock.symbol, stock_path(stock.symbol) %>
           <strong class="float-right">
             <%= number_to_currency(stock.current_price) %>
             <small class="<%= delta_class(stock.price_change) %>" style="font-weight: 400;">

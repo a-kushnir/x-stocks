@@ -14,7 +14,7 @@
   <% if peers.present? %>
     <% peers.each do |stock_peer| %>
       <% if stock_peer[:stock] %>
-        <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock]), class: 'badge badge-pill badge-primary' %>
+        <%= link_to stock_peer[:symbol], stock_path(stock_peer[:stock].symbol), class: 'badge badge-pill badge-primary' %>
       <% else %>
         <span class="badge badge-pill badge-secondary"><%= stock_peer[:symbol] %></span>
       <% end %>

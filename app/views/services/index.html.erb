@@ -34,7 +34,7 @@
       <% last_run_at = service&.last_run_at %>
       <td><%= (last_run_at ? "#{time_ago_in_words last_run_at} ago" : "never").capitalize %></td>
       <td>
-        <%= form_tag(run_service_path(job), multipart: true) do %>
+        <%= form_tag(run_service_path(job.lookup_code), multipart: true) do %>
           <% Hash(job.arguments).each do |name, input| %>
             <% Hash(input).each do |type, args| %>
               <%=
@@ -55,9 +55,9 @@
       </td>
       <td>
         <%= link_to 'Start', "#", class: 'btn btn-sm btn-primary', onclick: "runService($(this).parents('tr').find('form')); return false;" %>
-        <%= link_to 'Log', service_log_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.log.present? %>
-        <%= link_to 'Error', service_error_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.error.present? %>
-        <%= link_to 'File', service_file_path(job), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.file_content.present? %>
+        <%= link_to 'Log', log_service_path(job.lookup_code), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.log.present? %>
+        <%= link_to 'Error', error_service_path(job.lookup_code), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.error.present? %>
+        <%= link_to 'File', file_service_path(job.lookup_code), class: 'btn btn-sm btn-outline-dark', data: { turbo: false } if service&.file_content.present? %>
       </td>
     </tr>
   <% end %>

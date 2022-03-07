@@ -45,7 +45,7 @@ class StocksController < ApplicationController
     @stock.attributes = create_stock_params
 
     if @stock.save
-      redirect_to({ action: 'initializing', id: @stock.symbol }.merge(initialize_params))
+      redirect_to({ action: 'initializing', symbol: @stock.symbol }.merge(initialize_params))
     else
       set_page_title
       render action: 'new'
@@ -66,7 +66,7 @@ class StocksController < ApplicationController
 
     @stock.attributes = update_stock_params
     if @stock.save
-      redirect_to action: 'show', id: @stock.symbol
+      redirect_to action: 'show'
     else
       @exchanges = XStocks::AR::Exchange.all
       set_page_title
@@ -81,7 +81,7 @@ class StocksController < ApplicationController
   end
 
   def processing
-    @stock = XStocks::Stock.find_by!(symbol: params[:id])
+    @stock = find_stock
     flash[:notice] = "#{@stock} stock added"
     EventStream.run(response) do |stream|
       XStocks::Jobs::CompanyOne.new.perform(stock_id: @stock.id) { |status| stream.write(status) }
@@ -97,7 +97,7 @@ class StocksController < ApplicationController
       flash[:notice] = "#{stock} stock deleted"
       redirect_to stocks_path
     else
-      redirect_to stock_path(stock)
+      redirect_to stock_path(stock.symbol)
     end
   end
 
@@ -126,7 +126,7 @@ class StocksController < ApplicationController
   end
 
   def find_stock
-    XStocks::Stock.find_by_symbol(params[:id])
+    XStocks::Stock.find_by_symbol(params[:symbol])
   end
 
   def create_stock_params
@@ -143,13 +143,13 @@ class StocksController < ApplicationController
 
     stock = XStocks::AR::Stock.find_by(symbol: value.upcase)
     if stock
-      redirect_to stock_path(stock)
+      redirect_to stock_path(stock.symbol)
       return true
     end
 
     stocks = XStocks::AR::Stock.where('company_name ILIKE ?', "%#{value.downcase}%").all
     if stocks.count == 1
-      redirect_to stock_path(stocks.first)
+      redirect_to stock_path(stocks.first.symbol)
       return true
     end
 

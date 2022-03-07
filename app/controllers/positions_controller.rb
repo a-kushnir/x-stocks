@@ -22,15 +22,24 @@ class PositionsController < ApplicationController
     end
   end
 
+  def show
+    @position = find_position
+    not_found && return unless @position
+
+    stale? @position
+  end
+
+  alias edit show
+
   def update
     @position = find_position
     not_found && return unless @position
 
     @position.attributes = position_params
     if XStocks::Position.new.save(@position)
-      render partial: 'show', layout: nil
+      redirect_to action: 'show'
     else
-      render partial: 'edit', layout: nil
+      render partial: 'edit'
     end
   rescue Exception => e
     internal_error(e, layout: nil)
@@ -39,7 +48,7 @@ class PositionsController < ApplicationController
   private
 
   def find_position
-    stock = XStocks::AR::Stock.find_by(symbol: params[:id])
+    stock = XStocks::AR::Stock.find_by(symbol: params[:symbol])
     XStocks::AR::Position.find_or_initialize_by(user: current_user, stock: stock) if stock
   end
 

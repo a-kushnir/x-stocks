@@ -1,0 +1,19 @@
+<%= turbo_frame_tag 'my-position' do %>
+  <%= bootstrap_form_for(@position, url: position_path(@position.stock.symbol), method: :put, html: {id: 'position-form', class: 'my-form', style: 'margin-bottom: 20px;'}) do |form| %>
+    <%= form.text_field :shares, autocomplete: :off,
+                        value: format_if_valid(@position, :shares) { |value| number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) } %>
+
+    <%= form.text_field :average_price, autocomplete: :off, prepend: '$',
+                        value: format_if_valid(@position, :average_price) { |value| number_to_currency(value, unit: '') } %>
+
+    <%= form.text_field :stop_loss, autocomplete: :off, prepend: '$',
+                        value: format_if_valid(@position, :stop_loss) { |value| number_to_currency(value, unit: '') } %>
+
+    <%= form.text_area :note %>
+
+    <div class="my-button-group">
+      <%= link_to 'Cancel', position_path(@position.stock.symbol), class: 'btn btn-outline-dark', style: 'margin-left: 0;' %>
+      <%= form.submit 'Save', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

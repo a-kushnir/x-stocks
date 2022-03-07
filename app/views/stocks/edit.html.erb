@@ -1,6 +1,6 @@
 <div class="row justify-content-center my-form-row">
   <div class="col-12">
-    <%= bootstrap_form_for @stock, scope: :stock, url: stock_path(@stock), method: :put, local: true, html: {class: 'my-form mx-auto'} do |form| %>
+    <%= bootstrap_form_for @stock, scope: :stock, url: stock_path(@stock.symbol), method: :put, local: true, html: {class: 'my-form mx-auto'} do |form| %>
       <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, readonly: true %>
       <%= form.text_field :company_name, autocomplete: :off %>
 

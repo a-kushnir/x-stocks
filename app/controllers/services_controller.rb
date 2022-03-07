@@ -43,7 +43,7 @@ class ServicesController < ApplicationController
       service = job.service
 
       send_data(service&.log,
-                filename: "#{params[:id]}-log.txt",
+                filename: "#{params[:lookup_code]}-log.txt",
                 type: 'text/plain')
     end
   end
@@ -53,7 +53,7 @@ class ServicesController < ApplicationController
       service = job.service
 
       send_data(service&.error,
-                filename: "#{params[:id]}-error.txt",
+                filename: "#{params[:lookup_code]}-error.txt",
                 type: 'text/plain')
     end
   end
@@ -63,7 +63,7 @@ class ServicesController < ApplicationController
       service = job.service
 
       send_data(service&.file_content,
-                filename: service&.file_name || "#{params[:id]}-file.txt",
+                filename: service&.file_name || "#{params[:lookup_code]}-file.txt",
                 type: service&.file_type || 'text/plain')
     end
   end
@@ -80,7 +80,7 @@ class ServicesController < ApplicationController
   private
 
   def find_job
-    job = XStocks::Job.find(params[:id])
+    job = XStocks::Job.find(params[:lookup_code])
     if job
       yield job
     else

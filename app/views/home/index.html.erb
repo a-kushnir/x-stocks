@@ -12,8 +12,8 @@
   </div>
   <div class="col-lg-6 col-xl-2">
     <%= render partial: 'portfolio' %>
-    <%= render partial: 'top_movers', locals: {title: 'Top Gainers', where: 'price_change_pct > 0', order: 'desc'} %>
-    <%= render partial: 'top_movers', locals: {title: 'Top Losers', where: 'price_change_pct < 0', order: 'asc'} %>
+    <%= render partial: 'top_movers', locals: { title: 'Top Gainers', where: 'price_change_pct > 0', order: 'desc' } %>
+    <%= render partial: 'top_movers', locals: { title: 'Top Losers', where: 'price_change_pct < 0', order: 'asc' } %>
     <div class="text-center d-block d-md-none">
       <%= render partial: 'div_hikes_n_cuts' %>
     </div>

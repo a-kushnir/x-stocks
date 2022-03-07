@@ -2,10 +2,6 @@
 
 # Helper methods for all application controllers
 module ApplicationHelper
-  def stock_path(stock)
-    "/stocks/#{CGI.escape(stock.symbol)}"
-  end
-
   def back_url
     'javascript:history.back()'
   end

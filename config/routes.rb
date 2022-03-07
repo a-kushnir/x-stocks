@@ -13,16 +13,16 @@ Rails.application.routes.draw do
 
   get 'home/fear_n_greed_image', to: 'home#fear_n_greed_image'
 
-  resources :stocks, id: /.*/ do
+  resources :stocks, param: :symbol do
     member do
       get :initializing
       get :processing
     end
   end
-  resources :positions, only: %i[index update]
+  resources :positions, param: :symbol, only: %i[index show edit update]
   resources :dividends, only: [:index]
 
-  resources :services, only: [:index] do
+  resources :services, param: :lookup_code, only: [:index] do
     member do
       get :run, to: 'services#run_one'
       post :run, to: 'services#submit_one'

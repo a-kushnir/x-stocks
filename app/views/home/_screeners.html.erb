@@ -1,0 +1,16 @@
+<div class="my-side-panel pb-3">
+  <h3>Screeners</h3>
+  <nav class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md">
+    <ul class="m-0">
+      <% VirtualTag.all.each do |tag| %>
+        <li class="nav-item">
+          <% url = {controller: 'stocks', action: 'index', tag: tag.name} %>
+          <% url.merge!({order: tag.sort_order}) if tag.sort_order.present? %>
+          <a class="block h-10 hover:no-underline px-3 py-2" href="<%= url_for(url) %>" data-toggle="tooltip" data-placement="top" title="<%= tag.description %>">
+            <%= inline_svg(tag.svg_image, size: '24*24', class: 'inline-block') %> <%= tag.name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+</div>

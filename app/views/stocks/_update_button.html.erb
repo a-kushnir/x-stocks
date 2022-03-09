@@ -1,4 +1,4 @@
-<button id="stock-update-button" class="btn btn-dark float-right" style="margin-top: 10px; margin-right: 10px;" onclick="update_stock(<%= @stock.id %>);">
-  <%= inline_svg('svg/sync', size: '16*16', style: 'margin-bottom: 4px;') %>
-  <span id="stock-update-text" class="text-light d-none d-md-inline-block" style="padding-left: 3px;"><%= 'Update' %></span>
+<button id="stock-update-button" class="btn btn-dark float-right mt-2 mr-2" onclick="update_stock(<%= @stock.id %>);">
+  <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
+  <span id="stock-update-text" class="text-light d-none d-md-inline-block pl-1"><%= 'Update' %></span>
 </button>

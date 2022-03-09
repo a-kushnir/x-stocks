@@ -1,19 +1,19 @@
-<div class="small-widget my-side-panel mx-auto mx-lg-0">
+<div class="my-side-panel pb-3">
   <%= link_to 'See All', "/stocks?order=4-#{order}", class: 'float-right', style: 'margin-top: 10px; margin-right: 5px;' %>
   <h3><%= title %></h3>
   <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
-  <table class="table table-sm" style="margin-bottom: 7px;">
+  <table class="w-100">
     <tbody>
-    <% stocks.each_with_index do |stock, index| %>
-      <tr>
-        <td style="<%= index == 0 ? 'border-top: none;' : nil %>">
+    <% stocks.each do |stock| %>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
           <%= link_to stock.symbol, stock_path(stock.symbol) %>
-          <strong class="float-right">
+          <span class="font-bold float-right">
             <%= number_to_currency(stock.current_price) %>
-            <small class="<%= delta_class(stock.price_change) %>" style="font-weight: 400;">
-            <%= number_to_currency(stock.price_change) %> (<%= number_to_percentage(stock.price_change_pct, precision: 2) %>)
-            </small>
-          </strong>
+            <span class="text-xs font-normal <%= delta_class(stock.price_change) %>">
+              <%= number_to_currency(stock.price_change) %> (<%= number_to_percentage(stock.price_change_pct, precision: 2) %>)
+            </span>
+          </span>
         </td>
       </tr>
     <% end %>

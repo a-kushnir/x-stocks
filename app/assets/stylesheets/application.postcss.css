@@ -1,3 +1,11 @@
+@import "tailwindcss/base";
+
+/* modules, layouts, etc */
+/* ... */
+
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 /* LEGACY */
 @import "legacy/bootstrap.css";
 @import "legacy/bootstrap-select.css";

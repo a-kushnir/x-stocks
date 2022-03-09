@@ -1,5 +1,5 @@
 <div class="my-side-panel pb-3">
-  <%= link_to 'See All', "/stocks?order=4-#{order}", class: 'float-right', style: 'margin-top: 10px; margin-right: 5px;' %>
+  <%= link_to 'See All', "/stocks?order=5-#{order}", class: 'float-right', style: 'margin-top: 10px; margin-right: 5px;' %>
   <h3><%= title %></h3>
   <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
   <div class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md px-2">

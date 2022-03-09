@@ -2,7 +2,7 @@
   <h3>Company Profile</h3>
   <p class="company-profile">
     <% if @stock.country.present? %>
-      <strong>Headquarters:</strong> <%= country_flag_img_tag(@stock.country, size: 24, style: 'margin-bottom: 4px;') %> <%= [CountryName.new.name(@stock.country), @stock.state].select(&:present?).join(', ') %><br>
+      <strong>Headquarters:</strong> <%= country_flag_img_tag(@stock.country, size: 24, class: 'inline-block mb-1') %> <%= [CountryName.new.name(@stock.country), @stock.state].select(&:present?).join(', ') %><br>
     <% end %>
     <% if @stock.website.present? %>
       <strong>Website:</strong> <%= link_to_website @stock.website %><br>

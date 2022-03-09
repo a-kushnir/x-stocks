@@ -63,7 +63,7 @@ HELP
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
-            <%= inline_svg('svg/question-circle', size: '16*16', style: 'margin-bottom: 4px;') %>
+            <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>
           </span>
         <% end %>
       <% end %>
@@ -92,7 +92,7 @@ HELP
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
-            <%= inline_svg('svg/question-circle', size: '16*16', style: 'margin-bottom: 4px;') %>
+            <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>
           </span>
         <% end %>
       <% end %>

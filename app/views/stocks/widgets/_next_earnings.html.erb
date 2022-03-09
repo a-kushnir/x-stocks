@@ -1,29 +1,30 @@
-<div class="small-widget my-side-panel mx-auto mx-lg-0">
-  <% next_earnings_date = @stock.next_earnings_date if @stock.next_earnings_date && @stock.next_earnings_date >= Date.today %>
-  <% if next_earnings_date %>
+<% next_earnings_date = @stock.next_earnings_date if @stock.next_earnings_date && @stock.next_earnings_date >= Date.today %>
+<% if next_earnings_date %>
+  <div class="my-side-panel pb-3">
     <h4>Next Earnings</h4>
-
-    <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+    <div class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md px-2">
+      <table class="w-100">
       <tbody>
-        <tr>
-          <td style="border-top: none;">
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Estimated EPS:
             <strong class="float-right"><%= number_to_currency(@stock.next_earnings_est_eps, precision: dividend_precision(@stock.next_earnings_est_eps)) %></strong>
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Date:
             <strong class="float-right"><%= next_earnings_date.strftime('%b, %d %Y') %></strong>
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Time:
             <strong class="float-right"><%= humanize_earnings_hour(@stock.next_earnings_hour) %></strong>
           </td>
         </tr>
       </tbody>
     </table>
-  <% end %>
-</div>
+    </div>
+  </div>
+<% end %>

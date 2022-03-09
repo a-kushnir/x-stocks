@@ -13,7 +13,6 @@ gem 'stimulus-rails'
 gem 'turbo-rails'
 
 gem 'bootsnap', '>= 1.4.2', require: false
-# gem 'jbuilder', '~> 2.7' # TODO ???
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '>= 5.6.2'
 

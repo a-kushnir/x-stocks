@@ -1,20 +1,20 @@
-<div class="small-widget my-side-panel mx-auto mx-lg-0">
+<div class="my-side-panel pb-3">
   <h3>Links</h3>
-  <nav class="sidebar my-block">
-    <ul class="nav flex-column">
+  <nav class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md">
+    <ul class="m-0">
       <% [
-           ['https://finance.yahoo.com/', 'Yahoo Finance'],
-           ['https://www.dividend.com/', 'Dividend.com'],
-           ['https://seekingalpha.com/', 'Seeking Alpha'],
-           ['https://www.fool.com/', 'The Motley Fool'],
-           ['https://robinhood.com/', 'Robinhood'],
-           ['https://www.webull.com/', 'Webull'],
+             ['https://finance.yahoo.com/', 'Yahoo Finance'],
+             ['https://www.dividend.com/', 'Dividend.com'],
+             ['https://seekingalpha.com/', 'Seeking Alpha'],
+             ['https://www.fool.com/', 'The Motley Fool'],
+             ['https://robinhood.com/', 'Robinhood'],
+             ['https://www.webull.com/', 'Webull'],
          ].each do |link| %>
-          <li class="nav-item">
-            <a class="nav-link" href="<%= link[0] %>" style="height: 40px;">
-              <%= inline_svg('svg/external-link.svg', size: '24*24') %> <%= link[1] %>
-            </a>
-          </li>
+        <li>
+          <a class="block h-10 hover:no-underline px-3 py-2" href="<%= link[0] %>">
+            <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block') %> <%= link[1] %>
+          </a>
+        </li>
       <% end %>
     </ul>
   </nav>

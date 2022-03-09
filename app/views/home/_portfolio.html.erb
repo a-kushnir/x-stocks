@@ -1,33 +1,35 @@
 <div class="my-side-panel pb-3">
   <h3>My Portfolio</h3>
-  <table class="w-100">
-    <tbody>
-    <% day_change = XStocks::Position.new.day_change(current_user) %>
-    <% if day_change %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          Market Value:
-          <strong class="float-right"><%= number_to_currency(day_change[:market_value]) %></strong>
-        </td>
-      </tr>
-      <% if day_change[:market_value] > 0 %>
+  <div class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md px-2">
+    <table class="w-100">
+      <tbody>
+      <% day_change = XStocks::Position.new.day_change(current_user) %>
+      <% if day_change %>
         <tr class="border-t first:border-none border-gray-300">
           <td class="p-1">
-            Today's Change:
-            <strong class="float-right <%= delta_class(day_change[:price_change]) %>"><%= number_to_currency(day_change[:price_change]) %> (<%= number_to_percentage(day_change[:price_change_pct], precision: 2) %>)</strong>
+            Market Value:
+            <strong class="float-right"><%= number_to_currency(day_change[:market_value]) %></strong>
+          </td>
+        </tr>
+        <% if day_change[:market_value] > 0 %>
+          <tr class="border-t first:border-none border-gray-300">
+            <td class="p-1">
+              Today's Change:
+              <strong class="float-right <%= delta_class(day_change[:price_change]) %>"><%= number_to_currency(day_change[:price_change]) %> (<%= number_to_percentage(day_change[:price_change_pct], precision: 2) %>)</strong>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% est_ann_income = XStocks::Position.new.est_ann_income(current_user) %>
+      <% if est_ann_income %>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
+            Annual Dividend:
+            <strong class="float-right"><%= number_to_currency(est_ann_income) %></strong>
           </td>
         </tr>
       <% end %>
-    <% end %>
-    <% est_ann_income = XStocks::Position.new.est_ann_income(current_user) %>
-    <% if est_ann_income %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          Annual Dividend:
-          <strong class="float-right"><%= number_to_currency(est_ann_income) %></strong>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

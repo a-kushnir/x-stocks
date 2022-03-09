@@ -2,21 +2,23 @@
   <%= link_to 'See All', "/stocks?order=4-#{order}", class: 'float-right', style: 'margin-top: 10px; margin-right: 5px;' %>
   <h3><%= title %></h3>
   <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
-  <table class="w-100">
-    <tbody>
-    <% stocks.each do |stock| %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          <%= link_to stock.symbol, stock_path(stock.symbol) %>
-          <span class="font-bold float-right">
-            <%= number_to_currency(stock.current_price) %>
-            <span class="text-xs font-normal <%= delta_class(stock.price_change) %>">
-              <%= number_to_currency(stock.price_change) %> (<%= number_to_percentage(stock.price_change_pct, precision: 2) %>)
+  <div class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md px-2">
+    <table class="w-100">
+      <tbody>
+      <% stocks.each do |stock| %>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
+            <%= link_to stock.symbol, stock_path(stock.symbol) %>
+            <span class="font-bold float-right">
+              <%= number_to_currency(stock.current_price) %>
+              <span class="text-xs font-normal <%= delta_class(stock.price_change) %>">
+                <%= number_to_currency(stock.price_change) %> (<%= number_to_percentage(stock.price_change_pct, precision: 2) %>)
+              </span>
             </span>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

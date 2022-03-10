@@ -4,6 +4,8 @@
 class DividendsController < ApplicationController
   helper :stocks
 
+  layout 'application_old'
+
   def index
     @positions = XStocks::AR::Position
                  .where(user: current_user)

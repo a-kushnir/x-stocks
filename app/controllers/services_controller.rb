@@ -2,6 +2,8 @@
 
 # Controller to provide access to background services
 class ServicesController < ApplicationController
+  layout 'application_old'
+
   include ActionController::Live
 
   def index

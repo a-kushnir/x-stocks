@@ -6,8 +6,8 @@
 
 [![Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)
 [![Language](https://img.shields.io/badge/language-ruby-orange)](https://img.shields.io/badge/language-ruby-orange)
-[![Bootstrap](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/bootstrap)](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/bootstrap)
-[![jQuery](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/jquery)](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/jquery)
+[![Rails](https://img.shields.io/gem/v/rails?label=rails)](https://img.shields.io/gem/v/rails?label=rails)
+[![Tailwind](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/tailwindcss?label=tailwind)](https://img.shields.io/github/package-json/dependency-version/a-kushnir/x-stocks/tailwindcss?label=tailwind)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)](https://img.shields.io/scrutinizer/quality/g/a-kushnir/x-stocks/main)
 [![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/a-kushnir/x-stocks/main)](https://img.shields.io/scrutinizer/coverage/g/a-kushnir/x-stocks/main)
 [![License](https://img.shields.io/github/license/a-kushnir/x-stocks)](https://img.shields.io/github/license/a-kushnir/x-stocks)

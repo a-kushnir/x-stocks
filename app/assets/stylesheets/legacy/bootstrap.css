@@ -6854,9 +6854,9 @@ button.bg-dark:focus {
   background-color: transparent !important;
 }
 
-.border {
+/*.border {
   border: 1px solid #dee2e6 !important;
-}
+}*/
 
 .border-top {
   border-top: 1px solid #dee2e6 !important;

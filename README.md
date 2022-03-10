@@ -1,5 +1,5 @@
 <a href="http://x-stocks.herokuapp.com/">
-    <img src="https://raw.githubusercontent.com/a-kushnir/x-stocks/main/public/img/favicons/favicon.svg" alt="xStocks logo" title="xStocks" align="right" height="60" />
+    <img src="https://raw.githubusercontent.com/a-kushnir/x-stocks/main/app/assets/images/favicon/favicon.svg" alt="xStocks logo" title="xStocks" align="right" height="60" />
 </a>
 
 # xStocks

@@ -5,12 +5,11 @@ git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.7.5'
 
-gem 'importmap-rails'
+gem 'importmap-rails', '~> 1.0'
 gem 'rails', '>= 7.0.2.2'
-gem 'sass-rails', require: false
-gem 'sprockets-rails'
-gem 'stimulus-rails'
-gem 'turbo-rails'
+gem 'sprockets-rails', '~> 3.4'
+gem 'stimulus-rails', '~> 1.0'
+gem 'turbo-rails', '~> 1.0'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg', '>= 0.18', '< 2.0'
@@ -42,9 +41,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'bootstrap', '~> 4.6.1'
-gem 'bootstrap_form'
-gem 'bootstrap-select-rails'
 gem 'caxlsx', '>= 3.1.0'
 gem 'devise'
 gem 'inline_svg'

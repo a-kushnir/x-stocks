@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" class="relative min-h-full">
+<html lang="en" class="<%= class_names('relative', 'min-h-full', 'no-js',
+                                       'rails-dev' => Rails.env.development?) %>">
   <head>
     <title><%= @page_title %> | xStocks</title>
     <%= csrf_meta_tags %>

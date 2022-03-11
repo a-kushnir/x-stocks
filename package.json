@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
+    "build": "yarn build:css",
+    "build:js": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
     "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
     "build:css:watch": "TAILWIND_MODE=watch yarn build:css --watch --verbose",
     "lint": "eslint app/javascript spec/javascript",
@@ -23,18 +24,18 @@
     "popper.js": "^1.16.1",
     "tailwindcss": "^3.0.23",
     "@tailwindcss/forms": "^0.5.0",
-    "@tailwindcss/line-clamp": "^0.3.1"
+    "@tailwindcss/line-clamp": "^0.3.1",
+    "postcss": "^8.4.8",
+    "postcss-cli": "^9.1.0",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-preset-env": "^7.4.2"
   },
   "devDependencies": {
     "esbuild": "^0.14.14",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-watch": "^8.0.0",
-    "postcss": "^8.4.8",
-    "postcss-cli": "^9.1.0",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-import": "^14.0.2",
-    "postcss-preset-env": "^7.4.2"
+    "eslint-watch": "^8.0.0"
   }
 }

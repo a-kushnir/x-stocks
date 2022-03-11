@@ -1,20 +1,20 @@
 <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
-
-<% content_for :page_title do %>
   <% if params[:save_and_show] %>
     <%= render partial: 'new_button' %>
   <% else %>
     <%= render partial: 'update_button' %>
   <% end %>
 
-  <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar justify-content-center">
-    <% if @stock.logo_url.present? %>
-      <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
-    <% end %>
-    <h1><%= @page_title %></h1>
-  </header>
-<% end %>
+  <div class="flex">
+    <div>
+      <% if @stock.logo_url.present? %>
+        <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
+      <% end %>
+    </div>
+    <div>
+      <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
+    </div>
+  </div>
 
 <div class="row">
   <div class="col-md-8">

@@ -69,7 +69,6 @@ class ServicesController < ApplicationController
   end
 
   def run_all
-    return
     EventStream.run(response) do |stream|
       service = XStocks::Service.new
       break if service.locked?

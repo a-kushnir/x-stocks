@@ -7,7 +7,7 @@ module.exports = {
     './app/javascript/**/*.*',
     './app/components/**/*.{js,css,scss,rb,erb}',
     './lib/action_view/helpers/*.rb',
-    ...glob.sync('*/app/views').map((dir) => path.join(dir, '**/*.erb')),
+    ...glob.sync('app/views').map((dir) => path.join(dir, '**/*.erb')),
   ],
   theme: {
     extend: {},

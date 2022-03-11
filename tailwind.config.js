@@ -16,7 +16,7 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     plugin(function ({ _, addVariant, e }) {
-      ['js', 'no-js', 'mobile-app', 'desktop-chrome', 'desktop-safari'].forEach((variant) => {
+      ['js', 'no-js', 'rails-dev'].forEach((variant) => {
         addVariant(variant, ({ modifySelectors, separator }) => {
           modifySelectors(function ({ className }) {
             return `.${variant} .${e(`${variant}${separator}${className}`)}`;

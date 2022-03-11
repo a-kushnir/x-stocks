@@ -2,8 +2,6 @@
 
 # Controller to provide position information for user's portfolio
 class PositionsController < ApplicationController
-  layout 'application_old'
-
   def index
     @positions = XStocks::AR::Position
                  .where(user: current_user)

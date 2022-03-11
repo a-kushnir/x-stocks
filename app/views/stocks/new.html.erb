@@ -1,15 +1,18 @@
-<div class="row justify-content-center my-form-row">
-  <div class="col-12">
-  <%= bootstrap_form_for @stock, scope: :stock, url: stocks_url, local: true, html: {class: 'my-form mx-auto'} do |form| %>
-    <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, autofocus: true %>
+<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
 
-    <div class="my-button-group-centered">
-      <%= link_to back_url, class: 'btn btn-outline-dark', style: 'margin-right: 0; margin-left: 0;' do %>
+  <%= form_for @stock, url: stocks_url do |form| %>
+    <div class="mb-4">
+      <%= form.label :symbol, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :symbol, placeholder: 'Symbol', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase', autocomplete: :off, autofocus: true %>
+    </div>
+
+    <div class="pb-3 flex items-center justify-between">
+      <%= link_to back_url, class: 'btn btn-outline-dark' do %>
         Back
       <% end %>
-      <button class="btn btn-primary" name="save_and_show">Save & Show</button>
-      <button class="btn btn-secondary" name="save_only">Save</button>
+      <button class="btn2 btn2-primary" name="save_and_show">Save & Show</button>
+      <button class="btn2 btn2-secondary" name="save_only">Save</button>
     </div>
   <% end %>
-  </div>
 </div>

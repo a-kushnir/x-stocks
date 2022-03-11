@@ -1,19 +1,28 @@
 <%= turbo_frame_tag 'my-position' do %>
-  <%= bootstrap_form_for(@position, url: position_path(@position.stock.symbol), method: :put, html: {id: 'position-form', class: 'my-form', style: 'margin-bottom: 20px;'}) do |form| %>
-    <%= form.text_field :shares, autocomplete: :off,
-                        value: format_if_valid(@position, :shares) { |value| number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) } %>
+  <%= form_for(@position, url: position_path(@position.stock.symbol), method: :put, html: {id: 'position-form', class: 'my-form'}) do |form| %>
+    <div class="mb-4">
+      <%= form.label :shares, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :shares, autocomplete: :off, autofocus: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                          value: format_if_valid(@position, :shares) { |value| number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) } %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :average_price, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :average_price, autocomplete: :off, prepend: '$', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                          value: format_if_valid(@position, :average_price) { |value| number_to_currency(value, unit: '') } %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :stop_loss, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :stop_loss, autocomplete: :off, prepend: '$', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                          value: format_if_valid(@position, :stop_loss) { |value| number_to_currency(value, unit: '') } %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :note, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_area :note, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-20' %>
+    </div>
 
-    <%= form.text_field :average_price, autocomplete: :off, prepend: '$',
-                        value: format_if_valid(@position, :average_price) { |value| number_to_currency(value, unit: '') } %>
-
-    <%= form.text_field :stop_loss, autocomplete: :off, prepend: '$',
-                        value: format_if_valid(@position, :stop_loss) { |value| number_to_currency(value, unit: '') } %>
-
-    <%= form.text_area :note %>
-
-    <div class="my-button-group">
+    <div class="pb-3 flex items-center justify-between">
       <%= link_to 'Cancel', position_path(@position.stock.symbol), class: 'btn btn-outline-dark', style: 'margin-left: 0;' %>
-      <%= form.submit 'Save', class: 'btn btn-primary' %>
+      <%= form.submit 'Save', class: 'btn2 btn2-primary' %>
     </div>
   <% end %>
 <% end %>

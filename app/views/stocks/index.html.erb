@@ -1,3 +1,6 @@
+<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h2 class="uppercase mb-3 font-normal">Stocks</h2>
+
 <%= render partial: 'shared/column', locals: {columns: @columns} %>
 
 <% if @tag %>
@@ -21,8 +24,8 @@
 </table>
 
 <% if user_signed_in? %>
-<div>
-  <%= link_to new_stock_path, class: 'btn btn-success' do %>
+<div class="mt-4">
+  <%= link_to new_stock_path, class: 'btn2 btn2-secondary' do %>
     New Stock
   <% end %>
 </div>
@@ -66,3 +69,5 @@
   })
 </script>
 <% end %>
+
+</div>

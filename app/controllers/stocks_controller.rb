@@ -2,8 +2,6 @@
 
 # Controller to provide stock information
 class StocksController < ApplicationController
-  layout 'application_old'
-
   include ActionController::Live
   include StocksHelper
 

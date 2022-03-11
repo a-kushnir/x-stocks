@@ -2,8 +2,6 @@
 
 # Controller to provide home page information
 class HomeController < ApplicationController
-  layout 'application_old'
-
   def index
     @page_title = 'Home'
     @page_menu_item = :home

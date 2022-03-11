@@ -1,19 +1,24 @@
-<div class="row justify-content-center my-form-row">
-  <div class="col-12">
-    <%= bootstrap_form_for @stock, scope: :stock, url: processing_stock_path(@stock), local: true, html: {class: 'my-form mx-auto'} do |form| %>
-      <%= form.text_field :symbol, style: 'text-transform: uppercase;', autocomplete: :off, disabled: true %>
-      <div class="my-button-group-centered">
-        <%= link_to back_url, class: 'btn btn-outline-dark disabled', style: 'margin-right: 0; margin-left: 0;' do %>
-          Back
-        <% end %>
-        <button class="btn btn-primary" disabled="disabled" name="save_and_show">Save & Show</button>
-        <button class="btn btn-secondary" disabled="disabled" name="save_only">Save</button>
-      </div>
-    <% end %>
-  </div>
+<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
+
+  <%= form_for @stock, url: processing_stock_path(@stock), html: { class: 'my-form' } do |form| %>
+    <div class="mb-4">
+      <%= form.label :symbol, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.text_field :symbol, disabled: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase bg-gray-200' %>
+    </div>
+
+    <div class="pb-3 flex items-center justify-between">
+      <%= link_to back_url, class: 'btn btn-outline-dark disabled' do %>
+        Back
+      <% end %>
+      <button class="btn2 btn2-primary" disabled="disabled" name="save_and_show">Save & Show</button>
+      <button class="btn2 btn2-secondary" disabled="disabled" name="save_only">Save</button>
+    </div>
+  <% end %>
+
+  <%= render partial: 'shared/service_runner' %>
 </div>
 
-<%= render partial: 'shared/service_runner' %>
 <script>
     function redirectToNewStock() {
         window.location.replace('/stocks/new');

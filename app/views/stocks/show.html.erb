@@ -1,3 +1,6 @@
+<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
+
 <% content_for :page_title do %>
   <% if params[:save_and_show] %>
     <%= render partial: 'new_button' %>
@@ -53,4 +56,6 @@
       <%= button_to 'Delete', stock_path(@stock.symbol), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } %>
     <% end %>
   </div>
+</div>
+
 </div>

@@ -2,8 +2,6 @@
 
 # Controller to provide access to background services
 class ServicesController < ApplicationController
-  layout 'application_old'
-
   include ActionController::Live
 
   def index
@@ -71,6 +69,7 @@ class ServicesController < ApplicationController
   end
 
   def run_all
+    return
     EventStream.run(response) do |stream|
       service = XStocks::Service.new
       break if service.locked?

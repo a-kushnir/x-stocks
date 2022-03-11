@@ -8,8 +8,8 @@
     </div>
 
     <div class="pb-3 flex items-center justify-between">
-      <%= link_to back_url, class: 'btn btn-outline-dark' do %>
-        Back
+      <%= link_to back_url do %>
+        <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
       <% end %>
       <button class="btn2 btn2-primary" name="save_and_show">Save & Show</button>
       <button class="btn2 btn2-secondary" name="save_only">Save</button>

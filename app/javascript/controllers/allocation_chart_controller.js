@@ -1,5 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { destroy_chart } from "helpers/chart_helper";
+import { destroyChart } from "helpers/chart_helper";
 import { truncate } from "helpers/string_helper";
 
 const chart_office_colors = [
@@ -20,7 +20,7 @@ export default class extends ApplicationController {
   }
 
   disconnect() {
-    destroy_chart(this.element);
+    destroyChart(this.element);
   }
 
   get data() {

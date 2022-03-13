@@ -1,5 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { destroy_chart } from "helpers/chart_helper";
+import { destroyChart } from "helpers/chart_helper";
 
 export default class extends ApplicationController {
   connect() {
@@ -7,7 +7,7 @@ export default class extends ApplicationController {
   }
 
   disconnect() {
-    destroy_chart(this.element);
+    destroyChart(this.element);
   }
 
   get data() {

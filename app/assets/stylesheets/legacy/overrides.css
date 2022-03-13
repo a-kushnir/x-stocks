@@ -19,9 +19,6 @@
   background-color: #f8f9fa;
   border: 1px solid #dee2e6; }
 
-.navbar-nav form input[type=search] {
-  background-color: #F3F5F6; }
-
 .my-side-panel tr:first-child td {
   border-top-width: 0; }
 
@@ -33,9 +30,6 @@
     margin-left: 132px; } }
 .small-widget {
   margin-bottom: 15px; }
-
-.fa-sm {
-  font-size: 12px; }
 
 .tooltip-inner {
   white-space: pre;

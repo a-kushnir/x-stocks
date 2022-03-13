@@ -1,0 +1,39 @@
+<nav class="top-menu" data-controller="class">
+  <a href="/" class="top-menu-brand">
+    <%= inline_svg('favicon/favicon', size: '30*30', class: 'inline-block mb-1') %>
+    xStocks
+  </a>
+  <form action="<%= stocks_path %>" class="top-menu-search lg:hidden ml-auto">
+    <input class="shadow-sm appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" type="search" name="goto" placeholder="Search" aria-label="Search">
+  </form>
+  <a href="<%= menu_index_path %>" class="top-menu-toggler ml-0" data-action="click->class#toggle">
+    <%= inline_svg('svg/menu', size: '30*30', class: 'inline-block') %>
+  </a>
+  <div class="<%= class_names('top-menu-collapsible', { collapsed: @page_menu_item != :menu }) %>" data-class-target="element" data-class-value="collapsed">
+    <ul class="top-menu-left">
+    <% if user_signed_in? %>
+      <%= top_menu_link(:home, 'Home', root_path) %>
+      <%= top_menu_link(:stocks, 'Stocks', stocks_path) %>
+      <%= top_menu_link(:positions, 'My Positions', positions_path) %>
+      <%= top_menu_link(:dividends, 'My Dividends', dividends_path) %>
+    <% end %>
+  </ul>
+    <ul class="top-menu-right">
+    <% if user_signed_in? %>
+      <li class="hidden lg:list-item">
+        <form action="<%= stocks_path %>" class="top-menu-search">
+          <input class="shadow-sm appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" type="search" name="goto" placeholder="Search" aria-label="Search">
+        </form>
+      </li>
+      <%= top_menu_link(:services, 'Services', services_path) %>
+      <%= top_menu_link(:profile, 'My Profile', edit_user_registration_path)  %>
+      <li>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <%#= top_menu_link(:sign_up, 'Sign Up', new_user_registration_path) %>
+      <%#= top_menu_link(:sign_in, 'Sign In', user_session_path) %>
+    <% end %>
+  </ul>
+  </div>
+</nav>

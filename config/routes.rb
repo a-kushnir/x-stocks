@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     post '/registrations/regenerate' => 'registrations#regenerate'
   end
 
+  resources :menu, only: [:index]
+
   get 'home/fear_n_greed_image', to: 'home#fear_n_greed_image'
 
   resources :stocks, param: :symbol do

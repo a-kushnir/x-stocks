@@ -16,7 +16,7 @@
     }
   }
   form.top-menu-search {
-    @apply mx-3 mt-2;
+    @apply mx-0 lg:mx-3;
     margin-top: 10px;
 
     input {

@@ -6,7 +6,7 @@
     padding-top: 12px;
   }
   .top-menu-toggler {
-    @apply text-gray-50 text-xl pb-1 h-14 flex lg:hidden px-3 ml-auto hover:text-gray-300 hover:bg-gray-700 hover:no-underline;
+    @apply text-gray-50 text-xl pb-1 h-14 flex lg:hidden px-3 ml-auto hover:no-underline;
     padding-top: 12px;
    }
   .top-menu-collapsible {
@@ -41,6 +41,15 @@
       a, button {
         @apply text-gray-300 hover:text-gray-300 hover:bg-gray-700 hover:no-underline inline-block px-3 py-2 lg:py-4 font-semibold transition-colors w-full lg:w-auto text-left whitespace-nowrap;
       }
+    }
+  }
+}
+
+/* Fixes sticky-hover problem on touch devices */
+@media (hover: hover) {
+  .top-menu {
+    .top-menu-toggler {
+      @apply hover:text-gray-300 hover:bg-gray-700;
     }
   }
 }

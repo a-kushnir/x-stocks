@@ -1,4 +1,4 @@
-<nav class="top-menu" data-controller="class">
+<nav class="top-menu" data-controller="class event">
   <div class="flex flex-nowrap w-full lg:w-auto">
     <a href="/" class="top-menu-brand">
       <%= inline_svg('favicon/favicon', size: '30*30', class: 'inline-block mb-1') %>
@@ -8,7 +8,7 @@
       <form action="<%= stocks_path %>" class="top-menu-search lg:hidden ml-auto">
         <input class="shadow-sm appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" type="search" name="goto" placeholder="Search" aria-label="Search">
       </form>
-      <a href="<%= menu_index_path %>" class="top-menu-toggler ml-0" data-action="click->class#toggle">
+      <a href="<%= menu_index_path %>" class="top-menu-toggler ml-0" data-action="click->class#toggle click->event#cancel">
         <%= inline_svg('svg/menu', size: '30*30', class: 'inline-block') %>
       </a>
     <% end %>

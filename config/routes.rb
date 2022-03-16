@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get 'home/fear_n_greed_image', to: 'home#fear_n_greed_image'
 
+  resources :stocks2
   resources :stocks, param: :symbol do
     member do
       get :initializing

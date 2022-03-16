@@ -2,9 +2,7 @@
 <% if next_div_ex_date %>
 <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <h4 class="uppercase mb-3 font-normal">Next Dividend</h4>
-  <div class="text-center font-mono">
-    <span class="jcountdown" data-target="<%= (next_div_ex_date + 6.hours) %>"></span>
-  </div>
+  <%= render partial: 'stocks/widgets/timer', locals: { datetime: next_div_ex_date + 6.hours } %>
   <%
     next_div_amount = @stock.next_div_amount
     estimate = false

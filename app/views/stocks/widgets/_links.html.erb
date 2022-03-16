@@ -1,6 +1,6 @@
-<div class="my-side-panel pb-3">
-  <h4>Links</h4>
-  <nav class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md">
+<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h4 class="uppercase mb-3 font-normal">Links</h4>
+  <nav>
     <ul class="m-0">
       <% [
              ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance (#{@stock.symbol})"],
@@ -9,8 +9,8 @@
              ["https://robinhood.com/stocks/#{@stock.symbol}", "Robinhood (#{@stock.symbol})"],
              ["https://www.webull.com/quote/#{@stock.exchange&.webull_code}-#{@stock.symbol.downcase}", "Webull (#{@stock.symbol})"],
          ].each_with_index do |link, index| %>
-        <li class="nav-item">
-          <a class="block h-10 hover:no-underline px-3 py-2" href="<%= link[0] %>">
+        <li>
+          <a class="block h-10 hover:no-underline py-2" href="<%= link[0] %>">
             <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block') %> <%= link[1] %>
           </a>
         </li>

@@ -4,8 +4,8 @@
 <%= render partial: 'shared/column', locals: {columns: @columns} %>
 
 <% if @tag %>
-  <span class="float-left badge badge-pill badge-primary" style="margin-top: 6px;"><%= @tag %>
-    <a href="/services" class="badge badge-pill badge-dark" style="color: #fff;">×</a>
+  <span class="float-left text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1" style="margin-top: 6px;"><%= @tag %>
+    <a href="/services" class="pl-1 text-red-400">×</a>
   </span>
 <% end %>
 
@@ -28,7 +28,7 @@
       <td>
         <%= job.name %>
         <% job.tags.sort.each do |tag| %>
-          <%= link_to(tag, services_path(tag: tag), class: 'badge badge-pill badge-primary') %>
+          <%= link_to(tag, services_path(tag: tag), class: 'text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1') %>
         <% end %>
       </td>
       <td><%= job.schedule %></td>

@@ -1,53 +1,51 @@
 <% next_div_ex_date = @stock.next_div_ex_date if @stock.next_div_ex_date && @stock.next_div_ex_date >= Date.today %>
 <% if next_div_ex_date %>
-<div class="my-side-panel pb-3">
-  <h4>Next Dividend</h4>
-  <div class="border border-gray-300 rounded bg-slate-50 py-2 drop-shadow-md px-2">
-    <div class="text-center">
-      <span class="jcountdown" data-target="<%= (next_div_ex_date + 6.hours) %>"></span>
-    </div>
-    <%
-      next_div_amount = @stock.next_div_amount
-      estimate = false
-      unless next_div_amount.positive?
-        value = ::Dividend.new.estimate(@stock)&.first&.dig(:amount)
-        if value.positive?
-          next_div_amount = value
-          estimate = true
-        end
-      end
-    %>
-    <table class="w-100">
-      <tbody>
-        <% if next_div_amount.positive? %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
-            <%= 'Est. ' if estimate %>Amount:
-            <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
-          </td>
-        </tr>
-        <% end %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
-            <% div_change_pct = @stock.div_change_pct %>
-            Change:
-            <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
-          </td>
-        </tr>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
-            Ex Date:
-            <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
-          </td>
-        </tr>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
-            Payment Date:
-            <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h4 class="uppercase mb-3 font-normal">Next Dividend</h4>
+  <div class="text-center font-mono">
+    <span class="jcountdown" data-target="<%= (next_div_ex_date + 6.hours) %>"></span>
   </div>
+  <%
+    next_div_amount = @stock.next_div_amount
+    estimate = false
+    unless next_div_amount.positive?
+      value = ::Dividend.new.estimate(@stock)&.first&.dig(:amount)
+      if value.positive?
+        next_div_amount = value
+        estimate = true
+      end
+    end
+  %>
+  <table class="w-100">
+    <tbody>
+      <% if next_div_amount.positive? %>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
+          <%= 'Est. ' if estimate %>Amount:
+          <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
+        </td>
+      </tr>
+      <% end %>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
+          <% div_change_pct = @stock.div_change_pct %>
+          Change:
+          <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
+        </td>
+      </tr>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
+          Ex Date:
+          <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
+        </td>
+      </tr>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
+          Payment Date:
+          <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <% end %>

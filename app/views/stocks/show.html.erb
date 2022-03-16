@@ -1,30 +1,44 @@
-<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <% if params[:save_and_show] %>
-    <%= render partial: 'new_button' %>
-  <% else %>
-    <%= render partial: 'update_button' %>
-  <% end %>
-
-  <div class="flex">
-    <div>
-      <% if @stock.logo_url.present? %>
-        <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
-      <% end %>
-    </div>
-    <div>
-      <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
-    </div>
-  </div>
-
 <div class="row">
   <div class="col-md-8">
-    <%= render partial: 'stocks/widgets/tradingview_chart' %>
-    <%= render partial: 'stocks/widgets/summary' %>
-    <%= render partial: 'stocks/widgets/dividends' %>
+    <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <% if params[:save_and_show] %>
+        <%= render partial: 'new_button' %>
+      <% else %>
+        <%= render partial: 'update_button' %>
+      <% end %>
 
-    <div class="d-none d-md-block">
-      <%= render partial: 'stocks/widgets/about_company' %>
-      <%= render partial: 'stocks/widgets/tags' %>
+      <div class="flex">
+        <div>
+          <% if @stock.logo_url.present? %>
+            <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
+          <% end %>
+        </div>
+        <div>
+          <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
+        </div>
+      </div>
+
+
+      <%= render partial: 'stocks/widgets/tradingview_chart' %>
+      <%= render partial: 'stocks/widgets/summary' %>
+      <%= render partial: 'stocks/widgets/dividends' %>
+
+      <div class="d-none d-md-block">
+        <%= render partial: 'stocks/widgets/about_company' %>
+        <%= render partial: 'stocks/widgets/tags' %>
+      </div>
+
+      <div>
+        <%= link_to back_url do %>
+          <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
+        <% end %>
+
+        <%= link_to 'Edit', edit_stock_path(@stock.symbol), class: 'btn2 btn2-primary' %>
+
+        <% if @stock.destroyable? %>
+          <%= button_to 'Delete', stock_path(@stock.symbol), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } %>
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -46,20 +60,4 @@
       <%= render partial: 'stocks/widgets/tags' %>
     </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-12">
-    <%= link_to back_url do %>
-      <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
-    <% end %>
-
-    <%= link_to 'Edit', edit_stock_path(@stock.symbol), class: 'btn2 btn2-primary' %>
-
-    <% if @stock.destroyable? %>
-      <%= button_to 'Delete', stock_path(@stock.symbol), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } %>
-    <% end %>
-  </div>
-</div>
-
 </div>

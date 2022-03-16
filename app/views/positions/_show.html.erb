@@ -1,3 +1,5 @@
+<% if @position.persisted? %>
+  <h4 class="uppercase mb-3 font-normal">My Position</h4>
 <div style="margin-bottom: 15px;">
   <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
     <tbody>
@@ -123,3 +125,10 @@
 
   <%= link_to 'Edit', edit_position_path(@position.stock.symbol), class: 'btn2 btn2-secondary-outline' %>
 </div>
+<% else %>
+  <%= link_to edit_position_path(@position.stock.symbol), class: 'rounded-full bg-blue-500 text-white inline-block shadow-sm p-1 block-inline float-left mr-2' do %>
+    <%= inline_svg('svg/plus', size: '24*24') %>
+  <% end %>
+
+  <h4 class="uppercase mb-0 font-normal block-inline">My Position</h4>
+<% end %>

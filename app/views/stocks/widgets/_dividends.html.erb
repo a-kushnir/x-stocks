@@ -1,7 +1,7 @@
 <% div = ::Dividend.new %>
 <% est = div.estimate(@stock) %>
 <% if est %>
-  <h4>Dividends <small><%= est.size > 6 ? '6M' : '1Y' %> Estimate</small></h4>
+  <h4 class="uppercase mb-3 font-normal">Dividends <small><%= est.size > 6 ? '6M' : '1Y' %> Estimate</small></h4>
 
   <% est = est[0..5] %>
   <table class="table table-sm stock-dividends-table d-none d-md-table">

@@ -1,6 +1,6 @@
 <% if @position.persisted? %>
-  <h4 class="uppercase mb-3 font-normal">My Position</h4>
-<div style="margin-bottom: 15px;">
+<h4 class="uppercase mb-3 font-normal">My Position</h4>
+<div>
   <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
     <tbody>
     <% if @position.shares %>
@@ -123,7 +123,9 @@
     </div>
   <% end %>
 
-  <%= link_to 'Edit', edit_position_path(@position.stock.symbol), class: 'btn2 btn2-secondary-outline' %>
+  <%= link_to edit_position_path(@position.stock.symbol), class: 'btn2 btn2-icon btn2-secondary-outline' do %>
+    <%= inline_svg('svg/square-edit-outline', size: '24*24', class: 'inline-block') %>
+  <% end %>
 </div>
 <% else %>
   <%= link_to edit_position_path(@position.stock.symbol), class: 'rounded-full bg-blue-500 text-white inline-block shadow-sm p-1 block-inline float-left mr-2' do %>

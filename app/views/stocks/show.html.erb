@@ -29,14 +29,13 @@
       </div>
 
       <div>
-        <%= link_to back_url do %>
-          <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
+        <%= link_to edit_stock_path(@stock.symbol), class: 'btn2 btn2-icon btn2-secondary-outline mr-1' do %>
+          <%= inline_svg('svg/square-edit-outline', size: '24*24', class: 'inline-block') %>
         <% end %>
-
-        <%= link_to 'Edit', edit_stock_path(@stock.symbol), class: 'btn2 btn2-primary' %>
-
         <% if @stock.destroyable? %>
-          <%= button_to 'Delete', stock_path(@stock.symbol), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } %>
+          <%= button_to stock_path(@stock.symbol), method: :delete, class: 'btn2 btn2-icon btn2-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } do %>
+            <%= inline_svg('svg/trash-can-outline', size: '24*24', class: 'inline-block') %>
+          <% end %>
         <% end %>
       </div>
     </div>

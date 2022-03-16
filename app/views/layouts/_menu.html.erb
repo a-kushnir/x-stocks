@@ -26,7 +26,10 @@
     <% if user_signed_in? %>
       <li class="hidden lg:list-item">
         <form action="<%= stocks_path %>" class="top-menu-search">
-          <input class="shadow-sm appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" type="search" name="goto" placeholder="Search" aria-label="Search">
+          <input class="shadow-sm appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600 focus:bg-stone-600 transition-colors"
+                 type="search" name="goto" placeholder="Search" aria-label="Search"
+                 data-hotkey="/"
+                 data-controller="hotkey">
         </form>
       </li>
       <%= top_menu_link(:services, 'Services', services_path) %>

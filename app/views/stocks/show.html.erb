@@ -10,7 +10,7 @@
       <div class="flex">
         <div>
           <% if @stock.logo_url.present? %>
-            <img src="<%= @stock.logo_url %>" alt="" style="max-height: 40px; max-width: 80px; margin-right: 10px; margin-top: -5px;"/>
+            <img src="<%= @stock.logo_url %>" alt="<%= @stock.symbol %>" class="mr-2 mt-1 max-h-9" />
           <% end %>
         </div>
         <div>

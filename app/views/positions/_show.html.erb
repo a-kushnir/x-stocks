@@ -1,52 +1,52 @@
 <% if @position.persisted? %>
 <h4 class="uppercase mb-3 font-normal">My Position</h4>
 <div>
-  <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+  <table class="w-100 mb-2">
     <tbody>
     <% if @position.shares %>
-      <tr>
-        <td>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
           Shares:
           <strong class="float-right"><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
         </td>
       </tr>
       <% if @position.average_price %>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Average Price:
             <strong class="float-right"><%= number_to_currency(@position.average_price) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.gain_loss %>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Total Cost:
             <strong class="float-right"><%= number_to_currency(@position.total_cost) %></strong>
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Market Value:
             <strong class="float-right"><%= number_to_currency(@position.market_value) %></strong>
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Total Return:
             <strong class="float-right <%= delta_class(@position.gain_loss) %>"><%= delta_number(number_to_currency(@position.gain_loss)) %></strong>
           </td>
         </tr>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Total Return %:
             <strong class="float-right <%= delta_class(@position.gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.gain_loss_pct, precision: 2)) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.est_annual_income %>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Annual Dividend:
             <strong class="float-right"><%= number_to_currency(@position.est_annual_income) %></strong>
           </td>
@@ -65,16 +65,16 @@
             end
           end
         %>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             <%= 'Est. ' if estimate %>Next Dividend:
             <strong class="float-right"><%= number_to_currency(@position.shares * next_div_amount) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.market_value %>
-        <tr>
-          <td>
+        <tr class="border-t first:border-none border-gray-300">
+          <td class="p-1">
             Portfolio Diversity:
             <strong class="float-right"><%= number_to_percentage(@position.market_value / XStocks::Position.new.market_value(current_user) * 100, precision: 2) rescue nil %></strong>
           </td>
@@ -86,28 +86,28 @@
 
   <% if @position.shares && @position.stop_loss %>
     <h4 class="uppercase mb-3 font-normal">Stop Loss</h4>
-    <table class="table table-sm my-side-panel" style="margin-bottom: 7px;">
+    <table class="w-100 mb-2">
       <tbody>
-      <tr>
+      <tr class="border-t first:border-none border-gray-300">
         <td style="border-top: none;">
           Stop Price:
           <strong class="float-right"><%= number_to_currency(@position.stop_loss) %></strong>
         </td>
       </tr>
-      <tr>
-        <td>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
           Estimated Credit:
           <strong class="float-right"><%= number_to_currency(@position.stop_loss_value) %></strong>
         </td>
       </tr>
-      <tr>
-        <td>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
           Estimated Return:
           <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss) %>"><%= delta_number(number_to_currency(@position.stop_loss_gain_loss)) %></strong>
         </td>
       </tr>
-      <tr>
-        <td>
+      <tr class="border-t first:border-none border-gray-300">
+        <td class="p-1">
           Estimated Return %:
           <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.stop_loss_gain_loss_pct, precision: 2)) %></strong>
         </td>
@@ -117,7 +117,7 @@
   <% end %>
 
   <% if @position.note.present? %>
-    <div class="alert alert-warning fade show my-side-panel">
+    <div class="alert alert-warning fade show">
       <%= inline_svg('svg/comment-text-outline', size: '24*24', class: 'float-right') %>
       <%= multiline_text_to_html(@position.note) %>
     </div>

@@ -1,4 +1,4 @@
-<div class="my-side-panel bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <%= link_to 'See All', "/stocks?order=5-#{order}", class: 'float-right mt-1' %>
   <h4 class="uppercase mb-3 font-normal"><%= title %></h4>
   <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>

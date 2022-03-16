@@ -1,36 +1,3 @@
-.my-form-row {
-  margin-bottom: 20px; }
-
-.my-button-group {
-  margin-top: 20px; }
-
-.my-button-group-centered {
-  margin-top: 20px;
-  text-align: center; }
-
-.my-button-group a,
-.my-button-group input[type=button],
-.my-button-group-centered a,
-.my-button-group-centered input[type=button] {
-  margin-left: 8px;
-  margin-right: 8px; }
-
-.my-block {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6; }
-
-.my-side-panel tr:first-child td {
-  border-top-width: 0; }
-
-@media (min-width: 768px) {
-  .my-side-panel {
-    max-width: 300px; }
-
-  .my-header {
-    margin-left: 132px; } }
-.small-widget {
-  margin-bottom: 15px; }
-
 .tooltip-inner {
   white-space: pre;
   max-width: none;
@@ -64,13 +31,11 @@
 .stock-dividends-table tr:last-child td {
   border-bottom: 1px solid #dee2e6; }
 
-.company-profile {
-  margin-top: 24px; }
-  .company-profile strong {
-    width: 120px;
-    height: 28px;
-    display: inline-block;
-    text-align: right;
-    margin-right: 10px; }
+.company-profile strong {
+  width: 120px;
+  height: 28px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px; }
 
 /*# sourceMappingURL=overrides.css.map */

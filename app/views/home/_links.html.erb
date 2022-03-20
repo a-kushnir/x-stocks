@@ -3,15 +3,15 @@
   <nav>
     <ul class="m-0">
       <% [
-             ['https://finance.yahoo.com/', 'Yahoo Finance'],
-             ['https://www.dividend.com/', 'Dividend.com'],
-             ['https://seekingalpha.com/', 'Seeking Alpha'],
-             ['https://www.fool.com/', 'The Motley Fool'],
-             ['https://robinhood.com/', 'Robinhood'],
-             ['https://www.webull.com/', 'Webull'],
+           ['https://finance.yahoo.com/', 'Yahoo Finance'],
+           ['https://www.dividend.com/', 'Dividend.com'],
+           ['https://seekingalpha.com/', 'Seeking Alpha'],
+           ['https://www.fool.com/', 'The Motley Fool'],
+           ['https://robinhood.com/', 'Robinhood'],
+           ['https://www.webull.com/', 'Webull'],
          ].each do |link| %>
         <li>
-          <a class="block h-10 hover:no-underline py-2" href="<%= link[0] %>">
+          <a class="block h-10 hover:no-underline py-2" href="<%= link[0] %>" target="_blank">
             <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block') %> <%= link[1] %>
           </a>
         </li>

@@ -17,7 +17,7 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts
 # Cache SVG Files
 InlineSvg.configure do |config|
   config.asset_file = InlineSvg::CachedAssetFile.new(
-      paths: Dir.glob(Rails.root.join('app/assets/images')),
-      filters: /\.svg/
+    paths: Dir.glob(Rails.root.join('app/assets/images')),
+    filters: /\.svg/
   )
 end

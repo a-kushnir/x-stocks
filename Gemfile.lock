@@ -212,6 +212,8 @@ GEM
     nokogiri (1.13.3-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pagy (5.10.1)
+      activesupport
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
@@ -378,6 +380,7 @@ DEPENDENCIES
   jquery-datatables
   jquery-rails
   nokogiri (>= 1.13.3)
+  pagy
   pg (>= 0.18, < 2.0)
   puma (>= 5.6.2)
   rails (>= 7.0.2.2)

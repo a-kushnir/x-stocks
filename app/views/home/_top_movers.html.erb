@@ -7,7 +7,7 @@
     <% stocks.each do |stock| %>
       <tr class="border-t first:border-none border-gray-300">
         <td class="p-1">
-          <%= link_to stock.symbol, stock_path(stock.symbol) %>
+          <%= link_to stock.symbol, stock_path(stock.symbol), class: 'text-blue-500' %>
           <span class="font-bold float-right">
             <%= number_to_currency(stock.current_price) %>
             <span class="text-xs font-normal <%= delta_class(stock.price_change) %>">

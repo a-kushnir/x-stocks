@@ -10,7 +10,7 @@
            ["https://www.webull.com/quote/#{@stock.exchange&.webull_code}-#{@stock.symbol.downcase}", "Webull (#{@stock.symbol})"],
          ].each do |link| %>
         <li>
-          <a class="block h-10 hover:no-underline py-2" href="<%= link[0] %>" target="_blank">
+          <a class="block h-10 hover:no-underline py-2 text-blue-500" href="<%= link[0] %>" target="_blank">
             <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block') %> <%= link[1] %>
           </a>
         </li>

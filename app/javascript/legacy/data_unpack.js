@@ -150,6 +150,7 @@ window.Formats = {
 
       .append($('<a>')
         .addClass(note ? 'has-note' : null)
+        .addClass('text-blue-500')
         .attr('href', `/stocks/${FormatMethods.safeLink(symbol)}`)
         .text(symbol)
       )

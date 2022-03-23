@@ -2,6 +2,7 @@
 
 @import "module/button";
 @import "module/menu";
+@import "module/pagy";
 
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";

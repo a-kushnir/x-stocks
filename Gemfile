@@ -47,6 +47,7 @@ gem 'inline_svg'
 gem 'jquery-datatables'
 gem 'jquery-rails'
 gem 'nokogiri', '>= 1.13.3'
+gem 'pagy'
 
 gem 'grape'
 gem 'grape-entity'

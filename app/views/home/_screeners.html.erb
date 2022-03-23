@@ -6,7 +6,7 @@
         <li>
           <% url = {controller: 'stocks', action: 'index', tag: tag.name} %>
           <% url.merge!({order: tag.sort_order}) if tag.sort_order.present? %>
-          <a class="block h-10 hover:no-underline py-2" href="<%= url_for(url) %>" data-toggle="tooltip" data-placement="top" title="<%= tag.description %>">
+          <a class="block h-10 hover:no-underline py-2 text-blue-500" href="<%= url_for(url) %>" data-toggle="tooltip" data-placement="top" title="<%= tag.description %>">
             <%= inline_svg(tag.svg_image, size: '24*24', class: 'inline-block') %> <%= tag.name %>
           </a>
         </li>

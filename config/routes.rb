@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
   end
   resources :positions, param: :symbol, only: %i[index show edit update]
+  resources :dividends2, only: [:index]
   resources :dividends, only: [:index]
 
   resources :services, param: :lookup_code, only: [:index] do

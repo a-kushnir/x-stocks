@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'action_view\helpers\number_helper'
+require 'action_view/helpers/number_helper'
 
 module DataTable
   module Formats

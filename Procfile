@@ -1,2 +1,1 @@
-release: rake db:migrate
-release: yarn install && yarn build:css
+release: rake db:migrate && yarn install && yarn build:css

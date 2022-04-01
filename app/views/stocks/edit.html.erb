@@ -3,17 +3,33 @@
 
   <%= form_for @stock, url: stock_path(@stock.symbol), method: :put, html: { class: 'my-form' } do |form| %>
     <div class="mb-4">
-      <%= form.label :symbol, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :symbol, class: 'block text-gray-700 font-bold mb-2' %>
       <%= form.text_field :symbol, disabled: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase bg-gray-200' %>
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="x_stocks_ar_stock_exchange_id">Exchange</label>
+      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_exchange_id">Exchange</label>
       <%= select_tag('x_stocks_ar_stock[exchange_id]', options_for_select([[]] + @exchanges.map { |e| [ "#{e.name} (#{e.code})", e.id ] }, @stock.exchange_id), class: 'border rounded w-full') %>
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="x_stocks_ar_stock_yahoo_fair_price">Fair Price</label>
+      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_yahoo_fair_price">Fair Price</label>
       <%= form.text_field :yahoo_fair_price, placeholder: 'Fair Price', value: number_with_precision(@stock.yahoo_fair_price, precision: 2), autocomplete: :off, label: 'Fair Price', prepend: '$',
                           class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase'%>
+    </div>
+
+    <div class="mb-4">
+      <span class="block text-gray-700 font-bold mb-2">Taxes</span>
+      <ul>
+      <% XStocks::Stock::Taxes::TAXES.each do |tax_code, tax_data| %>
+        <% id = "x_stocks_ar_stock_taxes_#{tax_code}" %>
+        <% tax_name, tax_url = tax_data %>
+        <li>
+          <%= label_tag(id) do %>
+            <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= tax_name %>
+          <% end %>
+          <%= link_to 'Learn more', tax_url, class: 'text-blue-500 no-underline', target: '_blank' if tax_url %>
+        </li>
+      <% end %>
+      </ul>
     </div>
 
     <div class="pb-3 flex items-center justify-between">

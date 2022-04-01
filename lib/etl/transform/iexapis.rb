@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'country_flag'
+
 module Etl
   module Transform
     # Transforms data extracted from cloud.iexapis.com
@@ -31,11 +33,16 @@ module Etl
         stock.city = json['city']
         stock.zip = json['zip']
         stock.country = json['country']
+        stock.taxes ||= [:foreign_tax] if foreign?(stock)
         stock.phone = json['phone']
 
         return unless stock.save
 
         tag_class.new.batch_update(stock, :company_tag, json['tags'])
+      end
+
+      def foreign?(stock)
+        stock.country.present? && CountryFlag.new.code(stock.country) != 'US'
       end
 
       def dividends(stock, json)

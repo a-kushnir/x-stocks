@@ -1,0 +1,9 @@
+.tag {
+  @apply text-xs inline-flex items-center font-bold uppercase px-3 py-1 rounded-full mb-1;
+  svg { @apply mr-1; }
+  &.tag-blue { @apply bg-blue-200 text-blue-700; }
+  &.tag-red { @apply bg-red-200 text-red-700; }
+  &.tag-green { @apply bg-green-200 text-green-700; }
+  &.tag-orange { @apply bg-orange-200 text-orange-700; }
+  &.tag-gray { @apply bg-gray-200 text-gray-700; }
+}

@@ -3,7 +3,7 @@
 
   <%= form_for @stock, url: stocks_url do |form| %>
     <div class="mb-4">
-      <%= form.label :symbol, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :symbol, class: 'block text-gray-700 font-bold mb-2' %>
       <%= form.text_field :symbol, placeholder: 'Symbol', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase', autocomplete: :off, autofocus: true %>
     </div>
 

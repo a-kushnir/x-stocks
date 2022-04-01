@@ -9,6 +9,7 @@ module XStocks
     include XStocks::Stock::Dividends
     include XStocks::Stock::IssueType
     include XStocks::Stock::MetaScore
+    include XStocks::Stock::Taxes
 
     def initialize(ar_stock)
       @ar_stock = ar_stock

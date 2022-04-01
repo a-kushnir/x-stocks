@@ -4,7 +4,7 @@
 module StocksHelper
   def link_to_website(url)
     label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '')
-    link_to label, url if url
+    link_to label, url, class: 'text-blue-500 no-underline' if url
   end
 
   def stock_peers

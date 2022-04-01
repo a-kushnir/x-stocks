@@ -32,6 +32,7 @@ module XStocks
       serialize :dividend_details, JSON
       serialize :next_earnings_details, JSON
       serialize :metascore_details, JSON
+      serialize :taxes, JSON
     end
   end
 end

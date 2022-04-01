@@ -134,7 +134,7 @@ class StocksController < ApplicationController
   end
 
   def update_stock_params
-    params.require(:x_stocks_ar_stock).permit(:company_name, :exchange_id, :yahoo_fair_price)
+    { taxes: [] }.merge(params.require(:x_stocks_ar_stock).permit(:company_name, :exchange_id, :yahoo_fair_price, taxes: []))
   end
 
   def handle_goto_param?

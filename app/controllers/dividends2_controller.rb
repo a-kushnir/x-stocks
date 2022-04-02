@@ -14,6 +14,23 @@ class Dividends2Controller < ApplicationController
     @columns = columns
     @positions = @positions.to_a
     @data, @summary = data(@positions)
+    @summary_row = [
+        # Stock
+        nil,
+        nil,
+        nil,
+        @summary[:yield_on_value],
+        nil,
+        safety(@summary[:dividend_rating]),
+        # Position
+        @summary[:total_cost],
+        @summary[:market_value],
+        @summary[:gain_loss],
+        @summary[:gain_loss_pct],
+        100,
+        *@summary[:month_amounts],
+        @summary[:total_amount]
+    ]
 
     @page_title = 'My Dividends'
     @page_menu_item = :dividends
@@ -26,13 +43,17 @@ class Dividends2Controller < ApplicationController
 
   private
 
+  def safety(value)
+    return value if value.blank?
+
+    (value.round(1) * 20).to_i
+  end
+
   def generate_xlsx
     send_tmp_file('Dividends.xlsx') do |file_name|
       XLSX::Dividends.new.generate(file_name, @positions)
     end
   end
-
-
 
   def columns
     div = ::Dividend.new
@@ -111,7 +132,7 @@ class Dividends2Controller < ApplicationController
         flag.code(stock.country),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         stock.div_change_pct&.round(1),
-        stock.dividend_rating&.to_f,
+        safety(stock.dividend_rating&.to_f),
         # Position
         position.total_cost&.to_f,
         position.market_value&.to_f,

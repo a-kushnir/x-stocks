@@ -38,6 +38,17 @@
       </tr>
     <% end %>
   </tbody>
+  <tfoot>
+  <tr>
+    <% @summary_row.each_with_index do |cell, index| %>
+      <% column = @columns[index] %>
+      <% value, style = column.format(cell) %>
+      <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %> <%= style %>">
+        <%= value %>
+      </th>
+    <% end %>
+  </tr>
+  </tfoot>
 </table>
   </div>
 </div>

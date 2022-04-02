@@ -1,0 +1,12 @@
+
+.text-strong-sell { color: #FF333A; }
+.text-sell { color: #FFA33E; }
+.text-hold { color: #FFDC48; }
+.text-buy { color: #00C073; }
+.text-strong-buy { color: #008F88; }
+
+.bg-strong-sell { background-color: #FF333A; }
+.bg-sell { background-color: #FFA33E; }
+.bg-hold { background-color: #FFDC48; }
+.bg-buy { background-color: #00C073; }
+.bg-strong-buy { background-color: #008F88; }

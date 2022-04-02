@@ -1,5 +1,7 @@
 @import "tailwindcss/base";
 
+@import "module/theme";
+@import "module/badge";
 @import "module/button";
 @import "module/menu";
 @import "module/pagy";

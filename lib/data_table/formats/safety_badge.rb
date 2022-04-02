@@ -5,22 +5,18 @@ module DataTable
     # Formats value as a string
     class SafetyBadge
       def format(value)
-        [value ? "<span class='badge badge-dark #{style((value * 20).to_i)}'>#{(value * 20).to_i}</span>".html_safe : nil, nil]
+        [value, style(value)]
       end
 
       def style(value)
         if value.blank?
           nil
-        elsif value > 80
-          'rec-str-buy'
-        elsif value > 60
-          'rec-buy'
-        elsif value > 40
-          'rec-hold'
-        elsif value > 20
-          'rec-sell'
+        elsif value > 70
+          'text-green-600'
+        elsif value < 30
+          'text-red-600'
         else
-          'rec-str-sell'
+          nil
         end
       end
     end

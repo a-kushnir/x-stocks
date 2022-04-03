@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-xl-6">
       <div class="border rounded mx-md-auto float-xl-right" style="width: 580px; height: 443px; padding-bottom: 15px; margin-bottom: 15px;">
-        <h4 class="text-center">Stock allocation</h4>
+        <h4 class="text-2xl text-center pb-2">Stock allocation</h4>
         <%= XStocks::Charts::StockAllocation.new(@positions, @stocks_by_id).render(width: 580, height: 400) %>
       </div>
     </div>
     <div class="col-xl-6">
       <div class="border rounded mx-md-auto float-xl-left" style="width: 580px; height: 443px; padding-bottom: 15px;">
-        <h4 class="text-center">Sector allocation</h4>
+        <h4 class="text-2xl text-center pb-2">Sector allocation</h4>
         <%= XStocks::Charts::SectorAllocation.new(@positions, @stocks_by_id).render(width: 580, height: 400) %>
       </div>
     </div>

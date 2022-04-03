@@ -57,19 +57,19 @@
         <% end %>
       </td>
       <td>
-        <%= link_to "#", class: 'btn2 btn2-sm btn2-secondary', onclick: "runService($(this).parents('tr').find('form')); return false;" do %>
+        <%= link_to "#", class: 'btn btn-sm btn-secondary', onclick: "runService($(this).parents('tr').find('form')); return false;" do %>
           Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'inline-block mb-1') %>
         <% end %>
 
-        <%= link_to log_service_path(job.lookup_code), class: 'btn2 btn2-sm btn2-secondary-outline', data: { turbo: false } do %>
+        <%= link_to log_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
           <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> Log
         <% end if service&.log.present? %>
 
-        <%= link_to error_service_path(job.lookup_code), class: 'btn2 btn2-sm btn2-secondary-outline', data: { turbo: false } do %>
+        <%= link_to error_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
           <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> Error
         <% end if service&.error.present? %>
 
-        <%= link_to file_service_path(job.lookup_code), class: 'btn2 btn2-sm btn2-secondary-outline', data: { turbo: false } do %>
+        <%= link_to file_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
           <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> File
         <% end if service&.file_content.present? %>
       </td>

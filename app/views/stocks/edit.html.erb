@@ -34,7 +34,7 @@
 
     <div class="pb-3 flex items-center justify-between">
       <%= link_to 'Back', back_url, class: 'btn btn-outline-dark' %>
-      <%= form.submit 'Save', class: 'btn2 btn2-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
+      <%= form.submit 'Save', class: 'btn btn-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
     </div>
   <% end %>
 </div>

@@ -1,22 +1,22 @@
 
-.btn2 {
+.btn {
   @apply py-2 px-4 inline-block font-semibold border-gray-400 rounded shadow-sm hover:no-underline;
 }
-.btn2-icon {
+.btn-icon {
   @apply py-2 px-2
 }
-.btn2-sm {
+.btn-sm {
   @apply py-1 px-2 text-sm;
 }
-.btn2-primary {
+.btn-primary {
   @apply bg-blue-500 hover:bg-blue-700 text-white hover:text-white;
 }
-.btn2-secondary {
+.btn-secondary {
   @apply bg-gray-300 hover:bg-gray-400 text-gray-800 hover:text-gray-800;
 }
-.btn2-secondary-outline {
+.btn-secondary-outline {
   @apply bg-white hover:bg-gray-100 text-gray-800 border border-gray-400;
 }
-.btn2-danger {
+.btn-danger {
   @apply bg-red-600 hover:bg-red-800 text-white;
 }

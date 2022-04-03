@@ -1,16 +1,32 @@
 <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-3">
-  <div class="block relative mt-1 w-1/4 float-right">
-    <div class="flex flex-row relative">
+  <div class="flex space-x-2 block relative mt-1 w-96 float-right">
+    <div class="flex flex-row flex-auto relative">
       <input placeholder="Search" class="appearance-none rounded sm:rounded-l-none border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
       <span class="relative w-0 right-0 text-base text-gray-500 pointer-events-none">
         <%= inline_svg('svg/magnify.svg', size: '24*24', class: 'absolute right-full top-3 right-2 text-gray-500') %>
       </span>
     </div>
+
+    <div class="relative inline-block text-left">
+      <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-400 shadow-sm px-2 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+        <%= inline_svg('svg/cog.svg', size: '24*24', class: '') %>
+      </button>
+
+      <div class="border border-gray-300 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto">
+        <% @columns.each_with_index do |column, index| %>
+          <% id = "columns_#{index}" %>
+          <% selected = rand(2) > 0 %>
+          <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if selected }" do %>
+            <%= check_box_tag('columns[]', index, selected, id: id, class: 'mr-1') %> <%= column.label %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <h2 class="uppercase mb-3 font-normal">My Dividends</h2>
 
-  <div class="-mx-1 sm:-mx-2 px-1 sm:px-2 py-1 overflow-x-auto mb-3">
+  <div class="px-1 sm:px-2 py-1 overflow-x-auto mb-3">
     <div class="inline-block min-w-full shadow-sm rounded-lg overflow-hidden">
       <table class="min-w-full leading-normal">
 

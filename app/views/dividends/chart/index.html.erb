@@ -1,0 +1,22 @@
+<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 pt-3 md:pt-6 pb-3">
+  <div class="mt-1 float-right">
+    <%= render partial: 'dividends/formats', locals: { selected: 'chart' } %>
+  </div>
+
+  <h2 class="uppercase mb-6 font-normal">My Dividends</h2>
+
+  <div class="flex flex-col lg:flex-row justify-center space-x-0 lg:space-x-8 space-y-4 lg:space-y-0 mb-6">
+    <div class="shrink grow-0">
+      <div class="border border-gray-400 rounded-lg py-4 px-2">
+        <h4 class="text-center pb-1">Est. Annual Dividend Allocation</h4>
+        <%= XStocks::Charts::DividendAllocation.new(@positions, @stocks_by_id).render(width: 580, height: 400) %>
+      </div>
+    </div>
+    <div class="shrink grow-0">
+      <div class="border border-gray-400 rounded-lg py-4 px-2">
+        <h4 class="text-center pb-1">Est. Monthly Dividends</h4>
+        <%= XStocks::Charts::MonthlyDividend.new(@summary).render(width: 580, height: 400) %>
+      </div>
+    </div>
+  </div>
+</div>

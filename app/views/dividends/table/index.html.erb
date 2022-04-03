@@ -27,17 +27,7 @@
       </div>
     </div>
 
-    <div class="inline-flex rounded-md shadow-sm" role="group">
-      <a href="#" class="rounded-l-lg py-2 px-4 text-sm font-medium text-gray-900 bg-white bg-gray-200 border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white whitespace-nowrap">
-        <%= inline_svg('svg/table-large', size: '22*22') %>
-      </a>
-      <a href="#" class="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-        <%= inline_svg('svg/pie-chart', size: '22*22') %>
-      </a>
-      <a href="#" class="rounded-r-lg py-2 px-4 text-sm font-medium text-gray-900 bg-white border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-        <%= inline_svg('svg/file-excel', size: '22*22') %>
-      </a>
-    </div>
+    <%= render partial: 'dividends/formats', locals: { selected: 'table' } %>
   </div>
 
   <h2 class="uppercase mb-6 font-normal">My Dividends</h2>

@@ -12,7 +12,6 @@
 
 /* LEGACY */
 @import "legacy/bootstrap.css";
-@import "legacy/bootstrap-override.css";
 @import "legacy/dataTables.bootstrap4.css";
 @import "legacy/datatables.css";
 @import "legacy/checkbox-menu.css";

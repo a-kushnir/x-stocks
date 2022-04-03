@@ -1,6 +1,6 @@
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <h4 class="uppercase mb-3 font-normal">My Portfolio</h4>
-  <table class="w-100">
+  <h3 class="text-2xl uppercase mb-2">My Portfolio</h3>
+  <table class="w-full">
     <tbody>
     <% day_change = XStocks::Position.new.day_change(current_user) %>
     <% if day_change %>

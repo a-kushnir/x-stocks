@@ -39,3 +39,11 @@
   margin-right: 10px; }
 
 /*# sourceMappingURL=overrides.css.map */
+
+.popover {
+  max-width: 100%; }
+.popover .w-50 span {
+  display: inline-block;
+  width: 50px; }
+
+/*# sourceMappingURL=bootstrap-override.css.map */

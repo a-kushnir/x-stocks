@@ -1,7 +1,7 @@
 <% if @position.persisted? %>
-<h4 class="uppercase mb-3 font-normal">My Position</h4>
+<h3 class="text-2xl uppercase mb-2">My Position</h3>
 <div>
-  <table class="w-100 mb-2">
+  <table class="w-full mb-2">
     <tbody>
     <% if @position.shares %>
       <tr class="border-t first:border-none border-gray-300">
@@ -86,7 +86,7 @@
 
   <% if @position.shares && @position.stop_loss %>
     <h4 class="uppercase mb-3 font-normal">Stop Loss</h4>
-    <table class="w-100 mb-2">
+    <table class="w-full mb-2">
       <tbody>
       <tr class="border-t first:border-none border-gray-300">
         <td style="border-top: none;">
@@ -132,5 +132,5 @@
     <%= inline_svg('svg/plus', size: '24*24') %>
   <% end %>
 
-  <h4 class="uppercase mb-0 font-normal block-inline">My Position</h4>
+  <h4 class="text-2xl uppercase mb-0 block-inline">My Position</h4>
 <% end %>

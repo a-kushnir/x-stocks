@@ -14,7 +14,7 @@
           <% end %>
         </div>
         <div>
-          <h2 class="uppercase mb-3 font-normal"><%= @page_title %></h2>
+          <h2 class="text-2xl uppercase mb-6"><%= @page_title %></h2>
         </div>
       </div>
 
@@ -45,12 +45,12 @@
     <%= render partial: 'stocks/widgets/next_dividend' %>
     <%= render partial: 'stocks/widgets/next_earnings' %>
     <%= render partial: 'stocks/widgets/links' %>
-    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small>Finnhub</small>'.html_safe, details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
-    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small>Yahoo</small>'.html_safe, details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
-    <%= render partial: 'stocks/widgets/price_target', locals: { label: 'Price Targets <small>Yahoo</small>'.html_safe, details: @stock.yahoo_price_target } %>
-    <%= render partial: 'stocks/widgets/earnings', locals: { label: 'Earnings <small>Yahoo</small>'.html_safe } %>
-    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small>Yearly</small>'.html_safe, details: @stock.financials_yearly } %>
-    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small>Quarterly</small>'.html_safe, details: @stock.financials_quarterly } %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small class="text-gray-500">Finnhub</small>'.html_safe, details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small class="text-gray-500">Yahoo</small>'.html_safe, details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
+    <%= render partial: 'stocks/widgets/price_target', locals: { label: 'Price Targets <small class="text-gray-500">Yahoo</small>'.html_safe, details: @stock.yahoo_price_target } %>
+    <%= render partial: 'stocks/widgets/earnings', locals: { label: 'Earnings <small class="text-gray-500">Yahoo</small>'.html_safe } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small class="text-gray-500">Yearly</small>'.html_safe, details: @stock.financials_yearly } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small class="text-gray-500">Quarterly</small>'.html_safe, details: @stock.financials_quarterly } %>
     <%= render partial: 'stocks/widgets/tradingview_tech' %>
 
     <div class="d-block d-md-none">

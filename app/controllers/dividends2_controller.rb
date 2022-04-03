@@ -127,7 +127,7 @@ class Dividends2Controller < ApplicationController
     result =
       [
         # Stock
-        view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline'),
+        view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline inline-block w-full'),
         stock.company_name,
         flag.code(stock.country),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

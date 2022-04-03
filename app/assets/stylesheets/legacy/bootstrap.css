@@ -6649,10 +6649,6 @@ a.close.disabled {
   vertical-align: text-top !important;
 }
 
-.bg-primary {
-  background-color: #007bff !important;
-}
-
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
@@ -6709,32 +6705,16 @@ button.bg-danger:focus {
   background-color: #bd2130 !important;
 }
 
-.bg-light {
-  background-color: #f8f9fa !important;
-}
-
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,
 button.bg-light:focus {
   background-color: #dae0e5 !important;
 }
 
-.bg-dark {
-  background-color: #343a40 !important;
-}
-
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
 button.bg-dark:focus {
   background-color: #1d2124 !important;
-}
-
-.bg-white {
-  background-color: #fff !important;
-}
-
-.bg-transparent {
-  background-color: transparent !important;
 }
 
 /*.border {
@@ -6811,50 +6791,6 @@ button.bg-dark:focus {
 
 .border-white {
   border-color: #fff !important;
-}
-
-.rounded-sm {
-  border-radius: 0.2rem !important;
-}
-
-.rounded {
-  border-radius: 0.25rem !important;
-}
-
-.rounded-top {
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
-}
-
-.rounded-right {
-  border-top-right-radius: 0.25rem !important;
-  border-bottom-right-radius: 0.25rem !important;
-}
-
-.rounded-bottom {
-  border-bottom-right-radius: 0.25rem !important;
-  border-bottom-left-radius: 0.25rem !important;
-}
-
-.rounded-left {
-  border-top-left-radius: 0.25rem !important;
-  border-bottom-left-radius: 0.25rem !important;
-}
-
-.rounded-lg {
-  border-radius: 0.3rem !important;
-}
-
-.rounded-circle {
-  border-radius: 50% !important;
-}
-
-.rounded-pill {
-  border-radius: 50rem !important;
-}
-
-.rounded-0 {
-  border-radius: 0 !important;
 }
 
 .clearfix::after {

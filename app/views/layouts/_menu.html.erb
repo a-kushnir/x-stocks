@@ -1,14 +1,16 @@
 <nav class="top-menu" data-controller="class event">
   <div class="flex flex-nowrap w-full lg:w-auto">
-    <a href="/" class="top-menu-brand">
-      <%= inline_svg('favicon/favicon', size: '30*30', class: 'inline-block mb-1') %>
-      xStocks
-    </a>
     <% if user_signed_in? %>
-      <%= render partial: 'layouts/menu_search', locals: { classes: 'lg:hidden ml-auto', hotkey: '' } %>
       <a href="<%= menu_index_path %>" class="top-menu-toggler ml-0" data-action="click->class#toggle click->event#cancel">
         <%= inline_svg('svg/menu', size: '30*30', class: 'inline-block') %>
       </a>
+    <% end %>
+    <a href="/" class="top-menu-brand">
+      <%= inline_svg('favicon/favicon', size: '30*30', class: 'inline-block mb-1') %>
+      <span class="hidden sm:inline-block">xStocks</span>
+    </a>
+    <% if user_signed_in? %>
+      <%= render partial: 'layouts/menu_search', locals: { classes: 'lg:hidden ml-auto mr-4', hotkey: '' } %>
     <% end %>
   </div>
   <div class="<%= class_names('top-menu-collapsible', { collapsed: @page_menu_item != :menu }) %>" data-class-target="element" data-class-value="collapsed">

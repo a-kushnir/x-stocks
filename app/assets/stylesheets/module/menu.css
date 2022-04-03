@@ -6,7 +6,7 @@
     padding-top: 12px;
   }
   .top-menu-toggler {
-    @apply text-gray-50 text-xl pb-1 h-14 flex lg:hidden px-3 ml-auto hover:no-underline;
+    @apply text-gray-50 text-xl pb-1 h-14 flex lg:hidden px-3 hover:no-underline;
     padding-top: 12px;
    }
   .top-menu-collapsible {
@@ -16,7 +16,7 @@
     }
   }
   form.top-menu-search {
-    @apply mx-0 lg:mx-3;
+    @apply lg:mx-3;
     margin-top: 10px;
 
     input {

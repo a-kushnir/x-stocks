@@ -20,7 +20,7 @@
   <body class="bg-gray-200 mb-12">
     <%= render partial: 'layouts/menu' %>
 
-    <main class="w-full min-h-full flex-1 relative pt-4 pl-4 pr-4 pb-1">
+    <main class="w-full min-h-full flex-1 relative pt-0 md:pt-4 pl-0 md:pl-4 pr-0 md:pr-4 pb-1">
       <% if flash[:notice] %>
         <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
       <% end %>

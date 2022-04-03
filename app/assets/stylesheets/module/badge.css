@@ -1,4 +1,4 @@
-.badge2 {
+.badge {
   @apply px-2 rounded;
 
   &.badge-sm { @apply text-xs px-1; }

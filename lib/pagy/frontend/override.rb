@@ -14,7 +14,7 @@ class Pagy
 
         html = +%(<nav#{p_id} class="pagy-nav pagination" aria-label="pager">)
         html << if p_prev
-                  %(<span class="page prev">#{link.call p_prev, t_prev, 'aria-label="previous" data-controller="hotkey" hotkey="ArrowLeft"'}</span>)
+                  %(<span class="page prev">#{link.call p_prev, t_prev, 'aria-label="previous" data-controller="hotkey" data-hotkey="ArrowLeft"'}</span>)
                 else
                   %(<span class="page prev disabled">#{t_prev}</span>)
                 end
@@ -27,7 +27,7 @@ class Pagy
                   end
         end
         html << if p_next
-                  %(<span class="page next">#{link.call p_next, t_next, 'aria-label="next" data-controller="hotkey" hotkey="ArrowRight"'}</span>)
+                  %(<span class="page next">#{link.call p_next, t_next, 'aria-label="next" data-controller="hotkey" data-hotkey="ArrowRight"'}</span>)
                 else
                   %(<span class="page next disabled">#{t_next}</span>)
                 end

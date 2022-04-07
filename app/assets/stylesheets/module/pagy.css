@@ -21,14 +21,14 @@
     }
     &.prev, &.prev a { @apply inline-block border-l rounded-l-lg; }
     &.prev:not(.disabled)::after {
-      @apply hidden lg:absolute bg-gray-400 w-px h-6 right-0;
+      @apply hidden lg:inline-block absolute bg-gray-300 w-px h-6 right-0;
       content: '';
       top: 9px;
       right: 0;
     }
     &.next, &.next a { @apply inline-block border-r rounded-r-lg; }
     &.next:not(.disabled)::before {
-      @apply hidden lg:absolute bg-gray-400 w-px h-6 left-0;
+      @apply hidden lg:inline-block absolute bg-gray-300 w-px h-6 left-0;
       content: '';
       top: 9px;
       &.disabled { @apply w-0; }

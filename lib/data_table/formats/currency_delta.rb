@@ -13,9 +13,9 @@ module DataTable
       end
 
       def style(value)
-        if value.to_f > 0
+        if value.to_f.positive?
           'text-green-600'
-        elsif value.to_f < 0
+        elsif value.to_f.negative?
           'text-red-600'
         else
           'text-gray-600'

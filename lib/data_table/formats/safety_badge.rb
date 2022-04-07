@@ -15,8 +15,6 @@ module DataTable
           'text-green-600'
         elsif value < 30
           'text-red-600'
-        else
-          nil
         end
       end
     end

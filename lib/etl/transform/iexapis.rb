@@ -33,7 +33,7 @@ module Etl
         stock.city = json['city']
         stock.zip = json['zip']
         stock.country = json['country']
-        stock.taxes ||= [:foreign_tax] if foreign?(stock)
+        stock.taxes ||= taxes(stock)
         stock.phone = json['phone']
 
         return unless stock.save
@@ -41,8 +41,19 @@ module Etl
         tag_class.new.batch_update(stock, :company_tag, json['tags'])
       end
 
+      def taxes(stock)
+        taxes = []
+        taxes << :foreign_tax if foreign?(stock)
+        taxes << :schedule_k1 if limited_partnership?(stock)
+        taxes
+      end
+
       def foreign?(stock)
         stock.country.present? && CountryFlag.new.code(stock.country) != 'US'
+      end
+
+      def limited_partnership?(stock)
+        stock.company_name.present? && stock.company_name.strip =~ /\s+L[. ]*P\.?$/i
       end
 
       def dividends(stock, json)

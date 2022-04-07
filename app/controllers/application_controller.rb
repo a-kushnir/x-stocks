@@ -2,6 +2,8 @@
 
 # Base Application Controller
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
+
   before_action :authenticate_user!
 
   etag { current_user&.id }

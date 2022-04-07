@@ -13,24 +13,28 @@ module Dividends
       return unless stale?(@positions)
 
       @columns = columns
-      @positions = @positions.to_a
+      # @positions = @positions.to_a
+
+      # @pagy, stocks = pagy XStocks::AR::Position.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+      @pagy, @positions = pagy @positions, items: params.fetch(:count, 10)
+
       @data, @summary = data(@positions)
       @summary_row = [
-          # Stock
-          nil,
-          nil,
-          nil,
-          @summary[:yield_on_value],
-          nil,
-          safety(@summary[:dividend_rating]),
-          # Position
-          @summary[:total_cost],
-          @summary[:market_value],
-          @summary[:gain_loss],
-          @summary[:gain_loss_pct],
-          100,
-          *@summary[:month_amounts],
-          @summary[:total_amount]
+        # Stock
+        nil,
+        nil,
+        nil,
+        @summary[:yield_on_value],
+        nil,
+        safety(@summary[:dividend_rating]),
+        # Position
+        @summary[:total_cost],
+        @summary[:market_value],
+        @summary[:gain_loss],
+        @summary[:gain_loss_pct],
+        100,
+        *@summary[:month_amounts],
+        @summary[:total_amount]
       ]
 
       @page_title = 'My Dividends'

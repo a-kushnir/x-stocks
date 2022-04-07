@@ -2,8 +2,6 @@
 
 # Controller to provide stock information
 class Stocks2Controller < ApplicationController
-  include Pagy::Backend
-
   def index
     @pagy, stocks = pagy XStocks::AR::Stock.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 

@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require 'pagy'
-
 module Stocks2Helper
-  include Pagy::Frontend
-
   def sort_link_to(name, column, **options)
     direction = if params[:sort] == column.to_s
                   params[:direction] == 'asc' ? 'desc' : 'asc'

@@ -1,4 +1,4 @@
-<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 pt-3 md:pt-6 pb-3">
+<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6">
   <div class="flex space-x-2 block relative mt-1 float-right" style="width: 36rem;">
     <div class="flex flex-row flex-auto relative">
       <input placeholder="Search" class="appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
@@ -75,5 +75,7 @@
   </div>
 </div>
 
-  <%#== pagy_nav @pagy %>
+  <div class="text-center">
+    <%== pagy_nav @pagy %>
+  </div>
 </div>

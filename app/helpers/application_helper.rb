@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
+require 'pagy'
+require 'pagy/frontend/override'
+
 # Helper methods for all application controllers
 module ApplicationHelper
+  include Pagy::Frontend
+  include Pagy::Frontend::Override
+
   def back_url
     'javascript:history.back()'
   end

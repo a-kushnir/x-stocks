@@ -23,7 +23,6 @@ Rails.application.routes.draw do
     end
   end
   resources :positions, param: :symbol, only: %i[index show edit update]
-  resources :dividends, only: [:index]
   namespace :dividends do
     resources :chart, only: [:index]
     resources :excel, only: [:index]

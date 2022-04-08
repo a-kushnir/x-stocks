@@ -16,7 +16,9 @@ module Dividends
       # @positions = @positions.to_a
 
       # @pagy, stocks = pagy XStocks::AR::Position.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
-      @pagy, @positions = pagy @positions, items: params.fetch(:count, 10)
+      items = params.fetch(:items, 10)
+      items = nil if items.to_i <= 1
+      @pagy, @positions = pagy @positions, items: items
 
       @data, @summary = data(@positions)
       @summary_row = [

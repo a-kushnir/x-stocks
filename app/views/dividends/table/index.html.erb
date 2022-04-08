@@ -1,19 +1,21 @@
+<%= form_tag(dividends_table_index_path, method: :get, id: 'datatable_search') %>
+
 <div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6">
   <div class="flex space-x-2 block relative mt-1 float-right" style="width: 36rem;">
     <div class="flex flex-row flex-auto relative">
-      <input placeholder="Search" class="appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
+      <input placeholder="Search" class="appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" form="datatable_search">
       <span class="relative w-0 right-0 text-base text-gray-500 pointer-events-none">
         <%= inline_svg('svg/magnify.svg', size: '24*24', class: 'absolute right-full top-3 right-2 text-gray-500') %>
       </span>
     </div>
 
     <div class="inline-block">
-      <%= select_tag('per_page', options_for_select(%w[10 25]), class: 'border border-gray-400 rounded-lg') %>
+      <%= select_tag('items', options_for_select([%w[10 10], %w[20 20], %w[50 50], %w[100 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: 'datatable_search') %>
     </div>
 
     <div class="inline-block">
-      <button type="button" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-        <%= inline_svg('svg/cog.svg', size: '24*24', class: '') %>
+      <button type="button" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 hover:text-blue-700" id="menu-button" aria-expanded="true" aria-haspopup="true">
+        <%= inline_svg('svg/cog.svg', size: '24*24') %>
       </button>
 
       <div class="hidden border border-gray-400 origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto">
@@ -21,10 +23,16 @@
           <% id = "columns_#{index}" %>
           <% selected = rand(2) > 0 %>
           <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if selected }" do %>
-            <%= check_box_tag('columns[]', index, selected, id: id, class: 'mr-1') %> <%= column.label %>
+            <%= check_box_tag('columns[]', index, selected, id: id, class: 'mr-1', form: 'datatable_search') %> <%= column.label %>
           <% end %>
         <% end %>
       </div>
+    </div>
+
+    <div class="inline-block">
+      <%= button_tag(type: 'submit', class: 'inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 hover:text-blue-700', form: 'datatable_search') do %>
+        <%= inline_svg('svg/refresh.svg', size: '24*24') %>
+      <% end %>
     </div>
 
     <%= render partial: 'dividends/formats', locals: { selected: 'table' } %>

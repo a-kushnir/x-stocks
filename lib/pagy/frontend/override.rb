@@ -5,6 +5,8 @@ class Pagy
     # Overrides Pagy Frontend methods
     module Override
       def pagy_nav(pagy, pagy_id: nil, link_extra: '', **vars)
+        return if pagy.pages <= 1
+
         p_id   = %( id="#{pagy_id}") if pagy_id
         link   = pagy_link_proc(pagy, link_extra: link_extra)
         p_prev = pagy.prev

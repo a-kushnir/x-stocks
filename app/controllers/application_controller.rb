@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, with: :internal_error
 
   def not_found(layout: 'application')
-    @page_title = '404 Page not found'
+    @page_title = '404 Page Not Found'
     @layout = layout
 
     respond_to do |format|

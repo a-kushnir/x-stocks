@@ -6,6 +6,7 @@ module Dividends
     helper :stocks
 
     etag { @columns.map(&:code) }
+    etag { params.permit(:q, :page, :items, columns: []) }
 
     def index
       @columns = columns
@@ -43,6 +44,23 @@ module Dividends
 
       @page_title = 'My Dividends'
       @page_menu_item = :dividends
+
+      cookies[:dividends_datatable] = Base64.encode64(params.permit(:q, :page, :items, columns: []).to_json) if params.permit(:q, :page, :items, columns: []).present?
+    end
+
+    def params
+      result = super
+      begin
+        if result.keys.size <= 2 && cookies[:dividends_datatable]
+          hash = cookies[:dividends_datatable]
+          hash = Base64.decode64(hash)
+          hash = JSON.parse(hash)
+          result = ActionController::Parameters.new(hash)
+        end
+      rescue StandardError
+        # Ignore
+      end
+      result
     end
 
     private

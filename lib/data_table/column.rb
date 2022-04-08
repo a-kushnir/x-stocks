@@ -9,17 +9,22 @@ module DataTable
               .map { |const| [const.name.demodulize.underscore, const.new] }
               .to_h.freeze
 
-    attr_reader :label, :align, :sorting, :default, :formatter
+    attr_reader :code, :label, :align, :sorting, :default, :formatter, :visible
 
     delegate :format, to: :formatter
 
-    def initialize(label:, formatter:, align: 'text-right', sorting: false, default: false)
+    def initialize(code:, label:, formatter:, align: 'text-right', sorting: false, default: false)
+      @code = code
       @label = label
       @align = align
       @sorting = sorting
       @default = default
       @formatter = FORMATS[formatter.to_s]
       raise "Unknown formatter '#{formatter}'" unless @formatter
+    end
+
+    def visibility(params)
+      @visible = params[:columns] ? params[:columns].include?(code) : default
     end
   end
 end

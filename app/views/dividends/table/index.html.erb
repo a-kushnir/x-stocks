@@ -10,20 +10,19 @@
     </div>
 
     <div class="inline-block">
-      <%= select_tag('items', options_for_select([%w[10 10], %w[20 20], %w[50 50], %w[100 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: 'datatable_search') %>
+      <%= select_tag('items', options_for_select([['10', 10], ['20', 20], ['50', 50], ['100', 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: 'datatable_search') %>
     </div>
 
     <div class="inline-block">
-      <button type="button" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 hover:text-blue-700" id="menu-button" aria-expanded="true" aria-haspopup="true">
+      <a href="<%= dividends_table_index_path(params.permit(:page, :items, columns: []).merge(menu: params[:menu] != 'true' ? 'true' : nil)) %>" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 hover:text-blue-700" id="menu-button" aria-expanded="true" aria-haspopup="true">
         <%= inline_svg('svg/cog.svg', size: '24*24') %>
-      </button>
+      </a>
 
-      <div class="hidden border border-gray-400 origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto">
-        <% @columns.each_with_index do |column, index| %>
-          <% id = "columns_#{index}" %>
-          <% selected = rand(2) > 0 %>
-          <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if selected }" do %>
-            <%= check_box_tag('columns[]', index, selected, id: id, class: 'mr-1', form: 'datatable_search') %> <%= column.label %>
+      <div class="<%= 'hidden' unless params[:menu] %> border border-gray-400 origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50">
+        <% @columns.each do |column| %>
+          <% id = "columns_#{column.code}" %>
+          <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if column.visible }" do %>
+            <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1', form: 'datatable_search') %> <%= column.label %>
           <% end %>
         <% end %>
       </div>
@@ -47,6 +46,7 @@
   <thead>
     <tr>
       <% @columns.each do |column| %>
+        <% next unless column.visible %>
         <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %>">
           <% if column.sorting %>
             <%= sort_link_to column.label, '??', class: 'no-underline' %>
@@ -60,8 +60,9 @@
   <tbody>
     <% @data.each do |row| %>
       <tr class="hover:bg-gray-100">
-        <% row.each_with_index do |cell, index| %>
-          <% column = @columns[index] %>
+        <% @columns.each_with_index do |column, index| %>
+          <% next unless column.visible %>
+          <% cell = row[index] %>
           <% value, style = column.format(cell) %>
           <td class="px-1 border-b border-gray-200 p-1 whitespace-nowrap <%= column.align %> <%= style %>"><%= value %></td>
         <% end %>
@@ -70,8 +71,9 @@
   </tbody>
   <tfoot>
   <tr>
-    <% @summary_row.each_with_index do |cell, index| %>
-      <% column = @columns[index] %>
+    <% @columns.each_with_index do |column, index| %>
+      <% next unless column.visible %>
+      <% cell = @summary_row[index] %>
       <% value, style = column.format(cell) %>
       <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %> <%= style %>">
         <%= value %>

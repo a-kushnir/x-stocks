@@ -5,14 +5,17 @@ module Dividends
   class TableController < ApplicationController
     helper :stocks
 
+    etag { @columns.map(&:code) }
+
     def index
       @positions = XStocks::AR::Position
                    .where(user: current_user)
                    .where.not(shares: nil)
                    .all
-      return unless stale?(@positions)
 
       @columns = columns
+      return unless stale?(@positions)
+
       # @positions = @positions.to_a
 
       # @pagy, stocks = pagy XStocks::AR::Position.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
@@ -41,11 +44,6 @@ module Dividends
 
       @page_title = 'My Dividends'
       @page_menu_item = :dividends
-
-      respond_to do |format|
-        format.html { nil }
-        format.xlsx { generate_xlsx }
-      end
     end
 
     private
@@ -54,12 +52,6 @@ module Dividends
       return value if value.blank?
 
       (value.round(1) * 20).to_i
-    end
-
-    def generate_xlsx
-      send_tmp_file('Dividends.xlsx') do |file_name|
-        XLSX::Dividends.new.generate(file_name, @positions)
-      end
     end
 
     def columns
@@ -71,24 +63,25 @@ module Dividends
 
       columns = []
       # Stock
-      columns << DataTable::Column.new(label: 'Symbol', formatter: 'string', align: 'text-left', sorting: true, default: true)
-      columns << DataTable::Column.new(label: 'Company', formatter: 'string', align: 'text-left', default: true)
-      columns << DataTable::Column.new(label: 'Country', formatter: 'string', align: 'text-center')
-      columns << DataTable::Column.new(label: 'Est. Yield %', formatter: 'percent_or_warning2', default: true)
-      columns << DataTable::Column.new(label: 'Div. Change', formatter: 'percent_delta1')
-      columns << DataTable::Column.new(label: 'Div. Safety', formatter: 'safety_badge', align: 'text-center', default: true)
+      columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', align: 'text-left', sorting: true, default: true)
+      columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', align: 'text-left', default: true)
+      columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'text-center')
+      columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', default: true)
+      columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
+      columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', align: 'text-center', default: true)
       # Position
-      columns << DataTable::Column.new(label: 'Total Cost', formatter: 'currency')
-      columns << DataTable::Column.new(label: 'Market Value', formatter: 'currency')
-      columns << DataTable::Column.new(label: 'Total Return', formatter: 'currency_delta')
-      columns << DataTable::Column.new(label: 'Total Return %', formatter: 'percent_delta2')
-      columns << DataTable::Column.new(label: 'Diversity %', formatter: 'percent2')
+      columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency')
+      columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency')
+      columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta')
+      columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2')
+      columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2')
       # Dividends
-      month_names.each do |month_name|
-        columns << DataTable::Column.new(label: month_name, formatter: 'currency', default: true)
+      month_names.each_with_index do |month_name, index|
+        columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', default: true)
       end
-      columns << DataTable::Column.new(label: 'Total', formatter: 'currency_or_warning', default: true)
+      columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
 
+      columns.each { |column| column.visibility(params) }
       columns
     end
 

@@ -13,7 +13,7 @@
       <%= select_tag('items', options_for_select([['10', 10], ['20', 20], ['50', 50], ['100', 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit' }) %>
     </div>
 
-    <div class="inline-block" data-controller="class event">
+    <div class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
       <%= hidden_field_tag(:menu, params[:menu], form: 'datatable_search') %>
       <a href="<%= dividends_table_index_path(params.permit(:q, :page, :items, columns: []).merge(menu: params[:menu] != 'true' ? 'true' : nil)) %>" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-blue-700" aria-expanded="true" aria-haspopup="true"
          data-action="click->class#toggle click->event#cancel">
@@ -25,7 +25,7 @@
         <% @table.columns.each do |column| %>
           <% id = "columns_#{column.code}" %>
           <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if column.visible }" do %>
-            <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit' }) %> <%= column.label %>
+            <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit change->class#toggle' }) %> <%= column.label %>
           <% end %>
         <% end %>
       </div>

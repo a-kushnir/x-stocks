@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Dividends
-  # Excel representation of user portfolio dividends
+module Positions
+  # Excel representation of user portfolio positions
   class ExcelController < ApplicationController
     def index
       return unless stale?(positions)
 
-      send_tmp_file('Dividends.xlsx') do |file_name|
-        XLSX::Dividends.new.generate(file_name, positions.to_a)
+      send_tmp_file('Positions.xlsx') do |file_name|
+        XLSX::Positions.new.generate(file_name, positions.to_a)
       end
     end
 

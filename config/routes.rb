@@ -22,7 +22,14 @@ Rails.application.routes.draw do
       get :processing
     end
   end
+
+  namespace :positions do
+    resources :chart, only: [:index]
+    resources :excel, only: [:index]
+    # resources :table, only: [:index]
+  end
   resources :positions, param: :symbol, only: %i[index show edit update]
+
   namespace :dividends do
     resources :chart, only: [:index]
     resources :excel, only: [:index]

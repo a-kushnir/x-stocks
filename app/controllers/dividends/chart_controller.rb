@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dividends
-  # Controller to provide dividend information for user's portfolio
+  # Chart representation of user portfolio dividends
   class ChartController < ApplicationController
     helper :stocks
 

@@ -15,11 +15,6 @@ class PositionsController < ApplicationController
 
     @page_title = 'My Positions'
     @page_menu_item = :positions
-
-    respond_to do |format|
-      format.html { nil }
-      format.xlsx { generate_xlsx }
-    end
   end
 
   def show
@@ -56,12 +51,6 @@ class PositionsController < ApplicationController
     params
       .require(:x_stocks_ar_position)
       .permit(:shares, :average_price, :stop_loss, :note)
-  end
-
-  def generate_xlsx
-    send_tmp_file('Positions.xlsx') do |file_name|
-      XLSX::Positions.new.generate(file_name, @positions)
-    end
   end
 
   def columns

@@ -16,6 +16,9 @@ module XStocks
       validates :stop_loss, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
       numerical :shares, :average_price, :stop_loss
+
+      scope :with_shares, -> { where.not(shares: nil) }
+      scope :with_user, ->(user) { where(user: user) }
     end
   end
 end

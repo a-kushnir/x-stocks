@@ -1,5 +1,7 @@
 <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <%= render partial: 'shared/format', locals: {table: "#positions-table-container", chart: "#positions-charts-container"} %>
+  <div class="float-right">
+    <%= render partial: 'positions/formats', locals: { selected: 'table' } %>
+  </div>
   <h2 class="text-2xl uppercase mb-6">My Positions</h2>
 
 <div id="positions-table-container">
@@ -47,8 +49,6 @@
   </tfoot>
 </table>
 </div>
-
-<%= render partial: 'charts' %>
 
 <% content_for :head do %>
 <script>

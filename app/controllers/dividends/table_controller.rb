@@ -31,7 +31,7 @@ module Dividends
         nil,
         @summary[:yield_on_value],
         nil,
-        safety(@summary[:dividend_rating]),
+        @summary[:dividend_rating],
         # Position
         @summary[:total_cost],
         @summary[:market_value],
@@ -45,7 +45,7 @@ module Dividends
       @page_title = 'My Dividends'
       @page_menu_item = :dividends
 
-      cookies[:dividends_datatable] = Base64.encode64(params.permit(:q, :page, :items, columns: []).to_json) if params.permit(:q, :page, :items, columns: []).present?
+      cookies[:dividends_datatable] = Base64.encode64(params.permit(:items, columns: []).to_json) if params.permit(:q, :page, :items, columns: []).present?
     end
 
     def params
@@ -55,7 +55,7 @@ module Dividends
           hash = cookies[:dividends_datatable]
           hash = Base64.decode64(hash)
           hash = JSON.parse(hash)
-          result = ActionController::Parameters.new(hash)
+          result = result.merge(hash)
         end
       rescue StandardError
         # Ignore
@@ -73,12 +73,6 @@ module Dividends
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
-    def safety(value)
-      return value if value.blank?
-
-      (value.round(1) * 20).to_i
-    end
-
     def columns
       div = ::Dividend.new
       month_names = []
@@ -92,7 +86,7 @@ module Dividends
       columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', align: 'text-left', sorting: 'stocks.company_name', default: true)
       columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'text-center', sorting: 'stocks.country')
       columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
-      columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1', sorting: 'stocks.div_change_pct')
+      columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
       columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', sorting: 'stocks.dividend_rating', align: 'text-center', default: true)
       # Position
       columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost')
@@ -157,7 +151,7 @@ module Dividends
           flag.code(stock.country),
           value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
           stock.div_change_pct&.round(1),
-          safety(stock.dividend_rating&.to_f),
+          div_suspended ? 0 : stock.dividend_rating&.to_f,
           # Position
           position.total_cost&.to_f,
           position.market_value&.to_f,

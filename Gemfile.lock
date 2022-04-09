@@ -157,6 +157,7 @@ GEM
     grape-swagger-representable (0.2.2)
       grape-swagger (>= 0.31.0)
       representable
+    honeybadger (4.12.1)
     htmlentities (4.3.4)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
@@ -375,6 +376,7 @@ DEPENDENCIES
   grape-swagger
   grape-swagger-entity
   grape-swagger-representable
+  honeybadger (~> 4.0)
   importmap-rails (~> 1.0)
   inline_svg
   jquery-datatables

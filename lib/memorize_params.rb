@@ -9,12 +9,15 @@ module MemorizeParams
   # Class methods for MemorizeParams module
   module ClassMethods
     def memorize_params(code, options = {}, &block)
+      etag { @_memorized_params }
+
       before_action(options) do
         data = cookies[code]
         if params.except(:action, :controller).blank? && data.present?
           data = Base64.decode64(data)
           data = JSON.parse(data)
           params.merge!(data)
+          @_memorized_params = data
         end
       rescue StandardError
         # Ignore

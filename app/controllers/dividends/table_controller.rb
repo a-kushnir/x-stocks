@@ -5,29 +5,25 @@ module Dividends
   class TableController < ApplicationController
     helper :stocks
 
-    etag { @columns.map(&:code) }
-    etag { params.permit(:q, :page, :items, columns: []) }
-
     memorize_params :datatable_dividends, only: [:index] do
       params.permit(:items, columns: [])
     end
 
     def index
-      @columns = columns
+      @table = table
       @positions = XStocks::AR::Position
                    .joins(:stock)
                    .where(user: current_user)
                    .where.not(shares: nil)
-                   .reorder(sort_column => sort_direction)
+                   .reorder(@table.sort_column => @table.sort_direction)
       @positions = @positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
       @positions = @positions.all
       return unless stale?(@positions)
 
-      items = params.fetch(:items, 10)
-      items = nil if items.to_i <= 1
-      @pagy, @positions = pagy @positions, items: items
+      @pagy, @positions = pagy @positions, items: @table.pagy_items
 
-      @data, @summary = data(@positions)
+      rows, @summary = data(@positions)
+      @table.rows.concat(rows)
       @summary_row = [
         # Stock
         nil,
@@ -52,43 +48,38 @@ module Dividends
 
     private
 
-    def sort_column
-      @columns.detect { |column| column.code == params[:sort] }&.sorting || 'stocks.symbol'
+    def month_names
+      @month_names ||=
+        ::Dividend.new.months.each_with_index.map do |month, index|
+          (index.zero? || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+        end
     end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-    end
+    def table
+      table = DataTable::Table.new(params)
 
-    def columns
-      div = ::Dividend.new
-      month_names = []
-      div.months.each_with_index do |month, index|
-        month_names << (index.zero? || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
+      table.init_columns do |columns|
+        # Stock
+        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', align: 'text-left', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', align: 'text-left', sorting: 'stocks.company_name', default: true)
+        columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'text-center', sorting: 'stocks.country')
+        columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
+        columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
+        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', sorting: 'stocks.dividend_rating', align: 'text-center', default: true)
+        # Position
+        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost')
+        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss')
+        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct')
+        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
+        # Dividends
+        month_names.each_with_index do |month_name, index|
+          columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', default: true)
+        end
+        columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
       end
 
-      columns = []
-      # Stock
-      columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', align: 'text-left', sorting: 'stocks.symbol', default: true)
-      columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', align: 'text-left', sorting: 'stocks.company_name', default: true)
-      columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'text-center', sorting: 'stocks.country')
-      columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
-      columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
-      columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', sorting: 'stocks.dividend_rating', align: 'text-center', default: true)
-      # Position
-      columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost')
-      columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value')
-      columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss')
-      columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct')
-      columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
-      # Dividends
-      month_names.each_with_index do |month_name, index|
-        columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', default: true)
-      end
-      columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
-
-      columns.each { |column| column.visibility(params) }
-      columns
+      table
     end
 
     def data(positions)

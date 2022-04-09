@@ -20,7 +20,7 @@
       </a>
 
       <div class="<%= 'hidden' unless params[:menu].present? %> border border-gray-400 origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50">
-        <% @columns.each do |column| %>
+        <% @table.columns.each do |column| %>
           <% id = "columns_#{column.code}" %>
           <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if column.visible }" do %>
             <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit' }) %> <%= column.label %>
@@ -46,7 +46,7 @@
 
   <thead>
     <tr>
-      <% @columns.each do |column| %>
+      <% @table.columns.each do |column| %>
         <% next unless column.visible %>
         <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %>">
           <% if column.sorting %>
@@ -59,9 +59,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @data.each do |row| %>
+    <% @table.rows.each do |row| %>
       <tr class="hover:bg-gray-100">
-        <% @columns.each_with_index do |column, index| %>
+        <% @table.columns.each_with_index do |column, index| %>
           <% next unless column.visible %>
           <% cell = row[index] %>
           <% value, style = column.format(cell) %>
@@ -72,7 +72,7 @@
   </tbody>
   <tfoot>
   <tr>
-    <% @columns.each_with_index do |column, index| %>
+    <% @table.columns.each_with_index do |column, index| %>
       <% next unless column.visible %>
       <% cell = @summary_row[index] %>
       <% value, style = column.format(cell) %>

@@ -22,9 +22,5 @@ module DataTable
       @formatter = FORMATS[formatter.to_s]
       raise "Unknown formatter '#{formatter}'" unless @formatter
     end
-
-    def visibility(params)
-      @visible = params[:columns] ? params[:columns].include?(code) : default
-    end
   end
 end

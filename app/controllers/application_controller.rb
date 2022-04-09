@@ -3,6 +3,7 @@
 # Base Application Controller
 class ApplicationController < ActionController::Base
   include Pagy::Backend
+  include MemorizeParams
 
   before_action :authenticate_user!
 

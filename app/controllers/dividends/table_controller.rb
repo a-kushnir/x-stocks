@@ -8,6 +8,10 @@ module Dividends
     etag { @columns.map(&:code) }
     etag { params.permit(:q, :page, :items, columns: []) }
 
+    memorize_params :datatable_dividends, only: [:index] do
+      params.permit(:items, columns: [])
+    end
+
     def index
       @columns = columns
       @positions = XStocks::AR::Position
@@ -44,23 +48,6 @@ module Dividends
 
       @page_title = 'My Dividends'
       @page_menu_item = :dividends
-
-      cookies[:dividends_datatable] = Base64.encode64(params.permit(:items, columns: []).to_json) if params.permit(:q, :page, :items, columns: []).present?
-    end
-
-    def params
-      result = super
-      begin
-        if result.keys.size <= 2 && cookies[:dividends_datatable]
-          hash = cookies[:dividends_datatable]
-          hash = Base64.decode64(hash)
-          hash = JSON.parse(hash)
-          result = result.merge(hash)
-        end
-      rescue StandardError
-        # Ignore
-      end
-      result
     end
 
     private

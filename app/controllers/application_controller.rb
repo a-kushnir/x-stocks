@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   etag { current_user&.id }
 
-  rescue_from Exception, with: :internal_error
+  rescue_from Exception, with: :internal_error if Rails.env.production?
 
   def not_found(layout: 'application')
     @page_title = '404 Page Not Found'
@@ -34,6 +34,8 @@ class ApplicationController < ActionController::Base
   end
 
   def internal_error(error = nil, layout: 'application')
+    Honeybadger.notify(error)
+
     @page_title = '500 Internal Server Error'
     @error = error
     @layout = layout

@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.7.5'
 
+gem 'honeybadger', '~> 4.0'
 gem 'importmap-rails', '~> 1.0'
 gem 'rails', '>= 7.0.2.2'
 gem 'sprockets-rails', '~> 3.4'

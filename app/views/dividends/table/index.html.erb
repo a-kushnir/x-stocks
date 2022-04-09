@@ -15,19 +15,23 @@
 
     <div class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
       <%= hidden_field_tag(:menu, params[:menu], form: 'datatable_search') %>
-      <a href="<%= dividends_table_index_path(params.permit(:q, :page, :items, columns: []).merge(menu: params[:menu] != 'true' ? 'true' : nil)) %>" class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-blue-700" aria-expanded="true" aria-haspopup="true"
+      <a href="<%= dividends_table_index_path(params.permit(:q, :page, :items, columns: []).merge(menu: params[:menu] != 'true' ? 'true' : nil)) %>"
+         class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-blue-700" aria-expanded="true" aria-haspopup="true"
          data-action="click->class#toggle click->event#cancel">
         <%= inline_svg('svg/cog.svg', size: '24*24') %>
       </a>
 
-      <div class="border border-gray-400 origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50 <%= 'hidden' unless params[:menu].present? %>"
+      <div class="border border-gray-400 origin-top-right absolute right-0 mt-1 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50 <%= 'hidden' unless params[:menu].present? %>"
            data-class-value="hidden" data-class-target="element">
+        <div class="grid grid-cols-3 m-2">
         <% @table.columns.each do |column| %>
           <% id = "columns_#{column.code}" %>
-          <%= label_tag nil, id: id, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 #{ 'font-bold bg-slate-200' if column.visible }" do %>
-            <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit change->class#toggle' }) %> <%= column.label %>
+          <%= label_tag nil, id: id, class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' do %>
+            <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1 mb-px', form: 'datatable_search', data: { controller: 'element', action: 'change->element#requestSubmit change->class#toggle' }) %> <%= column.label %>
           <% end %>
         <% end %>
+        </div>
+        <!--div class="w-full px-4 pb-2 text-right"><%= link_to 'Reset', '#', class: 'text-blue-500 no-underline' %></div-->
       </div>
     </div>
 

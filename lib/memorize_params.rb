@@ -9,13 +9,14 @@ module MemorizeParams
   # Class methods for MemorizeParams module
   module ClassMethods
     def memorize_params(code, options = {}, &block)
-      etag { @_memorized_params }
+      etag { @_memorized_params&.to_json }
 
       before_action(options) do
         data = cookies[code]
         if params.except(:action, :controller).blank? && data.present?
           data = Base64.decode64(data)
           data = JSON.parse(data)
+          request.params.merge!(data)
           params.merge!(data)
           @_memorized_params = data
         end

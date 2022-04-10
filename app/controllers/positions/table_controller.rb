@@ -85,17 +85,17 @@ module Positions
         columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
         columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
         columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'ndv', label: 'Annual Div.', formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', default: true)
         columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
         # Stop Loss
-        # columns << { label: 'Stop Price' }
-        # columns << { label: 'Est. Credit' }
-        # columns << { label: 'Est. Return' }
-        # columns << { label: 'Est. Return %' }
+        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2')
         # Stock
-        # columns << { label: 'Price' }
-        # columns << { label: 'Change' }
-        # columns << { label: 'Change %' }
+        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2')
         # columns << { label: '52 Week Range' }
         # columns << { label: 'Fair Value' }
         # columns << { label: 'Short Term' }

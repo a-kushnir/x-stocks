@@ -20,6 +20,9 @@ module DataTable
         visible = params[:columns] ? params[:columns].include?(column.code) : column.default
         column.instance_variable_set('@visible', visible)
       end
+
+      duplicates = columns.group_by(&:code).map { |code, columns| code if columns.size > 1 }.compact
+      raise "Columns have duplicated codes: #{duplicates}" if duplicates.any?
     end
 
     def sort_column

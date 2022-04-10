@@ -18,7 +18,7 @@
     <% if user_signed_in? %>
       <%= top_menu_link(:home, 'Home', root_path) %>
       <%= top_menu_link(:stocks, 'Stocks', stocks_path) %>
-      <%= top_menu_link(:positions, 'My Positions', positions_path) %>
+      <%= top_menu_link(:positions, 'My Positions', positions_table_index_path) %>
       <%= top_menu_link(:dividends, 'My Dividends', dividends_table_index_path) %>
     <% end %>
   </ul>

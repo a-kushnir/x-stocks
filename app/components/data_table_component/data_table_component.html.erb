@@ -1,0 +1,103 @@
+<%= form_tag(request_path, method: :get, id: @form_id, data: { turbo_frame: @turbo_frame_id }) %>
+
+<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6">
+  <div class="flex space-x-2 block relative float-right" style="width: 36rem;">
+    <div class="flex flex-row flex-auto relative">
+      <%= text_field_tag :q, params[:q], placeholder: 'Search', class: 'appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none', form: @form_id %>
+      <span class="relative w-0 right-0 text-base text-gray-500 pointer-events-none">
+        <%= inline_svg('svg/magnify.svg', size: '24*24', class: 'absolute right-full top-3 right-2 text-gray-500') %>
+      </span>
+    </div>
+
+    <div class="inline-block">
+      <%= select_tag('items', options_for_select([['10', 10], ['20', 20], ['50', 50], ['100', 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: @form_id, data: { controller: 'element', action: 'change->element#requestSubmit' }) %>
+    </div>
+
+    <div class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
+      <%= hidden_field_tag(:menu, params[:menu], form: @form_id) %>
+      <a href="<%= request_path(params.permit(:q, :page, :items, columns: []).merge(menu: params[:menu] != 'true' ? 'true' : nil)) %>"
+         class="inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-blue-700" aria-expanded="true" aria-haspopup="true"
+         data-action="click->class#toggle click->event#cancel">
+        <%= inline_svg('svg/cog.svg', size: '24*24') %>
+      </a>
+
+      <div class="border border-gray-400 origin-top-right absolute right-0 mt-1 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50 <%= 'hidden' unless params[:menu].present? %>"
+           data-class-value="hidden" data-class-target="element">
+        <div class="grid grid-cols-3 m-2">
+          <% @table.columns.each_slice((@table.columns.size / 3.0).ceil) do |columns| %>
+            <div class="flex flex-col">
+              <% columns.each do |column| %>
+                <% id = "columns_#{column.code}" %>
+                <%= label_tag nil, id: id, class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' do %>
+                  <%= check_box_tag('columns[]', column.code, column.visible, id: id, class: 'mr-1 mb-px', form: @form_id, data: { controller: 'element', action: 'change->element#requestSubmit change->class#toggle' }) %> <%= column.label %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <!--div class="w-full px-4 pb-2 text-right"><%= link_to 'Reset', '#', class: 'text-blue-500 no-underline' %></div-->
+      </div>
+    </div>
+
+    <div class="hidden no-js:inline-block">
+      <%= button_tag(type: 'submit', class: 'inline-flex justify-center w-full rounded-lg border border-gray-400 shadow-sm py-2 px-4 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 hover:text-blue-700', form: @form_id) do %>
+        <%= inline_svg('svg/refresh.svg', size: '24*24') %>
+      <% end %>
+    </div>
+
+    <%= @top_right_block %>
+  </div>
+
+  <h2 class="text-2xl uppercase mb-6"><%= @name %></h2>
+
+  <%= turbo_frame_tag @turbo_frame_id do %>
+  <div class="px-1 py-1 overflow-x-auto mb-3">
+    <div class="inline-block min-w-full shadow-sm rounded-lg overflow-hidden">
+        <table class="min-w-full leading-normal">
+          <thead>
+          <tr>
+            <% @table.columns.each do |column| %>
+              <% next unless column.visible %>
+              <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %>">
+                <% if column.sorting %>
+                  <%= sort_link_to column.label, column.code, class: 'no-underline inline-block w-full' %>
+                <% else %>
+                  <%= column.label %>
+                <% end %>
+              </th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+          <% @table.rows.each do |row| %>
+            <tr class="hover:bg-gray-100">
+              <% @table.columns.each_with_index do |column, index| %>
+                <% next unless column.visible %>
+                <% cell = row[index] %>
+                <% value, style = column.format(cell) %>
+                <td class="px-1 border-b border-gray-200 p-1 whitespace-nowrap <%= column.align %> <%= style %>"><%= value %></td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <tr>
+            <% @table.columns.each_with_index do |column, index| %>
+              <% next unless column.visible %>
+              <% cell = @summary_row[index] %>
+              <% value, style = column.format(cell) %>
+              <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %> <%= style %>">
+                <%= value %>
+              </th>
+            <% end %>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <%== pagy_nav @pagy %>
+    </div>
+  <% end %>
+</div>

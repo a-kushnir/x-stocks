@@ -3,26 +3,21 @@
 module Dividends
   # Table representation of user portfolio dividends
   class TableController < ApplicationController
-    helper :stocks
-
     memorize_params :datatable_dividends, only: [:index] do
       params.permit(:items, columns: [])
     end
 
     def index
       @table = table
-      @positions = XStocks::AR::Position
-                   .joins(:stock)
-                   .where(user: current_user)
-                   .where.not(shares: nil)
-                   .reorder(@table.sort_column => @table.sort_direction)
-      @positions = @positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
-      @positions = @positions.all
-      return unless stale?(@positions)
+      positions = XStocks::AR::Position.joins(:stock).with_user(current_user).with_shares
+      positions = positions.reorder(@table.sort_column => @table.sort_direction)
+      positions = positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
+      positions = positions.all
+      return unless stale?(positions)
 
-      @pagy, @positions = pagy @positions, items: @table.pagy_items
+      @pagy, positions = pagy positions, items: @table.pagy_items
 
-      rows, @summary = data(@positions)
+      rows, @summary = data(positions)
       @table.rows.concat(rows)
       @summary_row = [
         # Stock
@@ -124,7 +119,7 @@ module Dividends
       result =
         [
           # Stock
-          view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline inline-block w-full'),
+          view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline inline-block w-full', target: '_top'),
           stock.company_name,
           flag.code(stock.country),
           value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

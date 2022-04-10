@@ -1,0 +1,2 @@
+<%= render(DataTableComponent.new(name: 'My Positions', table: @table, pagy: @pagy, summary_row: @summary_row, turbo_frame_id: 'datatable_positions',
+                                  top_right_block: render(partial: 'positions/formats', locals: { selected: 'table' }))) %>

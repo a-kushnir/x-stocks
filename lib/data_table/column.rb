@@ -34,10 +34,10 @@ module DataTable
     end
 
     def formatter=(value)
-      value = FORMATS[value.to_s]
-      raise "Unknown formatter '#{value}'" unless value
+      formatter = FORMATS[value.to_s]
+      raise "Unknown formatter '#{value}'" unless formatter
 
-      @formatter = value
+      @formatter = formatter
     end
   end
 end

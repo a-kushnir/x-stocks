@@ -9,7 +9,10 @@ module DataTable
       include ActionView::Helpers::NumberHelper
 
       def format(value)
-        number_to_percentage(value, precision: 1)
+        return value if value.blank?
+
+        result = number_to_percentage(value, precision: 1)
+        value > 0 ? "+#{result}" : result
       end
 
       def style(value)

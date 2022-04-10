@@ -96,8 +96,8 @@ module Positions
         columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency', align: 'right')
         columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta', align: 'right')
         columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2', align: 'right')
-        # columns << { label: '52 Week Range' }
-        # columns << { label: 'Fair Value' }
+        columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
+        columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', align: 'right', sorting: 'stocks.yahoo_discount')
         # columns << { label: 'Short Term' }
         # columns << { label: 'Mid Term' }
         # columns << { label: 'Long Term' }

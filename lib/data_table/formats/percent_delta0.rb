@@ -5,13 +5,13 @@ require 'action_view/helpers/number_helper'
 module DataTable
   module Formats
     # Formats value as a percent number
-    class PercentDelta2
+    class PercentDelta0
       include ActionView::Helpers::NumberHelper
 
       def format(value)
         return value if value.blank?
 
-        result = number_to_percentage(value, precision: 2)
+        result = number_to_percentage(value, precision: 0)
         value > 0 ? "+#{result}" : result
       end
 

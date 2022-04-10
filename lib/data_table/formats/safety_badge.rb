@@ -5,7 +5,7 @@ module DataTable
     # Formats value as a string
     class SafetyBadge
       def format(value)
-        [convert(value), style(value)]
+        convert(value)
       end
 
       def style(value)
@@ -13,9 +13,9 @@ module DataTable
         if value.blank?
           nil
         elsif value > 70
-          'text-green-600'
+          'positive'
         elsif value < 30
-          'text-red-600'
+          'negative'
         end
       end
 

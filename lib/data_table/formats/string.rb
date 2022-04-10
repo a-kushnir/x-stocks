@@ -5,8 +5,10 @@ module DataTable
     # Formats value as a string
     class String
       def format(value)
-        [value, nil]
+        value
       end
+
+      def style(_value); end
     end
   end
 end

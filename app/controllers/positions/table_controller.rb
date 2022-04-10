@@ -71,31 +71,31 @@ module Positions
 
       table.init_columns do |columns|
         # Stock
-        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', align: 'text-left', sorting: 'stocks.symbol', default: true)
-        columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', align: 'text-left', sorting: 'stocks.company_name', default: true)
-        columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'text-center', sorting: 'stocks.country')
+        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
+        columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
         # Position
-        columns << DataTable::Column.new(code: 'shr', label: 'Shares', formatter: 'number', sorting: 'positions.shares', default: true)
-        columns << DataTable::Column.new(code: 'apr', label: 'Average Price', formatter: 'currency', sorting: 'positions.average_price', default: true)
-        columns << DataTable::Column.new(code: 'mpr', label: 'Market Price', formatter: 'currency', sorting: 'positions.market_price', default: true)
-        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost', default: true)
-        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value', default: true)
-        columns << DataTable::Column.new(code: 'drc', label: "Today's Return", formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'drp', label: "Today's Return %", formatter: 'percent_delta2', sorting: 'stock.price_change_pct')
-        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
-        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
-        columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'shr', label: 'Shares', formatter: 'number', align: 'right', sorting: 'positions.shares', default: true)
+        columns << DataTable::Column.new(code: 'apr', label: 'Average Price', formatter: 'currency', align: 'right', sorting: 'positions.average_price', default: true)
+        columns << DataTable::Column.new(code: 'mpr', label: 'Market Price', formatter: 'currency', align: 'right', sorting: 'positions.market_price', default: true)
+        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', align: 'right', sorting: 'positions.total_cost', default: true)
+        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', align: 'right', sorting: 'positions.market_value', default: true)
+        columns << DataTable::Column.new(code: 'drc', label: "Today's Return", formatter: 'currency_delta', align: 'right')
+        columns << DataTable::Column.new(code: 'drp', label: "Today's Return %", formatter: 'percent_delta2', align: 'right', sorting: 'stock.price_change_pct')
+        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', align: 'right', sorting: 'positions.gain_loss', default: true)
+        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', align: 'right', sorting: 'positions.gain_loss_pct', default: true)
+        columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', align: 'right', default: true)
+        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', align: 'right', default: true)
+        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', align: 'right', sorting: 'positions.market_value')
         # Stop Loss
-        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2')
+        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency', align: 'right')
+        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency', align: 'right')
+        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta', align: 'right')
+        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2', align: 'right')
         # Stock
-        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2')
+        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency', align: 'right')
+        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta', align: 'right')
+        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2', align: 'right')
         # columns << { label: '52 Week Range' }
         # columns << { label: 'Fair Value' }
         # columns << { label: 'Short Term' }

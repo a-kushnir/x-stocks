@@ -1,0 +1,34 @@
+.datatable {
+  @apply w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6;
+
+  .datatable-container {
+    @apply px-1 py-1 overflow-x-auto mb-3;
+
+    .datatable-viewport {
+      @apply inline-block min-w-full shadow-sm rounded-lg overflow-hidden;
+
+      table {
+        @apply min-w-full leading-normal;
+
+        thead th, tfoot th {
+          @apply border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap;
+          a { @apply no-underline inline-block w-full; }
+        }
+
+        tbody tr {
+          @apply hover:bg-gray-100;
+          td { @apply px-1 border-b border-gray-200 p-1 whitespace-nowrap; };
+        }
+
+        th, td {
+          &.center { @apply text-center; }
+          &.right { @apply text-right; }
+          &.positive { @apply text-green-600; }
+          &.zero { @apply text-gray-500; }
+          &.negative { @apply text-red-600; }
+          &.warning { @apply text-red-600 font-bold; }
+        }
+      }
+    }
+  }
+}

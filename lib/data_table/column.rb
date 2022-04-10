@@ -3,6 +3,7 @@
 module DataTable
   # Represent a data table column
   class Column
+    ALIGNS = %w[left center right].freeze
     FORMATS = DataTable::Formats
               .constants
               .map { |const| DataTable::Formats.const_get(const) }
@@ -11,16 +12,32 @@ module DataTable
 
     attr_reader :code, :label, :align, :sorting, :default, :formatter, :visible
 
-    delegate :format, to: :formatter
+    delegate :format, :style, to: :formatter
 
-    def initialize(code:, label:, formatter:, align: 'text-right', sorting: false, default: false)
+    def initialize(code:, label:, formatter:, align: 'left', sorting: nil, default: false)
       @code = code
       @label = label
-      @align = align
       @sorting = sorting
       @default = default
-      @formatter = FORMATS[formatter.to_s]
-      raise "Unknown formatter '#{formatter}'" unless @formatter
+      self.align = align
+      self.formatter = formatter
+    end
+
+    private
+
+    def align=(value)
+      value = value.to_s
+      raise "Unknown align '#{value}'" if value.present? && !ALIGNS.include?(value)
+
+      value = nil if value.blank? || value == 'left'
+      @align = value
+    end
+
+    def formatter=(value)
+      value = FORMATS[value.to_s]
+      raise "Unknown formatter '#{value}'" unless value
+
+      @formatter = value
     end
   end
 end

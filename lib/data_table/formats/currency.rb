@@ -9,8 +9,10 @@ module DataTable
       include ActionView::Helpers::NumberHelper
 
       def format(value)
-        [number_to_currency(value), nil]
+        number_to_currency(value)
       end
+
+      def style(_value); end
     end
   end
 end

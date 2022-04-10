@@ -9,16 +9,16 @@ module DataTable
       include ActionView::Helpers::NumberHelper
 
       def format(value)
-        [number_to_currency(value), style(value)]
+        number_to_currency(value)
       end
 
       def style(value)
         if value.to_f.positive?
-          'text-green-600'
+          'positive'
         elsif value.to_f.negative?
-          'text-red-600'
+          'negative'
         else
-          'text-gray-600'
+          'zero'
         end
       end
     end

@@ -9,8 +9,10 @@ module DataTable
       include ActionView::Helpers::NumberHelper
 
       def format(value)
-        [number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true), nil] if value.is_a?(Numeric)
+        number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) if value.is_a?(Numeric)
       end
+
+      def style(_value); end
     end
   end
 end

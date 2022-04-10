@@ -1,6 +1,6 @@
 <%= form_tag(request_path, method: :get, id: @form_id, data: { turbo_frame: @turbo_frame_id }) %>
 
-<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6">
+<div class="datatable">
   <div class="flex space-x-2 block relative float-right" style="width: 36rem;">
     <div class="flex flex-row flex-auto relative">
       <%= text_field_tag :q, params[:q], placeholder: 'Search', class: 'appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none', form: @form_id %>
@@ -51,31 +51,26 @@
   <h2 class="text-2xl uppercase mb-6"><%= @name %></h2>
 
   <%= turbo_frame_tag @turbo_frame_id do %>
-  <div class="px-1 py-1 overflow-x-auto mb-3">
-    <div class="inline-block min-w-full shadow-sm rounded-lg overflow-hidden">
-        <table class="min-w-full leading-normal">
+    <div class="datatable-container">
+      <div class="datatable-viewport">
+        <table>
           <thead>
           <tr>
             <% @table.columns.each do |column| %>
               <% next unless column.visible %>
-              <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %>">
-                <% if column.sorting %>
-                  <%= sort_link_to column.label, column.code, class: 'no-underline inline-block w-full' %>
-                <% else %>
-                  <%= column.label %>
-                <% end %>
+              <th class="<%= column.align %>">
+<%= column.sorting ? sort_link_to(column.label, column.code) : column.label %>
               </th>
             <% end %>
           </tr>
           </thead>
           <tbody>
           <% @table.rows.each do |row| %>
-            <tr class="hover:bg-gray-100">
+            <tr>
               <% @table.columns.each_with_index do |column, index| %>
                 <% next unless column.visible %>
                 <% cell = row[index] %>
-                <% value, style = column.format(cell) %>
-                <td class="px-1 border-b border-gray-200 p-1 whitespace-nowrap <%= column.align %> <%= style %>"><%= value %></td>
+<td class="<%= class_names(column.align, column.style(cell)) %>"><%= column.format(cell) %></td>
               <% end %>
             </tr>
           <% end %>
@@ -85,10 +80,7 @@
             <% @table.columns.each_with_index do |column, index| %>
               <% next unless column.visible %>
               <% cell = @summary_row[index] %>
-              <% value, style = column.format(cell) %>
-              <th class="border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap <%= column.align %> <%= style %>">
-                <%= value %>
-              </th>
+<th class="<%= class_names(column.align, column.style(cell)) %>"><%= column.format(cell) %></th>
             <% end %>
           </tr>
           </tfoot>

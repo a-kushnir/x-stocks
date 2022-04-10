@@ -1,5 +1,6 @@
 @import "tailwindcss/base";
 
+/* MODULES */
 @import "module/theme";
 @import "module/badge";
 @import "module/button";
@@ -7,6 +8,10 @@
 @import "module/pagy";
 @import "module/tag";
 
+/* COMPONENTS */
+@import "../../components/data_table_component/data_table_component.css";
+
+/* TAILWIND */
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 

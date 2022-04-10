@@ -9,11 +9,11 @@ module DataTable
       include ActionView::Helpers::NumberHelper
 
       def format(value)
-        if value.is_a?(Numeric)
-          [number_to_percentage(value, precision: 2), nil]
-        else
-          [value, 'text-red-600 font-bold']
-        end
+        value.is_a?(Numeric) ? number_to_percentage(value, precision: 2) : value
+      end
+
+      def style(value)
+        'warning' unless value.is_a?(Numeric)
       end
     end
   end

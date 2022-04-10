@@ -68,9 +68,9 @@ The project has API that allows retrieving information about stocks, exhanges, a
 
 * Linux or macOS or Windows
 * PostgreSQL, [download](https://www.postgresql.org/download/)
-* Ruby 2.6 or later, [download](https://www.ruby-lang.org/en/downloads/)
+* Ruby 2.7.5 or later, [download](https://www.ruby-lang.org/en/downloads/)
 * Yarn 1.22 or later, [download](https://classic.yarnpkg.com/en/docs/install/)
-* Node 12 or later, [download](https://nodejs.org/en/download/)
+* Node 16 or later, [download](https://nodejs.org/en/download/)
 * Git
 
 # Installation

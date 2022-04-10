@@ -17,7 +17,7 @@ module Positions
 
       @pagy, positions = pagy positions, items: @table.pagy_items
 
-      rows, @summary = data(positions)
+      rows, @summary = data(positions.to_a)
       @table.rows.concat(rows)
       @summary_row = [
         nil,
@@ -203,7 +203,7 @@ module Positions
         position.shares && stock&.price_change ? position.shares * stock.price_change : 0
       end
 
-      today_return_pct = total_cost.positive? ? today_return / total_cost * 100 : 0
+      today_return_pct = total_cost.positive? ? today_return / market_value * 100 : 0
       total_return = market_value - total_cost
       total_return_pct = total_cost.positive? ? total_return / total_cost * 100 : 0
 

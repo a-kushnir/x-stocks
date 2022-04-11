@@ -8,12 +8,14 @@ module Dividends
     end
 
     def index
-      @table = table
       positions = XStocks::AR::Position.joins(:stock).with_user(current_user).with_shares
-      positions = positions.reorder(@table.sort_column => @table.sort_direction)
-      positions = positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
+
+      @table = table
+      @table.sort { |column, direction| positions = positions.reorder(column => direction) }
+      @table.filter { |query| positions = positions.where('LOWER(stocks.symbol) like LOWER(:query) or LOWER(stocks.company_name) like LOWER(:query)', query: "%#{query}%") }
+
       positions = positions.all
-      @pagy, positions = pagy positions, items: @table.pagy_items
+      positions = @table.paginate(positions)
       return unless stale?(positions)
 
       rows, @summary = data(positions)

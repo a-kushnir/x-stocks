@@ -10,15 +10,15 @@ class StocksController < ApplicationController
   def index
     return if handle_goto_param?
 
-    stock_ids = handle_tag_param
-
-    @table = table
     stocks = XStocks::AR::Stock
     stocks = stocks.where(id: stock_ids) if @tag
-    stocks = stocks.reorder(@table.sort_column => @table.sort_direction)
-    stocks = stocks.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
+
+    @table = table
+    @table.sort { |column, direction| stocks = stocks.reorder(column => direction) }
+    @table.filter { |query| stocks = stocks.where('LOWER(stocks.symbol) like LOWER(:query) or LOWER(stocks.company_name) like LOWER(:query)', query: "%#{query}%") }
+
     stocks = stocks.all
-    @pagy, stocks = pagy stocks, items: @table.pagy_items
+    stocks = @table.paginate(stocks)
     return unless stale?(stocks)
 
     stocks = stocks.map { |stock| XStocks::Stock.new(stock) }
@@ -192,7 +192,7 @@ class StocksController < ApplicationController
     true
   end
 
-  def handle_tag_param
+  def stock_ids
     @tag = params[:tag]
     return if @tag.blank?
 

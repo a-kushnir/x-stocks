@@ -1,2 +1,2 @@
-<%= render(DataTableComponent.new(name: 'Stocks', table: @table, pagy: @pagy, turbo_frame_id: 'datatable_stocks',
+<%= render(DataTableComponent.new(name: 'Stocks', table: @table, turbo_frame_id: 'datatable_stocks',
                                   bottom_left_block: link_to(new_stock_path, class: 'rounded-full bg-blue-500 text-white inline-block shadow-sm mt-1 p-1 float-left', target: '_top') { inline_svg('svg/plus', size: '24*24') })) %>

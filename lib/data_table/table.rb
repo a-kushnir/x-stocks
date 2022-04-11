@@ -3,7 +3,9 @@
 module DataTable
   # Represent a data table
   class Table
-    attr_reader :columns, :rows, :footer, :params
+    include Pagy::Backend
+
+    attr_reader :columns, :rows, :footer, :params, :pages
 
     def initialize(params)
       @params = params
@@ -27,9 +29,24 @@ module DataTable
       self
     end
 
+    def sort
+      yield sort_column, sort_direction
+    end
+
+    def filter
+      yield params[:q] if params[:q].present?
+    end
+
+    def paginate(records)
+      @pages, records = pagy(records, items: pagy_items)
+      records
+    end
+
+    private
+
     def sort_column
       columns.detect { |column| column.code == params[:sort] }&.sorting ||
-        columns.map(&:sorting).compact.first
+          columns.map(&:sorting).compact.first
     end
 
     def sort_direction

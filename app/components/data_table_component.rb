@@ -9,12 +9,10 @@ class DataTableComponent < ::ViewComponent::Base
   include Pagy::Frontend::Override
   include Turbo::FramesHelper
 
-  # TODO: refactor summary_row
-  def initialize(name:, table:, turbo_frame_id:, summary_row: nil, top_right_block: nil, bottom_left_block: nil)
+  def initialize(name:, table:, turbo_frame_id:, top_right_block: nil, bottom_left_block: nil)
     super
     @name = name
     @table = table
-    @summary_row = summary_row
     @turbo_frame_id = turbo_frame_id
     @form_id = "#{turbo_frame_id}_form"
     @top_right_block = top_right_block

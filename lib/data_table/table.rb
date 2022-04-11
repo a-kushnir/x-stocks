@@ -7,13 +7,14 @@ module DataTable
 
     DEFAULT_PAGINATION_OPTIONS = [['10', 10], ['20', 20], ['50', 50], ['100', 100]].freeze
 
-    attr_reader :columns, :rows, :footer, :params, :pages, :pagination_options
+    attr_reader :columns, :rows, :footers, :params, :pages, :pagination_options
 
     def initialize(params, pagination_options = DEFAULT_PAGINATION_OPTIONS)
       @params = params
       @pagination_options = pagination_options
       @columns = []
       @rows = []
+      @footers = []
     end
 
     def init_columns

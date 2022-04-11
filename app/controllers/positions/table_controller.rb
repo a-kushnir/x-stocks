@@ -18,48 +18,7 @@ module Positions
       positions = @table.paginate(positions)
       return unless stale?(positions)
 
-      rows, @summary = data(positions.to_a)
-      @table.rows.concat(rows)
-      @summary_row = [
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        @summary[:total_cost],
-        @summary[:market_value],
-        @summary[:today_return],
-        @summary[:today_return_pct],
-        @summary[:total_return],
-        @summary[:total_return_pct],
-        @summary[:next_div],
-        @summary[:est_annual_div],
-        100,
-        nil,
-        @summary[:stop_loss_value],
-        @summary[:stop_loss_gain_loss],
-        @summary[:stop_loss_gain_loss_pct],
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        @summary[:yield_on_value],
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        @summary[:dividend_rating],
-        nil,
-        nil
-      ]
+      populate_data(positions)
 
       @page_title = 'My Positions'
       @page_menu_item = :positions
@@ -115,27 +74,27 @@ module Positions
       end
     end
 
-    def data(positions)
+    def populate_data(positions)
+      positions = positions.to_a
       stocks = XStocks::Stock.find_all(id: positions.map(&:stock_id))
       @stocks_by_id = stocks.index_by(&:id)
 
       total_market_value = positions.sum(&:market_value)
       avg_dividend_rating = XStocks::Position::AvgDividendRating.new
 
-      data = []
       positions.each do |position|
         stock = @stocks_by_id[position.stock_id]
         div_suspended = stock.div_suspended?
         avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 
-        data << row(stock, position, div_suspended, total_market_value)
+        @table.rows << row(stock, position, div_suspended, total_market_value)
       end
 
       summary = {
         dividend_rating: avg_dividend_rating.value
       }
 
-      [data, summary(@stocks_by_id, positions, summary)]
+      @table.footers << footer(summary)
     end
 
     def row(stock, position, div_suspended, total_market_value)
@@ -185,6 +144,49 @@ module Positions
         stock.dividend_rating&.to_f,
         stock.prev_month_ex_date? ? stock.next_div_ex_date : nil,
         [stock.metascore, stock.meta_score_details]
+      ]
+    end
+
+    def footer(summary)
+      [
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          summary[:total_cost],
+          summary[:market_value],
+          summary[:today_return],
+          summary[:today_return_pct],
+          summary[:total_return],
+          summary[:total_return_pct],
+          summary[:next_div],
+          summary[:est_annual_div],
+          100,
+          nil,
+          summary[:stop_loss_value],
+          summary[:stop_loss_gain_loss],
+          summary[:stop_loss_gain_loss_pct],
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          summary[:yield_on_value],
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          summary[:dividend_rating],
+          nil,
+          nil
       ]
     end
 

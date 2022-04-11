@@ -18,25 +18,7 @@ module Dividends
       positions = @table.paginate(positions)
       return unless stale?(positions)
 
-      rows, @summary = data(positions)
-      @table.rows.concat(rows)
-      @summary_row = [
-        # Stock
-        nil,
-        nil,
-        nil,
-        @summary[:yield_on_value],
-        nil,
-        @summary[:dividend_rating],
-        # Position
-        @summary[:total_cost],
-        @summary[:market_value],
-        @summary[:gain_loss],
-        @summary[:gain_loss_pct],
-        100,
-        *@summary[:month_amounts],
-        @summary[:total_amount]
-      ]
+      populate_data(positions)
 
       @page_title = 'My Dividends'
       @page_menu_item = :dividends
@@ -76,7 +58,7 @@ module Dividends
       end
     end
 
-    def data(positions)
+    def populate_data(positions)
       dividend = ::Dividend.new
       months = dividend.months
 
@@ -87,7 +69,6 @@ module Dividends
       month_amounts = months.map { 0 }
       avg_dividend_rating = XStocks::Position::AvgDividendRating.new
 
-      data = []
       positions.each do |position|
         stock = @stocks_by_id[position.stock_id]
         div_suspended = stock.div_suspended?
@@ -99,7 +80,7 @@ module Dividends
           month_amounts[index] += amount if amount
         end
 
-        data << row(stock, position, months, estimates, div_suspended, total_market_value)
+        @table.rows << row(stock, position, months, estimates, div_suspended, total_market_value)
       end
 
       summary = {
@@ -108,7 +89,7 @@ module Dividends
         dividend_rating: avg_dividend_rating.value
       }
 
-      [data, summary(positions, summary)]
+      @table.footers << footer(summary)
     end
 
     def row(stock, position, months, estimates, div_suspended, total_market_value)
@@ -134,6 +115,26 @@ module Dividends
       # Dividends
       months.each { |month| result << month_dividends(estimates, div_suspended, position, month) }
       result << value_or_warning(div_suspended, annual_dividends(estimates, div_suspended, position))
+    end
+
+    def footer(summary)
+      [
+          # Stock
+          nil,
+          nil,
+          nil,
+          summary[:yield_on_value],
+          nil,
+          summary[:dividend_rating],
+          # Position
+          summary[:total_cost],
+          summary[:market_value],
+          summary[:gain_loss],
+          summary[:gain_loss_pct],
+          100,
+          *summary[:month_amounts],
+          summary[:total_amount]
+      ]
     end
 
     def month_dividends(estimates, div_suspended, position, month)

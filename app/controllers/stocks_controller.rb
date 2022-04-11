@@ -21,9 +21,7 @@ class StocksController < ApplicationController
     stocks = @table.paginate(stocks)
     return unless stale?(stocks)
 
-    stocks = stocks.map { |stock| XStocks::Stock.new(stock) }
-    rows = data(stocks)
-    @table.rows.concat(rows)
+    populate_data(stocks)
 
     @page_title = 'Stocks'
     @page_menu_item = :stocks
@@ -209,15 +207,21 @@ class StocksController < ApplicationController
     stock_ids
   end
 
-  def data(stocks)
+  def populate_data(stocks)
     # positions = XStocks::AR::Position.where(stock_id: stocks.map(&:id), user: current_user).all
     # positions = positions.index_by(&:stock_id)
     flag = CountryFlag.new
 
     stocks.map do |stock|
       # position = positions[stock.id]
-      div_suspended = stock.div_suspended?
-      [
+      @table.rows << row(stock, flag)
+    end
+  end
+
+  def row(stock, flag)
+    stock = XStocks::Stock.new(stock)
+    div_suspended = stock.div_suspended?
+    [
         stock.symbol,
         stock.company_name,
         flag.code(stock.country),
@@ -241,8 +245,7 @@ class StocksController < ApplicationController
         stock.finnhub_rec&.to_f,
         stock.dividend_rating&.to_f,
         stock.prev_month_ex_date? ? stock.next_div_ex_date : nil
-      ]
-    end
+    ]
   end
 
   def value_or_warning(div_suspended, value)

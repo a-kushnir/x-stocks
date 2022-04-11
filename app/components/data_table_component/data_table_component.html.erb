@@ -75,15 +75,17 @@
             </tr>
           <% end %>
           </tbody>
-          <% if @summary_row %>
+          <% if @table.footers.any? %>
           <tfoot>
-          <tr>
-            <% @table.columns.each_with_index do |column, index| %>
-              <% next unless column.visible %>
-              <% cell = @summary_row[index] %>
+          <% @table.footers.each do |footer| %>
+            <tr>
+              <% @table.columns.each_with_index do |column, index| %>
+                <% next unless column.visible %>
+                <% cell = footer[index] %>
 <th class="<%= class_names(column.align, column.style(cell)) %>"><%= column.format(cell) %></th>
-            <% end %>
-          </tr>
+              <% end %>
+            </tr>
+          <% end %>
           </tfoot>
           <% end %>
         </table>

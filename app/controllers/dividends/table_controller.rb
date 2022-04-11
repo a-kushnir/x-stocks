@@ -52,7 +52,7 @@ module Dividends
     end
 
     def table
-      table = DataTable::Table.new(params)
+      table = DataTable::Table.new(params, DataTable::Table::DEFAULT_PAGINATION_OPTIONS + [['All', -1]])
 
       table.init_columns do |columns|
         # Stock

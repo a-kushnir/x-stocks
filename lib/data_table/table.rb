@@ -5,10 +5,13 @@ module DataTable
   class Table
     include Pagy::Backend
 
-    attr_reader :columns, :rows, :footer, :params, :pages
+    DEFAULT_PAGINATION_OPTIONS = [['10', 10], ['20', 20], ['50', 50], ['100', 100]].freeze
 
-    def initialize(params)
+    attr_reader :columns, :rows, :footer, :params, :pages, :pagination_options
+
+    def initialize(params, pagination_options = DEFAULT_PAGINATION_OPTIONS)
       @params = params
+      @pagination_options = pagination_options
       @columns = []
       @rows = []
     end
@@ -46,7 +49,7 @@ module DataTable
 
     def sort_column
       columns.detect { |column| column.code == params[:sort] }&.sorting ||
-          columns.map(&:sorting).compact.first
+        columns.map(&:sorting).compact.first
     end
 
     def sort_direction
@@ -54,8 +57,10 @@ module DataTable
     end
 
     def pagy_items
-      items = params.fetch(:items, 10)
-      items = nil if items.to_i <= 1
+      default = pagination_options.first.last
+      items = params.fetch(:items, default).to_i
+      items = default unless pagination_options.map(&:last).include?(items)
+      items = nil unless items.positive?
       items
     end
   end

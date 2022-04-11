@@ -199,11 +199,11 @@ class StocksController < ApplicationController
     virtual_tag = VirtualTag.find(@tag)
 
     stock_ids =
-        if virtual_tag
-          virtual_tag.find_stock_ids(current_user)
-        else
-          XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
-        end
+      if virtual_tag
+        virtual_tag.find_stock_ids(current_user)
+      else
+        XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
+      end
 
     @tag = nil if stock_ids.blank? && !virtual_tag
     stock_ids
@@ -218,29 +218,29 @@ class StocksController < ApplicationController
       # position = positions[stock.id]
       div_suspended = stock.div_suspended?
       [
-          stock.symbol,
-          stock.company_name,
-          flag.code(stock.country),
-          stock.current_price&.to_f,
-          stock.price_change&.to_f,
-          stock.price_change_pct&.to_f,
-          stock.price_range,
-          stock.yahoo_discount&.to_f,
-          stock.yahoo_short_direction,
-          stock.yahoo_medium_direction,
-          stock.yahoo_long_direction,
-          stock.dividend_frequency&.titleize,
-          stock.next_div_amount&.to_f,
-          value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
-          value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-          stock.div_change_pct&.round(1),
-          stock.pe_ratio_ttm&.to_f&.round(2),
-          stock.payout_ratio&.to_f,
-          stock.market_capitalization&.to_f,
-          stock.yahoo_rec&.to_f,
-          stock.finnhub_rec&.to_f,
-          stock.dividend_rating&.to_f,
-          stock.prev_month_ex_date? ? stock.next_div_ex_date : nil
+        stock.symbol,
+        stock.company_name,
+        flag.code(stock.country),
+        stock.current_price&.to_f,
+        stock.price_change&.to_f,
+        stock.price_change_pct&.to_f,
+        stock.price_range,
+        stock.yahoo_discount&.to_f,
+        stock.yahoo_short_direction,
+        stock.yahoo_medium_direction,
+        stock.yahoo_long_direction,
+        stock.dividend_frequency&.titleize,
+        stock.next_div_amount&.to_f,
+        value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
+        value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
+        stock.div_change_pct&.round(1),
+        stock.pe_ratio_ttm&.to_f&.round(2),
+        stock.payout_ratio&.to_f,
+        stock.market_capitalization&.to_f,
+        stock.yahoo_rec&.to_f,
+        stock.finnhub_rec&.to_f,
+        stock.dividend_rating&.to_f,
+        stock.prev_month_ex_date? ? stock.next_div_ex_date : nil
       ]
     end
   end

@@ -10,7 +10,7 @@ class DataTableComponent < ::ViewComponent::Base
   include Turbo::FramesHelper
 
   # TODO: refactor summary_row
-  def initialize(name:, table:, summary_row: nil, turbo_frame_id:, top_right_block: nil, bottom_left_block: nil)
+  def initialize(name:, table:, turbo_frame_id:, summary_row: nil, top_right_block: nil, bottom_left_block: nil)
     super
     @name = name
     @table = table

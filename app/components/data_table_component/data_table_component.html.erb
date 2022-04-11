@@ -10,7 +10,7 @@
     </div>
 
     <div class="inline-block">
-      <%= select_tag('items', options_for_select([['10', 10], ['20', 20], ['50', 50], ['100', 100], ['All', -1]], params[:items]), class: 'border border-gray-400 rounded-lg', form: @form_id, data: { controller: 'element', action: 'change->element#requestSubmit' }) %>
+      <%= select_tag('items', options_for_select(@table.pagination_options, params[:items]), class: 'border border-gray-400 rounded-lg', form: @form_id, data: { controller: 'element', action: 'change->element#requestSubmit' }) %>
     </div>
 
     <div class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">

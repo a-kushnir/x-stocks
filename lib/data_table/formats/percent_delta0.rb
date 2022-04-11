@@ -10,7 +10,7 @@ module DataTable
         return value if value.blank?
 
         result = number_to_percentage(value, precision: 0)
-        value > 0 ? "+#{result}" : result
+        value.positive? ? "+#{result}" : result
       end
     end
   end

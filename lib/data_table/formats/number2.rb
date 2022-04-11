@@ -7,7 +7,7 @@ module DataTable
     # Formats value as a number
     class Number2 < Number
       def format(value)
-        number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true, precision: 2) if value.is_a?(Numeric)
+        number_with_precision(value, delimiter: ',', precision: 2) if value.is_a?(Numeric)
       end
     end
   end

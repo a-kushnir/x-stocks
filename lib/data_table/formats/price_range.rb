@@ -29,8 +29,8 @@ module DataTable
           html << "<div class='progress-bar #{css_class}' style='width: #{progress2}%'></div>"
           html << '</div>'
           html << '<span class="text-xs">'
-          html << "<span class='float-left'>#{ number_to_currency(min, unit: '') }</span>"
-          html << "<span class='float-right'>#{ number_to_currency(max, unit: '') }</span>"
+          html << "<span class='float-left'>#{number_to_currency(min, unit: '')}</span>"
+          html << "<span class='float-right'>#{number_to_currency(max, unit: '')}</span>"
           html << '</span>'
         end
       end

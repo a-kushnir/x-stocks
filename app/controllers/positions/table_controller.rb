@@ -107,11 +107,10 @@ module Positions
         columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
         columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2')
         columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2')
-        # columns << { label: 'Yahoo Rec.' }
-        # columns << { label: 'Finnhub Rec.' }
-        # columns << { label: 'Div. Safety' }
-        # columns << { label: 'Ex Date' }
-        # columns << { label: 'Score', align: 'center' }
+        columns << DataTable::Column.new(code: 'yrc', label: 'Yahoo Rec.', formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
+        columns << DataTable::Column.new(code: 'frc', label: 'Finnhub Rec.', formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
+        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
+        columns << DataTable::Column.new(code: 'exd', label: 'Ex Date.', formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
       end
 
       table

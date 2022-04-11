@@ -8,6 +8,10 @@ module DataTable
     class PriceRange
       include ActionView::Helpers::NumberHelper
 
+      def align
+        :center
+      end
+
       def format(value)
         return unless value
 

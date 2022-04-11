@@ -14,18 +14,20 @@ module DataTable
 
     delegate :format, :style, to: :formatter
 
-    def initialize(code:, label:, formatter:, align: 'left', sorting: nil, default: false)
+    def initialize(code:, label:, formatter:, align: nil, sorting: nil, default: false)
       @code = code
       @label = label
       @sorting = sorting
       @default = default
-      self.align = align
       self.formatter = formatter
+      self.align = align
     end
 
     private
 
     def align=(value)
+      return unless value
+
       value = value.to_s
       raise "Unknown align '#{value}'" if value.present? && !ALIGNS.include?(value)
 
@@ -38,6 +40,7 @@ module DataTable
       raise "Unknown formatter '#{value}'" unless formatter
 
       @formatter = formatter
+      self.align = formatter.align
     end
   end
 end

@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'action_view/helpers/number_helper'
+require_relative 'number'
 
 module DataTable
   module Formats
     # Formats value as a US currency
-    class CurrencyOrWarning
-      include ActionView::Helpers::NumberHelper
-
+    class CurrencyOrWarning < Number
       def format(value)
         value.is_a?(Numeric) ? number_to_currency(value) : value
       end

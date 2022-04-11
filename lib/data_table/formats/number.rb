@@ -8,6 +8,10 @@ module DataTable
     class Number
       include ActionView::Helpers::NumberHelper
 
+      def align
+        :right
+      end
+
       def format(value)
         number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) if value.is_a?(Numeric)
       end

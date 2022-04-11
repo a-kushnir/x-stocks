@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'action_view/helpers/number_helper'
+require_relative 'number'
 
 module DataTable
   module Formats
     # Formats value as a percent number
-    class PercentOrWarning2
-      include ActionView::Helpers::NumberHelper
-
+    class PercentOrWarning2 < Number
       def format(value)
         value.is_a?(Numeric) ? number_to_percentage(value, precision: 2) : value
       end

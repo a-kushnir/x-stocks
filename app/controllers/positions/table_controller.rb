@@ -75,38 +75,38 @@ module Positions
         columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
         columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
         # Position
-        columns << DataTable::Column.new(code: 'shr', label: 'Shares', formatter: 'number', align: 'right', sorting: 'positions.shares', default: true)
-        columns << DataTable::Column.new(code: 'apr', label: 'Average Price', formatter: 'currency', align: 'right', sorting: 'positions.average_price', default: true)
-        columns << DataTable::Column.new(code: 'mpr', label: 'Market Price', formatter: 'currency', align: 'right', sorting: 'positions.market_price', default: true)
-        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', align: 'right', sorting: 'positions.total_cost', default: true)
-        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', align: 'right', sorting: 'positions.market_value', default: true)
-        columns << DataTable::Column.new(code: 'drc', label: "Today's Return", formatter: 'currency_delta', align: 'right')
-        columns << DataTable::Column.new(code: 'drp', label: "Today's Return %", formatter: 'percent_delta2', align: 'right', sorting: 'stock.price_change_pct')
-        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', align: 'right', sorting: 'positions.gain_loss', default: true)
-        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', align: 'right', sorting: 'positions.gain_loss_pct', default: true)
-        columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', align: 'right', default: true)
-        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', align: 'right', default: true)
-        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', align: 'right', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'shr', label: 'Shares', formatter: 'number', sorting: 'positions.shares', default: true)
+        columns << DataTable::Column.new(code: 'apr', label: 'Average Price', formatter: 'currency', sorting: 'positions.average_price', default: true)
+        columns << DataTable::Column.new(code: 'mpr', label: 'Market Price', formatter: 'currency', sorting: 'positions.market_price', default: true)
+        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost', default: true)
+        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value', default: true)
+        columns << DataTable::Column.new(code: 'drc', label: "Today's Return", formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'drp', label: "Today's Return %", formatter: 'percent_delta2', sorting: 'stock.price_change_pct')
+        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
+        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
+        columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
         # Stop Loss
-        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency', align: 'right')
-        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency', align: 'right')
-        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta', align: 'right')
-        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2', align: 'right')
+        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2')
         # Stock
-        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency', align: 'right')
-        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta', align: 'right')
-        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2', align: 'right')
+        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency')
+        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2')
         columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
-        columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', align: 'right', sorting: 'stocks.yahoo_discount')
-        # columns << { label: 'Short Term' }
-        # columns << { label: 'Mid Term' }
-        # columns << { label: 'Long Term' }
-        # columns << { label: 'Div. Frequency' }
-        # columns << { label: 'Est. Annual Div.' }
-        # columns << { label: 'Est. Yield %' }
-        # columns << { label: 'Div. Change %' }
-        # columns << { label: 'P/E Ratio' }
-        # columns << { label: 'Payout %' }
+        columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount')
+        columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction')
+        columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction')
+        columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction')
+        columns << DataTable::Column.new(code: 'dvf', label: 'Div. Frequency', formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+        columns << DataTable::Column.new(code: 'ead', label: 'Est. Annual Div.', formatter: 'currency_or_warning')
+        columns << DataTable::Column.new(code: 'eyp', label: 'Est. Yield %', formatter: 'percent_or_warning2')
+        columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
+        columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2')
+        columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2')
         # columns << { label: 'Yahoo Rec.' }
         # columns << { label: 'Finnhub Rec.' }
         # columns << { label: 'Div. Safety' }
@@ -176,7 +176,7 @@ module Positions
         stock.yahoo_short_direction,
         stock.yahoo_medium_direction,
         stock.yahoo_long_direction,
-        [stock.dividend_frequency&.titleize, stock.dividend_frequency_num],
+        stock.dividend_frequency&.titleize,
         value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         stock.div_change_pct&.round(1),

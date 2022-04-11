@@ -58,20 +58,20 @@ module Dividends
         columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', sorting: 'stocks.symbol', default: true)
         columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
         columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
-        columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', align: 'right', sorting: 'stocks.est_annual_dividend_pct', default: true)
-        columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1', align: 'right')
-        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', align: 'center', sorting: 'stocks.dividend_rating', default: true)
+        columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
+        columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
+        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', sorting: 'stocks.dividend_rating', default: true)
         # Position
-        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', align: 'right', sorting: 'positions.total_cost')
-        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', align: 'right', sorting: 'positions.market_value')
-        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', align: 'right', sorting: 'positions.gain_loss')
-        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', align: 'right', sorting: 'positions.gain_loss_pct')
-        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', align: 'right', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost')
+        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss')
+        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct')
+        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
         # Dividends
         month_names.each_with_index do |month_name, index|
-          columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', align: 'right', default: true)
+          columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', default: true)
         end
-        columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', align: 'right', default: true)
+        columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
       end
 
       table

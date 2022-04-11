@@ -4,6 +4,10 @@ module DataTable
   module Formats
     # Formats value as a string
     class SafetyBadge
+      def align
+        :center
+      end
+
       def format(value)
         convert(value)
       end

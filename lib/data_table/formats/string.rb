@@ -4,6 +4,10 @@ module DataTable
   module Formats
     # Formats value as a string
     class String
+      def align
+        :left
+      end
+
       def format(value)
         value
       end

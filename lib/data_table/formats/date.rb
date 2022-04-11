@@ -9,7 +9,7 @@ module DataTable
       end
 
       def format(value)
-        value.strftime('%b, %d %Y') if value
+        value&.strftime('%b, %d %Y')
       end
 
       def style(_value); end

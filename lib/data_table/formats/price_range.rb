@@ -21,12 +21,12 @@ module DataTable
         progress1 = Math.inv_lerp(min, max, points[0]) * 100
         progress2 = Math.inv_lerp(min, max, points[1]) * 100 - progress1
         progress2 = 2 if progress2 < 2 # Min width is 2%
-        css_class = change.negative? ? 'bg-danger' : 'bg-success'
+        css_class = change.negative? ? 'negative' : 'positive'
 
         build do |html|
-          html << '<div class="progress" style="height: 4px; min-width: 100px;">'
-          html << "<div class='progress-bar' style='width: #{progress1}%; background-color: transparent;'></div>"
-          html << "<div class='progress-bar #{css_class}' style='width: #{progress2}%'></div>"
+          html << '<div class="datatable-price-range">'
+          html << "<div style='width: #{progress1.round}%;'></div>"
+          html << "<div class='#{css_class}' style='width: #{progress2.round}%'></div>"
           html << '</div>'
           html << '<span class="text-xs">'
           html << "<span class='float-left'>#{number_to_currency(min, unit: '')}</span>"

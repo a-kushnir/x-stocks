@@ -27,6 +27,12 @@
           &.zero { @apply text-gray-500; }
           &.negative { @apply text-red-600; }
           &.warning { @apply text-red-600 font-bold; }
+
+          .datatable-price-range {
+             @apply flex h-1 bg-gray-200;
+             .negative { @apply bg-red-600; }
+             .positive { @apply bg-green-600; }
+          }
         }
       }
     }

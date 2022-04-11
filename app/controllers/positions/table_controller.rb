@@ -13,9 +13,8 @@ module Positions
       positions = positions.reorder(@table.sort_column => @table.sort_direction)
       positions = positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
       positions = positions.all
-      return unless stale?(positions)
-
       @pagy, positions = pagy positions, items: @table.pagy_items
+      return unless stale?(positions)
 
       rows, @summary = data(positions.to_a)
       @table.rows.concat(rows)
@@ -71,7 +70,7 @@ module Positions
 
       table.init_columns do |columns|
         # Stock
-        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
         columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
         columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
         # Position
@@ -98,9 +97,9 @@ module Positions
         columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2')
         columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
         columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount')
-        columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction')
-        columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction')
-        columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction')
+        columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
+        columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
+        columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
         columns << DataTable::Column.new(code: 'dvf', label: 'Div. Frequency', formatter: 'string', sorting: 'stocks.dividend_frequency_num')
         columns << DataTable::Column.new(code: 'ead', label: 'Est. Annual Div.', formatter: 'currency_or_warning')
         columns << DataTable::Column.new(code: 'eyp', label: 'Est. Yield %', formatter: 'percent_or_warning2')
@@ -112,8 +111,6 @@ module Positions
         columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
         columns << DataTable::Column.new(code: 'exd', label: 'Ex Date.', formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
       end
-
-      table
     end
 
     def data(positions)
@@ -145,7 +142,7 @@ module Positions
 
       [
         # Stock
-        view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline inline-block w-full', target: '_top'),
+        stock.symbol,
         stock.company_name,
         flag.code(stock.country),
         # Position

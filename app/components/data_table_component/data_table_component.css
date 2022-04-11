@@ -34,6 +34,9 @@
              .positive { @apply bg-green-600; }
           }
         }
+        td {
+          a { @apply text-blue-500 no-underline inline-block w-full; }
+        }
       }
     }
   }

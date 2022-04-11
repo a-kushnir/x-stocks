@@ -23,6 +23,8 @@ module DataTable
 
       duplicates = columns.group_by(&:code).map { |code, columns| code if columns.size > 1 }.compact
       raise "Columns have duplicated codes: #{duplicates}" if duplicates.any?
+
+      self
     end
 
     def sort_column

@@ -13,9 +13,8 @@ module Dividends
       positions = positions.reorder(@table.sort_column => @table.sort_direction)
       positions = positions.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
       positions = positions.all
-      return unless stale?(positions)
-
       @pagy, positions = pagy positions, items: @table.pagy_items
+      return unless stale?(positions)
 
       rows, @summary = data(positions)
       @table.rows.concat(rows)
@@ -55,7 +54,7 @@ module Dividends
 
       table.init_columns do |columns|
         # Stock
-        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'string', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
         columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
         columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
         columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
@@ -73,8 +72,6 @@ module Dividends
         end
         columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
       end
-
-      table
     end
 
     def data(positions)
@@ -119,7 +116,7 @@ module Dividends
       result =
         [
           # Stock
-          view_context.link_to(stock.symbol, stock_url(stock.symbol), class: 'text-blue-500 no-underline inline-block w-full', target: '_top'),
+          stock.symbol,
           stock.company_name,
           flag.code(stock.country),
           value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

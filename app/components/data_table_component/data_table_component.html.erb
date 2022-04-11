@@ -75,6 +75,7 @@
             </tr>
           <% end %>
           </tbody>
+          <% if @summary_row %>
           <tfoot>
           <tr>
             <% @table.columns.each_with_index do |column, index| %>
@@ -84,10 +85,12 @@
             <% end %>
           </tr>
           </tfoot>
+          <% end %>
         </table>
       </div>
     </div>
 
+    <%= @bottom_left_block %>
     <div class="text-center">
       <%== pagy_nav @pagy %>
     </div>

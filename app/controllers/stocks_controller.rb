@@ -12,14 +12,18 @@ class StocksController < ApplicationController
 
     stock_ids = handle_tag_param
 
+    @table = table
     stocks = XStocks::AR::Stock
     stocks = stocks.where(id: stock_ids) if @tag
+    stocks = stocks.reorder(@table.sort_column => @table.sort_direction)
+    stocks = stocks.where('LOWER(stocks.symbol) like LOWER(:q) or LOWER(stocks.company_name) like LOWER(:q)', q: "%#{params[:q]}%") if params[:q].present?
     stocks = stocks.all
+    @pagy, stocks = pagy stocks, items: @table.pagy_items
     return unless stale?(stocks)
 
-    @columns = columns
     stocks = stocks.map { |stock| XStocks::Stock.new(stock) }
-    @data = data(stocks)
+    rows = data(stocks)
+    @table.rows.concat(rows)
 
     @page_title = 'Stocks'
     @page_menu_item = :stocks
@@ -103,6 +107,37 @@ class StocksController < ApplicationController
 
   private
 
+  def table
+    table = DataTable::Table.new(params)
+
+    table.init_columns do |columns|
+      # Stock
+      columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
+      columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
+      columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
+      columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency', default: true)
+      columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta', default: true)
+      columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2', default: true)
+      columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
+      columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount', default: true)
+      columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
+      columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
+      columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
+      columns << DataTable::Column.new(code: 'dvf', label: 'Div. Frequency', formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+      columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency_or_warning4', sorting: 'stocks.next_div_amount')
+      columns << DataTable::Column.new(code: 'ead', label: 'Est. Annual Div.', formatter: 'currency_or_warning', default: true)
+      columns << DataTable::Column.new(code: 'eyp', label: 'Est. Yield %', formatter: 'percent_or_warning2', default: true)
+      columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
+      columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
+      columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2', sorting: 'stocks.payout_ratio')
+      columns << DataTable::Column.new(code: 'cap', label: 'Market Cap.', formatter: 'currency', sorting: 'stocks.market_capitalization')
+      columns << DataTable::Column.new(code: 'yrc', label: 'Yahoo Rec.', formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
+      columns << DataTable::Column.new(code: 'frc', label: 'Finnhub Rec.', formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
+      columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
+      columns << DataTable::Column.new(code: 'exd', label: 'Ex Date.', formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
+    end
+  end
+
   def initialize_params
     params.permit(:save_and_show, :save_only).slice(:save_and_show, :save_only)
   end
@@ -164,80 +199,48 @@ class StocksController < ApplicationController
     virtual_tag = VirtualTag.find(@tag)
 
     stock_ids =
-      if virtual_tag
-        virtual_tag.find_stock_ids(current_user)
-      else
-        XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
-      end
+        if virtual_tag
+          virtual_tag.find_stock_ids(current_user)
+        else
+          XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
+        end
 
     @tag = nil if stock_ids.blank? && !virtual_tag
     stock_ids
   end
 
-  def columns
-    columns = []
-
-    columns << { label: 'Company', align: 'left', searchable: true, default: true }
-    columns << { label: 'Country', align: 'center' }
-    columns << { label: 'Price', default: true }
-    columns << { label: 'Change', default: true }
-    columns << { label: 'Change %', default: true }
-    columns << { label: '52 Week Range' }
-    columns << { label: 'Fair Value', default: true }
-    columns << { label: 'Short Term' }
-    columns << { label: 'Mid Term' }
-    columns << { label: 'Long Term' }
-    columns << { label: 'Div. Frequency' }
-    columns << { label: 'Next Div.' }
-    columns << { label: 'Est. Annual Div.', default: true }
-    columns << { label: 'Est. Yield %', default: true }
-    columns << { label: 'Div. Change %' }
-    columns << { label: 'P/E Ratio' }
-    columns << { label: 'Payout %' }
-    columns << { label: 'Market Cap.' }
-    columns << { label: 'Yahoo Rec.', default: true }
-    columns << { label: 'Finnhub Rec.', default: true }
-    columns << { label: 'Div. Safety', default: true }
-    columns << { label: 'Ex Date' }
-    columns << { label: 'Score', align: 'center', default: true }
-
-    columns.each_with_index { |column, index| column[:index] = index + 1 }
-    columns
-  end
-
   def data(stocks)
-    positions = XStocks::AR::Position.where(stock_id: stocks.map(&:id), user: current_user).all
-    positions = positions.index_by(&:stock_id)
+    # positions = XStocks::AR::Position.where(stock_id: stocks.map(&:id), user: current_user).all
+    # positions = positions.index_by(&:stock_id)
     flag = CountryFlag.new
 
     stocks.map do |stock|
-      position = positions[stock.id]
+      # position = positions[stock.id]
       div_suspended = stock.div_suspended?
       [
-        [stock.symbol, stock.logo_url, position&.note.presence],
-        stock.company_name,
-        flag.code(stock.country),
-        stock.current_price&.to_f,
-        stock.price_change&.to_f,
-        stock.price_change_pct&.to_f,
-        stock.price_range,
-        stock.yahoo_discount&.to_f,
-        stock.yahoo_short_direction,
-        stock.yahoo_medium_direction,
-        stock.yahoo_long_direction,
-        [stock.dividend_frequency&.titleize, stock.dividend_frequency_num],
-        stock.next_div_amount&.to_f,
-        value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
-        value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
-        stock.div_change_pct&.round(1),
-        stock.pe_ratio_ttm&.to_f&.round(2),
-        stock.payout_ratio&.to_f,
-        stock.market_capitalization&.to_f,
-        stock.yahoo_rec&.to_f,
-        stock.finnhub_rec&.to_f,
-        stock.dividend_rating&.to_f,
-        stock.prev_month_ex_date? ? stock.next_div_ex_date : nil,
-        [stock.metascore, stock.meta_score_details]
+          stock.symbol,
+          stock.company_name,
+          flag.code(stock.country),
+          stock.current_price&.to_f,
+          stock.price_change&.to_f,
+          stock.price_change_pct&.to_f,
+          stock.price_range,
+          stock.yahoo_discount&.to_f,
+          stock.yahoo_short_direction,
+          stock.yahoo_medium_direction,
+          stock.yahoo_long_direction,
+          stock.dividend_frequency&.titleize,
+          stock.next_div_amount&.to_f,
+          value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
+          value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
+          stock.div_change_pct&.round(1),
+          stock.pe_ratio_ttm&.to_f&.round(2),
+          stock.payout_ratio&.to_f,
+          stock.market_capitalization&.to_f,
+          stock.yahoo_rec&.to_f,
+          stock.finnhub_rec&.to_f,
+          stock.dividend_rating&.to_f,
+          stock.prev_month_ex_date? ? stock.next_div_ex_date : nil
       ]
     end
   end

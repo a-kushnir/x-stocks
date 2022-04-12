@@ -119,21 +119,21 @@ module Dividends
 
     def footer(summary)
       [
-          # Stock
-          nil,
-          nil,
-          nil,
-          summary[:yield_on_value],
-          nil,
-          summary[:dividend_rating],
-          # Position
-          summary[:total_cost],
-          summary[:market_value],
-          summary[:gain_loss],
-          summary[:gain_loss_pct],
-          100,
-          *summary[:month_amounts],
-          summary[:total_amount]
+        # Stock
+        nil,
+        nil,
+        nil,
+        summary[:yield_on_value],
+        nil,
+        summary[:dividend_rating],
+        # Position
+        summary[:total_cost],
+        summary[:market_value],
+        summary[:gain_loss],
+        summary[:gain_loss_pct],
+        100,
+        *summary[:month_amounts],
+        summary[:total_amount]
       ]
     end
 

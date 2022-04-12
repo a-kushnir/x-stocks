@@ -15,11 +15,11 @@ module ApplicationHelper
   def delta_class(number)
     number = number.to_s
     if number.blank? || number !~ /[1-9]/i
-      'text-muted'
+      'text-neutral'
     elsif /-/i.match?(number)
-      'text-danger'
+      'text-negative'
     else
-      'text-success'
+      'text-positive'
     end
   end
 

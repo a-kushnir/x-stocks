@@ -7,7 +7,7 @@ module DataTable
     # Formats value as a Date
     class FutureDate < Date
       def style(value)
-        'zero' if value && !value.future?
+        'text-neutral' if value && !value.future?
       end
     end
   end

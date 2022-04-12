@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def fear_n_greed_image
-    image_path = Etl::Refresh::FearNGreed.new.image_path
+    image_path = "#{Rails.root}/public/img/fear-and-greed.png" # Etl::Refresh::FearNGreed.new.image_path
     send_file(image_path, type: 'image/png', disposition: 'inline')
   end
 end

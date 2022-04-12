@@ -16,11 +16,11 @@ module DataTable
         if value.blank?
           nil
         elsif value <= 2.5
-          'positive'
+          'text-positive'
         elsif value < 3.5
-          'zero'
+          'text-neutral'
         elsif value < 4.5
-          'negative'
+          'text-negative'
         end
       end
 

@@ -23,9 +23,6 @@
         th, td {
           &.center { @apply text-center; }
           &.right { @apply text-right; }
-          &.positive { @apply text-green-600; }
-          &.zero { @apply text-gray-500; }
-          &.negative { @apply text-red-600; }
           &.warning { @apply text-red-600 font-bold; }
 
           .datatable-price-range {

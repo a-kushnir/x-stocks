@@ -10,3 +10,7 @@
 .bg-hold { background-color: #FFDC48; }
 .bg-buy { background-color: #00C073; }
 .bg-strong-buy { background-color: #008F88; }
+
+.text-positive { @apply text-green-600; }
+.text-neutral { @apply text-gray-500; }
+.text-negative { @apply text-red-600; }

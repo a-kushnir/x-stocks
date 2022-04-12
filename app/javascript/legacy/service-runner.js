@@ -51,7 +51,7 @@ window.runService = function(form) {
   })
 }
 
-function stopService() {
+window.stopService = function() {
   if (esComponent && confirm('Are you sure you want to stop the service?')) {
     esComponent.close();
     serviceStopped();

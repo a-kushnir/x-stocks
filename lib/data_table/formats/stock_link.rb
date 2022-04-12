@@ -13,7 +13,7 @@ module DataTable
       end
 
       def format(value)
-        link_to(value, main_app.stock_path(value), target: '_top') if value
+        link_to(value, main_app.stock_path(value), class: 'w-full', target: '_top') if value
       end
 
       def style(_value); end

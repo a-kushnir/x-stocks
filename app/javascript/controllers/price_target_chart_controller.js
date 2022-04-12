@@ -1,5 +1,6 @@
 import ApplicationController from "controllers/application_controller";
 import { destroyChart } from "helpers/chart_helper";
+import { formatCurrency } from "helpers/format_helper";
 
 export default class extends ApplicationController {
   connect() {

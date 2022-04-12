@@ -1,7 +1,5 @@
-<div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<div class="datatable">
   <h2 class="text-2xl uppercase mb-6">Services</h2>
-
-<%= render partial: 'shared/column', locals: {columns: @columns} %>
 
 <% if @tag %>
   <span class="float-left text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1" style="margin-top: 6px;"><%= @tag %>
@@ -9,8 +7,10 @@
   </span>
 <% end %>
 
-<table id="services-table" class="table table-sm table-hover table-override">
-  <thead class="thead-light">
+  <div class="datatable-container">
+    <div class="datatable-viewport">
+      <table>
+  <thead>
   <tr>
     <th>Service</th>
     <th>Schedule</th>
@@ -28,7 +28,7 @@
       <td>
         <%= job.name %>
         <% job.tags.sort.each do |tag| %>
-          <%= link_to(tag, services_path(tag: tag), class: 'text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1') %>
+          <%= link_to(tag, services_path(tag: tag), class: 'text-xs w-auto font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1') %>
         <% end %>
       </td>
       <td><%= job.schedule %></td>
@@ -77,12 +77,8 @@
   <% end %>
   </tbody>
 </table>
+    </div>
+  </div>
 
 <%= render partial: 'shared/service_runner' %>
-<script>
-  document.addEventListener("turbo:load", () => {
-    dataTable("#services-table", {order: [0, 'asc']}, <%= default_columns %>, '<%= @tag %>');
-  })
-</script>
-
 </div>

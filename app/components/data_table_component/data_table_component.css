@@ -35,7 +35,7 @@
           }
         }
         td {
-          a { @apply text-blue-500 no-underline inline-block w-full; }
+          a { @apply text-blue-500 no-underline inline-block; }
         }
       }
     }

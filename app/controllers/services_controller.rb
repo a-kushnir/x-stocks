@@ -13,8 +13,6 @@ class ServicesController < ApplicationController
       @jobs = XStocks::Job.all
     end
 
-    @stocks = XStocks::AR::Stock.all
-
     @columns = columns
 
     @page_title = 'Services'

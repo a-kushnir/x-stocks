@@ -12,8 +12,8 @@ module XStocks
         ['Finnhub', 'IEX Cloud', 'Yahoo']
       end
 
-      def perform(stock_id:, &block)
-        stock = XStocks::Stock.find_by!(id: stock_id)
+      def perform(symbol:, &block)
+        stock = XStocks::Stock.find_by!(symbol: symbol)
         yield stock_message(stock)
 
         lock do |logger|
@@ -25,7 +25,7 @@ module XStocks
       end
 
       def arguments
-        { stock_id: select_tag(values: stock_values, include_blank: '') }
+        { symbol: select_tag(values: stock_values, include_blank: '') }
       end
     end
   end

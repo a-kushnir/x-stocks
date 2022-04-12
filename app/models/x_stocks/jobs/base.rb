@@ -67,7 +67,7 @@ module XStocks
       end
 
       def stock_values
-        XStocks::AR::Stock.order(:symbol).all.map { |s| ["#{s.symbol} - #{s.company_name}", s.id] }
+        XStocks::AR::Stock.order(:symbol).pluck(:symbol, :company_name).map { |symbol, company_name| ["#{symbol} - #{company_name}", symbol] }
       end
 
       private

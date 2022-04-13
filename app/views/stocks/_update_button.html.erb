@@ -1,4 +1,7 @@
-<button id="stock-update-button" class="btn btn-secondary-outline float-right px-3" onclick="update_stock(<%= @stock.id %>);">
+<button data-controller="stock-data"
+        data-action="click->stock-data#update"
+        data-stock-data-symbol-value="<%= @stock.symbol %>"
+        class="btn btn-secondary-outline float-right px-3">
   <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
-  <span id="stock-update-text"></span>
+  <span data-stock-data-target="output"></span>
 </button>

@@ -17,9 +17,9 @@ module DataTable
         if value.blank?
           nil
         elsif value > 70
-          'positive'
+          'text-positive'
         elsif value < 30
-          'negative'
+          'text-negative'
         end
       end
 

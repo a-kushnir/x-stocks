@@ -8,11 +8,11 @@ module DataTable
     class NumberDelta < Number
       def style(value)
         if value.to_f.positive?
-          'positive'
+          'text-positive'
         elsif value.to_f.negative?
-          'negative'
+          'text-negative'
         else
-          'zero'
+          'text-neutral'
         end
       end
     end

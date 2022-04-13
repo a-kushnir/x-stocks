@@ -74,6 +74,9 @@
               <% end %>
             </tr>
           <% end %>
+          <% if @table.rows.empty? %>
+            <tr><td class="text-center text-gray-500" style="font-style: italic;" colspan="<%= @table.columns.count(&:visible) %>">No data available</td></tr>
+          <% end %>
           </tbody>
           <% if @table.footers.any? %>
           <tfoot>

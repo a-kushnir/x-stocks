@@ -1,15 +1,14 @@
-<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="w-full flex p-2 pr-1"
-   data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="
-  <%=
-    "<div class='text-nowrap'>#{
+<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="w-full flex p-2 pr-1 show-tooltip">
+  <div class="tooltip bottom whitespace-nowrap">
+    <%=
       [
         "#{details['stateDescription']}",
-        "<strong><span>Stock:</span> #{up_down_tag(details['direction'])} #{details['score']}</strong> - #{details['scoreDescription']}",
-        "<strong><span>Sector:</span> #{up_down_tag(details['sectorDirection'])} #{details['sectorScore']}</strong> - #{details['sectorScoreDescription']}",
-        "<strong><span>Index:</span> #{up_down_tag(details['indexScore'])} #{details['indexScore']}</strong> - #{details['indexScoreDescription']}"
-      ].join('<br>')
-    }</div>".gsub('"', "'").html_safe
-  %>">
+        "<strong><span class='inline-block text-right w-12'>Stock:</span> #{up_down_tag(details['direction'])} #{details['score']}</strong> - #{details['scoreDescription']}",
+        "<strong><span class='inline-block text-right w-12'>Sector:</span> #{up_down_tag(details['sectorDirection'])} #{details['sectorScore']}</strong> - #{details['sectorScoreDescription']}",
+        "<strong><span class='inline-block text-right w-12'>Index:</span> #{up_down_tag(details['indexScore'])} #{details['indexScore']}</strong> - #{details['indexScoreDescription']}"
+      ].join('<br>').html_safe
+    %>
+  </div>
   <div class="flex-fill text-left" data-placement="right" style="line-height: 1.2;">
     <span class="font-medium"><%= title %></span><br>
     <small class="text-gray-500"><%= term %></small>

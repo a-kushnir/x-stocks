@@ -62,9 +62,10 @@ HELP
       <% if row %>
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
-          <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
+          <div class="show-tooltip inline-block">
+            <div class="tooltip right whitespace-nowrap"><%= row[:help].html_safe %></div>
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>
-          </span>
+          </div>
         <% end %>
       <% end %>
     </td>
@@ -74,7 +75,10 @@ HELP
       <% if row %>
         <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
-          <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
+          <div class="show-tooltip inline-block">
+            <div class="tooltip right whitespace-nowrap"><%= row[:help].html_safe %></div>
+            <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>1
+          </div>
         <% end %>
       <% end %>
     </td>
@@ -90,11 +94,6 @@ HELP
       <% row = combined_table[index] %>
       <% if row %>
         <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
-        <% if row[:help] %>
-          <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
-            <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>
-          </span>
-        <% end %>
       <% end %>
     </td>
   </tr>

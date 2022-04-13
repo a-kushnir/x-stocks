@@ -9,6 +9,7 @@
 @import "module/price_range";
 @import "module/table";
 @import "module/tag";
+@import "module/tooltip";
 
 /* COMPONENTS */
 @import "../../components/data_table_component/data_table_component.css";
@@ -16,7 +17,3 @@
 /* TAILWIND */
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
-/* LEGACY */
-@import "legacy/bootstrap.css";
-@import "legacy/overrides.css";

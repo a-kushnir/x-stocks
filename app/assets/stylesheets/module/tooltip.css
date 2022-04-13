@@ -1,0 +1,52 @@
+.show-tooltip  {
+  .tooltip, .tooltip::after { @apply border-gray-400 bg-white; }
+
+  @apply relative;
+  .tooltip, .tooltip::after { @apply invisible; }
+  &:hover { .tooltip, .tooltip::after { @apply visible; } }
+
+  .tooltip {
+    z-index: 998;
+    @apply absolute rounded text-sm p-3 border shadow-lg;
+
+    &::after {
+      background-color: white;
+      content: ' ';
+      z-index: 999;
+      @apply absolute border border-gray-400 border-b-0 border-l-0 w-2.5 h-2.5;
+    }
+
+    &.top {
+      @apply top-0 left-1/2;
+      transform: translate(-50%, calc(-100% - 10px));
+      &::after {
+        @apply bottom-0 left-1/2;
+        transform: translate(-50%, calc(100% - 4px)) rotate(135deg);
+      }
+    }
+    &.bottom {
+      @apply bottom-0 left-1/2;
+      transform: translate(-50%, calc(100% + 10px));
+      &::after {
+        @apply top-0 left-1/2;
+        transform: translate(-50%, calc(-100% + 5px)) rotate(-45deg);
+      }
+    }
+    &.right {
+      @apply top-1/2 right-0;
+      transform: translate(calc(100% + 10px), -50%);
+      &::after {
+        @apply top-1/2 left-0;
+        transform: translate(calc(-100% + 5px), -50%) rotate(-135deg);
+      }
+    }
+    &.left {
+      @apply top-1/2 left-0;
+      transform: translate(calc(-100% - 10px), -50%);
+      &::after {
+        @apply top-1/2 right-0;
+        transform: translate(calc(100% - 5px), -50%) rotate(45deg);
+      }
+    }
+  }
+}

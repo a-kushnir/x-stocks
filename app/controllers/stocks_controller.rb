@@ -7,6 +7,10 @@ class StocksController < ApplicationController
 
   UPDATE_PRICE_TIMEOUT = 0.5 # sec
 
+  memorize_params :datatable_stocks, only: [:index] do
+    params.permit(:items, columns: [])
+  end
+
   def index
     return if handle_goto_param?
 

@@ -1,17 +1,17 @@
 <% div_suspended = @stock.div_suspended? %>
 
-<div class="row">
-  <div class="col-lg-6 col-sm-12">
-    <h2 style="margin-top: 15px; margin-bottom: 0;"><%= number_to_currency(@stock.current_price) %>
+<div class="flex">
+  <div class="w-full sm:w-1/2">
+    <h2 class="text-2xl uppercase mb-6 mt-4 mb-0 font-medium"><%= number_to_currency(@stock.current_price) %>
       <% if @stock.price_change %>
         <small class="<%= delta_class(@stock.price_change) %>"><%= number_to_currency(@stock.price_change) %> (<%= number_to_percentage(@stock.price_change_pct, precision: 2) %>)</small>
       <% end %>
     </h2>
     <% if @stock.exchange %>
-      <small class="text-muted"><%= @stock.exchange.name %> (<%= @stock.exchange.code %>)</small>
+      <small class="text-gray-500"><%= @stock.exchange.name %> (<%= @stock.exchange.code %>)</small>
     <% end %>
   </div>
-  <div class="col-lg-6 col-sm-12">
+  <div class="w-full sm:w-1/2">
     <%= render partial: 'stocks/widgets/yahoo_tech' %>
   </div>
 </div>
@@ -32,7 +32,7 @@ HELP
   left_table << { label: '52 Week Range', value: render_range(@stock.week_52_low, @stock.week_52_high, @stock.current_price, @stock.price_change) } if @stock.week_52_low && @stock.week_52_high
   left_table << { label: 'P/E Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2) } if @stock.week_52_low && @stock.pe_ratio_ttm
   left_table << { label: 'Outstanding Shares', value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true) } if @stock.outstanding_shares
-  left_table << { label: 'Market Cap', value: number_to_currency(@stock.market_capitalization, strip_insignificant_zeros: true) } if @stock.market_capitalization
+  left_table << { label: 'Market Cap', value: number_to_currency(number_to_human(@stock.market_capitalization)) } if @stock.market_capitalization
   left_table << { label: 'Fair Price', value: number_to_currency(@stock.yahoo_fair_price), help: fair_price_help.split("\n").join("<br>") } if @stock.yahoo_fair_price
   left_table << { label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i) } if @stock.yahoo_discount
 
@@ -54,7 +54,7 @@ HELP
   right_table << { label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
 %>
 
-<table class="table table-sm stock-summary-table d-none d-lg-table">
+<table class="summary-table hidden sm:table mb-6">
   <% [left_table.size, right_table.size].max.to_i.times do |index| %>
   <tr>
     <td>
@@ -72,7 +72,7 @@ HELP
     <td>
       <% row = right_table[index] %>
       <% if row %>
-        <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
+        <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <i class="fa fa-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>"></i>
         <% end %>
@@ -83,13 +83,13 @@ HELP
 </table>
 
 <% combined_table = left_table + right_table %>
-<table class="table table-sm stock-summary-table d-lg-none">
+<table class="summary-table table sm:hidden mb-6">
   <% combined_table.size.times do |index| %>
   <tr>
     <td>
       <% row = combined_table[index] %>
       <% if row %>
-        <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
+        <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
         <% if row[:help] %>
           <span data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="<%= row[:help] %>">
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>

@@ -1,0 +1,6 @@
+.price-range {
+  @apply flex h-1 bg-gray-200;
+  min-width: 100px;
+  .negative { @apply bg-red-600; }
+  .positive { @apply bg-green-600; }
+}

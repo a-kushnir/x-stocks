@@ -1,0 +1,18 @@
+table.summary-table {
+  @apply w-full;
+  tr {
+    @apply border-t first:border-none border-gray-300;
+    td {
+      @apply p-1;
+      strong { @apply float-right; }
+    }
+  }
+}
+
+.company-profile strong {
+  width: 120px;
+  height: 28px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+}

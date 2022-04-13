@@ -24,12 +24,6 @@
           &.center { @apply text-center; }
           &.right { @apply text-right; }
           &.warning { @apply text-red-600 font-bold; }
-
-          .datatable-price-range {
-             @apply flex h-1 bg-gray-200;
-             .negative { @apply bg-red-600; }
-             .positive { @apply bg-green-600; }
-          }
         }
         td {
           a { @apply text-blue-500 no-underline inline-block; }

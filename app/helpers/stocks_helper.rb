@@ -82,7 +82,7 @@ module StocksHelper
 
     direction = Etl::Transform::Yahoo.new.direction(direction) if direction.is_a?(String)
     icon = { 1 => 'svg/caret-up', 0 => 'svg/caret-right', -1 => 'svg/caret-down' }[direction <=> 0]
-    color = { 1 => 'text-success', 0 => 'text-muted', -1 => 'text-danger' }[direction <=> 0]
+    color = { 1 => 'text-positive', 0 => 'text-neutral', -1 => 'text-negative' }[direction <=> 0]
     inline_svg(icon, size: size, class: color)
   end
 
@@ -91,18 +91,17 @@ module StocksHelper
     progress1 = Math.inv_lerp(min, max, points[0]) * 100
     progress2 = Math.inv_lerp(min, max, points[1]) * 100 - progress1
     progress2 = 2 if progress2 < 2 # Min width is 2%
-    css_class = change.negative? ? 'bg-danger' : 'bg-success'
+    css_class = change.negative? ? 'negative' : 'positive'
 
-    progress = "<div class='progress'>
-      <div class='progress-bar' role='progressbar' style='width: #{progress1}%; background-color: transparent;'></div>
-      <div class='progress-bar #{css_class}' role='progressbar' style='width: #{progress2}%'></div>
-      </div>"
-
-    label = "<small>
-      <span class='float-left'>#{number_to_currency(min)}</span>
-      <span class='float-right'>#{number_to_currency(max)}</span>
-      </small>"
-
-    "<div class='price-range'>#{label}#{progress}</div>".html_safe
+    html = []
+    html << '<div class="price-range" style="margin-top: 3px;">'
+    html << "<div style='width: #{progress1.round}%;'></div>"
+    html << "<div class='#{css_class}' style='width: #{progress2.round}%'></div>"
+    html << '</div>'
+    html << '<span class="text-xs">'
+    html << "<span class='float-left'>#{number_to_currency(min, unit: '')}</span>"
+    html << "<span class='float-right'>#{number_to_currency(max, unit: '')}</span>"
+    html << '</span>'
+    html.join.html_safe
   end
 end

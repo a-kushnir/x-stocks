@@ -128,7 +128,7 @@ class StocksController < ApplicationController
       columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
       columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
       columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2', sorting: 'stocks.payout_ratio')
-      columns << DataTable::Column.new(code: 'cap', label: 'Market Cap.', formatter: 'currency', sorting: 'stocks.market_capitalization')
+      columns << DataTable::Column.new(code: 'cap', label: 'Market Cap.', formatter: 'big_currency', sorting: 'stocks.market_capitalization')
       columns << DataTable::Column.new(code: 'yrc', label: 'Yahoo Rec.', formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
       columns << DataTable::Column.new(code: 'frc', label: 'Finnhub Rec.', formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
       columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')

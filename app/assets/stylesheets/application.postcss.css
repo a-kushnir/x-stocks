@@ -6,6 +6,8 @@
 @import "module/button";
 @import "module/menu";
 @import "module/pagy";
+@import "module/price_range";
+@import "module/table";
 @import "module/tag";
 
 /* COMPONENTS */

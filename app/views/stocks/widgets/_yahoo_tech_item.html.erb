@@ -1,7 +1,7 @@
-<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="btn btn-light d-flex flex-row w-full" style="padding-right: 4px;"
+<a href="https://finance.yahoo.com/chart/<%= @stock.symbol %>?technical=<%= link %>" class="w-full flex p-2 pr-1"
    data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="
   <%=
-    "<div class='text-nowrap w-50'>#{
+    "<div class='text-nowrap'>#{
       [
         "#{details['stateDescription']}",
         "<strong><span>Stock:</span> #{up_down_tag(details['direction'])} #{details['score']}</strong> - #{details['scoreDescription']}",
@@ -11,10 +11,10 @@
     }</div>".gsub('"', "'").html_safe
   %>">
   <div class="flex-fill text-left" data-placement="right" style="line-height: 1.2;">
-    <%= title %><br>
-    <small class="text-muted"><%= term %></small>
+    <span class="font-medium"><%= title %></span><br>
+    <small class="text-gray-500"><%= term %></small>
   </div>
-  <div class="flex-right" style="padding-top: 4px;">
+  <div class="flex-right pl-1 pt-2">
     <%= up_down_tag(direction, size: '28*28') %>
   </div>
 </a>

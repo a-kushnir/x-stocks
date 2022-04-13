@@ -24,7 +24,7 @@ module DataTable
         css_class = change.negative? ? 'negative' : 'positive'
 
         build do |html|
-          html << '<div class="datatable-price-range">'
+          html << '<div class="price-range">'
           html << "<div style='width: #{progress1.round}%;'></div>"
           html << "<div class='#{css_class}' style='width: #{progress2.round}%'></div>"
           html << '</div>'

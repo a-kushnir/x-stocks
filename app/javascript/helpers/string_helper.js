@@ -26,3 +26,10 @@ export function truncate(str, n) {
 export function generateId(prefix = 'id_') {
   return prefix + Math.random().toString(16).slice(2);
 }
+
+export function escapeHTML(value) {
+  const text = document.createTextNode(value);
+  const span = document.createElement('span');
+  span.appendChild(text);
+  return span.innerHTML;
+}

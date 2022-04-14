@@ -5,9 +5,9 @@ export function urlFor(url, params) {
 
   if (params) {
     const uri = new URL(url);
-    params.forEach(function (param) {
-      uri.searchParams.append(param.name, param.value);
-    })
+    for (const [key, value] of Object.entries(params)) {
+      uri.searchParams.append(key, String(value));
+    }
     return uri.toString();
   } else {
     return url;

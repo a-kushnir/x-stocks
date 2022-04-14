@@ -6,9 +6,5 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 // Legacy
-import "bootstrap"
 import "chart"
 import "chartjs-plugin-datalabels"
-import "legacy/eventsource"
-import "legacy/service-runner"
-import "https://s3.tradingview.com/tv.js"

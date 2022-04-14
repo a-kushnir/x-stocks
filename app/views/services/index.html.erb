@@ -24,7 +24,10 @@
   <tbody>
   <% @jobs.each do |job| %>
     <% service = job.service %>
-    <tr>
+    <tr data-controller="service"
+        data-service-output-container-value="output-container"
+        data-service-output-progress-value="output-progress"
+        data-service-output-message-value="output-message">
       <td>
         <%= job.name %>
         <% job.tags.sort.each do |tag| %>
@@ -37,7 +40,7 @@
       <% last_run_at = service&.last_run_at %>
       <td><%= (last_run_at ? "#{time_ago_in_words last_run_at} ago" : "never").capitalize %></td>
       <td>
-        <%= form_tag(run_service_path(job.lookup_code), multipart: true) do %>
+        <%= form_tag(run_service_path(job.lookup_code), multipart: true, id: "form_#{job.lookup_code}") do %>
           <% Hash(job.arguments).each do |name, input| %>
             <% Hash(input).each do |type, args| %>
               <%=
@@ -57,8 +60,8 @@
         <% end %>
       </td>
       <td>
-        <%= link_to "#", class: 'btn btn-sm btn-secondary', onclick: "runService($(this).parents('tr').find('form')); return false;" do %>
-          Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'inline-block mb-1') %>
+        <%= button_tag class: 'btn btn-sm btn-secondary text-gray-900', data: { action: 'click->service#run' }, form: "form_#{job.lookup_code}" do %>
+          Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'inline-block mb-0.5') %>
         <% end %>
 
         <%= link_to log_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
@@ -79,6 +82,6 @@
 </table>
     </div>
   </div>
+</div>
 
 <%= render partial: 'shared/service_runner' %>
-</div>

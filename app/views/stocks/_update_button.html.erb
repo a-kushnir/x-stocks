@@ -1,7 +1,7 @@
-<button data-controller="stock-data"
-        data-action="click->stock-data#update"
-        data-stock-data-symbol-value="<%= @stock.symbol %>"
+<button data-controller="service"
+        data-action="click->service#updateStock"
+        data-service-symbol-value="<%= @stock.symbol %>"
         class="btn btn-secondary-outline float-right px-3">
   <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
-  <span data-stock-data-target="output"></span>
+  <span data-service-target="output"></span>
 </button>

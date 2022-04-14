@@ -5,7 +5,7 @@ export default class extends ApplicationController {
   static values = { symbol: String }
   static targets = [ 'output' ]
 
-  update() {
+  updateStock() {
     this.element.disabled = true;
     const output = this.outputTarget;
     output.textContent = 'Updating... 0%';
@@ -26,7 +26,7 @@ export default class extends ApplicationController {
     })
   }
 
-  updateAll() {
+  updateStocks() {
     const output = this.outputTarget;
     output.textContent = 'Updating...';
 

@@ -43,3 +43,14 @@ export function runEventSource(url, options) {
 
   return source;
 }
+
+export function submitEventSource(form, options) {
+  const url = form.action;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  delete data['authenticity_token'];
+  options ||= {}
+  options.data = data;
+
+  return runEventSource(url, options);
+}

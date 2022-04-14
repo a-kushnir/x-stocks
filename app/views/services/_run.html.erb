@@ -1,7 +1,7 @@
 <% if current_user && (XStocks::Service.new.fast_update? || XStocks::Service.new.slow_update?) %>
   <div class="pr-4"
-       data-controller="stock-data"
-       data-action="turbo:load@window->stock-data#updateAll">
-    <span data-stock-data-target="output"></span>
+       data-controller="service"
+       data-action="turbo:load@window->service#updateStocks">
+    <span data-service-target="output"></span>
   </div>
 <% end %>

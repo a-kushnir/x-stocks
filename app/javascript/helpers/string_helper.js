@@ -22,3 +22,7 @@ export function truncate(str, n) {
   const s = copyString(str);
   return (s.length > n + 3) ? `${s.substr(0, n-1)}…` : s;
 }
+
+export function generateId(prefix = 'id_') {
+  return prefix + Math.random().toString(16).slice(2);
+}

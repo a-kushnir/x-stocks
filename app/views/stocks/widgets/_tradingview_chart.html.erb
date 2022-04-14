@@ -1,31 +1,5 @@
 <% if @stock.exchange&.tradingview_code %>
-  <!-- TradingView Widget BEGIN -->
-  <div class="tradingview-widget-container">
-    <div id="tradingview_9d100" style="height: 350px;"></div>
-    <script type="text/javascript">
-        document.addEventListener("turbo:load", () => {
-            if ($("#tradingview_9d100").length === 0) return;
-
-            new TradingView.widget(
-                {
-                    "autosize": true,
-                    "symbol": "<%= @stock.exchange.tradingview_code %>:<%= @stock.symbol %>",
-                    "timezone": "Etc/UTC",
-                    "theme": "light",
-                    "style": "2",
-                    "locale": "en",
-                    "toolbar_bg": "#f1f3f6",
-                    "enable_publishing": false,
-                    "hide_top_toolbar": true,
-                    "withdateranges": true,
-                    "range": "1m",
-                    "allow_symbol_change": true,
-                    "save_image": false,
-                    "container_id": "tradingview_9d100"
-                }
-            );
-        });
-    </script>
-  </div>
-  <!-- TradingView Widget END -->
+  <div data-controller="tradingview-chart"
+       data-tradingview-chart-symbol-value="<%= @stock.exchange.tradingview_code %>:<%= @stock.symbol %>"
+       style="height: 360px;"></div>
 <% end %>

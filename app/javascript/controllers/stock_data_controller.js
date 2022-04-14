@@ -20,7 +20,23 @@ export default class extends ApplicationController {
         location.reload();
       },
       error: function (data) {
-        output.textContent = "Error: " + data.message;
+        output.textContent = 'Error';
+        console.error(data);
+      }
+    })
+  }
+
+  updateAll() {
+    const output = this.outputTarget;
+    output.textContent = 'Updating...';
+
+    runEventSource('/services/run', {
+
+      closed: function() {
+        output.textContent = 'Updated';
+      },
+      error: function (data) {
+        output.textContent = 'Error';
         console.error(data);
       }
     })

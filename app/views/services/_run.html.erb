@@ -1,8 +1,7 @@
-<% if current_user && (fast = XStocks::Service.new.fast_update?) || XStocks::Service.new.slow_update? %>
-  <div id="data-refresh-div" class="text-right" data-refresh="<%= fast ? 'true' : 'false' %>">
-    <div id="data-refresh-spin" class="spinner-border spinner-border-sm text-gray-400" role="status">
-      <span class="sr-only"></span>
-    </div>
-    <span id="data-refresh-text" class="text-gray-400 d-none d-md-inline-block" style="padding-left: 3px;"><%= fast ? 'Updating Stock Prices' : 'Updating Stock Data' %></span>
+<% if current_user && (XStocks::Service.new.fast_update? || XStocks::Service.new.slow_update?) %>
+  <div class="pr-4"
+       data-controller="stock-data"
+       data-action="turbo:load@window->stock-data#updateAll">
+    <span data-stock-data-target="output"></span>
   </div>
 <% end %>

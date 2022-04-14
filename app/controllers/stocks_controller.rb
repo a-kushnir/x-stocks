@@ -90,7 +90,7 @@ class StocksController < ApplicationController
     @stock = find_stock
     flash[:notice] = "#{@stock} stock added"
     EventStream.run(response) do |stream|
-      XStocks::Jobs::CompanyOne.new.perform(stock_id: @stock.id) { |status| stream.write(status) }
+      XStocks::Jobs::CompanyOne.new.perform(symbol: @stock.id) { |status| stream.write(status) }
     end
   end
 
@@ -147,7 +147,7 @@ class StocksController < ApplicationController
   def update_price
     safe_exec do
       Timeout.timeout(UPDATE_PRICE_TIMEOUT) do
-        XStocks::Jobs::FinnhubPriceOne.new.perform(stock_id: @stock.id) { nil }
+        XStocks::Jobs::FinnhubPriceOne.new.perform(symbol: @stock.id) { nil }
       end
       true
     end
@@ -190,7 +190,7 @@ class StocksController < ApplicationController
       return true
     end
 
-    redirect_to url_for(search: value)
+    redirect_to url_for(q: value)
     true
   end
 

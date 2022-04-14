@@ -1,5 +1,5 @@
 .datatable {
-  @apply w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6;
+  @apply w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6 mb-3;
 
   .datatable-container {
     @apply px-1 py-1 overflow-x-auto mb-3;

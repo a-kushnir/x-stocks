@@ -1,12 +1,16 @@
-<div id="service-runner" class="card" style="display: none; margin-top: 10px;">
+<div id="service-runner"
+     class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6 mb-3"
+     data-controller="service">
   <div class="card-header">
-    <button type="button" class="close float-right" aria-label="Close" onclick="stopService();">
-      <span aria-hidden="true">&times;</span>
+    <button type="button" class="float-right btn btn-icon btn-danger p-0" aria-label="Close" data-action="click#service->stop">
+      <span aria-hidden="true">
+        <%= inline_svg('svg/close.svg', size: '24*24') %>
+      </span>
     </button>
-    <h3>Running Service</h3>
+    <h3 class="text-2xl uppercase mb-2">Running Service</h3>
     <div id="output-progress" class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
-    <div id="output-message" class="font-italic" style="margin-top: 5px;"></div>
+    <div id="output-message" class="italic">Message</div>
   </div>
 </div>

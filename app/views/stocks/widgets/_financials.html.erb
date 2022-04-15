@@ -1,8 +1,9 @@
 <% financials = XStocks::Charts::Financials.new(@stock, details) %>
 <% if financials.data? %>
-  <div class="w-full mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <h3 class="text-2xl uppercase mb-2"><%= label %></h3>
-    <div style="width: 280px; height: 220px;" class="mx-auto">
+  <div class="section">
+    <h3><%= label %></h3>
+
+    <div class="mx-auto" style="width: 280px; height: 220px;">
       <%= financials.render(width: 280, height: 220) %>
     </div>
   </div>

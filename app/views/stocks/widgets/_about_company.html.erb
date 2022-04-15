@@ -1,6 +1,7 @@
 <% if @stock.description.present? %>
   <div class="mb-6">
-    <h3 class="text-2xl uppercase mb-2">Company Profile</h3>
+    <h3>Company Profile</h3>
+
     <p class="company-profile mb-3">
       <% if @stock.country.present? %>
         <strong>Headquarters:</strong> <%= country_flag_img_tag(@stock.country, size: 24, class: 'inline-block mb-1') %> <%= [CountryName.new.name(@stock.country), @stock.state].select(&:present?).join(', ') %><br>

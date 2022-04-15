@@ -23,10 +23,18 @@
 
     <main class="w-full min-h-full flex-1 relative pt-0 md:pt-4 pl-0 md:pl-4 pr-0 md:pr-4 pb-1">
       <% if flash[:notice] %>
-        <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
+        <div class="alert alert-notice">
+          <%= inline_svg('svg/bell', size: '24*24') %>
+          <span role="alert"><%= flash[:notice] %></span>
+          <!--button><span>×</span></button-->
+        </div>
       <% end %>
       <% if flash[:error] %>
-        <div class="alert alert-danger" role="alert"><%= flash[:error] %></div>
+        <div class="alert alert-error">
+          <%= inline_svg('svg/bell', size: '24*24') %>
+          <span role="alert"><%= flash[:error] %></span>
+          <!--button><span>×</span></button-->
+        </div>
       <% end %>
 
       <%= yield %>

@@ -2,6 +2,7 @@
 
 /* MODULES */
 @import "module/theme";
+@import "module/alert";
 @import "module/badge";
 @import "module/button";
 @import "module/menu";

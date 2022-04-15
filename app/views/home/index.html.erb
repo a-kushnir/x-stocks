@@ -1,19 +1,17 @@
 <div class="w-full flex flex-col xl:flex-row space-x-0 xl:space-x-4">
-  <div class="w-full xl:w-1/3">
+  <div class="w-full xl:w-1/3 space-y-4">
     <%= render partial: 'home/widgets/fear_n_greed' %>
-    <div class="d-none d-md-block">
-      <%= render partial: 'home/widgets/div_hikes_n_cuts' %>
-    </div>
+    <%= render partial: 'home/widgets/div_hikes_n_cuts' %>
   </div>
-  <div class="w-full xl:w-1/6">
+  <div class="w-full xl:w-1/6 space-y-4">
     <%= render partial: 'home/widgets/portfolio' %>
     <%= render partial: 'home/widgets/top_movers', locals: { title: 'Top Gainers', where: 'price_change_pct > 0', order: 'desc' } %>
     <%= render partial: 'home/widgets/top_movers', locals: { title: 'Top Losers', where: 'price_change_pct < 0', order: 'asc' } %>
   </div>
-  <div class="w-full xl:w-1/3">
+  <div class="w-full xl:w-1/3 space-y-4">
     <%= render partial: 'home/widgets/market' %>
   </div>
-  <div class="w-full xl:w-1/6">
+  <div class="w-full xl:w-1/6 space-y-4">
     <%= render partial: 'home/widgets/links' %>
     <%= render partial: 'home/widgets/screeners' %>
   </div>

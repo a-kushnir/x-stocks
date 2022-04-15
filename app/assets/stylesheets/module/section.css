@@ -1,0 +1,4 @@
+.section {
+  @apply bg-white shadow-md md:rounded px-2 md:px-8 py-3 md:py-6;
+  h3 { @apply text-2xl uppercase mb-2; }
+}

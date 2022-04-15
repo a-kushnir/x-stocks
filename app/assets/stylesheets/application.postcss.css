@@ -8,6 +8,7 @@
 @import "module/menu";
 @import "module/pagy";
 @import "module/price_range";
+@import "module/section";
 @import "module/table";
 @import "module/tag";
 @import "module/tooltip";

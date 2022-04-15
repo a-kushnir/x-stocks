@@ -90,7 +90,7 @@ class StocksController < ApplicationController
     @stock = find_stock
     flash[:notice] = "#{@stock} stock added"
     EventStream.run(response) do |stream|
-      XStocks::Jobs::CompanyOne.new.perform(symbol: @stock.id) { |status| stream.write(status) }
+      XStocks::Jobs::CompanyOne.new.perform(symbol: @stock.symbol) { |status| stream.write(status) }
     end
   end
 

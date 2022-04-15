@@ -8,12 +8,13 @@ export default class extends ApplicationController {
     symbol: String,
     outputContainer: String,
     outputProgress: String,
-    outputMessage: String
+    outputMessage: String,
+    redirect: String
   }
-  static targets = [ 'output' ]
+  static targets = [ 'output', 'form' ]
 
   run(event) {
-    const form = event.currentTarget.form;
+    const form = event.currentTarget.form || this.formTarget;
 
     const outputContainer = document.getElementById(this.outputContainerValue);
     const outputProgress = document.getElementById(this.outputProgressValue);
@@ -46,6 +47,9 @@ export default class extends ApplicationController {
           outputContainer.classList.add('hidden');
         } else {
           // ??
+        }
+        if (this.hasRedirectValue) {
+          window.location.replace(this.redirectValue);
         }
       }
     })

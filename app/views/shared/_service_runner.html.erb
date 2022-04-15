@@ -1,11 +1,13 @@
 <div id="output-container"
-     class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6 mb-3 hidden"
+     class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 py-3 md:py-6 mb-3 hidden <%= local_assigns[:class] %>"
      data-controller="service">
-  <button type="button" class="float-right btn btn-icon btn-danger p-0" aria-label="Close" data-action="click#service->stop">
-    <span aria-hidden="true">
-      <%= inline_svg('svg/close.svg', size: '24*24') %>
-    </span>
-  </button>
+  <% if can_stop %>
+    <button type="button" class="float-right btn btn-icon btn-danger p-0" aria-label="Close" data-action="click#service->stop">
+      <span aria-hidden="true">
+        <%= inline_svg('svg/close.svg', size: '24*24') %>
+      </span>
+    </button>
+  <% end %>
   <h3 class="text-2xl uppercase mb-2">Running Service</h3>
   <div class="w-full bg-gray-200 rounded-full mt-4 mb-2">
     <div id="output-progress" class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full transition-all ease-out duration-1000" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>

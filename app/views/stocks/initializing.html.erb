@@ -1,7 +1,13 @@
-<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+     data-controller="service"
+     data-action="turbo:load@window->service#run"
+     data-service-output-container-value="output-container"
+     data-service-output-progress-value="output-progress"
+     data-service-output-message-value="output-message"
+     data-service-redirect-value="<%= params[:save_and_show] ? stock_path(@stock.symbol, save_and_show: true) : new_stock_path %>">
   <h2 class="text-2xl uppercase mb-6"><%= @page_title %></h2>
 
-  <%= form_for @stock, url: processing_stock_path(@stock), html: { class: 'my-form' } do |form| %>
+  <%= form_for @stock, url: processing_stock_path(@stock), data: { service_target: 'form' } do |form| %>
     <div class="mb-4">
       <%= form.label :symbol, class: 'block text-gray-700 font-bold mb-2' %>
       <%= form.text_field :symbol, disabled: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase bg-gray-200' %>
@@ -15,29 +21,6 @@
       <button class="btn btn-secondary" disabled="disabled" name="save_only">Save</button>
     </div>
   <% end %>
-
-  <%= render partial: 'shared/service_runner' %>
 </div>
 
-<script>
-    function redirectToNewStock() {
-        window.location.replace('/stocks/new');
-    }
-
-    function redirectToTheStock() {
-    const symbol = $('#x_stocks_ar_stock_symbol').val().trim().toUpperCase();
-    window.location.replace(`/stocks/${FormatMethods.safeLink(symbol)}?save_and_show=`);
-  }
-
-  function onServiceRunSuccess() {
-    <%= params[:save_and_show] ? 'redirectToTheStock();' : 'redirectToNewStock();' %>
-  }
-
-  function onServiceRunFailed() {
-    const control = $('#service-runner');
-    control.delay(3000).slideUp();
-    setTimeout(redirectToStock, 3500);
-  }
-
-  runService($('.my-form'));
-</script>
+<%= render partial: 'shared/service_runner', locals: { class: 'max-w-md', can_stop: false } %>

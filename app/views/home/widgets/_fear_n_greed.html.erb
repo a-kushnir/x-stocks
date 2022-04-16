@@ -1,11 +1,16 @@
 <div class="section">
+  <a class="float-right mt-1 text-blue-500" href="https://www.cnn.com/markets/fear-and-greed" target="_blank">
+    <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block mb-1') %>
+    Source
+  </a>
   <h3>Fear & Greed Index</h3>
 
-  <div class="flex flex-col w-full items-center">
-    <div>
-      <a href="https://money.cnn.com/data/fear-and-greed/" data-turbo="false" target="_blank">
-        <%= image_tag('/home/fear_n_greed_image.png', class: 'img-fluid border rounded', alt: 'Fear & Greed Index') rescue 'No Image Available' %><br>
-      </a>
+  <% data = Etl::Refresh::FearNGreed.new.data&.dig(:fear_and_greed) %>
+  <% if data && [:score, :previous_close, :previous_1_week, :previous_1_month, :previous_1_year].all? { |key| data.key?(key) } %>
+    <div class="my-2 mx-auto" style="max-width: 640px;">
+      <%= render(FearNGreedGaugeComponent.new(**data.slice(:score, :previous_close, :previous_1_week, :previous_1_month, :previous_1_year))) %>
     </div>
-  </div>
+  <% else %>
+    <div class="text-center italic">No data available</div>
+  <% end %>
 </div>

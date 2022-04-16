@@ -6,9 +6,4 @@ class HomeController < ApplicationController
     @page_title = 'Home'
     @page_menu_item = :home
   end
-
-  def fear_n_greed_image
-    image_path = "#{Rails.root}/public/img/fear-and-greed.png" # Etl::Refresh::FearNGreed.new.image_path
-    send_file(image_path, type: 'image/png', disposition: 'inline')
-  end
 end

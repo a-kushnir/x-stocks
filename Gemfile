@@ -46,7 +46,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'caxlsx', '>= 3.1.0'
 gem 'devise'
 gem 'inline_svg'
-gem 'nokogiri', '>= 1.13.3'
+gem 'nokogiri'
 gem 'pagy'
 
 gem 'grape'

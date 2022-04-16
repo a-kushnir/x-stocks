@@ -14,7 +14,8 @@
 @import "module/tooltip";
 
 /* COMPONENTS */
-@import "../../components/data_table_component/data_table_component.css";
+@import "../../components/data_table_component/data_table_component";
+@import "../../components/fear_n_greed_gauge_component/fear_n_greed_gauge_component";
 
 /* TAILWIND */
 @import "tailwindcss/components";

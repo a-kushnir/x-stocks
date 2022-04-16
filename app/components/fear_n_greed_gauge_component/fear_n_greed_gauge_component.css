@@ -1,0 +1,309 @@
+@keyframes dataTimestampFlash {
+  from,
+  to {
+    border: 1px solid transparent;
+    background-color: transparent
+  }
+  50% {
+    border: 1px solid #00bcf0;
+    background-color: #00bcf019
+  }
+}
+
+.market-fng-gauge {
+  text-align: right
+}
+
+.market-fng-gauge .market-fng-gauge__overview {
+  display: block;
+  position: relative;
+  width: 100%;
+  text-align: left
+}
+
+.market-fng-gauge .market-fng-gauge__meter-container {
+  width: 100%;
+  max-width: 525px;
+  padding-bottom: min(52.6%, 276.15px);
+  margin: 0 auto 20px;
+  position: relative
+}
+
+.market-fng-gauge .market-fng-gauge__meter {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  box-sizing: content-box;
+  width: 100%
+}
+
+.market-fng-gauge .market-fng-gauge__historical {
+  width: 100%
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item {
+  margin-top: 4px;
+  color: #262626;
+  font-weight: 700;
+  font-size: 13px
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-label {
+  color: #6e6e6e;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-index {
+  display: flex
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-index-label {
+  width: calc(100% - 32px);
+  text-transform: capitalize;
+  display: inline-flex
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-index-label:before {
+  display: inline-block;
+  padding-right: 5px;
+  white-space: nowrap;
+  content: '  '
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-index-label:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px dashed #e6e6e6
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item-index-value {
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme fear'] .market-fng-gauge__historical-item-index-label:before {
+  content: 'extreme fear'
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme fear'] .market-fng-gauge__historical-item-index-value {
+  background: rgba(255, 129, 112, .5);
+  border: 1px solid #fc7989
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=fear] .market-fng-gauge__historical-item-index-label:before {
+  content: 'fear'
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=fear] .market-fng-gauge__historical-item-index-value {
+  background: rgba(255, 185, 161, .5);
+  border: 1px solid #fdaab2
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=neutral] .market-fng-gauge__historical-item-index-label:before {
+  content: 'neutral'
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=neutral] .market-fng-gauge__historical-item-index-value {
+  background: #e6e6e6;
+  border: 1px solid #b1b1b1
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=greed] .market-fng-gauge__historical-item-index-label:before {
+  content: 'greed'
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=greed] .market-fng-gauge__historical-item-index-value {
+  background: #b9ede9;
+  border: 1px solid #66c9af
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme greed'] .market-fng-gauge__historical-item-index-label:before {
+  content: 'extreme greed'
+}
+
+.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme greed'] .market-fng-gauge__historical-item-index-value {
+  background: rgba(102, 201, 175, 1);
+  border: 1px solid #66c9af
+}
+
+.market-fng-gauge .market-fng-gauge__timestamp {
+  border: 1px solid transparent;
+  text-align: right;
+  color: #6e6e6e;
+  font-size: 12px;
+  padding: 0 3px;
+  display: inline-block;
+  margin-bottom: 23px
+}
+
+.market-fng-gauge .container__title {
+  clear: both
+}
+
+.market-fng-gauge[data-updated=true] .market-fng-gauge__timestamp {
+  animation-duration: 2s;
+  animation-name: dataTimestampFlash;
+  animation-iteration-count: 2
+}
+
+.market-fng-gauge__meter[data-index-label='extreme fear'] #extreme-fear {
+  fill: rgba(255, 129, 112, .5);
+  stroke: #fc7989
+}
+
+.market-fng-gauge__meter[data-index-label=fear] #fear {
+  fill: rgba(255, 185, 161, .5);
+  stroke: #fdaab2
+}
+
+.market-fng-gauge__meter[data-index-label=neutral] #neutral {
+  fill: #e6e6e6;
+  stroke: #b1b1b1
+}
+
+.market-fng-gauge__meter[data-index-label=greed] #greed {
+  fill: #b9ede9;
+  stroke: #66c9af
+}
+
+.market-fng-gauge__meter[data-index-label='extreme greed'] #extreme-greed {
+  fill: rgba(102, 201, 175, 1);
+  stroke: #66c9af
+}
+
+.market-fng-gauge__meter[data-index-label='extreme fear'] #extreme-fear-text .dial-area-letter,
+.market-fng-gauge__meter[data-index-label=fear] #fear-text .dial-area-letter,
+.market-fng-gauge__meter[data-index-label=neutral] #neutral-text .dial-area-letter,
+.market-fng-gauge__meter[data-index-label=greed] #greed-text .dial-area-letter,
+.market-fng-gauge__meter[data-index-label='extreme greed'] #extreme-greed-text .dial-area-letter {
+  fill: #231f20
+}
+
+.market-fng-gauge__dial {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0
+}
+
+.market-fng-gauge__dial .dial-area {
+  fill: #f7f7f7
+}
+
+.market-fng-gauge__dial .dial-area-letter {
+  fill: #6e6e6e
+}
+
+.market-fng-gauge__dial .dial-area-number {
+  enable-background: new
+}
+
+.market-fng-gauge__dial .dial-area-number-text,
+.market-fng-gauge__dial .dots {
+  fill: #8c8b8b
+}
+
+.market-fng-gauge__dial .dial-area-number-text-active {
+  fill: #8c8c8c
+}
+
+.market-fng-gauge__dial-number {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  width: 20%;
+  height: 0;
+  padding-top: 11.25%;
+  transition: .5s color;
+  color: #262626
+}
+
+.market-fng-gauge__dial-number .market-fng-gauge__dial-number-value {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+  font-size: 27px;
+  line-height: 27px;
+  font-weight: 800;
+  text-align: center
+}
+
+.market-fng-gauge__hand {
+  width: 3.15%;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  enable-background: 'new 0 0 10 124'
+}
+
+.market-fng-gauge__hand .market-fng-gauge__hand-svg {
+  z-index: 2;
+  transform-origin: bottom center;
+  transform: rotate(0)
+}
+
+.market-fng-gauge__hand .market-fng-gauge__hand-svg path {
+  fill: #262626
+}
+
+.market-fng-gauge__hand-base {
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3
+}
+
+.market-fng-gauge__hand-base:before {
+  content: '';
+  display: block;
+  background: #fff;
+  width: 100%;
+  padding-bottom: 100%;
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 -15px 15px rgb(12 12 12 / .05)
+}
+
+.market-fng-gauge[data-showHistorical=false] .market-fng-gauge__meter {
+  width: 100%
+}
+
+@media screen and (min-width:480px) {
+  .market-fng-gauge .market-fng-gauge__meter-container {
+    margin-bottom: 28px
+  }
+  .market-fng-gauge .market-fng-gauge__historical {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+  }
+  .market-fng-gauge .market-fng-gauge__historical-item {
+    margin-top: 0
+  }
+  .market-fng-gauge .market-fng-gauge__dial-number .market-fng-gauge__dial-number-value {
+    font-size: 38px;
+    line-height: 38px
+  }
+}

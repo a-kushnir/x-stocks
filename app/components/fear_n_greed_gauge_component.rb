@@ -15,9 +15,9 @@ class FearNGreedGaugeComponent < ::ViewComponent::Base
   def score_label(score)
     if score < 25
       'extreme fear'
-    elsif score < 40
+    elsif score < 45
       'fear'
-    elsif score <= 60
+    elsif score <= 55
       'neutral'
     elsif score <= 75
       'greed'

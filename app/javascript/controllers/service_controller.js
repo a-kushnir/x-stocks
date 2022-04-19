@@ -8,8 +8,7 @@ export default class extends ApplicationController {
     symbol: String,
     outputContainer: String,
     outputProgress: String,
-    outputMessage: String,
-    redirect: String
+    outputMessage: String
   }
   static targets = [ 'output', 'form' ]
 
@@ -34,6 +33,9 @@ export default class extends ApplicationController {
         outputMessage.textContent = data.message;
         success = true;
       },
+      redirect: function(location) {
+        window.location.replace(location);
+      },
       error: function(data) {
         console.error(data);
         outputMessage.textContent = `Error ${escapeHTML(data.message)}`;
@@ -47,9 +49,6 @@ export default class extends ApplicationController {
           outputContainer.classList.add('hidden');
         } else {
           // ??
-        }
-        if (this.hasRedirectValue) {
-          window.location.replace(this.redirectValue);
         }
       }
     })

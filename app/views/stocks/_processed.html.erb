@@ -1,0 +1,5 @@
+<%= @stock.symbol %> stock added
+
+<%= link_to stock_path(@stock.symbol), class: 'pl-4' do %>
+  <%= inline_svg('svg/open-in-app.svg', size: '24*24', class: 'inline-block mb-1') %> Show
+<% end %>

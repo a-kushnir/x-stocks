@@ -17,6 +17,9 @@
 .btn-secondary-outline {
   @apply bg-white hover:bg-gray-100 text-gray-800 border border-gray-400;
 }
+.btn-link {
+  @apply shadow-none px-0;
+}
 .btn-danger {
   @apply bg-red-600 hover:bg-red-800 text-white;
 }

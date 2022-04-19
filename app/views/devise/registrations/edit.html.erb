@@ -1,8 +1,9 @@
 <% @page_title = 'My Profile' %>
 <% @page_menu_item = :profile %>
 
-<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <h2 class="text-2xl uppercase mb-6">My Profile</h2>
+<div class="flex flex-col space-y-4">
+  <div class="section section-form">
+    <h2>My Profile</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -41,6 +42,7 @@
   </div>
 <% end %>
 
-</div>
+  </div>
 
-<%= render partial: 'devise/registrations/api_key' %>
+  <%= render partial: 'devise/registrations/api_key' %>
+</div>

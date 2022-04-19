@@ -1,0 +1,7 @@
+.field_with_errors {
+  label {
+    @apply text-red-500;
+    &.error-message { }
+  }
+  input { @apply border-red-500; }
+}

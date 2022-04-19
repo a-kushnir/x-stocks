@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'action_view/helpers/form_builder'
 require 'pagy'
 require 'pagy/frontend/override'
 

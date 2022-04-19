@@ -1,6 +1,6 @@
 .alert {
   @apply text-white px-2 sm:px-6 py-4 border-0 md:rounded relative md:mb-4;
-  svg { @apply text-xl hidden sm:inline-block mr-5 align-middle; }
+  svg.alert-icon { @apply text-xl hidden sm:inline-block mr-5 align-middle; }
   span { @apply inline-block align-middle mr-8; }
   button { @apply absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none; }
 }

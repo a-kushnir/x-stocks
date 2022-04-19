@@ -29,6 +29,10 @@ class EventStream
     @sse.write(object, options)
   end
 
+  def redirect_to(location)
+    @sse.write(location, event: 'redirect')
+  end
+
   def close
     @sse.close
   end

@@ -1,5 +1,5 @@
-<div class="w-full max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  <h2 class="text-2xl uppercase mb-6"><%= @page_title %></h2>
+<div class="section section-form">
+  <h2><%= @page_title %></h2>
 
   <%= form_for @stock, url: stock_path(@stock.symbol), method: :put do |form| %>
     <div class="mb-4">
@@ -33,7 +33,9 @@
     </div>
 
     <div class="pb-3 flex items-center justify-between">
-      <%= link_to 'Back', back_url, class: 'btn btn-outline-dark' %>
+      <%= link_to back_url, class: 'btn btn-link' do %>
+        <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
+      <% end %>
       <%= form.submit 'Save', class: 'btn btn-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
     </div>
   <% end %>

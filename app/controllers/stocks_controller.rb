@@ -88,9 +88,11 @@ class StocksController < ApplicationController
 
   def processing
     @stock = find_stock
-    flash[:notice] = "#{@stock} stock added"
+    flash[:notice] = render_to_string partial: 'processed'
+
     EventStream.run(response) do |stream|
       XStocks::Jobs::CompanyOne.new.perform(symbol: @stock.symbol) { |status| stream.write(status) }
+      stream.redirect_to(new_stock_path)
     end
   end
 

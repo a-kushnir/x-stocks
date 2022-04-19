@@ -23,6 +23,11 @@ export function runEventSource(url, options) {
       options.message(JSON.parse(e.data));
     }
   }, false);
+  source.addEventListener('redirect', function(e) {
+    if (typeof(options.redirect) === 'function') {
+      options.redirect(e.data);
+    }
+  }, false);
   source.addEventListener('exception', function(e) {
     if (typeof(options.error) === 'function') {
       options.error(JSON.parse(e.data));

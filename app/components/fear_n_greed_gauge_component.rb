@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Component class to render a Fear&Greed Gauge
 class FearNGreedGaugeComponent < ::ViewComponent::Base
   delegate :label, to: :helpers

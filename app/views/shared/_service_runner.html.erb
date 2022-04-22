@@ -1,8 +1,10 @@
 <div id="output-container"
      class="section hidden <%= local_assigns[:class] %>"
-     data-controller="service">
+     data-controller="service"
+     data-service-output-progress-value="output-progress"
+     data-service-output-message-value="output-message">
   <% if can_stop %>
-    <button type="button" class="float-right btn btn-icon btn-danger p-0" aria-label="Close" data-action="click#service->stop">
+    <button type="button" class="float-right btn btn-icon btn-danger p-0" aria-label="Close" data-action="click->service#stop">
       <span aria-hidden="true">
         <%= inline_svg('svg/close.svg', size: '24*24') %>
       </span>

@@ -19,15 +19,17 @@ export default class extends ApplicationController {
     const outputProgress = document.getElementById(this.outputProgressValue);
     const outputMessage = document.getElementById(this.outputMessageValue);
 
+    if (outputContainer.esComponent) {
+      outputContainer.esComponent.close();
+    }
     outputContainer.classList.remove('hidden');
 
-    const colors = ['bg-blue-600', 'bg-red-600'];
     setProgressValue(outputProgress, 0);
-    setProgressColor(outputProgress, 'bg-blue-600', colors);
+    setProgressColor(outputProgress, 'bg-blue-600', ['bg-red-600']);
     outputMessage.textContent = 'Connecting to server...';
 
     let success = false;
-    const esComponent = submitEventSource(form, {
+    outputContainer.esComponent = submitEventSource(form, {
       message: function(data) {
         setProgressValue(outputProgress, data.percent);
         outputMessage.textContent = data.message;
@@ -39,7 +41,7 @@ export default class extends ApplicationController {
       error: function(data) {
         console.error(data);
         outputMessage.textContent = `Error ${escapeHTML(data.message)}`;
-        setProgressColor(outputProgress, 'bg-red-600', colors);
+        setProgressColor(outputProgress, 'bg-red-600', ['bg-blue-600']);
       },
       open: function() {
         outputMessage.textContent = 'Retrieving information...'
@@ -55,7 +57,24 @@ export default class extends ApplicationController {
   }
 
   stop() {
+    if (!this.element.esComponent) { return; }
 
+    if (confirm('Are you sure you want to stop the service?')) {
+      this.stopNoConfirm();
+    }
+  }
+
+  stopNoConfirm() {
+    if (!this.element.esComponent) { return; }
+
+    this.element.esComponent.close();
+    this.element.esComponent = null;
+
+    const outputProgress = document.getElementById(this.outputProgressValue);
+    const outputMessage = document.getElementById(this.outputMessageValue);
+
+    setProgressColor(outputProgress, 'bg-red-600', ['bg-blue-600']);
+    outputMessage.textContent = 'Cancelled';
   }
 
   updateStock() {

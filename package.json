@@ -1,7 +1,8 @@
 {
   "name": "x_stocks",
   "version": "0.1.0",
-  "private": true,
+  "author": "Andrew Kushnir",
+  "license": "MIT",
   "scripts": {
     "build": "yarn build:css",
     "build:js": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",

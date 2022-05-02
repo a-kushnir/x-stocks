@@ -134,7 +134,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_224758) do
     t.string "next_earnings_hour"
     t.decimal "next_earnings_est_eps", precision: 12, scale: 4
     t.string "next_earnings_details"
-    t.string "string"
     t.decimal "yahoo_beta", precision: 10, scale: 6
     t.decimal "yahoo_rec", precision: 5, scale: 2
     t.string "yahoo_rec_details"

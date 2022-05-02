@@ -41,5 +41,8 @@ yarn-debug.log*
 /.rakeTasks
 /coverage
 
+# ignore OS stuff
+.DS_Store
+
 /app/assets/builds/*
 !/app/assets/builds/.keep

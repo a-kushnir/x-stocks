@@ -26,3 +26,4 @@ RSpec/MultipleMemoizedHelpers:
 Style/Documentation:
   Exclude:
     - db/migrate/*
+    - test/**/*

@@ -10,6 +10,10 @@ module Etl
 
       TEXT_CONTENT_TYPES = %w[application/json text/html].freeze
 
+      DEFAULT_HEADERS = {
+        'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36'
+      }.freeze
+
       def initialize(logger)
         @logger = logger
       end
@@ -26,7 +30,7 @@ module Etl
         end
       end
 
-      def http_get(url, headers = {})
+      def http_get(url, headers = DEFAULT_HEADERS)
         uri = URI(url)
         request = Net::HTTP::Get.new(uri)
         headers.each { |key, value| request[key] = value }
@@ -35,7 +39,7 @@ module Etl
         http.request(request)
       end
 
-      def fetch(url, headers = {}, limit: 10)
+      def fetch(url, headers = DEFAULT_HEADERS, limit: 10)
         raise 'Too Many Redirects' if limit.zero?
 
         response = http_get(url, headers)
@@ -46,12 +50,12 @@ module Etl
         end
       end
 
-      def get_redirect(url, headers = {})
+      def get_redirect(url, headers = DEFAULT_HEADERS)
         response = http_get(url, headers)
         response['location'] if response.is_a?(Net::HTTPRedirection)
       end
 
-      def get_text(url, headers = {})
+      def get_text(url, headers = DEFAULT_HEADERS)
         response = http_get(url, headers)
         validate!(response, url)
         return unless response.is_a?(Net::HTTPSuccess)
@@ -59,7 +63,7 @@ module Etl
         response.body
       end
 
-      def get_json(url, headers = {})
+      def get_json(url, headers = DEFAULT_HEADERS)
         response = http_get(url, headers)
         validate!(response, url)
         return unless response.is_a?(Net::HTTPSuccess)

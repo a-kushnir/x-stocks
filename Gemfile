@@ -5,17 +5,17 @@ git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
 ruby '2.7.5'
 
+gem 'bootsnap', '>= 1.4.2', require: false
 gem 'honeybadger', '~> 4.0'
 gem 'importmap-rails', '~> 1.0'
+gem 'net-http'
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '>= 5.6.2'
 gem 'rails', '>= 7.0.2.2'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'turbo-rails', '~> 1.0'
 gem 'view_component', '>= 2.50'
-
-gem 'bootsnap', '>= 1.4.2', require: false
-gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '>= 5.6.2'
 
 group :development do
   gem 'rubocop', require: false

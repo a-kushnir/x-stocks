@@ -182,6 +182,8 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mustermann-grape (1.0.1)
       mustermann (>= 1.0.0)
+    net-http (0.2.2)
+      uri
     net-imap (0.2.3)
       digest
       net-protocol
@@ -335,6 +337,7 @@ GEM
       tzinfo (>= 1.0.0)
     uber (0.1.0)
     unicode-display_width (1.7.0)
+    uri (0.11.0)
     view_component (2.52.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
@@ -369,6 +372,7 @@ DEPENDENCIES
   honeybadger (~> 4.0)
   importmap-rails (~> 1.0)
   inline_svg
+  net-http
   nokogiri
   pagy
   pg (>= 0.18, < 2.0)

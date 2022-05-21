@@ -51,3 +51,6 @@ gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 
 gem 'swagger_ui_engine', github: 'swagger_ui_engine'
+
+# NOTE: FFI is a required pre-requisite for Windows or posix_spawn support in the ChildProcess gem. Ensure the `ffi` gem is installed
+gem 'ffi' if RUBY_PLATFORM =~ /x64-mingw32/i

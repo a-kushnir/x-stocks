@@ -135,6 +135,7 @@ GEM
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0, >= 1.0.2)
     erubi (1.10.0)
+    ffi (1.15.5-x64-mingw32)
     globalid (1.0.0)
       activesupport (>= 5.0)
     grape (1.5.1)
@@ -364,6 +365,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   caxlsx (>= 3.1.0)
   devise
+  ffi
   grape
   grape-entity
   grape-swagger

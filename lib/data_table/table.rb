@@ -38,7 +38,8 @@ module DataTable
     end
 
     def filter
-      yield params[:q] if params[:q].present?
+      query = params[:q]&.strip
+      yield query if query.present?
     end
 
     def paginate(records)

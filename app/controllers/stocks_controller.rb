@@ -177,7 +177,7 @@ class StocksController < ApplicationController
   end
 
   def handle_goto_param?
-    value = params[:goto]
+    value = params[:goto]&.strip
     return false if value.blank?
 
     stock = XStocks::AR::Stock.find_by(symbol: value.upcase)

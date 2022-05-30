@@ -1,0 +1,22 @@
+<div class="section section-form section-form-left">
+  <h2>Estimated Taxes</h2>
+
+  <%= form_for(resource, as: resource_name, url: '/registrations/regenerate', html: { method: :post, id: 'edit_api_key' }) do |f| %>
+    <% [:ordinary_divs, :qualified_divs].each do |tax_code| %>
+    <% tax_name, tax_url = XStocks::Stock::TAXES[tax_code] %>
+      <div class="field mb-4">
+        <%= label_tag "user[taxes][#{tax_code}]", class: 'block text-gray-700 font-bold mb-2' do %>
+          <%= tax_name %> <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
+        <% end %>
+        <div class="relative flex w-full text-gray-800">
+          <%= text_field_tag "user[taxes][#{tax_code}]", @user.taxes&.dig(tax_code), class: 'rounded-l w-full border-gray-400', placeholder: tax_name %>
+          <div class="pt-2 border border-l-0 px-2 rounded-none rounded-r bg-gray-200 border-gray-400">%</div>
+        </div>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

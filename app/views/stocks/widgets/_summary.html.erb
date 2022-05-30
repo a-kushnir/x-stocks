@@ -43,7 +43,12 @@ HELP
   if div_suspended
     right_table << { label: 'Forward Dividend & Yield', value: 'Suspended', class: 'text-danger' }
   else
-    right_table << { label: 'Forward Dividend & Yield', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+    if @stock.est_annual_dividend_taxed(current_user)
+      right_table << { label: 'Forward Dividend & Yield BT', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+      right_table << { label: 'Forward Dividend & Yield AT', value: "#{number_to_currency(@stock.est_annual_dividend_taxed(current_user))} (#{number_to_percentage(@stock.est_annual_dividend_taxed_pct(current_user), precision: 2) })"}
+    else
+      right_table << { label: 'Forward Dividend & Yield', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+    end
     right_table << { label: 'Dividend Growth 3Y', value: "#{change_icon(@stock.dividend_growth_3y)}#{number_to_percentage(@stock.dividend_growth_3y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_3y)} if @stock.dividend_growth_3y
     right_table << { label: 'Dividend Growth 5Y', value: "#{change_icon(@stock.dividend_growth_5y)}#{number_to_percentage(@stock.dividend_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
     right_table << { label: 'Years of Dividend Growth', value: @stock.dividend_growth_years } if @stock.dividend_growth_years

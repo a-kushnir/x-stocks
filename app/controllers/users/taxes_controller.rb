@@ -5,8 +5,10 @@ module Users
   class TaxesController < ApplicationController
     def create
       current_user.attributes = user_params
-      current_user.save!
-      redirect_to edit_user_registration_path
+      if current_user.valid?
+        current_user.save!
+        redirect_to edit_user_registration_path
+      end
     end
 
     private

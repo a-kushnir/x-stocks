@@ -16,6 +16,7 @@ gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'turbo-rails', '~> 1.0'
 gem 'view_component', '>= 2.50'
+gem 'validates_serialized'
 
 group :development do
   gem 'rubocop', require: false

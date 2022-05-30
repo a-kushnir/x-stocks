@@ -26,7 +26,7 @@
           <%= label_tag(id) do %>
             <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= tax_name %>
           <% end %>
-          <%= link_to 'Learn more', tax_url, class: 'text-blue-500 no-underline', target: '_blank' if tax_url %>
+          <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
         </li>
       <% end %>
       </ul>

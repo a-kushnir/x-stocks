@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   mount API::Root => '/api'
   mount SwaggerUiEngine::Engine, at: '/api_docs'
 
-  devise_for :users, class_name: XStocks::AR::User, controllers: { registrations: 'registrations', sessions: 'sessions' }
-  devise_scope :user do
-    post '/registrations/regenerate' => 'registrations#regenerate'
+  namespace :users do
+    resources :apis, only: [:create]
+    resources :taxes, only: [:create]
   end
+  devise_for :users, class_name: XStocks::AR::User, controllers: { registrations: 'registrations', sessions: 'sessions' }
 
   resources :menu, only: [:index]
 

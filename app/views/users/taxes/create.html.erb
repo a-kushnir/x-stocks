@@ -1,0 +1,3 @@
+<%= turbo_frame_tag :user_taxes do %>
+  <%= render partial: 'devise/registrations/forms/taxes', locals: { resource: current_user, resource_name: :user } %>
+<% end %>

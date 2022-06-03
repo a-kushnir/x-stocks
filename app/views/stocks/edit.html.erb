@@ -3,29 +3,29 @@
 
   <%= form_for @stock, url: stock_path(@stock.symbol), method: :put do |form| %>
     <div class="mb-4">
-      <%= form.label :symbol, class: 'block text-gray-700 font-bold mb-2' %>
+      <%= form.label :symbol, t('stocks.attributes.symbol'), class: 'block text-gray-700 font-bold mb-2' %>
       <%= form.text_field :symbol, disabled: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase bg-gray-200' %>
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_exchange_id">Exchange</label>
+      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_exchange_id"><%= t('stocks.attributes.exchange') %></label>
       <%= select_tag('x_stocks_ar_stock[exchange_id]', options_for_select([[]] + @exchanges.map { |e| [ "#{e.name} (#{e.code})", e.id ] }, @stock.exchange_id), class: 'border rounded w-full') %>
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_yahoo_fair_price">Fair Price</label>
-      <%= form.text_field :yahoo_fair_price, placeholder: 'Fair Price', value: number_with_precision(@stock.yahoo_fair_price, precision: 2), autocomplete: :off, label: 'Fair Price', prepend: '$',
+      <label class="block text-gray-700 font-bold mb-2" for="x_stocks_ar_stock_yahoo_fair_price"><%= t('stocks.attributes.fair_price') %></label>
+      <%= form.text_field :yahoo_fair_price, placeholder: t('stocks.attributes.fair_price'), value: number_with_precision(@stock.yahoo_fair_price, precision: 2), autocomplete: :off, label: 'Fair Price', prepend: '$',
                           class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase'%>
     </div>
 
     <div class="mb-4">
-      <span class="block text-gray-700 font-bold mb-2">Taxes</span>
+      <span class="block text-gray-700 font-bold mb-2"><%= t('stocks.attributes.taxes') %></span>
       <ul>
       <% XStocks::Stock::Taxes::TAXES.each do |tax_code, tax_data| %>
         <% id = "x_stocks_ar_stock_taxes_#{tax_code}" %>
-        <% tax_name, tax_url = tax_data %>
         <li>
           <%= label_tag(id) do %>
-            <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= tax_name %>
+            <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= t("taxes.#{tax_code}") %>
           <% end %>
+          <% tax_url = tax_data.first %>
           <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
         </li>
       <% end %>
@@ -34,9 +34,9 @@
 
     <div class="pb-3 flex items-center justify-between">
       <%= link_to back_url, class: 'btn btn-link' do %>
-        <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
+        <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> <%= t('buttons.back') %>
       <% end %>
-      <%= form.submit 'Save', class: 'btn btn-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
+      <%= form.submit t('buttons.save'), class: 'btn btn-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
     </div>
   <% end %>
 </div>

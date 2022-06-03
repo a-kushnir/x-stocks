@@ -6,6 +6,7 @@
 @import "module/badge";
 @import "module/button";
 @import "module/form";
+@import "module/i18n";
 @import "module/menu";
 @import "module/pagy";
 @import "module/price_range";

@@ -1,33 +1,42 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  buttons:
+    back: 'Back'
+    save: 'Save'
+  stocks:
+    pages:
+      index: 'Stocks'
+      new: 'New Stock'
+    attributes:
+      symbol: 'Symbol'
+      exchange: 'Exchange'
+      fair_price: 'Fair Price'
+      taxes: 'Taxes'
+    columns:
+      symbol: 'Symbol'
+      company: 'Company'
+      country: 'Country'
+      price: 'Price'
+      change: 'Change'
+      change_pct: 'Change %'
+      52wk_range: '52 Week Range'
+      fair_value: 'Fair Value'
+      short_term: 'Short Term'
+      mid_term: 'Mid Term'
+      long_term: 'Long Term'
+      div_frequency: 'Div. Frequency'
+      next_div: 'Next Div.'
+      est_annual_div: 'Est. Annual Div.'
+      est_yield_pct: 'Est. Yield %'
+      div_change_pct: 'Div. Change %'
+      pe_ratio: 'P/E Ratio'
+      payout_pct: 'Payout %'
+      market_cap: 'Market Cap.'
+      yahoo_rec: 'Yahoo Rec.'
+      finnhub_rec: 'Finnhub Rec.'
+      div_safety: 'Div. Safety.'
+      ex_date: 'Ex Date.'
+  taxes:
+    foreign_tax: 'Foreign Tax'
+    schedule_k1: 'Schedule K-1 (Form 1065)'
+    ordinary_divs: 'Non-Qualified Dividend'
+    qualified_divs: 'Qualified Dividends'

@@ -116,29 +116,29 @@ class StocksController < ApplicationController
 
     table.init_columns do |columns|
       # Stock
-      columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
-      columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
-      columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
-      columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency', default: true)
-      columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta', default: true)
-      columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2', default: true)
-      columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
-      columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount', default: true)
-      columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
-      columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
-      columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
-      columns << DataTable::Column.new(code: 'dvf', label: 'Div. Frequency', formatter: 'string', sorting: 'stocks.dividend_frequency_num')
-      columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency_or_warning4', sorting: 'stocks.next_div_amount')
-      columns << DataTable::Column.new(code: 'ead', label: 'Est. Annual Div.', formatter: 'currency_or_warning', default: true)
-      columns << DataTable::Column.new(code: 'eyp', label: 'Est. Yield %', formatter: 'percent_or_warning2', default: true)
-      columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
-      columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
-      columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2', sorting: 'stocks.payout_ratio')
-      columns << DataTable::Column.new(code: 'cap', label: 'Market Cap.', formatter: 'big_currency', sorting: 'stocks.market_capitalization')
-      columns << DataTable::Column.new(code: 'yrc', label: 'Yahoo Rec.', formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
-      columns << DataTable::Column.new(code: 'frc', label: 'Finnhub Rec.', formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
-      columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
-      columns << DataTable::Column.new(code: 'exd', label: 'Ex Date.', formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
+      columns << DataTable::Column.new(code: 'smb', label: t('stocks.columns.symbol'), formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
+      columns << DataTable::Column.new(code: 'cmp', label: t('stocks.columns.company'), formatter: 'string', sorting: 'stocks.company_name', default: true)
+      columns << DataTable::Column.new(code: 'cnt', label: t('stocks.columns.country'), formatter: 'string', align: 'center', sorting: 'stocks.country')
+      columns << DataTable::Column.new(code: 'prc', label: t('stocks.columns.price'), formatter: 'currency', default: true)
+      columns << DataTable::Column.new(code: 'prd', label: t('stocks.columns.change'), formatter: 'currency_delta', default: true)
+      columns << DataTable::Column.new(code: 'prp', label: t('stocks.columns.change_pct'), formatter: 'percent_delta2', default: true)
+      columns << DataTable::Column.new(code: 'wkr', label: t('stocks.columns.52wk_range'), formatter: 'price_range')
+      columns << DataTable::Column.new(code: 'frv', label: t('stocks.columns.fair_value'), formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount', default: true)
+      columns << DataTable::Column.new(code: 'srg', label: t('stocks.columns.short_term'), formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
+      columns << DataTable::Column.new(code: 'mrg', label: t('stocks.columns.mid_term'), formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
+      columns << DataTable::Column.new(code: 'lrg', label: t('stocks.columns.long_term'), formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
+      columns << DataTable::Column.new(code: 'dvf', label: t('stocks.columns.div_frequency'), formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+      columns << DataTable::Column.new(code: 'ndv', label: t('stocks.columns.next_div'), formatter: 'currency_or_warning4', sorting: 'stocks.next_div_amount')
+      columns << DataTable::Column.new(code: 'ead', label: t('stocks.columns.est_annual_div'), formatter: 'currency_or_warning', default: true)
+      columns << DataTable::Column.new(code: 'eyp', label: t('stocks.columns.est_annual_div'), formatter: 'percent_or_warning2', default: true)
+      columns << DataTable::Column.new(code: 'dcp', label: t('stocks.columns.div_change_pct'), formatter: 'percent_delta1')
+      columns << DataTable::Column.new(code: 'per', label: t('stocks.columns.pe_ratio'), formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
+      columns << DataTable::Column.new(code: 'ptp', label: t('stocks.columns.payout_pct'), formatter: 'percent2', sorting: 'stocks.payout_ratio')
+      columns << DataTable::Column.new(code: 'cap', label: t('stocks.columns.market_cap'), formatter: 'big_currency', sorting: 'stocks.market_capitalization')
+      columns << DataTable::Column.new(code: 'yrc', label: t('stocks.columns.yahoo_rec'), formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
+      columns << DataTable::Column.new(code: 'frc', label: t('stocks.columns.finnhub_rec'), formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
+      columns << DataTable::Column.new(code: 'dsf', label: t('stocks.columns.div_safety'), formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
+      columns << DataTable::Column.new(code: 'exd', label: t('stocks.columns.ex_date'), formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
     end
   end
 
@@ -156,7 +156,7 @@ class StocksController < ApplicationController
   end
 
   def set_page_title
-    @page_title = @stock.nil? || @stock.new_record? ? 'New Stock' : @stock
+    @page_title = @stock.nil? || @stock.new_record? ? t('stocks.pages.new') : @stock
     @page_menu_item = :stocks
   end
 

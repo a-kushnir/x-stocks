@@ -4,16 +4,16 @@
 
     <%= form_for @stock, url: stocks_url do |form| %>
       <div class="mb-4">
-        <%= form.label :symbol, class: 'block text-gray-700 font-bold mb-2' %>
-        <%= form.text_field :symbol, placeholder: 'Symbol', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase', autocomplete: :off, autofocus: true %>
+        <%= form.label :symbol, t('stocks.attributes.symbol'), class: 'block text-gray-700 font-bold mb-2' %>
+        <%= form.text_field :symbol, placeholder: t('stocks.attributes.symbol'), class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline uppercase', autocomplete: :off, autofocus: true %>
         <%= form.error_message_for(:symbol) %>
       </div>
 
       <div class="pb-3 flex items-center justify-between">
         <%= link_to back_url, class: 'btn btn-link' do %>
-          <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> Back
+          <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> <%= t('buttons.back') %>
         <% end %>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary"><%= t('buttons.save') %></button>
       </div>
     <% end %>
   </div>

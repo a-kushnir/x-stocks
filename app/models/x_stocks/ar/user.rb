@@ -8,6 +8,7 @@ module XStocks
              :recoverable, :rememberable, :validatable, :trackable
 
       has_many :positions
+      has_many :watchlists
 
       serialize :favorites, JSON
       serialize :taxes, JSON

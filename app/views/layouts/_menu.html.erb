@@ -17,7 +17,7 @@
     <ul class="top-menu-left">
     <% if user_signed_in? %>
       <%= top_menu_link(:stocks, t('stocks.pages.stocks'), stocks_path) %>
-      <%= top_menu_link(:watchlists, t('watchlists.pages.watchlists'), watchlists_path) %>
+      <%#= top_menu_link(:watchlists, t('watchlists.pages.watchlists'), watchlists_path) %>
       <%= top_menu_link(:positions, t('positions.pages.portfolio'), positions_table_index_path) %>
       <%= top_menu_link(:dividends, t('dividends.pages.dividends'), dividends_table_index_path) %>
     <% end %>

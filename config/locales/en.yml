@@ -54,3 +54,9 @@ en:
     schedule_k1: 'Schedule K-1 (Form 1065)'
     ordinary_divs: 'Non-Qualified Dividend'
     qualified_divs: 'Qualified Dividends'
+  watchlists:
+    pages:
+      watchlists: 'Watchlists'
+      new_watchlist: 'New Watchlist'
+    columns:
+      name: 'Name'

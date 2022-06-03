@@ -7,6 +7,8 @@ module XStocks
       devise :database_authenticatable, :registerable,
              :recoverable, :rememberable, :validatable, :trackable
 
+      has_many :positions
+
       serialize :favorites, JSON
       serialize :taxes, JSON
       validates_hash_values :taxes, numericality: { greater_than_or_equal_to: 0, less_than: 100, allow_blank: true }

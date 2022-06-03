@@ -18,7 +18,6 @@ module XStocks
       numerical :shares, :average_price, :stop_loss
 
       scope :with_shares, -> { where.not(shares: nil) }
-      scope :with_user, ->(user) { where(user: user) }
     end
   end
 end

@@ -14,7 +14,7 @@ module Dividends
     private
 
     def positions
-      @positions ||= XStocks::AR::Position.with_user(current_user).with_shares.all
+      @positions ||= current_user.positions.with_shares.all
     end
   end
 end

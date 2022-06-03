@@ -86,11 +86,11 @@
   </table>
 
   <% if @position.shares && @position.stop_loss %>
-    <h4 class="uppercase mb-3 font-normal">Stop Loss</h4>
+    <h3>Stop Loss</h3>
     <table class="w-full mb-2">
       <tbody>
       <tr class="border-t first:border-none border-gray-300">
-        <td style="border-top: none;">
+        <td class="p-1">
           Stop Price:
           <strong class="float-right"><%= number_to_currency(@position.stop_loss) %></strong>
         </td>
@@ -118,7 +118,7 @@
   <% end %>
 
   <% if @position.note.present? %>
-    <div class="alert alert-warning fade show">
+    <div class="alert alert-warning">
       <%= inline_svg('svg/comment-text-outline', size: '24*24', class: 'float-right') %>
       <%= multiline_text_to_html(@position.note) %>
     </div>

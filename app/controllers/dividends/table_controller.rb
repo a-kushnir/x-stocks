@@ -8,7 +8,7 @@ module Dividends
     end
 
     def index
-      positions = XStocks::AR::Position.joins(:stock).with_user(current_user).with_shares
+      positions = current_user.positions.joins(:stock).with_shares
 
       @table = table
       @table.sort { |column, direction| positions = positions.reorder(column => direction) }

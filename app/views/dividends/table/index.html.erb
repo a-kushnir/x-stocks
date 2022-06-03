@@ -1,2 +1,2 @@
-<%= render(DataTableComponent.new(name: 'My Dividends', table: @table, turbo_frame_id: 'datatable_dividends',
+<%= render(DataTableComponent.new(name: t('dividends.pages.dividends'), table: @table, turbo_frame_id: 'datatable_dividends',
                                   top_right_block: render(partial: 'dividends/formats', locals: { selected: 'table' }))) %>

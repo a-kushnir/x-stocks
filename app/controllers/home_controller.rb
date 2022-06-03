@@ -3,7 +3,7 @@
 # Controller to provide home page information
 class HomeController < ApplicationController
   def index
-    @page_title = 'Home'
+    @page_title = t('home.pages.home')
     @page_menu_item = :home
   end
 end

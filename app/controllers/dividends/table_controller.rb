@@ -20,7 +20,7 @@ module Dividends
 
       populate_data(positions)
 
-      @page_title = 'My Dividends'
+      @page_title = t('dividends.pages.dividends')
       @page_menu_item = :dividends
     end
 

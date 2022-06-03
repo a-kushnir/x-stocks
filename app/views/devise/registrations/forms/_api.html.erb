@@ -1,5 +1,5 @@
 <div class="section section-form section-form-left">
-  <h2>API Key</h2>
+  <h2><%= t('account.pages.api_key') %></h2>
 
   <%= form_for(resource, as: resource_name, url: users_apis_path, html: { method: :post }) do |f| %>
     <div class="pb-3 relative flex w-full" data-controller="clipboard">

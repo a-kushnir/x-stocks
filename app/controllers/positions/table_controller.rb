@@ -20,7 +20,7 @@ module Positions
 
       populate_data(positions)
 
-      @page_title = 'My Positions'
+      @page_title = t('positions.pages.portfolio')
       @page_menu_item = :positions
     end
 

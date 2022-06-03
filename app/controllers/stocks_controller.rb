@@ -27,8 +27,7 @@ class StocksController < ApplicationController
 
     populate_data(stocks)
 
-    @page_title = 'Stocks'
-    @page_menu_item = :stocks
+    @page_title = t('stocks.pages.stocks')
   end
 
   def show
@@ -37,13 +36,10 @@ class StocksController < ApplicationController
 
     @stock.reload if update_price
     @position = XStocks::AR::Position.find_or_initialize_by(stock_id: @stock.id, user: current_user)
-
-    set_page_title
   end
 
   def new
     @stock = new_stock
-    set_page_title
   end
 
   def create
@@ -53,7 +49,6 @@ class StocksController < ApplicationController
     if @stock.save
       redirect_to({ action: 'initializing', symbol: @stock.symbol }.merge(initialize_params))
     else
-      set_page_title
       render action: 'new'
     end
   end
@@ -63,7 +58,6 @@ class StocksController < ApplicationController
     not_found && return unless @stock
 
     @exchanges = XStocks::AR::Exchange.all
-    set_page_title
   end
 
   def update
@@ -75,13 +69,11 @@ class StocksController < ApplicationController
       redirect_to action: 'show'
     else
       @exchanges = XStocks::AR::Exchange.all
-      set_page_title
       render action: 'edit'
     end
   end
 
   def initializing
-    set_page_title
     @stock = find_stock
     not_found unless @stock
   end
@@ -110,6 +102,12 @@ class StocksController < ApplicationController
   end
 
   private
+
+  def render(*args)
+    @page_title ||= @stock && !@stock.new_record? ? @stock.to_s : t('stocks.pages.new_stock')
+    @page_menu_item = :stocks
+    super
+  end
 
   def table
     table = DataTable::Table.new(params)
@@ -153,11 +151,6 @@ class StocksController < ApplicationController
       end
       true
     end
-  end
-
-  def set_page_title
-    @page_title = @stock.nil? || @stock.new_record? ? t('stocks.pages.new') : @stock
-    @page_menu_item = :stocks
   end
 
   def new_stock

@@ -1,11 +1,25 @@
 en:
+  account:
+    pages:
+      account: 'Account'
+      api_key: 'API Key'
+      estimated_taxes: 'Estimated Taxes'
   buttons:
     back: 'Back'
     save: 'Save'
+  dividends:
+    pages:
+      dividends: 'Dividends'
+  home:
+    pages:
+      home: 'Home'
+  positions:
+    pages:
+      portfolio: 'Portfolio'
   stocks:
     pages:
-      index: 'Stocks'
-      new: 'New Stock'
+      stocks: 'Stocks'
+      new_stock: 'New Stock'
     attributes:
       symbol: 'Symbol'
       exchange: 'Exchange'

@@ -1,5 +1,5 @@
 <div class="section section-form section-form-left">
-  <h2>Estimated Taxes</h2>
+  <h2><%= t('account.pages.estimated_taxes') %></h2>
 
   <%= form_for(resource, as: resource_name, url: users_taxes_path, html: { method: :post }) do |f| %>
     <% [:ordinary_divs, :qualified_divs].each do |tax_code| %>

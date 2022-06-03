@@ -11,7 +11,7 @@
         @apply min-w-full leading-normal;
 
         thead th, tfoot th {
-          @apply border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap;
+          @apply border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap text-left;
           a { @apply no-underline inline-block w-full; }
         }
 

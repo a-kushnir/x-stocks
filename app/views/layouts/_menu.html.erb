@@ -16,10 +16,10 @@
   <div class="<%= class_names('top-menu-collapsible', { collapsed: @page_menu_item != :menu }) %>" data-class-target="element" data-class-value="collapsed">
     <ul class="top-menu-left">
     <% if user_signed_in? %>
-      <%= top_menu_link(:home, 'Home', root_path) %>
-      <%= top_menu_link(:stocks, 'Stocks', stocks_path) %>
-      <%= top_menu_link(:positions, 'My Positions', positions_table_index_path) %>
-      <%= top_menu_link(:dividends, 'My Dividends', dividends_table_index_path) %>
+      <%= top_menu_link(:stocks, t('stocks.pages.stocks'), stocks_path) %>
+      <%= top_menu_link(:watchlists, t('watchlists.pages.watchlists'), watchlists_path) %>
+      <%= top_menu_link(:positions, t('positions.pages.portfolio'), positions_table_index_path) %>
+      <%= top_menu_link(:dividends, t('dividends.pages.dividends'), dividends_table_index_path) %>
     <% end %>
   </ul>
     <ul class="top-menu-right">
@@ -28,7 +28,7 @@
         <%= render partial: 'layouts/menu_search', locals: { classes: '', hotkey: '/' } %>
       </li>
       <%= top_menu_link(:services, 'Services', services_path) %>
-      <%= top_menu_link(:profile, 'My Profile', edit_user_registration_path)  %>
+      <%= top_menu_link(:account, t('account.pages.account'), edit_user_registration_path)  %>
       <li>
         <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
       </li>

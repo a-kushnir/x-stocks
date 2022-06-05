@@ -34,27 +34,27 @@ module Dividends
     end
 
     def table
-      table = DataTable::Table.new(params, DataTable::Table::DEFAULT_PAGINATION_OPTIONS + [['All', -1]])
+      table = DataTable::Table.new(params, DataTable::Table::DEFAULT_PAGINATION_OPTIONS + [['All', -1]], -1)
 
       table.init_columns do |columns|
         # Stock
-        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
-        columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
-        columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
-        columns << DataTable::Column.new(code: 'yld', label: 'Est. Yield %', formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
-        columns << DataTable::Column.new(code: 'dch', label: 'Div. Change', formatter: 'percent_delta1')
-        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety', formatter: 'safety_badge', sorting: 'stocks.dividend_rating', default: true)
+        columns << DataTable::Column.new(code: 'smb', label: t('dividends.columns.symbol'), formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'cmp', label: t('dividends.columns.company'), formatter: 'string', sorting: 'stocks.company_name', default: true)
+        columns << DataTable::Column.new(code: 'cnt', label: t('dividends.columns.country'), formatter: 'string', align: 'center', sorting: 'stocks.country')
+        columns << DataTable::Column.new(code: 'yld', label: t('dividends.columns.est_yield_pct'), formatter: 'percent_or_warning2', sorting: 'stocks.est_annual_dividend_pct', default: true)
+        columns << DataTable::Column.new(code: 'dcp', label: t('dividends.columns.div_change_pct'), formatter: 'percent_delta1')
+        columns << DataTable::Column.new(code: 'dsf', label: t('dividends.columns.div_safety'), formatter: 'safety_badge', sorting: 'stocks.dividend_rating', default: true)
         # Position
-        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost')
-        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value')
-        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss')
-        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct')
-        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'cst', label: t('dividends.columns.total_cost'), formatter: 'currency', sorting: 'positions.total_cost')
+        columns << DataTable::Column.new(code: 'mvl', label: t('dividends.columns.market_value'), formatter: 'currency', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'trc', label: t('dividends.columns.total_return'), formatter: 'currency_delta', sorting: 'positions.gain_loss')
+        columns << DataTable::Column.new(code: 'trp', label: t('dividends.columns.total_return_pct'), formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct')
+        columns << DataTable::Column.new(code: 'dvr', label: t('dividends.columns.diversity_pct'), formatter: 'percent2', sorting: 'positions.market_value')
         # Dividends
         month_names.each_with_index do |month_name, index|
           columns << DataTable::Column.new(code: "m#{index.to_s.rjust(2, '0')}", label: month_name, formatter: 'currency', default: true)
         end
-        columns << DataTable::Column.new(code: 'ttl', label: 'Total', formatter: 'currency_or_warning', default: true)
+        columns << DataTable::Column.new(code: 'ttl', label: t('dividends.columns.total'), formatter: 'currency_or_warning', default: true)
       end
     end
 
@@ -88,6 +88,7 @@ module Dividends
         total_amount: month_amounts.sum,
         dividend_rating: avg_dividend_rating.value
       }
+      summary = summary(positions, summary)
 
       @table.footers << footer(summary)
     end
@@ -123,17 +124,17 @@ module Dividends
         nil,
         nil,
         nil,
-        summary[:yield_on_value],
+        summary.fetch(:yield_on_value),
         nil,
-        summary[:dividend_rating],
+        summary.fetch(:dividend_rating),
         # Position
-        summary[:total_cost],
-        summary[:market_value],
-        summary[:gain_loss],
-        summary[:gain_loss_pct],
+        summary.fetch(:total_cost),
+        summary.fetch(:market_value),
+        summary.fetch(:gain_loss),
+        summary.fetch(:gain_loss_pct),
         100,
-        *summary[:month_amounts],
-        summary[:total_amount]
+        *summary.fetch(:month_amounts),
+        summary.fetch(:total_amount)
       ]
     end
 

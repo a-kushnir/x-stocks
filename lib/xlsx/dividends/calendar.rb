@@ -5,10 +5,14 @@ module XLSX
   class Dividends
     # Generates Dividend Calendar worksheet
     class Calendar
+      delegate :t, to: :@i18n
+
       def initialize(freeze: XLSX::Worksheet::Freeze.new,
-                     styles: XLSX::Worksheet::Styles.new)
+                     styles: XLSX::Worksheet::Styles.new,
+                     i18n: I18n)
         @freeze = freeze
         @styles = styles
+        @i18n = i18n
       end
 
       def generate(package, positions)
@@ -43,7 +47,14 @@ module XLSX
           month_names << (edge_months.include?(month) ? month.strftime("%b'%y") : month.strftime('%b'))
         end
 
-        ['Symbol', 'Company', 'Yield', 'Safety', month_names, 'Total'].flatten
+        [
+          t('dividends.columns.symbol'),
+          t('dividends.columns.company'),
+          t('dividends.columns.est_yield_pct'),
+          t('dividends.columns.div_safety'),
+          *month_names,
+          'Total'
+        ]
       end
 
       def header_styles

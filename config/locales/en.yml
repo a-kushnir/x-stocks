@@ -10,12 +10,63 @@ en:
   dividends:
     pages:
       dividends: 'Dividends'
+    columns:
+      symbol: 'Symbol'
+      company: 'Company'
+      country: 'Country'
+      est_yield_pct: 'Est. Yield %'
+      div_change_pct: 'Div. Change %'
+      div_safety: 'Div. Safety'
+      total_cost: 'Total Cost'
+      market_value: 'Market Value'
+      total_return: 'Total Return'
+      total_return_pct: 'Total Return %'
+      diversity_pct: 'Diversity %'
+      total: 'Total'
   home:
     pages:
       home: 'Home'
   positions:
     pages:
       portfolio: 'Portfolio'
+    columns:
+      symbol: 'Symbol'
+      company: 'Company'
+      country: 'Country'
+      shares: 'Shares'
+      average_price: 'Average Price'
+      market_price: 'Market Price'
+      total_cost: 'Total Cost'
+      market_value: 'Market Value'
+      today_return: "Today's Return"
+      today_return_pct: "Today's Return %"
+      total_return: 'Total Return'
+      total_return_pct: 'Total Return %'
+      next_div: 'Next Div.'
+      annual_div: 'Annual Div.'
+      diversity_pct: 'Diversity %'
+      stop_price: 'Stop Price'
+      est_credit: 'Est. Credit'
+      est_return: 'Est. Return'
+      est_return_pct: 'Est. Return %'
+      price: 'Price'
+      change: 'Change'
+      change_pct: 'Change %'
+      52wk_range: '52 Week Range'
+      fair_value: 'Fair Value'
+      short_term: 'Short Term'
+      mid_term: 'Mid Term'
+      long_term: 'Long Term'
+      div_frequency: 'Div. Frequency'
+      est_annual_div: 'Est. Annual Div.'
+      est_yield_pct: 'Est. Yield %'
+      div_change_pct: 'Div. Change %'
+      pe_ratio: 'P/E Ratio'
+      payout_pct: 'Payout %'
+      yahoo_rec: 'Yahoo Rec.'
+      finnhub_rec: 'Finnhub Rec.'
+      div_safety: 'Div. Safety'
+      ex_date: 'Ex-Date'
   stocks:
     pages:
       stocks: 'Stocks'
@@ -47,8 +98,8 @@ en:
       market_cap: 'Market Cap.'
       yahoo_rec: 'Yahoo Rec.'
       finnhub_rec: 'Finnhub Rec.'
-      div_safety: 'Div. Safety.'
-      ex_date: 'Ex Date.'
+      div_safety: 'Div. Safety'
+      ex_date: 'Ex-Date'
   taxes:
     foreign_tax: 'Foreign Tax'
     schedule_k1: 'Schedule K-1 (Form 1065)'

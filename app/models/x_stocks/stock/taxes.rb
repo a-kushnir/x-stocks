@@ -15,7 +15,7 @@ module XStocks
         stock_taxes = (ar_stock.taxes || [])
         user_taxes = (user.taxes || {})
 
-        taxes = [:ordinary_divs, :qualified_divs].map do |tax_code|
+        taxes = %i[ordinary_divs qualified_divs].map do |tax_code|
           user_tax = user_taxes[tax_code.to_s].presence
           user_tax.to_f if stock_taxes.include?(tax_code.to_s) && user_tax
         end.compact

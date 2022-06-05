@@ -2,6 +2,7 @@
 
 # Calculates the current progress on a scale from 0 to 100%
 class ProgressBar
+  # Progress bar range
   class Range
     attr_reader :min, :max
 
@@ -44,6 +45,7 @@ class ProgressBar
     end
   end
 
+  # Steps with different weights
   class Steps
     attr_reader :steps
 

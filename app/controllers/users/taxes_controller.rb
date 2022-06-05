@@ -8,13 +8,15 @@ module Users
       if current_user.valid?
         current_user.save!
         redirect_to edit_user_registration_path
+      else
+        render action: 'create'
       end
     end
 
     private
 
     def user_params
-      (params[:user] || {}).permit(:taxes => {})
+      (params[:user] || {}).permit(taxes: {})
     end
   end
 end

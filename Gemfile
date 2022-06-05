@@ -15,8 +15,8 @@ gem 'rails', '>= 7.0.2.2'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'turbo-rails', '~> 1.0'
-gem 'view_component', '>= 2.50'
 gem 'validates_serialized'
+gem 'view_component', '>= 2.50'
 
 group :development do
   gem 'rubocop', require: false
@@ -54,4 +54,4 @@ gem 'grape-swagger-representable'
 gem 'swagger_ui_engine', github: 'swagger_ui_engine'
 
 # NOTE: FFI is a required pre-requisite for Windows or posix_spawn support in the ChildProcess gem. Ensure the `ffi` gem is installed
-gem 'ffi' if RUBY_PLATFORM =~ /x64-mingw32/i
+gem 'ffi' if RUBY_PLATFORM.match?(/x64-mingw32/i)

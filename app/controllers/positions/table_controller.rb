@@ -27,50 +27,50 @@ module Positions
     private
 
     def table
-      table = DataTable::Table.new(params, DataTable::Table::DEFAULT_PAGINATION_OPTIONS + [['All', -1]])
+      table = DataTable::Table.new(params, DataTable::Table::DEFAULT_PAGINATION_OPTIONS + [['All', -1]], -1)
 
       table.init_columns do |columns|
         # Stock
-        columns << DataTable::Column.new(code: 'smb', label: 'Symbol', formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
-        columns << DataTable::Column.new(code: 'cmp', label: 'Company', formatter: 'string', sorting: 'stocks.company_name', default: true)
-        columns << DataTable::Column.new(code: 'cnt', label: 'Country', formatter: 'string', align: 'center', sorting: 'stocks.country')
+        columns << DataTable::Column.new(code: 'smb', label: t('positions.columns.symbol'), formatter: 'stock_link', sorting: 'stocks.symbol', default: true)
+        columns << DataTable::Column.new(code: 'cmp', label: t('positions.columns.company'), formatter: 'string', sorting: 'stocks.company_name', default: true)
+        columns << DataTable::Column.new(code: 'cnt', label: t('positions.columns.country'), formatter: 'string', align: 'center', sorting: 'stocks.country')
         # Position
-        columns << DataTable::Column.new(code: 'shr', label: 'Shares', formatter: 'number', sorting: 'positions.shares', default: true)
-        columns << DataTable::Column.new(code: 'apr', label: 'Average Price', formatter: 'currency', sorting: 'positions.average_price', default: true)
-        columns << DataTable::Column.new(code: 'mpr', label: 'Market Price', formatter: 'currency', sorting: 'positions.market_price', default: true)
-        columns << DataTable::Column.new(code: 'cst', label: 'Total Cost', formatter: 'currency', sorting: 'positions.total_cost', default: true)
-        columns << DataTable::Column.new(code: 'mvl', label: 'Market Value', formatter: 'currency', sorting: 'positions.market_value', default: true)
-        columns << DataTable::Column.new(code: 'drc', label: "Today's Return", formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'drp', label: "Today's Return %", formatter: 'percent_delta2', sorting: 'stock.price_change_pct')
-        columns << DataTable::Column.new(code: 'trc', label: 'Total Return', formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
-        columns << DataTable::Column.new(code: 'trp', label: 'Total Return %', formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
-        columns << DataTable::Column.new(code: 'ndv', label: 'Next Div.', formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'adv', label: 'Annual Div.', formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'dvr', label: 'Diversity %', formatter: 'percent2', sorting: 'positions.market_value')
+        columns << DataTable::Column.new(code: 'shr', label: t('positions.columns.shares'), formatter: 'number', sorting: 'positions.shares', default: true)
+        columns << DataTable::Column.new(code: 'apr', label: t('positions.columns.average_price'), formatter: 'currency', sorting: 'positions.average_price', default: true)
+        columns << DataTable::Column.new(code: 'mpr', label: t('positions.columns.market_price'), formatter: 'currency', sorting: 'positions.market_price', default: true)
+        columns << DataTable::Column.new(code: 'cst', label: t('positions.columns.total_cost'), formatter: 'currency', sorting: 'positions.total_cost', default: true)
+        columns << DataTable::Column.new(code: 'mvl', label: t('positions.columns.market_value'), formatter: 'currency', sorting: 'positions.market_value', default: true)
+        columns << DataTable::Column.new(code: 'drc', label: t('positions.columns.today_return'), formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'drp', label: t('positions.columns.today_return_pct'), formatter: 'percent_delta2', sorting: 'stock.price_change_pct')
+        columns << DataTable::Column.new(code: 'trc', label: t('positions.columns.today_return'), formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
+        columns << DataTable::Column.new(code: 'trp', label: t('positions.columns.today_return_pct'), formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
+        columns << DataTable::Column.new(code: 'ndv', label: t('positions.columns.next_div'), formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'adv', label: t('positions.columns.annual_div'), formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'dvr', label: t('positions.columns.diversity_pct'), formatter: 'percent2', sorting: 'positions.market_value')
         # Stop Loss
-        columns << DataTable::Column.new(code: 'spp', label: 'Stop Price', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'ecr', label: 'Est. Credit', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'ert', label: 'Est. Return', formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'erp', label: 'Est. Return %', formatter: 'percent_delta2')
+        columns << DataTable::Column.new(code: 'spp', label: t('positions.columns.stop_price'), formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ecr', label: t('positions.columns.est_credit'), formatter: 'currency')
+        columns << DataTable::Column.new(code: 'ert', label: t('positions.columns.est_return'), formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'erp', label: t('positions.columns.est_return_pct'), formatter: 'percent_delta2')
         # Stock
-        columns << DataTable::Column.new(code: 'prc', label: 'Price', formatter: 'currency')
-        columns << DataTable::Column.new(code: 'prd', label: 'Change', formatter: 'currency_delta')
-        columns << DataTable::Column.new(code: 'prp', label: 'Change %', formatter: 'percent_delta2')
-        columns << DataTable::Column.new(code: 'wkr', label: '52 Week Range', formatter: 'price_range')
-        columns << DataTable::Column.new(code: 'frv', label: 'Fair Value', formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount')
-        columns << DataTable::Column.new(code: 'srg', label: 'Short Term', formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
-        columns << DataTable::Column.new(code: 'mrg', label: 'Mid Term', formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
-        columns << DataTable::Column.new(code: 'lrg', label: 'Long Term', formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
-        columns << DataTable::Column.new(code: 'dvf', label: 'Div. Frequency', formatter: 'string', sorting: 'stocks.dividend_frequency_num')
-        columns << DataTable::Column.new(code: 'ead', label: 'Est. Annual Div.', formatter: 'currency_or_warning')
-        columns << DataTable::Column.new(code: 'eyp', label: 'Est. Yield %', formatter: 'percent_or_warning2')
-        columns << DataTable::Column.new(code: 'dcp', label: 'Div. Change %', formatter: 'percent_delta1')
-        columns << DataTable::Column.new(code: 'per', label: 'P/E Ratio', formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
-        columns << DataTable::Column.new(code: 'ptp', label: 'Payout %', formatter: 'percent2', sorting: 'stocks.payout_ratio')
-        columns << DataTable::Column.new(code: 'yrc', label: 'Yahoo Rec.', formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
-        columns << DataTable::Column.new(code: 'frc', label: 'Finnhub Rec.', formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
-        columns << DataTable::Column.new(code: 'dsf', label: 'Div. Safety.', formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
-        columns << DataTable::Column.new(code: 'exd', label: 'Ex Date.', formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
+        columns << DataTable::Column.new(code: 'prc', label: t('positions.columns.price'), formatter: 'currency')
+        columns << DataTable::Column.new(code: 'prd', label: t('positions.columns.change'), formatter: 'currency_delta')
+        columns << DataTable::Column.new(code: 'prp', label: t('positions.columns.change_pct'), formatter: 'percent_delta2')
+        columns << DataTable::Column.new(code: 'wkr', label: t('positions.columns.52wk_range'), formatter: 'price_range')
+        columns << DataTable::Column.new(code: 'frv', label: t('positions.columns.fair_value'), formatter: 'percent_delta0', sorting: 'stocks.yahoo_discount')
+        columns << DataTable::Column.new(code: 'srg', label: t('positions.columns.short_term'), formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
+        columns << DataTable::Column.new(code: 'mrg', label: t('positions.columns.mid_term'), formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
+        columns << DataTable::Column.new(code: 'lrg', label: t('positions.columns.long_term'), formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
+        columns << DataTable::Column.new(code: 'dvf', label: t('positions.columns.div_frequency'), formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+        columns << DataTable::Column.new(code: 'ead', label: t('positions.columns.est_annual_div'), formatter: 'currency_or_warning')
+        columns << DataTable::Column.new(code: 'eyp', label: t('positions.columns.est_yield_pct'), formatter: 'percent_or_warning2')
+        columns << DataTable::Column.new(code: 'dcp', label: t('positions.columns.div_change_pct'), formatter: 'percent_delta1')
+        columns << DataTable::Column.new(code: 'per', label: t('positions.columns.pe_ratio'), formatter: 'number2', sorting: 'stocks.pe_ratio_ttm')
+        columns << DataTable::Column.new(code: 'ptp', label: t('positions.columns.payout_pct'), formatter: 'percent2', sorting: 'stocks.payout_ratio')
+        columns << DataTable::Column.new(code: 'yrc', label: t('positions.columns.yahoo_rec'), formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
+        columns << DataTable::Column.new(code: 'frc', label: t('positions.columns.finnhub_rec'), formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
+        columns << DataTable::Column.new(code: 'dsf', label: t('positions.columns.div_safety'), formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
+        columns << DataTable::Column.new(code: 'exd', label: t('positions.columns.ex_date'), formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
       end
     end
 
@@ -90,9 +90,8 @@ module Positions
         @table.rows << row(stock, position, div_suspended, total_market_value)
       end
 
-      summary = {
-        dividend_rating: avg_dividend_rating.value
-      }
+      summary = { dividend_rating: avg_dividend_rating.value }
+      summary = summary(@stocks_by_id, positions, summary)
 
       @table.footers << footer(summary)
     end
@@ -155,19 +154,19 @@ module Positions
         nil,
         nil,
         nil,
-        summary[:total_cost],
-        summary[:market_value],
-        summary[:today_return],
-        summary[:today_return_pct],
-        summary[:total_return],
-        summary[:total_return_pct],
-        summary[:next_div],
-        summary[:est_annual_div],
+        summary.fetch(:total_cost),
+        summary.fetch(:market_value),
+        summary.fetch(:today_return),
+        summary.fetch(:today_return_pct),
+        summary.fetch(:total_return),
+        summary.fetch(:total_return_pct),
+        summary.fetch(:next_div),
+        summary.fetch(:est_annual_div),
         100,
         nil,
-        summary[:stop_loss_value],
-        summary[:stop_loss_gain_loss],
-        summary[:stop_loss_gain_loss_pct],
+        summary.fetch(:stop_loss_value),
+        summary.fetch(:stop_loss_gain_loss),
+        summary.fetch(:stop_loss_gain_loss_pct),
         nil,
         nil,
         nil,
@@ -178,13 +177,13 @@ module Positions
         nil,
         nil,
         nil,
-        summary[:yield_on_value],
+        summary.fetch(:yield_on_value),
         nil,
         nil,
         nil,
         nil,
         nil,
-        summary[:dividend_rating],
+        summary.fetch(:dividend_rating),
         nil,
         nil
       ]

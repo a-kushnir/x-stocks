@@ -5,16 +5,20 @@ module XLSX
   class Positions
     # Generates My Positions worksheet
     class Worksheet
+      delegate :t, to: :@i18n
+
       def initialize(freeze: XLSX::Worksheet::Freeze.new,
-                     styles: XLSX::Worksheet::Styles.new)
+                     styles: XLSX::Worksheet::Styles.new,
+                     i18n: I18n)
         @freeze = freeze
         @styles = styles
+        @i18n = i18n
       end
 
       def generate(package, positions)
         positions = positions.sort_by { |position| position.stock.symbol }
 
-        package.workbook.add_worksheet(name: 'My Positions') do |sheet|
+        package.workbook.add_worksheet(name: t('positions.pages.portfolio')) do |sheet|
           freeze.generate(sheet, row: 1)
           styles.generate(sheet)
 
@@ -35,7 +39,18 @@ module XLSX
       private
 
       def header_row
-        ['Symbol', 'Shares', 'Average Price', 'Market Price', 'Total Cost', 'Market Value', 'Total Return', 'Total Return %', 'Annual Dividend', 'Diversity %']
+        [
+          t('positions.columns.symbol'),
+          t('positions.columns.shares'),
+          t('positions.columns.average_price'),
+          t('positions.columns.market_value'),
+          t('positions.columns.total_cost'),
+          t('positions.columns.market_value'),
+          t('positions.columns.total_return'),
+          t('positions.columns.total_return_pct'),
+          t('positions.columns.annual_div'),
+          t('positions.columns.diversity_pct')
+        ]
       end
 
       def header_styles

@@ -9,9 +9,10 @@ module DataTable
 
     attr_reader :columns, :rows, :footers, :params, :pages, :pagination_options
 
-    def initialize(params, pagination_options = DEFAULT_PAGINATION_OPTIONS)
+    def initialize(params, pagination_options = DEFAULT_PAGINATION_OPTIONS, default_page_size = pagination_options.first.last)
       @params = params
       @pagination_options = pagination_options
+      @default_page_size = default_page_size
       @columns = []
       @rows = []
       @footers = []
@@ -59,9 +60,8 @@ module DataTable
     end
 
     def pagy_items
-      default = pagination_options.first.last
-      items = params.fetch(:items, default).to_i
-      items = default unless pagination_options.map(&:last).include?(items)
+      items = params.fetch(:items, @default_page_size).to_i
+      items = @default_page_size unless pagination_options.map(&:last).include?(items)
       items = nil unless items.positive?
       items
     end

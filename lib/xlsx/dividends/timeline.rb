@@ -5,10 +5,14 @@ module XLSX
   class Dividends
     # Generates Dividend Timeline worksheet
     class Timeline
+      delegate :t, to: :@i18n
+
       def initialize(freeze: XLSX::Worksheet::Freeze.new,
-                     styles: XLSX::Worksheet::Styles.new)
+                     styles: XLSX::Worksheet::Styles.new,
+                     i18n: I18n)
         @freeze = freeze
         @styles = styles
+        @i18n = i18n
       end
 
       def generate(package, positions)
@@ -39,7 +43,17 @@ module XLSX
       end
 
       def header_row
-        ['Symbol', 'Company', 'Yield', 'Safety', 'Payment Date', 'Ex Date', 'Shares', 'Amount per Share', 'Total Amount']
+        [
+          t('dividends.columns.symbol'),
+          t('dividends.columns.company'),
+          t('dividends.columns.est_yield_pct'),
+          t('dividends.columns.div_safety'),
+          'Payment Date',
+          'Ex Date',
+          'Shares',
+          'Amount per Share',
+          'Total Amount'
+        ]
       end
 
       def header_styles

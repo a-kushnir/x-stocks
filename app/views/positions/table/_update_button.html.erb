@@ -1,7 +1,6 @@
 <button data-controller="service"
         data-action="click->service#run"
-        data-service-code-value="stock_one"
-        data-service-params-value="<%= { symbol: @stock.symbol }.to_json %>"
+        data-service-code-value="stock_list"
         class="btn btn-secondary-outline float-right px-3 whitespace-nowrap">
   <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
   <span data-service-target="output"></span>

@@ -6,13 +6,7 @@ class ServicesController < ApplicationController
 
   def index
     @tag = params[:tag]
-    @jobs = @tag.present? ? XStocks::Job.find_by_tag(@tag) : XStocks::Job.all
-
-    if @tag.present? && @jobs.blank?
-      @tag = nil
-      @jobs = XStocks::Job.all
-    end
-
+    @jobs = jobs(@tag) { @tag = nil }
     @columns = columns
 
     @page_title = 'Services'
@@ -68,7 +62,7 @@ class ServicesController < ApplicationController
 
   def run_all
     EventStream.run(response) do |stream|
-      service = XStocks::Service.new
+      service = XStocks::Service.new(current_user)
       break if service.locked?
 
       service.perform_update { |status| stream.write(status) }
@@ -77,8 +71,14 @@ class ServicesController < ApplicationController
 
   private
 
+  def jobs(tag)
+    jobs = tag.present? ? XStocks::Job.find_by_tag(tag) : XStocks::Job.all
+    (jobs = XStocks::Job.all) and yield if tag.present? && jobs.blank?
+    jobs.map { |job| job.new(current_user) }
+  end
+
   def find_job
-    job = XStocks::Job.find(params[:lookup_code])
+    job = XStocks::Job.find(params[:lookup_code]).new(current_user)
     if job
       yield job
     else

@@ -13,8 +13,9 @@ module XStocks
       XStocks::Jobs::DividendStockAll
     ].freeze
 
-    def initialize(service = nil, service_ar_class: XStocks::AR::Service)
+    def initialize(service = nil, current_user, service_ar_class: XStocks::AR::Service)
       @service = service
+      @current_user = current_user
       @service_ar_class = service_ar_class
     end
 
@@ -61,8 +62,8 @@ module XStocks
       true
     end
 
-    def self.find(lookup_code, service_ar_class: XStocks::AR::Service)
-      new(service_ar_class.find_or_initialize_by(key: lookup_code), service_ar_class: service_ar_class)
+    def self.find(lookup_code, current_user, service_ar_class: XStocks::AR::Service)
+      new(service_ar_class.find_or_initialize_by(key: lookup_code), current_user, service_ar_class: service_ar_class)
     end
 
     def locked?
@@ -76,11 +77,11 @@ module XStocks
     private
 
     def ready?(jobs)
-      jobs.detect { |job| job.new.ready? }
+      jobs.detect { |job| job.new(current_user).ready? }
     end
 
     def perform(jobs, &block)
-      jobs.each { |job| job.new.perform(&block) }
+      jobs.each { |job| job.new(current_user).perform(&block) }
     end
 
     def lock!(service)
@@ -96,7 +97,7 @@ module XStocks
       service.locked_at && service.locked_at > 10.minutes.ago
     end
 
-    attr_reader :service, :service_ar_class
+    attr_reader :service, :current_user, :service_ar_class
 
     XStocks::ARForwarder.delegate_methods(self, :service, XStocks::AR::Service)
   end

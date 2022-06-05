@@ -60,7 +60,7 @@
         <% end %>
       </td>
       <td>
-        <%= button_tag class: 'btn btn-sm btn-secondary text-gray-900', data: { action: 'click->service#run' }, form: "form_#{job.lookup_code}" do %>
+        <%= button_tag class: 'btn btn-sm btn-secondary text-gray-900', data: { action: 'click->service#start' }, form: "form_#{job.lookup_code}" do %>
           Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'inline-block mb-0.5') %>
         <% end %>
 

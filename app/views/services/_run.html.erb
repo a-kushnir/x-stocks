@@ -1,4 +1,5 @@
-<% if current_user && (XStocks::Service.new.fast_update? || XStocks::Service.new.slow_update?) %>
+<% service = XStocks::Service.new(current_user) if current_user %>
+<% if service&.fast_update? || service&.slow_update? %>
   <div class="pr-4"
        data-controller="service"
        data-action="turbo:load@window->service#updateStocks">

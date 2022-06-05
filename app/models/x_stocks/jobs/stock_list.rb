@@ -2,18 +2,19 @@
 
 module XStocks
   module Jobs
-    # StockOne Job
-    class StockOne < Base
+    # StockList Job
+    class StockList < Base
       def name
-        'Update stock information'
+        'Update stock list information'
       end
 
       def tags
         ['Dividend.com', 'Finnhub', 'IEX Cloud', 'Yahoo']
       end
 
-      def perform(symbol:)
-        stocks = [XStocks::Stock.find_by!(symbol: symbol)]
+      def perform
+        stock_ids = current_user.positions.pluck(:stock_id)
+        stocks = XStocks::AR::Stock.where(id: stock_ids).all.map { |stock| XStocks::Stock.new(stock) }
 
         lock do |logger|
           logger.text_size_limit = nil
@@ -24,10 +25,6 @@ module XStocks
 
           yield completed_message
         end
-      end
-
-      def arguments
-        { symbol: select_tag(values: stock_values, include_blank: '') }
       end
     end
   end

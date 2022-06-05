@@ -4,7 +4,11 @@ module XStocks
   module Jobs
     # Base Job
     class Base
-      attr_accessor :force_lock
+      attr_accessor :force_lock, :current_user
+
+      def initialize(current_user)
+        @current_user = current_user
+      end
 
       def lookup_code
         @lookup_code ||= self.class.name.demodulize.underscore
@@ -35,7 +39,7 @@ module XStocks
       end
 
       def service
-        @service ||= XStocks::Service.find(lookup_code)
+        @service ||= XStocks::Service.find(lookup_code, current_user)
       end
 
       def ready?
@@ -45,7 +49,7 @@ module XStocks
       end
 
       def lock(&block)
-        XStocks::Service.new.lock(lookup_code, force: force_lock, &block)
+        XStocks::Service.new(current_user).lock(lookup_code, force: force_lock, &block)
       end
 
       extend Forwardable

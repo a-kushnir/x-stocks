@@ -5,14 +5,15 @@ import { escapeHTML } from "helpers/string_helper"
 
 export default class extends ApplicationController {
   static values = {
-    symbol: String,
+    code: String,
+    params: String,
     outputContainer: String,
     outputProgress: String,
     outputMessage: String
   }
   static targets = [ 'output', 'form' ]
 
-  run(event) {
+  start(event) {
     const form = event.currentTarget.form || this.formTarget;
 
     const outputContainer = document.getElementById(this.outputContainerValue);
@@ -77,13 +78,13 @@ export default class extends ApplicationController {
     outputMessage.textContent = 'Cancelled';
   }
 
-  updateStock() {
+  run() {
     this.element.disabled = true;
     const output = this.outputTarget;
     output.textContent = 'Updating... 0%';
 
-    runEventSource(`/services/stock_one/run`, {
-      data: { symbol: this.symbolValue },
+    runEventSource(`/services/${this.codeValue}/run`, {
+      data: this.hasParamsValue ? JSON.parse(this.paramsValue) : {},
       message: function(data) {
         output.textContent = `Updating... ${data.percent}%`;
       },

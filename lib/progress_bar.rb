@@ -45,6 +45,10 @@ class ProgressBar
     end
   end
 
+  def percent
+    progress.min.round
+  end
+
   # Steps with different weights
   class Steps
     attr_reader :steps

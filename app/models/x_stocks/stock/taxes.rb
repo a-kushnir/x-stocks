@@ -11,18 +11,27 @@ module XStocks
         qualified_divs: ['https://en.wikipedia.org/wiki/Qualified_dividend', 'svg/cash-multiple', 'tag tag-green']
       }.freeze
 
+      def tax_rate(user)
+        @tax_rate ||= begin
+          stock_taxes = (ar_stock.taxes || [])
+          user_taxes = (user.taxes || {})
+
+          taxes = %i[ordinary_divs qualified_divs].map do |tax_code|
+            user_tax = user_taxes[tax_code.to_s].presence
+            user_tax.to_f if stock_taxes.include?(tax_code.to_s) && user_tax
+          end.compact
+          return nil if taxes.blank?
+
+          avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
+          (1.0 - avg_taxes / 100)
+        end
+      end
+
       def est_annual_dividend_taxed(user)
-        stock_taxes = (ar_stock.taxes || [])
-        user_taxes = (user.taxes || {})
+        tax_rate = tax_rate(user)
+        return nil unless tax_rate
 
-        taxes = %i[ordinary_divs qualified_divs].map do |tax_code|
-          user_tax = user_taxes[tax_code.to_s].presence
-          user_tax.to_f if stock_taxes.include?(tax_code.to_s) && user_tax
-        end.compact
-        return nil if taxes.blank?
-
-        avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
-        ar_stock.est_annual_dividend * (1.0 - avg_taxes / 100)
+        ar_stock.est_annual_dividend * (1.0 - tax_rate / 100)
       end
 
       def est_annual_dividend_taxed_pct(user)

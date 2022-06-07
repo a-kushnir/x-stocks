@@ -44,6 +44,7 @@ en:
       total_return_pct: 'Total Return %'
       next_div: 'Next Div.'
       annual_div: 'Annual Div.'
+      annual_div_at: 'Annual Div. AT'
       diversity_pct: 'Diversity %'
       stop_price: 'Stop Price'
       est_credit: 'Est. Credit'

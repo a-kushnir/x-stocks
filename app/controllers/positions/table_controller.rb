@@ -45,7 +45,8 @@ module Positions
         columns << DataTable::Column.new(code: 'trc', label: t('positions.columns.today_return'), formatter: 'currency_delta', sorting: 'positions.gain_loss', default: true)
         columns << DataTable::Column.new(code: 'trp', label: t('positions.columns.today_return_pct'), formatter: 'percent_delta2', sorting: 'positions.gain_loss_pct', default: true)
         columns << DataTable::Column.new(code: 'ndv', label: t('positions.columns.next_div'), formatter: 'currency', default: true)
-        columns << DataTable::Column.new(code: 'adv', label: t('positions.columns.annual_div'), formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'adb', label: t('positions.columns.annual_div'), formatter: 'currency', default: true)
+        columns << DataTable::Column.new(code: 'ada', label: t('positions.columns.annual_div_at'), formatter: 'currency', default: true)
         columns << DataTable::Column.new(code: 'dvr', label: t('positions.columns.diversity_pct'), formatter: 'percent2', sorting: 'positions.market_value')
         # Stop Loss
         columns << DataTable::Column.new(code: 'spp', label: t('positions.columns.stop_price'), formatter: 'currency')
@@ -117,6 +118,7 @@ module Positions
         position.gain_loss_pct&.to_f,
         position.shares && stock.next_div_amount ? (position.shares * stock.next_div_amount)&.to_f : nil,
         position.est_annual_income&.to_f,
+        taxed(stock, position.est_annual_income&.to_f),
         diversity&.to_f,
         # Stop Loss
         position.stop_loss&.to_f,
@@ -161,7 +163,8 @@ module Positions
         summary.fetch(:total_return),
         summary.fetch(:total_return_pct),
         summary.fetch(:next_div),
-        summary.fetch(:est_annual_div),
+        summary.fetch(:est_annual_div_bt),
+        summary.fetch(:est_annual_div_at),
         100,
         nil,
         summary.fetch(:stop_loss_value),
@@ -193,6 +196,13 @@ module Positions
       div_suspended ? 'Sus.' : value
     end
 
+    def taxed(stock, amount)
+      return nil unless amount
+
+      tax_rate = stock.tax_rate(current_user) || 0
+      amount * (1.0 - tax_rate / 100)
+    end
+
     def summary(stocks_by_id, positions, summary)
       total_cost = positions.map(&:total_cost).compact.sum || 0
       market_value = positions.map(&:market_value).compact.sum || 0
@@ -211,8 +221,9 @@ module Positions
         position.shares && stock&.next_div_amount ? position.shares * stock.next_div_amount : 0
       end
 
-      est_annual_div = positions.map(&:est_annual_income).compact.sum
-      yield_on_value = market_value.positive? ? (est_annual_div / market_value) * 100 : 0
+      est_annual_div_bt = positions.map(&:est_annual_income).compact.sum
+      est_annual_div_at = positions.map { |position| taxed(stocks_by_id[position.stock_id], position.est_annual_income&.to_f) }.compact.sum
+      yield_on_value = market_value.positive? ? (est_annual_div_bt / market_value) * 100 : 0
 
       stop_loss_positions = positions.select(&:stop_loss_value)
       stop_loss_value = stop_loss_positions.sum(&:stop_loss_value) || 0
@@ -228,7 +239,8 @@ module Positions
                       total_return: total_return,
                       total_return_pct: total_return_pct,
                       next_div: next_div,
-                      est_annual_div: est_annual_div,
+                      est_annual_div_bt: est_annual_div_bt,
+                      est_annual_div_at: est_annual_div_at,
                       yield_on_value: yield_on_value,
                       stop_loss_value: stop_loss_value,
                       stop_loss_gain_loss: stop_loss_gain_loss,

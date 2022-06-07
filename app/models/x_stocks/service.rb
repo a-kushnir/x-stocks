@@ -13,9 +13,9 @@ module XStocks
       XStocks::Jobs::DividendStockAll
     ].freeze
 
-    def initialize(service = nil, current_user, service_ar_class: XStocks::AR::Service)
-      @service = service
+    def initialize(current_user, service = nil, service_ar_class: XStocks::AR::Service)
       @current_user = current_user
+      @service = service
       @service_ar_class = service_ar_class
     end
 
@@ -63,7 +63,7 @@ module XStocks
     end
 
     def self.find(lookup_code, current_user, service_ar_class: XStocks::AR::Service)
-      new(service_ar_class.find_or_initialize_by(key: lookup_code), current_user, service_ar_class: service_ar_class)
+      new(current_user, service_ar_class.find_or_initialize_by(key: lookup_code), service_ar_class: service_ar_class)
     end
 
     def locked?

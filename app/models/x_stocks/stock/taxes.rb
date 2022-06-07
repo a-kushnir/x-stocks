@@ -23,15 +23,18 @@ module XStocks
           return nil if taxes.blank?
 
           avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
-          (1.0 - avg_taxes / 100)
+          avg_taxes / 100
         end
       end
 
-      def est_annual_dividend_taxed(user)
+      def after_tax_rate(user)
         tax_rate = tax_rate(user)
-        return nil unless tax_rate
+        tax_rate ? 1.0 - tax_rate : nil
+      end
 
-        ar_stock.est_annual_dividend * (1.0 - tax_rate / 100)
+      def est_annual_dividend_taxed(user)
+        after_tax_rate = after_tax_rate(user)
+        after_tax_rate ? ar_stock.est_annual_dividend * after_tax_rate : nil
       end
 
       def est_annual_dividend_taxed_pct(user)

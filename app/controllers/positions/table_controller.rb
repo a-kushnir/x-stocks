@@ -118,7 +118,7 @@ module Positions
         position.gain_loss_pct&.to_f,
         position.shares && stock.next_div_amount ? (position.shares * stock.next_div_amount)&.to_f : nil,
         position.est_annual_income&.to_f,
-        taxed(stock, position.est_annual_income&.to_f),
+        after_tax(stock, position.est_annual_income&.to_f),
         diversity&.to_f,
         # Stop Loss
         position.stop_loss&.to_f,
@@ -196,11 +196,8 @@ module Positions
       div_suspended ? 'Sus.' : value
     end
 
-    def taxed(stock, amount)
-      return nil unless amount
-
-      tax_rate = stock.tax_rate(current_user) || 0
-      amount * (1.0 - tax_rate / 100)
+    def after_tax(stock, amount)
+      amount ? amount * (stock.after_tax_rate(current_user) || 0) : nil
     end
 
     def summary(stocks_by_id, positions, summary)
@@ -222,7 +219,7 @@ module Positions
       end
 
       est_annual_div_bt = positions.map(&:est_annual_income).compact.sum
-      est_annual_div_at = positions.map { |position| taxed(stocks_by_id[position.stock_id], position.est_annual_income&.to_f) }.compact.sum
+      est_annual_div_at = positions.map { |position| after_tax(stocks_by_id[position.stock_id], position.est_annual_income&.to_f) }.compact.sum
       yield_on_value = market_value.positive? ? (est_annual_div_bt / market_value) * 100 : 0
 
       stop_loss_positions = positions.select(&:stop_loss_value)

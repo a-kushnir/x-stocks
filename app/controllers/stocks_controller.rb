@@ -83,7 +83,7 @@ class StocksController < ApplicationController
     flash[:notice] = render_to_string partial: 'processed'
 
     EventStream.run(response) do |stream|
-      XStocks::Jobs::CompanyOne.new.perform(symbol: @stock.symbol) { |status| stream.write(status) }
+      XStocks::Jobs::CompanyOne.new(current_user).perform(symbol: @stock.symbol) { |status| stream.write(status) }
       stream.redirect_to(new_stock_path)
     end
   end
@@ -147,7 +147,7 @@ class StocksController < ApplicationController
   def update_price
     safe_exec do
       Timeout.timeout(UPDATE_PRICE_TIMEOUT) do
-        XStocks::Jobs::FinnhubPriceOne.new.perform(symbol: @stock.symbol) { nil }
+        XStocks::Jobs::FinnhubPriceOne.new(current_user).perform(symbol: @stock.symbol) { nil }
       end
       true
     end

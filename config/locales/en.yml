@@ -112,3 +112,4 @@ en:
       new_watchlist: 'New Watchlist'
     columns:
       name: 'Name'
+      stocks: 'Stocks'

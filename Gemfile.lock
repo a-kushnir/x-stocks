@@ -155,6 +155,10 @@ GEM
     grape-swagger-representable (0.2.2)
       grape-swagger (>= 0.31.0)
       representable
+    hashid-rails (1.4.1)
+      activerecord (>= 4.0)
+      hashids (~> 1.0)
+    hashids (1.0.6)
     honeybadger (4.12.1)
     htmlentities (4.3.4)
     i18n (1.10.0)
@@ -371,6 +375,7 @@ DEPENDENCIES
   grape-swagger
   grape-swagger-entity
   grape-swagger-representable
+  hashid-rails
   honeybadger (~> 4.0)
   importmap-rails (~> 1.0)
   inline_svg

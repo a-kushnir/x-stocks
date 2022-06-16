@@ -15,8 +15,10 @@ module DataTable
       def format(value)
         return unless value
 
-        name, url = value
-        link_to(name, url, class: 'w-full', target: '_top')
+        name, url, options = value
+        options = { class: 'w-full', target: '_top' }.merge(options || {})
+
+        link_to(name, url, options)
       end
 
       def style(_value); end

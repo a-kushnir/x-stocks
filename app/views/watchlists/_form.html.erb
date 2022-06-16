@@ -1,7 +1,7 @@
 <div class="section section-form">
   <h2><%= @page_title %></h2>
 
-  <%= turbo_frame_tag 'my-watchlist' do %>
+  <%= turbo_frame_tag dom_id(@watchlist) do %>
     <%= form_for(@watchlist, url: local_assigns[:url], method: local_assigns[:method]) do |form| %>
       <div class="mb-4">
         <%= form.label :name, class: 'block text-gray-700 text-sm font-bold mb-2' %>

@@ -1,0 +1,8 @@
+<% { notice: 'alert-notice', error: 'alert-error' }.each do |alert_type, alert_class| %>
+  <% next unless flash[alert_type] %>
+  <div class="alert <%= alert_class %>">
+    <%= inline_svg('svg/bell', size: '24*24', class: 'alert-icon') %>
+    <span role="alert"><%= flash[alert_type].html_safe %></span>
+    <!--button><span>×</span></button-->
+  </div>
+<% end %>

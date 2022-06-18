@@ -26,6 +26,24 @@ en:
   home:
     pages:
       home: 'Home'
+    sections:
+      fear_and_greed_index: 'Fear & Greed Index'
+      dividend_hikes_and_cuts: 'Dividend Hikes and Cuts'
+      portfolio: 'Portfolio'
+      top_gainers: 'Top Gainers'
+      top_losers: 'Top Losers'
+      market_overview: 'Market Overview'
+      links: 'Links'
+      screeners: 'Screeners'
+    fear_and_greed_index:
+      source: 'Source'
+      no_data_available: 'No data available'
+    portfolio:
+      marker_value: 'Market Value'
+      today_change: "Today's Change"
+      annual_change: 'Annual Dividend'
+    top_movers:
+      see_all: 'See All'
   positions:
     pages:
       portfolio: 'Portfolio'
@@ -72,6 +90,32 @@ en:
     pages:
       stocks: 'Stocks'
       new_stock: 'New Stock'
+    sections:
+      dividends: 'Dividends'
+      related_tags: 'Related Tags'
+      company_profile: 'Company Profile'
+      position: 'Position'
+      links: 'Links'
+      recommendations: 'Recommendations'
+      price_targets: 'Price Targets'
+      earnings: 'Earnings'
+      financials: 'Financials'
+    company_profile:
+      headquarters: 'Headquarters'
+      website: 'Website'
+      employees: 'Employees'
+      industry: 'Industry'
+      issue_type: 'Issue Type'
+    dividends:
+      1y_estimate: '1y Estimate'
+      6m_estimate: '6m Estimate'
+      month: 'Month'
+      amount: 'Amount'
+      ex_date: 'Ex Date'
+      payment_data: 'Payment Date'
+    financials:
+      yearly: 'Yearly'
+      quarterly: 'Quarterly'
     attributes:
       symbol: 'Symbol'
       exchange: 'Exchange'

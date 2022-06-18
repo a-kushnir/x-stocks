@@ -1,21 +1,21 @@
 <% if @stock.description.present? %>
   <div class="mb-6">
-    <h3>Company Profile</h3>
+    <h3><%= t('stocks.sections.company_profile') %></h3>
 
     <p class="company-profile mb-3">
       <% if @stock.country.present? %>
-        <strong>Headquarters:</strong> <%= country_flag_img_tag(@stock.country, size: 24, class: 'inline-block mb-1') %> <%= [CountryName.new.name(@stock.country), @stock.state].select(&:present?).join(', ') %><br>
+        <strong><%= t('stocks.company_profile.headquarters') %>:</strong> <%= country_flag_img_tag(@stock.country, size: 24, class: 'inline-block mb-1') %> <%= [CountryName.new.name(@stock.country), @stock.state].select(&:present?).join(', ') %><br>
       <% end %>
       <% if @stock.website.present? %>
-        <strong>Website:</strong> <%= link_to_website @stock.website %><br>
+        <strong><%= t('stocks.company_profile.website') %>:</strong> <%= link_to_website @stock.website %><br>
       <% end %>
       <% if @stock.employees.present? %>
-        <strong>Employees:</strong> <%= number_with_delimiter(@stock.employees, delimiter: ',') %><br>
+        <strong><%= t('stocks.company_profile.employees') %>:</strong> <%= number_with_delimiter(@stock.employees, delimiter: ',') %><br>
       <% end %>
       <% if @stock.industry.present? %>
-        <strong>Industry:</strong> <%= @stock.industry %><br>
+        <strong><%= t('stocks.company_profile.industry') %>:</strong> <%= @stock.industry %><br>
       <% end %>
-      <strong>Issue Type:</strong> <%= @stock.issue_type_name %>
+      <strong><%= t('stocks.company_profile.issue_type') %>:</strong> <%= @stock.issue_type_name %>
     </p>
     <p class="text-sm">
       <%= @stock.description %>

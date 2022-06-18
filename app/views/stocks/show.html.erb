@@ -42,12 +42,12 @@
     <%= render partial: 'stocks/widgets/next_dividend' %>
     <%= render partial: 'stocks/widgets/next_earnings' %>
     <%= render partial: 'stocks/widgets/links' %>
-    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small class="text-gray-500">Finnhub</small>'.html_safe, details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
-    <%= render partial: 'stocks/widgets/recommendations', locals: { label: 'Recommendation <small class="text-gray-500">Yahoo</small>'.html_safe, details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
-    <%= render partial: 'stocks/widgets/price_target', locals: { label: 'Price Targets <small class="text-gray-500">Yahoo</small>'.html_safe, details: @stock.yahoo_price_target } %>
-    <%= render partial: 'stocks/widgets/earnings', locals: { label: 'Earnings <small class="text-gray-500">Yahoo</small>'.html_safe } %>
-    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small class="text-gray-500">Yearly</small>'.html_safe, details: @stock.financials_yearly } %>
-    <%= render partial: 'stocks/widgets/financials', locals: { label: 'Financials <small class="text-gray-500">Quarterly</small>'.html_safe, details: @stock.financials_quarterly } %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { provider: 'Finnhub', details: @stock.finnhub_rec_details, mean: @stock.finnhub_rec } %>
+    <%= render partial: 'stocks/widgets/recommendations', locals: { provider: 'Yahoo', details: @stock.yahoo_rec_details, mean: @stock.yahoo_rec } %>
+    <%= render partial: 'stocks/widgets/price_target', locals: { provider: 'Yahoo', details: @stock.yahoo_price_target } %>
+    <%= render partial: 'stocks/widgets/earnings', locals: { provider: 'Yahoo' } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { provider: t('stocks.financials.yearly'), details: @stock.financials_yearly } %>
+    <%= render partial: 'stocks/widgets/financials', locals: { provider: t('stocks.financials.quarterly'), details: @stock.financials_quarterly } %>
     <%= render partial: 'stocks/widgets/tradingview_tech' %>
   </div>
 </div>

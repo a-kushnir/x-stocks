@@ -1,7 +1,7 @@
 <% price_target = XStocks::Charts::PriceTarget.new(@stock, details) %>
 <% if price_target.data? %>
   <div class="section">
-    <h3><%= label %></h3>
+    <h3><h3><%= t('stocks.sections.price_targets') %> <small class="text-gray-500"><%= provider %></small></h3></h3>
 
     <div class="mx-auto block mt-4" style="width: 280px; height: 85px;">
       <%= price_target.render(width: 280, height:85) %>

@@ -29,7 +29,7 @@
           <%= inline_svg('svg/square-edit-outline', size: '24*24', class: 'inline-block') %>
         <% end %>
         <% if @stock.destroyable? %>
-          <%= button_to stock_path(@stock.symbol), method: :delete, class: 'btn btn-icon btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } do %>
+          <%= button_to stock_path(@stock.symbol), method: :delete, class: 'btn btn-icon btn-danger-outline', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } do %>
             <%= inline_svg('svg/trash-can-outline', size: '24*24', class: 'inline-block') %>
           <% end %>
         <% end %>

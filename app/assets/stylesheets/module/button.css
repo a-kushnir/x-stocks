@@ -23,3 +23,6 @@
 .btn-danger {
   @apply bg-red-600 hover:bg-red-800 text-white;
 }
+.btn-danger-outline {
+  @apply bg-white hover:bg-red-600 text-gray-800 hover:text-white border border-gray-400 hover:border-red-600;
+}

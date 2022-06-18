@@ -1,6 +1,4 @@
 <div class="section section-form">
   <h2><%= @page_title %></h2>
-  <%= turbo_frame_tag dom_id(@watchlist), target: '_top' do %>
-    <%= render partial: 'form', locals: { url: watchlist_path(@watchlist), method: :put } %>
-  <% end %>
+  <%= render partial: 'form', locals: { url: watchlist_path(@watchlist), method: :put } %>
 </div>

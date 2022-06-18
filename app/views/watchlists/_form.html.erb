@@ -1,19 +1,13 @@
-<div class="section section-form">
-  <h2><%= @page_title %></h2>
-
-  <%= turbo_frame_tag dom_id(@watchlist) do %>
-    <%= form_for(@watchlist, url: local_assigns[:url], method: local_assigns[:method]) do |form| %>
-      <div class="mb-4">
-        <%= form.label :name, class: 'block text-gray-700 text-sm font-bold mb-2' %>
-        <%= form.text_field :name, autocomplete: :off, autofocus: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
-        <%= form.error_message_for :name %>
-      </div>
-      <div class="pb-3 flex items-center justify-between">
-        <%= link_to back_url, class: 'btn btn-link' do %>
-          <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> <%= t('buttons.back') %>
-        <% end %>
-        <%= form.submit t('buttons.save'), class: 'btn btn-primary' %>
-      </div>
+<%= form_for(@watchlist, url: local_assigns[:url], method: local_assigns[:method]) do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_field :name, autocomplete: :off, autofocus: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    <%= form.error_message_for :name %>
+  </div>
+  <div class="pb-3 flex items-center justify-between">
+    <%= link_to back_url, class: 'btn btn-link' do %>
+      <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> <%= t('buttons.back') %>
     <% end %>
-  <% end %>
-</div>
+    <%= form.submit t('buttons.save'), class: 'btn btn-primary' %>
+  </div>
+<% end %>

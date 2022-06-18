@@ -1,6 +1,5 @@
-<%= form_tag(request_path, method: :get, id: @form_id, data: { turbo_frame: @turbo_frame_id }) %>
-
 <div class="datatable">
+<%= form_tag(request_path, method: :get, id: @form_id, data: { turbo_frame: @turbo_frame_id }) do %>
   <div class="flex space-x-2 block relative float-right" style="width: 36rem;">
     <div class="flex flex-row flex-auto relative">
       <%= text_field_tag :q, params[:q], placeholder: 'Search', class: 'appearance-none rounded-lg border border-gray-400 border-b block py-2 px-3 w-full placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none', form: @form_id %>
@@ -49,6 +48,7 @@
   </div>
 
   <h2 class="text-2xl uppercase mb-6"><%= @name %></h2>
+<% end %>
 
   <%= turbo_frame_tag @turbo_frame_id do %>
     <div class="datatable-container">

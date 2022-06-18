@@ -5,7 +5,7 @@
   <%= link_to edit_watchlist_path(@watchlist), class: 'btn btn-icon btn-secondary-outline mr-1', data: { turbo: false } do %>
     <%= inline_svg('svg/square-edit-outline', size: '24*24', class: 'inline-block') %>
   <% end %>
-  <%= button_to watchlist_path(@watchlist), method: :delete, class: 'btn btn-icon btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } do %>
+  <%= button_to watchlist_path(@watchlist), method: :delete, class: 'btn btn-icon btn-danger', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;', data: { turbo: false }} do %>
     <%= inline_svg('svg/trash-can-outline', size: '24*24', class: 'inline-block') %>
   <% end %>
 </div>

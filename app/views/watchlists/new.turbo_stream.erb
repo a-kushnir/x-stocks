@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@watchlist) do %>
+  <%= render partial: 'form', locals: { url: watchlists_path, method: :post } %>
+<% end %>

@@ -62,14 +62,17 @@ class WatchlistsController < ApplicationController
     @watchlist.attributes = watchlist_params
 
     if @watchlist.save
-      redirect_to action: 'index'
+      redirect_to action: 'show', id: @watchlist.hashid
     else
-      render action: 'new'
+      render action: 'edit'
     end
   end
 
   def destroy
-    @watchlist = find_user_watchlist
+    watchlist = find_user_watchlist
+    watchlist.destroy
+    flash[:notice] = "#{watchlist.name} watchlist deleted"
+    redirect_to action: 'index'
   end
 
   private

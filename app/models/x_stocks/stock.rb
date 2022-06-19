@@ -27,6 +27,7 @@ module XStocks
 
     attr_reader :ar_stock
 
+    delegate :hashid, to: :ar_stock
     XStocks::ARForwarder.delegate_methods(self, :ar_stock, XStocks::AR::Stock)
   end
 end

@@ -4,6 +4,8 @@ module XStocks
   module AR
     # Stock Active Record Model
     class Stock < ApplicationRecord
+      include Hashid::Rails
+
       belongs_to :exchange, optional: true
       has_many :positions
       has_many :tags, dependent: :destroy do
@@ -33,6 +35,11 @@ module XStocks
       serialize :next_earnings_details, JSON
       serialize :metascore_details, JSON
       serialize :taxes, JSON
+
+      # Used for dom_id, links, etc.
+      def hashid
+        symbol
+      end
     end
   end
 end

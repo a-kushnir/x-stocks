@@ -1,9 +1,9 @@
 <% next_div_ex_date = @stock.next_div_ex_date if @stock.next_div_ex_date && @stock.next_div_ex_date >= Date.today %>
 <% if next_div_ex_date %>
 <div class="section">
-  <h3>Next Dividend</h3>
+  <h3><%= t('stocks.sections.next_dividend') %></h3>
 
-  <%= render partial: 'stocks/widgets/timer', locals: { datetime: next_div_ex_date + 6.hours } %>
+  <%= render(CountdownComponent.new(datetime: next_div_ex_date + 6.hours)) %>
   <%
     next_div_amount = @stock.next_div_amount
     estimate = false
@@ -20,27 +20,27 @@
       <% if next_div_amount.positive? %>
       <tr class="border-t first:border-none border-gray-300">
         <td class="p-1">
-          <%= 'Est. ' if estimate %>Amount:
+          <%= estimate ? t('stocks.next_dividend.est_amount') : t('stocks.next_dividend.amount') %>:
           <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
         </td>
       </tr>
       <% end %>
       <tr class="border-t first:border-none border-gray-300">
         <td class="p-1">
+          <%= t('stocks.next_dividend.change') %>:
           <% div_change_pct = @stock.div_change_pct %>
-          Change:
           <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
         </td>
       </tr>
       <tr class="border-t first:border-none border-gray-300">
         <td class="p-1">
-          Ex Date:
+          <%= t('stocks.next_dividend.ex_date') %>:
           <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
         </td>
       </tr>
       <tr class="border-t first:border-none border-gray-300">
         <td class="p-1">
-          Payment Date:
+          <%= t('stocks.next_dividend.payment_date') %>:
           <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
         </td>
       </tr>

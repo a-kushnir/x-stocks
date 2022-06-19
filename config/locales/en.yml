@@ -95,6 +95,7 @@ en:
       related_tags: 'Related Tags'
       company_profile: 'Company Profile'
       position: 'Position'
+      next_dividend: 'Next Dividend'
       links: 'Links'
       recommendations: 'Recommendations'
       price_targets: 'Price Targets'
@@ -143,6 +144,12 @@ en:
       employees: 'Employees'
       industry: 'Industry'
       issue_type: 'Issue Type'
+    next_dividend:
+      amount: 'Amount'
+      est_amount: 'Est. Amount'
+      change: 'Change'
+      ex_date: 'Ex Date'
+      payment_date: 'Payment Date'
     dividends:
       1y_estimate: '1y Estimate'
       6m_estimate: '6m Estimate'

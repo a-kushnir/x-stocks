@@ -3,18 +3,18 @@
      data-countdown-datetime-value="<%= @datetime %>">
   <div class="flex flex-col rounded-lg bg-gray-200 p-1 mx-1 border border-gray-300" style="width: 44px">
     <div class="font-mono text-xl" data-countdown-target="days">0</div>
-    <div class="text-sm">days</div>
+    <div class="text-sm"><%= t('countdown_component.days') %></div>
   </div>
   <div class="flex flex-col rounded-lg bg-gray-200 p-1 mx-1 border border-gray-300" style="width: 44px">
     <div class="font-mono text-xl" data-countdown-target="hours">00</div>
-    <div class="text-sm">hours</div>
+    <div class="text-sm"><%= t('countdown_component.hours') %></div>
   </div>
   <div class="flex flex-col rounded-lg bg-gray-200 p-1 mx-1 border border-gray-300" style="width: 44px">
     <div class="font-mono text-xl" data-countdown-target="minutes">00</div>
-    <div class="text-sm">min</div>
+    <div class="text-sm"><%= t('countdown_component.min') %></div>
   </div>
   <div class="flex flex-col rounded-lg bg-gray-200 p-1 mx-1 border border-gray-300" style="width: 44px">
     <div class="font-mono text-xl" data-countdown-target="seconds">00</div>
-    <div class="text-sm">sec</div>
+    <div class="text-sm"><%= t('countdown_component.sec') %></div>
   </div>
 </div>

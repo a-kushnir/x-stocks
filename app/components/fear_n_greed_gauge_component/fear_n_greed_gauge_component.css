@@ -66,13 +66,6 @@
   display: inline-flex
 }
 
-.market-fng-gauge .market-fng-gauge__historical-item-index-label:before {
-  display: inline-block;
-  padding-right: 5px;
-  white-space: nowrap;
-  content: '  '
-}
-
 .market-fng-gauge .market-fng-gauge__historical-item-index-label:after {
   content: '';
   display: inline-block;
@@ -92,8 +85,8 @@
   border: 1px solid #e5e5e5
 }
 
-.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme fear'] .market-fng-gauge__historical-item-index-label:before {
-  content: 'extreme fear'
+.market-fng-gauge__historical-item-index-label {
+  white-space: nowrap;
 }
 
 .market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme fear'] .market-fng-gauge__historical-item-index-value {
@@ -101,17 +94,9 @@
   border: 1px solid #fc7989
 }
 
-.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=fear] .market-fng-gauge__historical-item-index-label:before {
-  content: 'fear'
-}
-
 .market-fng-gauge .market-fng-gauge__historical-item[data-index-label=fear] .market-fng-gauge__historical-item-index-value {
   background: rgba(255, 185, 161, .5);
   border: 1px solid #fdaab2
-}
-
-.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=neutral] .market-fng-gauge__historical-item-index-label:before {
-  content: 'neutral'
 }
 
 .market-fng-gauge .market-fng-gauge__historical-item[data-index-label=neutral] .market-fng-gauge__historical-item-index-value {
@@ -119,32 +104,14 @@
   border: 1px solid #b1b1b1
 }
 
-.market-fng-gauge .market-fng-gauge__historical-item[data-index-label=greed] .market-fng-gauge__historical-item-index-label:before {
-  content: 'greed'
-}
-
 .market-fng-gauge .market-fng-gauge__historical-item[data-index-label=greed] .market-fng-gauge__historical-item-index-value {
   background: #b9ede9;
   border: 1px solid #66c9af
 }
 
-.market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme greed'] .market-fng-gauge__historical-item-index-label:before {
-  content: 'extreme greed'
-}
-
 .market-fng-gauge .market-fng-gauge__historical-item[data-index-label='extreme greed'] .market-fng-gauge__historical-item-index-value {
   background: rgba(102, 201, 175, 1);
   border: 1px solid #66c9af
-}
-
-.market-fng-gauge .market-fng-gauge__timestamp {
-  border: 1px solid transparent;
-  text-align: right;
-  color: #6e6e6e;
-  font-size: 12px;
-  padding: 0 3px;
-  display: inline-block;
-  margin-bottom: 23px
 }
 
 .market-fng-gauge .container__title {

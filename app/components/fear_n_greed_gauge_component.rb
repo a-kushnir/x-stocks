@@ -14,7 +14,7 @@ class FearNGreedGaugeComponent < ::ViewComponent::Base
     @previous_1_year = previous_1_year.round
   end
 
-  def score_label(score)
+  def score_class(score)
     if score < 25
       'extreme fear'
     elsif score < 45
@@ -25,6 +25,20 @@ class FearNGreedGaugeComponent < ::ViewComponent::Base
       'greed'
     else
       'extreme greed'
+    end
+  end
+
+  def score_label(score)
+    if score < 25
+      t('fear_n_greed_gauge_component.extreme_fear')
+    elsif score < 45
+      t('fear_n_greed_gauge_component.fear')
+    elsif score <= 55
+      t('fear_n_greed_gauge_component.neutral')
+    elsif score <= 75
+      t('fear_n_greed_gauge_component.greed')
+    else
+      t('fear_n_greed_gauge_component.extreme_greed')
     end
   end
 end

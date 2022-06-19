@@ -118,11 +118,12 @@ en:
       outstanding_shares: 'Outstanding Shares'
       market_cap: 'Market Cap'
       fair_price: 'Fair Price'
-      fair_price_help: 'Fair Price is the appropriate price for the shares of a company, based on
+      fair_price_help: |
+        Fair Price is the appropriate price for the shares of a company, based on
         its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate.
         Estimated return represents the projected annual return you might expect
         after purchasing shares in the company and holding them over the default time
-        horizon of 5 years, based on the EPS growth rate that we have projected.'
+        horizon of 5 years, based on the EPS growth rate that we have projected.
       fair_value: 'Fair Value'
       undervalued: 'Undervalued'
       overvalued: 'Overvalued'
@@ -152,7 +153,7 @@ en:
       ex_date: 'Ex Date'
       payment_date: 'Payment Date'
     next_earnings:
-      est_eps: 'Est. EPS'
+      estimated_eps: 'Estimated EPS'
       date: 'Date'
       time: 'Time'
       before_market_open: 'Before Market Open'

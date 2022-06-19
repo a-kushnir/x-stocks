@@ -1,7 +1,7 @@
 <div class="market-fng-gauge" style="margin-bottom: 10px;">
   <div class="market-fng-gauge__overview">
     <div class="market-fng-gauge__meter-container">
-      <div class="market-fng-gauge__meter" data-index-label="<%= score_label(@score) %>">
+      <div class="market-fng-gauge__meter" data-index-label="<%= score_class(@score) %>">
         <!-- dial ranges -->
         <div class="market-fng-gauge__dial">
           <svg id="fear-and-greed-dial" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 338 173" style="enable-background: new 0 0 338 173" aria-labelledby="market-fng-guage__title">
@@ -102,33 +102,32 @@
       </div>
     </div>
 
-
     <div class="market-fng-gauge__historical">
-      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--prevClose" data-index-label="<%= score_label(@previous_close) %>">
-        <div class="market-fng-gauge__historical-item-label">Previous close</div>
+      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--prevClose" data-index-label="<%= score_class(@previous_close) %>">
+        <div class="market-fng-gauge__historical-item-label"><%= t('fear_n_greed_gauge_component.previous_close') %></div>
         <div class="market-fng-gauge__historical-item-index">
-          <div class="market-fng-gauge__historical-item-index-label"></div>
+          <div class="market-fng-gauge__historical-item-index-label"><%= score_label(@previous_close) %></div>
           <div class="market-fng-gauge__historical-item-index-value"><%= @previous_close %></div>
         </div>
       </div>
-      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--weekClose" data-index-label="<%= score_label(@previous_1_week) %>">
-        <div class="market-fng-gauge__historical-item-label">1 week ago</div>
+      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--weekClose" data-index-label="<%= score_class(@previous_1_week) %>">
+        <div class="market-fng-gauge__historical-item-label"><%= t('fear_n_greed_gauge_component.1_week_ago') %></div>
         <div class="market-fng-gauge__historical-item-index">
-          <div class="market-fng-gauge__historical-item-index-label"></div>
+          <div class="market-fng-gauge__historical-item-index-label"><%= score_label(@previous_1_week) %></div>
           <div class="market-fng-gauge__historical-item-index-value"><%= @previous_1_week %></div>
         </div>
       </div>
-      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--monthClose" data-index-label="<%= score_label(@previous_1_month) %>">
-        <div class="market-fng-gauge__historical-item-label">1 month ago</div>
+      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--monthClose" data-index-label="<%= score_class(@previous_1_month) %>">
+        <div class="market-fng-gauge__historical-item-label"><%= t('fear_n_greed_gauge_component.1_month_ago') %></div>
         <div class="market-fng-gauge__historical-item-index">
-          <div class="market-fng-gauge__historical-item-index-label"></div>
+          <div class="market-fng-gauge__historical-item-index-label"><%= score_label(@previous_1_month) %></div>
           <div class="market-fng-gauge__historical-item-index-value"><%= @previous_1_month %></div>
         </div>
       </div>
-      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--yearClose" data-index-label="<%= score_label(@previous_1_year) %>">
-        <div class="market-fng-gauge__historical-item-label">1 year ago</div>
+      <div class="market-fng-gauge__historical-item market-fng-gauge__historical-item--yearClose" data-index-label="<%= score_class(@previous_1_year) %>">
+        <div class="market-fng-gauge__historical-item-label"><%= t('fear_n_greed_gauge_component.1_year_ago') %></div>
         <div class="market-fng-gauge__historical-item-index">
-          <div class="market-fng-gauge__historical-item-index-label"></div>
+          <div class="market-fng-gauge__historical-item-index-label"><%= score_label(@previous_1_year) %></div>
           <div class="market-fng-gauge__historical-item-index-value"><%= @previous_1_year %></div>
         </div>
       </div>

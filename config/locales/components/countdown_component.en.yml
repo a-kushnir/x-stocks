@@ -1,0 +1,6 @@
+en:
+  countdown_component:
+    days: 'days'
+    hours: 'hours'
+    min: 'min'
+    sec: 'sec'

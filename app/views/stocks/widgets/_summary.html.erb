@@ -58,9 +58,9 @@
       <% row = left_table[index] %>
       <% if row %>
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
-        <% if row[:help] %>
+        <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
-            <div class="tooltip right whitespace-nowrap"><%= row[:help].html_safe %></div>
+            <div class="tooltip right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>
           </div>
         <% end %>

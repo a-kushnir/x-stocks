@@ -1,0 +1,11 @@
+en:
+  fear_n_greed_gauge_component:
+    previous_close: 'Previous close'
+    1_week_ago: '1 week ago'
+    1_month_ago: '1 month ago'
+    1_year_ago: '1 year ago'
+    extreme_fear: 'Extreme Fear'
+    fear: 'Fear'
+    neutral: 'Neutral'
+    greed: 'Greed'
+    extreme_greed: 'Extreme Greed'

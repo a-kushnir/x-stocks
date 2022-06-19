@@ -1,8 +1,12 @@
-<button data-controller="service"
-        data-action="click->service#run"
-        data-service-code-value="stock_one"
-        data-service-params-value="<%= { symbol: @stock.symbol }.to_json %>"
-        class="btn btn-secondary-outline float-right px-3 whitespace-nowrap">
-  <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
-  <span data-service-target="output"></span>
-</button>
+<div class="float-right relative space-x-1">
+  <button data-controller="service"
+          data-action="click->service#run"
+          data-service-code-value="stock_one"
+          data-service-params-value="<%= { symbol: @stock.symbol }.to_json %>"
+          class="btn btn-secondary-outline px-3 whitespace-nowrap">
+    <%= inline_svg('svg/sync', size: '16*16', class: 'inline-block mb-1') %>
+    <span data-service-target="output"></span>
+  </button>
+
+  <%= render partial: 'stocks/watchlists/index' %>
+</div>

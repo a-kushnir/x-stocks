@@ -1,0 +1,27 @@
+<% user_watchlists = current_user.watchlists %>
+<% if user_watchlists.any? %>
+  <% watchlists = user_watchlists.select { |watchlist| (watchlist.symbols || []).include?(@stock.symbol) } %>
+
+  <turbo-frame id="<%= dom_id(@stock, :watchlists) %>" class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
+    <a href="#" class="<%= class_names('text-amber-500': watchlists.any?, 'text-zinc-500': watchlists.none?) %>"
+       data-action="click->class#toggle click->event#cancel">
+      <%= inline_svg('svg/bookmark-star', size: '40*40', class: 'inline-block') %>
+    </a>
+
+    <%= form_tag stock_watchlists_path(stock_symbol: @stock.symbol, watchlist_menu: true) do %>
+      <div class="border border-gray-400 origin-top-right absolute right-0 mt-1 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-70 overflow-y-auto z-50 text-left <%= 'hidden' unless params[:watchlist_menu].present? %>"
+           data-class-value="hidden" data-class-target="element">
+        <div class="flex flex-col m-2 whitespace-nowrap">
+          <!--div class="px-4 pb-1">Add to..</div-->
+          <% user_watchlists.each do |watchlist| %>
+            <% id = "watchlists_#{watchlist.hashid}" %>
+            <%= label_tag nil, id: id, class: 'text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100' do %>
+              <%= check_box_tag('watchlists[]', watchlist.hashid, watchlists.include?(watchlist), id: id, class: 'mr-1 mb-px', form: @form_id, data: { controller: 'element', action: 'change->element#requestSubmit change->class#toggle' }) %> <%= watchlist.name %>
+            <% end %>
+          <% end %>
+          <!--div class="px-4 pb-1"><%= button_tag('Save') %></div-->
+        </div>
+      </div>
+    <% end %>
+  </turbo-frame>
+<% end %>

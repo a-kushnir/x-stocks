@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get :initializing
       get :processing
     end
+    resources :watchlists, only: [:create], module: :stocks
   end
 
   resources :watchlists

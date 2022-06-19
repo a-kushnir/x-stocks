@@ -65,10 +65,10 @@ module StocksHelper
 
   def humanize_earnings_hour(value)
     {
-      'bmo' => 'Before Market Open',
-      'amc' => 'After Market Close',
-      'dmh' => 'During Market Hours'
-    }[value] || 'Unknown'
+      'bmo' => t('stocks.next_earnings.before_market_open'),
+      'amc' => t('stocks.next_earnings.after_market_close'),
+      'dmh' => t('stocks.next_earnings.during_market_hours')
+    }[value] || t('stocks.next_earnings.unknown')
   end
 
   def country_flag_img_tag(country, options)

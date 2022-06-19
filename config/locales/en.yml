@@ -96,6 +96,7 @@ en:
       company_profile: 'Company Profile'
       position: 'Position'
       next_dividend: 'Next Dividend'
+      next_earnings: 'Next Earnings'
       links: 'Links'
       recommendations: 'Recommendations'
       price_targets: 'Price Targets'
@@ -150,6 +151,14 @@ en:
       change: 'Change'
       ex_date: 'Ex Date'
       payment_date: 'Payment Date'
+    next_earnings:
+      est_eps: 'Est. EPS'
+      date: 'Date'
+      time: 'Time'
+      before_market_open: 'Before Market Open'
+      after_market_close: 'After Market Close'
+      during_market_hours: 'During Market Hours'
+      unknown: 'Unknown'
     dividends:
       1y_estimate: '1y Estimate'
       6m_estimate: '6m Estimate'

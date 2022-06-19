@@ -16,35 +16,33 @@
     end
   %>
   <table class="w-full">
-    <tbody>
-      <% if next_div_amount.positive? %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          <%= estimate ? t('stocks.next_dividend.est_amount') : t('stocks.next_dividend.amount') %>:
-          <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
-        </td>
-      </tr>
-      <% end %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          <%= t('stocks.next_dividend.change') %>:
-          <% div_change_pct = @stock.div_change_pct %>
-          <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
-        </td>
-      </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          <%= t('stocks.next_dividend.ex_date') %>:
-          <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
-        </td>
-      </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
-          <%= t('stocks.next_dividend.payment_date') %>:
-          <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
-        </td>
-      </tr>
-    </tbody>
+    <% if next_div_amount.positive? %>
+    <tr class="border-t first:border-none border-gray-300">
+      <td class="p-1">
+        <%= estimate ? t('stocks.next_dividend.est_amount') : t('stocks.next_dividend.amount') %>:
+        <strong class="float-right"><%= number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount)) %></strong>
+      </td>
+    </tr>
+    <% end %>
+    <tr class="border-t first:border-none border-gray-300">
+      <td class="p-1">
+        <%= t('stocks.next_dividend.change') %>:
+        <% div_change_pct = @stock.div_change_pct %>
+        <strong class="float-right <%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
+      </td>
+    </tr>
+    <tr class="border-t first:border-none border-gray-300">
+      <td class="p-1">
+        <%= t('stocks.next_dividend.ex_date') %>:
+        <strong class="float-right"><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
+      </td>
+    </tr>
+    <tr class="border-t first:border-none border-gray-300">
+      <td class="p-1">
+        <%= t('stocks.next_dividend.payment_date') %>:
+        <strong class="float-right"><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
+      </td>
+    </tr>
   </table>
 </div>
 <% end %>

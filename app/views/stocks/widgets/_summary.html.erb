@@ -12,51 +12,43 @@
     <% end %>
   </div>
   <div class="w-full sm:w-1/2">
-    <%= render partial: 'stocks/widgets/yahoo_tech' %>
+    <%= render partial: 'stocks/widgets/technical_analysis' %>
   </div>
 </div>
 
 <%
-  fair_price_help = <<HELP
-    Fair Price is the appropriate price for the shares of a company, based on
-    its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate.
-    Estimated return represents the projected annual return you might expect
-    after purchasing shares in the company and holding them over the default time
-    horizon of 5 years, based on the EPS growth rate that we have projected.
-HELP
-
   left_table = []
-  left_table << { label: 'Previous Close', value: number_to_currency(@stock.prev_close_price) } if @stock.prev_close_price
-  left_table << { label: 'Open', value: number_to_currency(@stock.open_price) } if @stock.open_price
-  left_table << { label: "Day's Range", value: render_range(@stock.day_low_price, @stock.day_high_price, @stock.current_price, @stock.price_change) } if @stock.day_low_price && @stock.day_high_price
-  left_table << { label: '52 Week Range', value: render_range(@stock.week_52_low, @stock.week_52_high, @stock.current_price, @stock.price_change) } if @stock.week_52_low && @stock.week_52_high
-  left_table << { label: 'P/E Ratio (TTM)', value: number_with_precision(@stock.pe_ratio_ttm, precision: 2) } if @stock.week_52_low && @stock.pe_ratio_ttm
-  left_table << { label: 'Outstanding Shares', value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true) } if @stock.outstanding_shares
-  left_table << { label: 'Market Cap', value: number_to_currency(number_to_human(@stock.market_capitalization)) } if @stock.market_capitalization
-  left_table << { label: 'Fair Price', value: number_to_currency(@stock.yahoo_fair_price), help: fair_price_help.split("\n").join("<br>") } if @stock.yahoo_fair_price
-  left_table << { label: 'Fair Value', value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? 'Undervalued' : 'Overvalued'})", class: delta_class(@stock.yahoo_discount.to_i) } if @stock.yahoo_discount
+  left_table << { label: t('stocks.summary.previous_close'), value: number_to_currency(@stock.prev_close_price) } if @stock.prev_close_price
+  left_table << { label: t('stocks.summary.open'), value: number_to_currency(@stock.open_price) } if @stock.open_price
+  left_table << { label: t('stocks.summary.day_range'), value: render_range(@stock.day_low_price, @stock.day_high_price, @stock.current_price, @stock.price_change) } if @stock.day_low_price && @stock.day_high_price
+  left_table << { label: t('stocks.summary.52_week_range'), value: render_range(@stock.week_52_low, @stock.week_52_high, @stock.current_price, @stock.price_change) } if @stock.week_52_low && @stock.week_52_high
+  left_table << { label: t('stocks.summary.pe_ratio_ttm'), value: number_with_precision(@stock.pe_ratio_ttm, precision: 2) } if @stock.week_52_low && @stock.pe_ratio_ttm
+  left_table << { label: t('stocks.summary.outstanding_shares'), value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true) } if @stock.outstanding_shares
+  left_table << { label: t('stocks.summary.market_cap'), value: number_to_currency(number_to_human(@stock.market_capitalization)) } if @stock.market_capitalization
+  left_table << { label: t('stocks.summary.fair_price'), value: number_to_currency(@stock.yahoo_fair_price), help: t('stocks.summary.fair_price_help') } if @stock.yahoo_fair_price
+  left_table << { label: t('stocks.summary.fair_value'), value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? t('stocks.summary.undervalued') : t('stocks.summary.overvalued')})", class: delta_class(@stock.yahoo_discount.to_i) } if @stock.yahoo_discount
 
   right_table = []
-  right_table << { label: 'Support / Resistance', value: render_range(@stock.yahoo_support, @stock.yahoo_resistance, @stock.current_price, @stock.price_change) } if !@stock.yahoo_support.to_f.zero? && !@stock.yahoo_resistance.to_f.zero?
-  right_table << { label: 'EPS (TTM)', value: number_with_precision(@stock.eps_ttm, precision: 2) } if @stock.eps_ttm
-  right_table << { label: 'EPS Growth 5Y', value: "#{change_icon(@stock.eps_growth_5y)}#{number_to_percentage(@stock.eps_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.eps_growth_5y) } if @stock.eps_growth_5y
+  right_table << { label: t('stocks.summary.support_resistance'), value: render_range(@stock.yahoo_support, @stock.yahoo_resistance, @stock.current_price, @stock.price_change) } if !@stock.yahoo_support.to_f.zero? && !@stock.yahoo_resistance.to_f.zero?
+  right_table << { label: t('stocks.summary.eps_ttm'), value: number_with_precision(@stock.eps_ttm, precision: 2) } if @stock.eps_ttm
+  right_table << { label: t('stocks.summary.eps_growth_5y'), value: "#{change_icon(@stock.eps_growth_5y)}#{number_to_percentage(@stock.eps_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.eps_growth_5y) } if @stock.eps_growth_5y
   if div_suspended
-    right_table << { label: 'Forward Dividend & Yield', value: 'Suspended', class: 'text-danger' }
+    right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: t('stocks.summary.suspended'), class: 'text-danger' }
   else
     if @stock.est_annual_dividend_taxed(current_user)
-      right_table << { label: 'Forward Dividend & Yield BT', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
-      right_table << { label: 'Forward Dividend & Yield AT', value: "#{number_to_currency(@stock.est_annual_dividend_taxed(current_user))} (#{number_to_percentage(@stock.est_annual_dividend_taxed_pct(current_user), precision: 2) })"}
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield_bt'), value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield_at'), value: "#{number_to_currency(@stock.est_annual_dividend_taxed(current_user))} (#{number_to_percentage(@stock.est_annual_dividend_taxed_pct(current_user), precision: 2) })"}
     else
-      right_table << { label: 'Forward Dividend & Yield', value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
     end
-    right_table << { label: 'Dividend Growth 3Y', value: "#{change_icon(@stock.dividend_growth_3y)}#{number_to_percentage(@stock.dividend_growth_3y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_3y)} if @stock.dividend_growth_3y
-    right_table << { label: 'Dividend Growth 5Y', value: "#{change_icon(@stock.dividend_growth_5y)}#{number_to_percentage(@stock.dividend_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
-    right_table << { label: 'Years of Dividend Growth', value: @stock.dividend_growth_years } if @stock.dividend_growth_years
+    right_table << { label: t('stocks.summary.dividend_growth_3y'), value: "#{change_icon(@stock.dividend_growth_3y)}#{number_to_percentage(@stock.dividend_growth_3y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_3y)} if @stock.dividend_growth_3y
+    right_table << { label: t('stocks.summary.dividend_growth_5y'), value: "#{change_icon(@stock.dividend_growth_5y)}#{number_to_percentage(@stock.dividend_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
+    right_table << { label: t('stocks.summary.years_of_dividend_growth'), value: @stock.dividend_growth_years } if @stock.dividend_growth_years
   end
   div_change_pct = @stock.div_change_pct
-  right_table << { label: 'Dividend Change', value: "#{change_icon(div_change_pct)}#{number_to_percentage(div_change_pct, precision: 1) }".html_safe, class: delta_class(div_change_pct) } if div_change_pct
-  right_table << { label: 'Dividend Safety', value: "#{number_with_precision(@stock.dividend_rating, precision: 1) } (#{safety_human(@stock.dividend_rating)})" } if @stock.dividend_rating
-  right_table << { label: 'Payout', value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
+  right_table << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(div_change_pct)}#{number_to_percentage(div_change_pct, precision: 1) }".html_safe, class: delta_class(div_change_pct) } if div_change_pct
+  right_table << { label: t('stocks.summary.dividend_safety'), value: "#{number_with_precision(@stock.dividend_rating, precision: 1) } (#{safety_human(@stock.dividend_rating)})" } if @stock.dividend_rating
+  right_table << { label: t('stocks.summary.payout'), value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
 %>
 
 <table class="summary-table hidden sm:table mb-6">
@@ -79,9 +71,9 @@ HELP
       <% row = right_table[index] %>
       <% if row %>
         <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
-        <% if row[:help] %>
+        <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
-            <div class="tooltip right whitespace-nowrap"><%= row[:help].html_safe %></div>
+            <div class="tooltip right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1') %>1
           </div>
         <% end %>

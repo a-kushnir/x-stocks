@@ -100,6 +100,43 @@ en:
       price_targets: 'Price Targets'
       earnings: 'Earnings'
       financials: 'Financials'
+    technical_analysis:
+      short_term: 'Short Term'
+      2w_6w: '2W - 6W'
+      mid_term: 'Mid Term'
+      6w_9m: '6W - 9M'
+      long_term: 'Long Term'
+      9m: '9M+'
+    summary:
+      previous_close: 'Previous Close'
+      open: 'Open'
+      day_range: "Day's Range"
+      52_week_range: '52 Week Range'
+      pe_ratio_ttm: 'P/E Ratio (TTM)'
+      outstanding_shares: 'Outstanding Shares'
+      market_cap: 'Market Cap'
+      fair_price: 'Fair Price'
+      fair_price_help: 'Fair Price is the appropriate price for the shares of a company, based on
+        its earnings and growth rate also interpreted as when P/E Ratio = Growth Rate.
+        Estimated return represents the projected annual return you might expect
+        after purchasing shares in the company and holding them over the default time
+        horizon of 5 years, based on the EPS growth rate that we have projected.'
+      fair_value: 'Fair Value'
+      undervalued: 'Undervalued'
+      overvalued: 'Overvalued'
+      support_resistance: 'Support / Resistance'
+      eps_ttm: 'EPS (TTM)'
+      eps_growth_5y: 'EPS Growth 5Y'
+      forward_dividend_and_yield: 'Forward Dividend & Yield'
+      suspended: 'Suspended'
+      forward_dividend_and_yield_bt: 'Forward Dividend & Yield BT'
+      forward_dividend_and_yield_at: 'Forward Dividend & Yield AT'
+      dividend_growth_3y: 'Dividend Growth 3Y'
+      dividend_growth_5y: 'Dividend Growth 5Y'
+      years_of_dividend_growth: 'Years of Dividend Growth'
+      dividend_change: 'Dividend Change'
+      dividend_safety: 'Dividend Safety'
+      payout: 'Payout'
     company_profile:
       headquarters: 'Headquarters'
       website: 'Website'

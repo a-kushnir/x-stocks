@@ -1,0 +1,19 @@
+<% if @stock.yahoo_short_direction && @stock.yahoo_medium_direction && @stock.yahoo_long_direction %>
+  <div class="border border-gray-300 rounded shadow-sm float-right mt-4 mb-2" style="max-width: 400px;">
+    <table class="w-full">
+      <tbody>
+      <tr>
+        <td class="border-r border-gray-300">
+          <%= render partial: 'stocks/widgets/technical_analysis_item', locals: { title: t('stocks.technical_analysis.short_term'), subtitle: t('stocks.technical_analysis.2w_6w'), direction: @stock.yahoo_short_direction, details: @stock.yahoo_short_outlook, link: 'short' } %>
+        </td>
+        <td class="border-r border-gray-300">
+          <%= render partial: 'stocks/widgets/technical_analysis_item', locals: { title: t('stocks.technical_analysis.mid_term'), subtitle: t('stocks.technical_analysis.6w_9m'), direction: @stock.yahoo_medium_direction, details: @stock.yahoo_medium_outlook, link: 'intermediate' } %>
+        </td>
+        <td>
+          <%= render partial: 'stocks/widgets/technical_analysis_item', locals: { title: t('stocks.technical_analysis.long_term'), subtitle: t('stocks.technical_analysis.9m'), direction: @stock.yahoo_long_direction, details: @stock.yahoo_long_outlook, link: 'long' } %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

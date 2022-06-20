@@ -7,8 +7,8 @@ module XStocks
       devise :database_authenticatable, :registerable,
              :recoverable, :rememberable, :validatable, :trackable
 
-      has_many :positions
-      has_many :watchlists
+      has_many :positions, dependent: :destroy
+      has_many :watchlists, dependent: :destroy
 
       serialize :favorites, JSON
       serialize :taxes, JSON

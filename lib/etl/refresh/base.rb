@@ -14,9 +14,9 @@ module Etl
         @loader ||= Etl::Extract::DataLoader.new(logger)
       end
 
-      def stock_message(stock, percent: 0)
+      def stock_message(stock, percent: 0, index: 0, count: 1)
         {
-          message: "Processing #{stock.symbol} (1 out of 1)",
+          message: t('services.processing_record', record: stock.symbol, index: index + 1, count: count),
           percent: percent
         }
       end
@@ -24,7 +24,7 @@ module Etl
       def each_symbol_with_message(symbols)
         symbols.each_with_index do |symbol, index|
           yield symbol, {
-            message: "Processing #{symbol} (#{index + 1} out of #{symbols.size})",
+            message: t('services.processing_record', record: symbol, index: index + 1, count: symbols.size),
             percent: index * 100 / symbols.length
           }
         end
@@ -34,7 +34,7 @@ module Etl
         stocks = XStocks::Stock.find_all_random
         stocks.each_with_index do |stock, index|
           yield stock, {
-            message: "Processing #{stock.symbol} (#{index + 1} out of #{stocks.size})",
+            message: t('services.processing_record', record: stock.symbol, index: index + 1, count: stocks.size),
             percent: index * 100 / stocks.length
           }
         end
@@ -42,14 +42,14 @@ module Etl
 
       def processing_message(percent)
         {
-          message: 'Processing',
+          message: t('services.processing'),
           percent: percent
         }
       end
 
       def completed_message
         {
-          message: 'Completed',
+          message: t('services.complete'),
           percent: 100
         }
       end
@@ -61,6 +61,8 @@ module Etl
       def add_csv_file_row(row)
         logger.append_file("#{row.map { |cell| "\"#{cell.to_s.gsub('"', '""')}\"" }.join(',')}\r\n")
       end
+
+      delegate :t, to: I18n
     end
   end
 end

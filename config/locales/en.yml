@@ -211,3 +211,7 @@ en:
     columns:
       name: 'Name'
       stocks: 'Stocks'
+  services:
+    processing: 'Processing'
+    processing_record: "Processing %{record} (%{index} out of %{count})"
+    complete: 'Complete'

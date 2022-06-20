@@ -32,6 +32,14 @@ class ProgressBar
     end
   end
 
+  def loop_with_index(objects)
+    @value = progress.min
+    increment = progress.size / objects.count
+    objects.each_with_index do |object, index|
+      yield ProgressBar.new(object, progress: Range.new(@value, @value += increment)), index
+    end
+  end
+
   def steps
     steps = Steps.new
     yield steps

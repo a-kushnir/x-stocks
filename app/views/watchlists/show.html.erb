@@ -1,2 +1,3 @@
 <%= render(DataTableComponent.new(name: @watchlist.name, table: @table, turbo_frame_id: 'page_content',
+                                  top_right_block: render({ partial: 'update_button' }),
                                   bottom_left_block: render({ partial: 'show_buttons'}))) %>

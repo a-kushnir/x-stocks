@@ -69,15 +69,15 @@ The project has API that allows retrieving information about stocks, exhanges, a
 * Linux or macOS or Windows
 * PostgreSQL, [download](https://www.postgresql.org/download/)
 * Ruby 2.7.5 or later, [download](https://www.ruby-lang.org/en/downloads/)
-* Yarn 1.22 or later, [download](https://classic.yarnpkg.com/en/docs/install/)
 * Node 16 or later, [download](https://nodejs.org/en/download/)
+* Yarn 1.22 or later, [download](https://classic.yarnpkg.com/en/docs/install/)
 * Git
 
 # Installation
 
 [(Back to top)](#table-of-contents)
 
-Install PostgreSQL and create _x_stocks_ user and _x_stocks_development_ database or update _config/database.yml_ file to match existing configuration.
+Install PostgreSQL and create _x_stocks_ user or update _config/database.yml_ file to match existing configuration.
 
 To build and run this application locally, you'll need latest versions of Git, Ruby, Yarn and Node installed on your computer. From your command line:
 
@@ -94,8 +94,8 @@ $ bundle
 # Install packages
 $ yarn install
 
-# Run mirgations
-$ rails db:migrate
+# Create the database, loads the schema, and initialize it with the seed data
+$ rails db:setup
 
 # Run the app
 $ rails s
@@ -134,8 +134,8 @@ Learn more about environment variables:
 ## Users
 
 ### Default User
-* Username: admin@admin.com
-* Password: admin!
+* Username: xstocks@example.com
+* Password: xStocks!
 
 ### New User
 * Sign in under an existing user

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_02_223955) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,8 +49,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_223955) do
     t.integer "metascore"
     t.string "metascore_details"
     t.string "note"
-    t.datetime "created_at", precision: nil, default: "2020-01-01 00:00:00", null: false
-    t.datetime "updated_at", precision: nil, default: "2020-01-01 00:00:00", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "stop_loss_base", precision: 10, scale: 2
     t.decimal "stop_loss", precision: 10, scale: 2
     t.decimal "stop_loss_pct", precision: 10, scale: 2
@@ -134,7 +134,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_223955) do
     t.string "next_earnings_hour"
     t.decimal "next_earnings_est_eps", precision: 12, scale: 4
     t.string "next_earnings_details"
-    t.string "string"
     t.decimal "yahoo_beta", precision: 10, scale: 6
     t.decimal "yahoo_rec", precision: 5, scale: 2
     t.string "yahoo_rec_details"
@@ -194,7 +193,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_223955) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "api_key"
-    t.string "favorites"
     t.string "taxes"
     t.index ["api_key"], name: "index_users_on_api_key", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

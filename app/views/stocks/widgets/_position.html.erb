@@ -1,5 +1,5 @@
 <div class="section">
-  <%= turbo_frame_tag 'my-position' do %>
+  <%= turbo_frame_tag dom_id(@position.stock, :position) do %>
     <%= render partial: '/positions/show' %>
   <% end %>
 </div>

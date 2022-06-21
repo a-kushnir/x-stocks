@@ -6,6 +6,7 @@ en:
       estimated_taxes: 'Estimated Taxes'
   buttons:
     back: 'Back'
+    cancel: 'Cancel'
     save: 'Save'
   dividends:
     pages:
@@ -47,6 +48,23 @@ en:
   positions:
     pages:
       portfolio: 'Portfolio'
+    attributes:
+      shares: 'Shares'
+      average_price: 'Average Price'
+      total_cost: 'Total Cost'
+      market_value: 'Market Value'
+      total_return: 'Total Return'
+      total_return_pct: 'Total Return %'
+      annual_dividend: 'Annual Dividend'
+      next_dividend: 'Next Dividend'
+      est_next_dividend: 'Est. Next Dividend'
+      portfolio_diversity: 'Portfolio Diversity'
+      stop_loss: 'Stop Loss'
+      stop_price: 'Stop Price'
+      estimated_credit: 'Estimated Credit'
+      estimated_return: 'Estimated Return'
+      estimated_return_pct: 'Estimated Return %'
+      note: 'Note'
     columns:
       symbol: 'Symbol'
       company: 'Company'

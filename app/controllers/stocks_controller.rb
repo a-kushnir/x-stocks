@@ -48,7 +48,7 @@ class StocksController < ApplicationController
     @stock.attributes = create_stock_params
 
     if @stock.save
-      redirect_to({ action: 'initializing', symbol: @stock.symbol }.merge(initialize_params))
+      redirect_to({ action: 'initializing', symbol: @stock.symbol })
     else
       render action: 'new'
     end
@@ -108,10 +108,6 @@ class StocksController < ApplicationController
     @page_title ||= @stock && !@stock.new_record? ? @stock.to_s : t('stocks.pages.new_stock')
     @page_menu_item = :stocks
     super
-  end
-
-  def initialize_params
-    params.permit(:save_and_show, :save_only).slice(:save_and_show, :save_only)
   end
 
   def update_price

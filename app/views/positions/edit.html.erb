@@ -1,28 +1,28 @@
-<%= turbo_frame_tag 'my-position' do %>
+<%= turbo_frame_tag dom_id(@position.stock, :position) do %>
   <%= form_for(@position, url: position_path(@position.stock.symbol), method: :put) do |form| %>
     <div class="mb-4">
-      <%= form.label :shares, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :shares, t('positions.attributes.shares'), class: 'block text-gray-700 text-sm font-bold mb-2' %>
       <%= form.text_field :shares, autocomplete: :off, autofocus: true, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
                           value: format_if_valid(@position, :shares) { |value| number_with_precision(value, delimiter: ',', strip_insignificant_zeros: true) } %>
     </div>
     <div class="mb-4">
-      <%= form.label :average_price, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :average_price, t('positions.attributes.average_price'), class: 'block text-gray-700 text-sm font-bold mb-2' %>
       <%= form.text_field :average_price, autocomplete: :off, prepend: '$', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
                           value: format_if_valid(@position, :average_price) { |value| number_to_currency(value, unit: '') } %>
     </div>
     <div class="mb-4">
-      <%= form.label :stop_loss, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :stop_loss, t('positions.attributes.stop_loss'), class: 'block text-gray-700 text-sm font-bold mb-2' %>
       <%= form.text_field :stop_loss, autocomplete: :off, prepend: '$', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
                           value: format_if_valid(@position, :stop_loss) { |value| number_to_currency(value, unit: '') } %>
     </div>
     <div class="mb-4">
-      <%= form.label :note, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.label :note, t('positions.attributes.note'), class: 'block text-gray-700 text-sm font-bold mb-2' %>
       <%= form.text_area :note, class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-20' %>
     </div>
 
     <div class="pb-3 flex items-center justify-between">
-      <%= link_to 'Cancel', position_path(@position.stock.symbol), class: 'btn btn-secondary-outline', style: 'margin-left: 0;' %>
-      <%= form.submit 'Save', class: 'btn btn-primary' %>
+      <%= link_to t('buttons.cancel'), position_path(@position.stock.symbol), class: 'btn btn-secondary-outline', style: 'margin-left: 0;' %>
+      <%= form.submit t('buttons.save'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 <% end %>

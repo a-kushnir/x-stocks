@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'x_stocks'
+
 # Controller to provide user profile functions
 class RegistrationsController < Devise::RegistrationsController
   def create
@@ -11,12 +13,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Security fix: Sign Up for existing users only
   def require_no_authentication
-    authenticate_scope!
+    XStocks.protected_sign_up? ? authenticate_scope! : super
   end
 
   # The path used after sign up. You need to overwrite this method
   # in your own RegistrationsController.
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(_resource)
     root_url
   end
 end

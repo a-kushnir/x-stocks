@@ -133,14 +133,7 @@ Learn more about environment variables:
 
 ## Users
 
-### Default User
-* Username: xstocks@example.com
-* Password: xStocks!
-
-### New User
-* Sign in under an existing user
-* Type the following url in your address line: /users/sign_up
-* Complete registration
+See [db/seeds/users.rb](https://github.com/a-kushnir/x-stocks/blob/main/db/seeds/users.rb) for default credentials.
 
 # License
 

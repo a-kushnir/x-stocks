@@ -30,11 +30,8 @@
       <%= top_menu_link(:services, 'Services', services_path) %>
       <%= top_menu_link(:account, t('account.pages.account'), edit_user_registration_path)  %>
       <li>
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+        <%= button_to t('devise.sessions.destroy.sign_out'), destroy_user_session_path, method: :delete %>
       </li>
-    <% else %>
-      <%#= top_menu_link(:sign_up, 'Sign Up', new_user_registration_path) %>
-      <%#= top_menu_link(:sign_in, 'Sign In', user_session_path) %>
     <% end %>
   </ul>
   </div>

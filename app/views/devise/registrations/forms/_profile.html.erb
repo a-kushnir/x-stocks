@@ -37,4 +37,10 @@
       <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
     </div>
   <% end %>
+
+  <% if XStocks.protected_sign_up? %>
+    <div class="mt-4">
+      <%= link_to t('devise.registrations.new.sign_up'), new_registration_path(resource_name), class: 'text-blue-500' %>
+    </div>
+  <% end %>
 </div>

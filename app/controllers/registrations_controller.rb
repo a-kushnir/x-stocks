@@ -13,4 +13,10 @@ class RegistrationsController < Devise::RegistrationsController
   def require_no_authentication
     authenticate_scope!
   end
+
+  # The path used after sign up. You need to overwrite this method
+  # in your own RegistrationsController.
+  def after_sign_up_path_for(resource)
+    root_url
+  end
 end

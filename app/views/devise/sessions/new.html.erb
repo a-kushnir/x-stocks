@@ -1,28 +1,28 @@
-<% @page_title = 'Sign In' %>
+<% @page_title = t('devise.sessions.new.sign_in') %>
 <div class="section section-form">
-  <h2>Sign in</h2>
+  <h2><%= t('devise.sessions.new.sign_in') %></h2>
 
 <%= form_for(resource, as: resource_name, url: user_session_path(back_url: params[:back_url])) do |f| %>
   <div class="mb-4">
     <%= f.label :email, class: 'block text-gray-700 font-bold mb-2' %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: t('activerecord.attributes.user.email'), class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
   </div>
 
   <div class="mb-4">
     <%= f.label :password, class: 'block text-gray-700 font-bold mb-2' %>
-    <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Password', class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    <%= f.password_field :password, autocomplete: "current-password", placeholder: t('activerecord.attributes.user.password'), class: 'shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
   </div>
 
   <% if devise_mapping.rememberable? %>
     <div class="mb-4">
       <%= f.label :remember_me, class: 'block text-gray-700 font-bold mb-2' do %>
-        <%= f.check_box :remember_me, class: 'mr-2 leading-tight' %>Remember Me
+        <%= f.check_box :remember_me, class: 'mr-2 leading-tight' %><%= t('activerecord.attributes.user.remember_me') %>
       <% end %>
     </div>
   <% end %>
 
   <div>
-    <%= f.submit "Sign in", class: 'btn btn-primary' %>
+    <%= f.submit t('devise.sessions.new.sign_in'), class: 'btn btn-primary' %>
   </div>
 <% end %>
 </div>

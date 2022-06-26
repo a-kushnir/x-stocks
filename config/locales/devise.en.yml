@@ -45,7 +45,15 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address."
       updated: "Your account has been updated successfully."
       updated_but_not_signed_in: "Your account has been updated successfully, but since your password was changed, you need to sign in again"
+      edit:
+        leave_blank_if_you_don_t_want_to_change_it: "Leave blank if you don't want to change it"
+        currently_waiting_confirmation_for_email: "Currently waiting confirmation for: %{email}"
+        we_need_your_current_password_to_confirm_your_changes: "We need your current password to confirm your changes"
+      new:
+        sign_up: "Sign Up"
     sessions:
+      new:
+        sign_in: "Sign In"
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
@@ -63,3 +71,13 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+  activerecord:
+    models:
+      user: "User"
+    attributes:
+      user:
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        current_password: "Current Password"
+        remember_me: "Remember Me"

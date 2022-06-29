@@ -2,7 +2,7 @@
   <%= link_to 'See All', "/stocks?order=5-#{order}", class: 'float-right mt-1 text-blue-500' %>
   <h3><%= title %></h3>
 
-  <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(5).all %>
+  <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(7).all %>
   <table class="summary-table">
     <tbody>
     <% stocks.each do |stock| %>

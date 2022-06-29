@@ -1,19 +1,25 @@
+<% height = 330 -%>
 <div class="section">
-  <h3><%= t('home.sections.dividend_hikes_and_cuts') %></h3>
-
-  <div class="flex flex-col space-y-4 space-x-0" style="min-height: 406px;">
-    <div class="flex-1 border rounded">
-      <a class="twitter-timeline"
-         data-lang="en" data-width="100%" data-height="380" data-dnt="true" data-theme="light"
-         href="https://twitter.com/dividendhike">
-      </a>
-    </div>
-    <div class="flex-1 border rounded">
-      <a class="twitter-timeline"
-         data-lang="en" data-width="100%" data-height="380" data-dnt="true" data-theme="light"
-         href="https://twitter.com/dividendcut">
-      </a>
-    </div>
+  <a href="https://twitter.com/dividendhike">
+    <h3><%= inline_svg('svg/twitter', size: '24*24', class: 'inline-block mb-1 text-sky-500') %> <%= t('home.sections.dividend_hikes') %></h3>
+  </a>
+  <div style="min-height: <%= height %>px;">
+    <a class="twitter-timeline"
+       data-lang="en" data-width="100%" data-height="<%= height %>" data-dnt="true" data-theme="light" data-chrome="noheader nofooter noscrollbar transparent"
+       href="https://twitter.com/dividendhike">
+    </a>
   </div>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
+<div class="section">
+  <a href="https://twitter.com/dividendcut">
+    <h3><%= inline_svg('svg/twitter', size: '24*24', class: 'inline-block mb-1 text-sky-500') %> <%= t('home.sections.dividend_cuts') %></h3>
+  </a>
+
+  <div style="min-height: <%= height %>px;">
+    <a class="twitter-timeline"
+       data-lang="en" data-width="100%" data-height="<%= height %>" data-dnt="true" data-theme="light" data-chrome="noheader nofooter noscrollbar transparent"
+       href="https://twitter.com/dividendcut">
+    </a>
+  </div>
+</div>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

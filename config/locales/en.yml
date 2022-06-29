@@ -29,7 +29,8 @@ en:
       home: 'Home'
     sections:
       fear_and_greed_index: 'Fear & Greed Index'
-      dividend_hikes_and_cuts: 'Dividend Hikes and Cuts'
+      dividend_hikes: 'Dividend Hikes'
+      dividend_cuts: 'Dividend Cuts'
       portfolio: 'Portfolio'
       top_gainers: 'Top Gainers'
       top_losers: 'Top Losers'

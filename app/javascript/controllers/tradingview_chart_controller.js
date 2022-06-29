@@ -14,17 +14,14 @@ export default class extends ApplicationController {
       new TradingView.widget({
         "autosize": true,
         "symbol": this.symbolValue,
+        "interval": "D",
         "timezone": "Etc/UTC",
         "theme": isDarkTheme() ? "dark" : "light",
         "style": "2",
         "locale": "en",
-        /*"toolbar_bg": "#f1f3f6",*/
-        "enable_publishing": false,
         "hide_top_toolbar": true,
         "withdateranges": true,
-        "range": "1m",
-        /*"allow_symbol_change": false,*/
-        "save_image": false,
+        "range": "12m",
         "container_id": this.element.id
       });
     });

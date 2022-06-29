@@ -7,7 +7,7 @@
 
   <% data = Etl::Refresh::FearNGreed.new.data&.dig(:fear_and_greed) %>
   <% if data && [:score, :previous_close, :previous_1_week, :previous_1_month, :previous_1_year].all? { |key| data.key?(key) } %>
-    <div class="my-2 mx-auto" style="max-width: 640px;">
+    <div class="my-1 mx-auto" style="max-width: 640px;">
       <%= render(FearNGreedGaugeComponent.new(**data.slice(:score, :previous_close, :previous_1_week, :previous_1_month, :previous_1_year))) %>
     </div>
   <% else %>

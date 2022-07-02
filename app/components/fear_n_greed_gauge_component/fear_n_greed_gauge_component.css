@@ -255,15 +255,15 @@
 .market-fng-gauge[data-showHistorical=false] .market-fng-gauge__meter {
   width: 100%
 }
+.market-fng-gauge .market-fng-gauge__historical {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px
+}
 
 @media screen and (min-width:480px) {
   .market-fng-gauge .market-fng-gauge__meter-container {
     margin-bottom: 10px
-  }
-  .market-fng-gauge .market-fng-gauge__historical {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px
   }
   .market-fng-gauge .market-fng-gauge__historical-item {
     margin-top: 0

@@ -45,7 +45,7 @@
 .market-fng-gauge .market-fng-gauge__historical-item {
   margin-top: 4px;
   color: #262626;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 13px
 }
 
@@ -205,10 +205,9 @@
   left: 0;
   width: 100%;
   height: auto;
-  font-family: inherit;
   font-size: 27px;
   line-height: 27px;
-  font-weight: 800;
+  font-weight: bold;
   text-align: center
 }
 
@@ -216,7 +215,7 @@
   width: 3.15%;
   position: absolute;
   bottom: 0;
-  padding-bottom: 3%;
+  padding-bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   enable-background: 'new 0 0 10 124'

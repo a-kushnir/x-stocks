@@ -22,7 +22,16 @@ export default class extends ApplicationController {
         "hide_top_toolbar": true,
         "withdateranges": true,
         "range": "12m",
-        "container_id": this.element.id
+        "container_id": this.element.id,
+        "studies": [{
+          "id": "MAExp@tv-basicstudies",
+          "inputs": {
+            "length": 120
+          }
+        }],
+        "studies_overrides": {
+          "moving average exponential.ma.color.0": "#FF9800"
+        }
       });
     });
   }

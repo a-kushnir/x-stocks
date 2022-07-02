@@ -34,11 +34,10 @@ en:
       portfolio: 'Portfolio'
       top_gainers: 'Top Gainers'
       top_losers: 'Top Losers'
-      market_overview: 'Market Overview'
+      market_overview: 'Market Momentum'
       links: 'Links'
       screeners: 'Screeners'
     fear_and_greed_index:
-      source: 'Source'
       no_data_available: 'No data available'
     portfolio:
       marker_value: 'Market Value'

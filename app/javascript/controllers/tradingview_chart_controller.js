@@ -26,7 +26,7 @@ export default class extends ApplicationController {
         "studies": [{
           "id": "MAExp@tv-basicstudies",
           "inputs": {
-            "length": 120
+            "length": 125
           }
         }],
         "studies_overrides": {

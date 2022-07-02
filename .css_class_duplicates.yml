@@ -1,0 +1,23 @@
+
+files:
+  include:
+    - '**/*.html.erb'
+
+matches:
+  # type: 'partial'
+  type: 'exact'
+
+filters:
+  classes:
+    min: 2
+    # include:
+    # - 'btn'
+    exclude:
+      - 'section section-form'
+      - 'section section-form section-form-left'
+      - 'btn btn-primary'
+      - 'btn btn-link'
+    # delete:
+    #  - 'btn'
+  matches:
+    min: 2

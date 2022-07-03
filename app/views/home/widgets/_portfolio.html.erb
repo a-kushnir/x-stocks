@@ -1,7 +1,7 @@
 <div class="section">
   <h3><%= t('home.sections.portfolio') %></h3>
 
-  <table class="summary-table">
+  <table class="section-table">
     <tbody>
     <% day_change = XStocks::Position.new.day_change(current_user) %>
     <% if day_change %>

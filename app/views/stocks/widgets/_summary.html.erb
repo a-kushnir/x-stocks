@@ -51,7 +51,7 @@
   right_table << { label: t('stocks.summary.payout'), value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
 %>
 
-<table class="summary-table hidden sm:table mb-6">
+<table class="section-table hidden sm:table mb-6">
   <% [left_table.size, right_table.size].max.to_i.times do |index| %>
   <tr>
     <td>
@@ -84,7 +84,7 @@
 </table>
 
 <% combined_table = left_table + right_table %>
-<table class="summary-table table sm:hidden mb-6">
+<table class="section-table table sm:hidden mb-6">
   <% combined_table.size.times do |index| %>
   <tr>
     <td>

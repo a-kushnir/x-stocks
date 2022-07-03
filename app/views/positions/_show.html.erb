@@ -2,54 +2,54 @@
 <h3><%= t('stocks.sections.position') %></h3>
 
 <div>
-  <table class="w-full mb-2">
+  <table class="section-table mb-2">
     <tbody>
     <% if @position.shares %>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('positions.attributes.shares') %>:
-          <strong class="float-right"><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
+          <strong><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
         </td>
       </tr>
       <% if @position.average_price %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.average_price') %>:
-            <strong class="float-right"><%= number_to_currency(@position.average_price) %></strong>
+            <strong><%= number_to_currency(@position.average_price) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.gain_loss %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.total_cost') %>:
-            <strong class="float-right"><%= number_to_currency(@position.total_cost) %></strong>
+            <strong><%= number_to_currency(@position.total_cost) %></strong>
           </td>
         </tr>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.market_value') %>:
-            <strong class="float-right"><%= number_to_currency(@position.market_value) %></strong>
+            <strong><%= number_to_currency(@position.market_value) %></strong>
           </td>
         </tr>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.total_return') %>:
             <strong class="float-right <%= delta_class(@position.gain_loss) %>"><%= delta_number(number_to_currency(@position.gain_loss)) %></strong>
           </td>
         </tr>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.total_return_pct') %>:
             <strong class="float-right <%= delta_class(@position.gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.gain_loss_pct, precision: 2)) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.est_annual_income %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.annual_dividend') %>:
-            <strong class="float-right"><%= number_to_currency(@position.est_annual_income) %></strong>
+            <strong><%= number_to_currency(@position.est_annual_income) %></strong>
           </td>
         </tr>
       <% end %>
@@ -66,18 +66,18 @@
             end
           end
         %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= estimate ? t('positions.attributes.est_next_dividend') : t('positions.attributes.next_dividend') %>:
-            <strong class="float-right"><%= number_to_currency(@position.shares * next_div_amount) %></strong>
+            <strong><%= number_to_currency(@position.shares * next_div_amount) %></strong>
           </td>
         </tr>
       <% end %>
       <% if @position.market_value %>
-        <tr class="border-t first:border-none border-gray-300">
-          <td class="p-1">
+        <tr>
+          <td>
             <%= t('positions.attributes.portfolio_diversity') %>:
-            <strong class="float-right"><%= number_to_percentage(@position.market_value / XStocks::Position.new.market_value(current_user) * 100, precision: 2) rescue nil %></strong>
+            <strong><%= number_to_percentage(@position.market_value / XStocks::Position.new.market_value(current_user) * 100, precision: 2) rescue nil %></strong>
           </td>
         </tr>
       <% end %>
@@ -87,28 +87,28 @@
 
   <% if @position.shares && @position.stop_loss %>
     <h3><%= t('positions.attributes.stop_loss') %></h3>
-    <table class="w-full mb-2">
+    <table class="section-table mb-2">
       <tbody>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('positions.attributes.stop_price') %>:
-          <strong class="float-right"><%= number_to_currency(@position.stop_loss) %></strong>
+          <strong><%= number_to_currency(@position.stop_loss) %></strong>
         </td>
       </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('positions.attributes.estimated_credit') %>:
-          <strong class="float-right"><%= number_to_currency(@position.stop_loss_value) %></strong>
+          <strong><%= number_to_currency(@position.stop_loss_value) %></strong>
         </td>
       </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('positions.attributes.estimated_return') %>:
           <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss) %>"><%= delta_number(number_to_currency(@position.stop_loss_gain_loss)) %></strong>
         </td>
       </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('positions.attributes.estimated_return_pct') %>:
           <strong class="float-right <%= delta_class(@position.stop_loss_gain_loss_pct) %>"><%= delta_number(number_to_percentage(@position.stop_loss_gain_loss_pct, precision: 2)) %></strong>
         </td>

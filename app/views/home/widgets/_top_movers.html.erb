@@ -3,7 +3,7 @@
   <h3><%= title %></h3>
 
   <% stocks = XStocks::AR::Stock.unscoped.where(where).order(price_change_pct: order).limit(7).all %>
-  <table class="summary-table">
+  <table class="section-table">
     <tbody>
     <% stocks.each do |stock| %>
       <tr>

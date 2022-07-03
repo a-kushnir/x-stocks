@@ -1,4 +1,4 @@
-table.summary-table {
+table.section-table {
   @apply w-full;
   tr {
     @apply border-t first:border-none border-gray-300;

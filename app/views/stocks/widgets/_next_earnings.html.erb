@@ -3,23 +3,23 @@
   <div class="section">
     <h3><%= t('stocks.sections.next_earnings') %></h3>
 
-    <table class="w-full">
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+    <table class="section-table">
+      <tr>
+        <td>
           <%= t('stocks.next_earnings.estimated_eps') %>:
-          <strong class="float-right"><%= number_to_currency(@stock.next_earnings_est_eps, precision: dividend_precision(@stock.next_earnings_est_eps)) %></strong>
+          <strong><%= number_to_currency(@stock.next_earnings_est_eps, precision: dividend_precision(@stock.next_earnings_est_eps)) %></strong>
         </td>
       </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('stocks.next_earnings.date') %>:
-          <strong class="float-right"><%= next_earnings_date.strftime('%b, %d %Y') %></strong>
+          <strong><%= next_earnings_date.strftime('%b, %d %Y') %></strong>
         </td>
       </tr>
-      <tr class="border-t first:border-none border-gray-300">
-        <td class="p-1">
+      <tr>
+        <td>
           <%= t('stocks.next_earnings.time') %>:
-          <strong class="float-right"><%= humanize_earnings_hour(@stock.next_earnings_hour) %></strong>
+          <strong><%= humanize_earnings_hour(@stock.next_earnings_hour) %></strong>
         </td>
       </tr>
     </table>

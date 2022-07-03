@@ -16,7 +16,7 @@ class StocksController < ApplicationController
     return if handle_goto_param?
 
     stocks = XStocks::AR::Stock
-    stocks = stocks.where(id: stock_ids) if @tag
+    stocks = apply_tag(stocks)
 
     @table = stock_table
     @table.sort { |column, direction| stocks = stocks.reorder(column => direction) }
@@ -155,21 +155,19 @@ class StocksController < ApplicationController
     true
   end
 
-  def stock_ids
-    @tag = params[:tag]
-    return if @tag.blank?
+  def apply_tag(stocks)
+    @tag = params[:tag].presence
+    return stocks unless @tag
 
     virtual_tag = VirtualTag.find(@tag)
+    stock_ids = virtual_tag ? virtual_tag.find_stock_ids(current_user) : XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
 
-    stock_ids =
-      if virtual_tag
-        virtual_tag.find_stock_ids(current_user)
-      else
-        XStocks::AR::Tag.where(name: @tag).pluck(:stock_id)
-      end
+    if stock_ids.blank? && !virtual_tag
+      @tag = nil
+      return stocks
+    end
 
-    @tag = nil if stock_ids.blank? && !virtual_tag
-    stock_ids
+    stocks.where(id: stock_ids)
   end
 
   def safe_exec

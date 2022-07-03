@@ -1,4 +1,4 @@
-<div class="section">
+<div class="section pb-3">
   <h3><%= t('stocks.sections.links') %></h3>
 
   <nav>
@@ -13,7 +13,7 @@
          ].compact.sort_by(&:last).each do |link| %>
         <li>
           <a class="block h-10 hover:no-underline py-2 text-blue-500" href="<%= link[0] %>" target="_blank">
-            <%= inline_svg('svg/external-link.svg', size: '24*24', class: 'inline-block') %> <%= link[1] %>
+            <%= inline_svg('svg/external-link.svg', size: '24*24') %> <%= link[1] %>
           </a>
         </li>
       <% end %>

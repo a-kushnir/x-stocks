@@ -2,11 +2,11 @@
   <div class="flex flex-nowrap w-full lg:w-auto">
     <% if user_signed_in? %>
       <a href="<%= menu_index_path %>" class="top-menu-toggler ml-0" data-action="click->class#toggle click->event#cancel">
-        <%= inline_svg('svg/menu', size: '30*30', class: 'inline-block') %>
+        <%= inline_svg('svg/menu', size: '30*30') %>
       </a>
     <% end %>
     <a href="/" class="top-menu-brand">
-      <%= inline_svg('favicon/favicon', size: '30*30', class: 'inline-block mb-1') %>
+      <%= inline_svg('favicon/favicon', size: '30*30', class: 'mb-1') %>
       <span class="hidden sm:inline-block">xStocks</span>
     </a>
     <% if user_signed_in? %>

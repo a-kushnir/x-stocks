@@ -1,3 +1,5 @@
+svg { @apply inline-block }
+
 .section {
   @apply bg-white dark:bg-slate-800 dark:text-slate-400 shadow-md md:rounded px-2 md:px-8 py-3 md:py-6;
   &.section-form { @apply mx-auto w-full sm:max-w-md px-2 sm:px-8 py-3 sm:py-6; }

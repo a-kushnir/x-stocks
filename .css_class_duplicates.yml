@@ -17,6 +17,7 @@ filters:
       - 'section section-form section-form-left'
       - 'btn btn-primary'
       - 'btn btn-link'
+      - 'tag tag-*'
     # delete:
     #  - 'btn'
   matches:

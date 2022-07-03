@@ -1,4 +1,4 @@
-<div class="section">
+<div class="section pb-3">
   <h3><%= t('home.sections.screeners') %></h3>
 
   <nav>
@@ -9,7 +9,7 @@
           <% url.merge!({order: tag.sort_order}) if tag.sort_order.present? %>
           <a class="block h-10 hover:no-underline py-2 show-tooltip" href="<%= url_for(url) %>">
             <div class="tooltip top whitespace-nowrap"><%= tag.description %></div>
-            <span class="text-blue-500"><%= inline_svg(tag.svg_image, size: '24*24', class: 'inline-block') %> <%= tag.name %></span>
+            <span class="text-blue-500"><%= inline_svg(tag.svg_image, size: '24*24') %> <%= tag.name %></span>
           </a>
         </li>
       <% end %>

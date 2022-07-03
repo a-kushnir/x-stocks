@@ -61,19 +61,19 @@
       </td>
       <td>
         <%= button_tag class: 'btn btn-sm btn-secondary text-gray-900', data: { controller: 'element', action: 'click->service#start click->element#scrollTo', element_scroll_target: 'output-container' }, form: "form_#{job.lookup_code}" do %>
-          Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'inline-block mb-0.5') %>
+          Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'mb-0.5') %>
         <% end %>
 
         <%= link_to log_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
-          <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> Log
+          <%= inline_svg('svg/download', size: '18*18') %> Log
         <% end if service&.log.present? %>
 
         <%= link_to error_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
-          <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> Error
+          <%= inline_svg('svg/download', size: '18*18') %> Error
         <% end if service&.error.present? %>
 
         <%= link_to file_service_path(job.lookup_code), class: 'btn btn-sm btn-secondary-outline', data: { turbo: false } do %>
-          <%= inline_svg('svg/download', size: '18*18', class: 'inline-block') %> File
+          <%= inline_svg('svg/download', size: '18*18') %> File
         <% end if service&.file_content.present? %>
       </td>
     </tr>

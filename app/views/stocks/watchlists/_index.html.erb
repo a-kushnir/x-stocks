@@ -5,7 +5,7 @@
   <turbo-frame id="<%= dom_id(@stock, :watchlists) %>" class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
     <a href="#" class="<%= class_names('text-amber-500': watchlists.any?, 'text-zinc-500': watchlists.none?) %>"
        data-action="click->class#toggle click->event#cancel">
-      <%= inline_svg('svg/bookmark-star', size: '40*40', class: 'inline-block') %>
+      <%= inline_svg('svg/bookmark-star', size: '40*40') %>
     </a>
 
     <%= form_tag stock_watchlists_path(stock_symbol: @stock.symbol, watchlist_menu: true) do %>

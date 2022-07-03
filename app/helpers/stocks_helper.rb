@@ -83,7 +83,7 @@ module StocksHelper
     direction = Etl::Transform::Yahoo.new.direction(direction) if direction.is_a?(String)
     icon = { 1 => 'svg/caret-up', 0 => 'svg/caret-right', -1 => 'svg/caret-down' }[direction <=> 0]
     color = { 1 => 'text-positive', 0 => 'text-neutral', -1 => 'text-negative' }[direction <=> 0]
-    inline_svg(icon, size: size, class: class_names(color, 'inline-block'))
+    inline_svg(icon, size: size, class: color)
   end
 
   def render_range(min, max, curr, change)

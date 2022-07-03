@@ -26,7 +26,7 @@
             <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= t("taxes.#{tax_code}") %>
           <% end %>
           <% tax_url = tax_data.first %>
-          <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'inline-block mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
+          <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
         </li>
       <% end %>
       </ul>
@@ -34,7 +34,7 @@
 
     <div class="pb-3 flex items-center justify-between">
       <%= link_to back_url, class: 'btn btn-link' do %>
-        <%= inline_svg('svg/arrow-left.svg', size: '24*24', class: 'inline-block') %> <%= t('buttons.back') %>
+        <%= inline_svg('svg/arrow-left.svg', size: '24*24') %> <%= t('buttons.back') %>
       <% end %>
       <%= form.submit t('buttons.save'), class: 'btn btn-primary', onclick: "prepareForm(); runService($(this).parents('form')); return false;" %>
     </div>

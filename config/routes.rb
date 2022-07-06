@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   resources :menu, only: [:index]
 
+  namespace :stocks do
+    resources :confirmations, only: %i[show]
+  end
   resources :stocks, param: :symbol do
     member do
       get :initializing

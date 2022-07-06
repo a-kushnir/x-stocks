@@ -1,7 +1,9 @@
 <div class="section">
-  <a href="https://www.cnn.com/markets/fear-and-greed" target="_blank">
-    <h3><%= inline_svg('svg/cnn', size: '50*23', class: 'mb-1', style: 'color: #C60000;') %> <%= t('home.sections.fear_and_greed_index') %></h3>
-  </a>
+    <h3>
+      <a href="https://www.cnn.com/markets/fear-and-greed" target="_blank">
+        <%= inline_svg('svg/cnn', size: '50*23', class: 'mb-1', style: 'color: #C60000;') %> <%= t('home.sections.fear_and_greed_index') %>
+      </a>
+    </h3>
 
   <% data = Etl::Refresh::FearNGreed.new.data&.dig(:fear_and_greed) %>
   <% if data && [:score, :previous_close, :previous_1_week, :previous_1_month, :previous_1_year].all? { |key| data.key?(key) } %>

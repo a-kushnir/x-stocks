@@ -108,6 +108,11 @@ en:
     pages:
       stocks: 'Stocks'
       new_stock: 'New Stock'
+    confirmation:
+      delete_stock: 'Delete Stock?'
+      action_cannot_be_undone: 'Deleting a stock will permanently remove it from all accounts. This action cannot be undone.'
+      confirm: 'Yes, Delete Stock'
+      cancel: 'No, Keep Stock'
     sections:
       dividends: 'Dividends'
       related_tags: 'Related Tags'

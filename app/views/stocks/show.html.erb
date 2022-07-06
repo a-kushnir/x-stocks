@@ -21,13 +21,14 @@
       <%= render partial: 'stocks/widgets/about_company' %>
 
       <div>
-        <%= link_to edit_stock_path(@stock.symbol), class: 'btn btn-icon btn-secondary-outline mr-1' do %>
+        <%= link_to edit_stock_path(@stock.symbol), class: 'btn btn-icon btn-secondary-outline mr-1', target: '_top' do %>
           <%= inline_svg('svg/square-edit-outline', size: '24*24') %>
         <% end %>
         <% if @stock.destroyable? %>
-          <%= button_to stock_path(@stock.symbol), method: :delete, class: 'btn btn-icon btn-danger-outline', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;' } do %>
+          <%= link_to stocks_confirmation_path(@stock.symbol), class: 'btn btn-icon btn-danger-outline', data: { turbo_frame: 'delete_stock' } do %>
             <%= inline_svg('svg/trash-can-outline', size: '24*24') %>
           <% end %>
+          <%= turbo_frame_tag 'delete_stock' %>
         <% end %>
       </div>
     </div>

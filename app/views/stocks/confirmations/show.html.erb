@@ -1,0 +1,6 @@
+<% @page_title = t('stocks.confirmation.delete_stock') %>
+
+<%= turbo_frame_tag 'delete_stock' do %>
+  <%= render ConfirmationComponent.new(title: t('stocks.confirmation.delete_stock'), description: t('stocks.confirmation.action_cannot_be_undone'),
+                                       confirm: [ t('stocks.confirmation.confirm'), stock_path(params[:id]), method: :delete, data: { turbo: false } ], cancel: t('stocks.confirmation.cancel')) %>
+<% end %>

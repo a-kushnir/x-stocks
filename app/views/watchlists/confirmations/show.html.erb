@@ -1,0 +1,6 @@
+<% @page_title = t('watchlists.confirmation.delete_watchlist') %>
+
+<%= turbo_frame_tag 'delete_watchlist' do %>
+  <%= render ConfirmationComponent.new(title: t('watchlists.confirmation.delete_watchlist'), description: t('watchlists.confirmation.action_cannot_be_undone'),
+                                       confirm: [ t('watchlists.confirmation.confirm'), watchlist_path(params[:id]), method: :delete, data: { turbo: false } ], cancel: t('watchlists.confirmation.cancel')) %>
+<% end %>

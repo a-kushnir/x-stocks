@@ -226,6 +226,11 @@ en:
     pages:
       watchlists: 'Watchlists'
       new_watchlist: 'New Watchlist'
+    confirmation:
+      delete_watchlist: 'Delete Watchlist?'
+      action_cannot_be_undone: 'Deleting a watchlist will permanently remove it from your account. This action cannot be undone.'
+      confirm: 'Yes, Delete Watchlist'
+      cancel: 'No, Keep Watchlist'
     columns:
       name: 'Name'
       stocks: 'Stocks'

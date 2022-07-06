@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     resources :watchlists, only: [:create], module: :stocks
   end
 
+  namespace :watchlists do
+    resources :confirmations, only: %i[show]
+  end
   resources :watchlists
 
   namespace :positions do

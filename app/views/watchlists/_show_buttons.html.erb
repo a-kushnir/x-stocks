@@ -2,10 +2,11 @@
   <%= link_to back_url, class: 'btn btn-link mr-2' do %>
     <%= inline_svg('svg/arrow-left.svg', size: '24*24') %> <%= t('buttons.back') %>
   <% end %>
-  <%= link_to edit_watchlist_path(@watchlist), class: 'btn btn-icon btn-secondary-outline mr-1', data: { turbo: false } do %>
+  <%= link_to edit_watchlist_path(@watchlist), class: 'btn btn-icon btn-secondary-outline mr-1', target: '_top' do %>
     <%= inline_svg('svg/square-edit-outline', size: '24*24') %>
   <% end %>
-  <%= button_to watchlist_path(@watchlist), method: :delete, class: 'btn btn-icon btn-danger-outline', data: { confirm: "Are you sure you want to delete #{@stock}?" }, form: { style: 'display: inline-block;', data: { turbo: false }} do %>
+  <%= link_to watchlists_confirmation_path(@watchlist), class: 'btn btn-icon btn-danger-outline', data: { turbo_frame: 'delete_watchlist' } do %>
     <%= inline_svg('svg/trash-can-outline', size: '24*24') %>
   <% end %>
+  <%= turbo_frame_tag 'delete_watchlist' %>
 </div>

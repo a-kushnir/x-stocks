@@ -26,7 +26,7 @@
           &.warning { @apply text-red-600 font-bold; }
         }
         td {
-          a { @apply text-blue-500 no-underline inline-block; }
+          &.link a { @apply text-blue-500 no-underline inline-block; }
         }
       }
     }

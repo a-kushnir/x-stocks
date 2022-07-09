@@ -245,3 +245,10 @@ en:
     processing: 'Processing'
     processing_record: "Processing %{record} (%{index} out of %{count})"
     complete: 'Complete'
+    columns:
+      service: 'Service'
+      schedule: 'Schedule'
+      status: 'Status'
+      last_run: 'Last Run'
+      arguments: 'Arguments'
+      actions: 'Actions'

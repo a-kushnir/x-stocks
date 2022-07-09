@@ -21,7 +21,9 @@ module DataTable
         link_to(name, url, options)
       end
 
-      def style(_value); end
+      def style(_value)
+        'link'
+      end
     end
   end
 end

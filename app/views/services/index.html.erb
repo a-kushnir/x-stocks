@@ -6,12 +6,12 @@
       <table>
   <thead>
   <tr>
-    <th>Service</th>
-    <th>Schedule</th>
-    <th>Status</th>
-    <th>Last Run</th>
-    <th class="no-sort no-search">Arguments</th>
-    <th class="no-sort no-search">Actions</th>
+    <th><%= t('services.columns.service') %></th>
+    <th><%= t('services.columns.schedule') %></th>
+    <th><%= t('services.columns.status') %></th>
+    <th><%= t('services.columns.last_run') %></th>
+    <th><%= t('services.columns.arguments') %></th>
+    <th><%= t('services.columns.actions') %></th>
   </tr>
   </thead>
 
@@ -25,14 +25,12 @@
       <td>
         <%= job.name %>
         <% job.tags.sort.each do |tag| %>
-          <%= link_to(tag, services_path(tag: tag), class: 'tag tag-blue mb-0', style: 'color: rgb(29, 78, 216)') %>
+          <%= link_to(tag, services_path(tag: tag), class: 'tag tag-blue mb-0') %>
         <% end %>
       </td>
-      <td><%= job.schedule %></td>
-      <% locked_at = service&.locked_at %>
-      <td><%= service ? (locked_at ? "Started #{time_ago_in_words locked_at} ago" : "Paused") : 'Paused' %></td>
-      <% last_run_at = service&.last_run_at %>
-      <td><%= (last_run_at ? "#{time_ago_in_words last_run_at} ago" : "never").capitalize %></td>
+      <td><%= job.schedule || '-' %></td>
+      <td><%= service&.locked_at ? "Started #{time_ago_in_words service&.locked_at} ago" : '-' %></td>
+      <td><%= service&.last_run_at ? "#{time_ago_in_words service&.last_run_at} ago".capitalize : '-' %></td>
       <td>
         <%= form_tag(run_service_path(job.lookup_code), multipart: true, id: "form_#{job.lookup_code}") do %>
           <% Hash(job.arguments).each do |name, input| %>
@@ -54,7 +52,7 @@
         <% end %>
       </td>
       <td>
-        <%= button_tag class: 'btn btn-sm btn-secondary text-gray-900', data: { controller: 'element', action: 'click->service#start click->element#scrollTo', element_scroll_target: 'output-container' }, form: "form_#{job.lookup_code}" do %>
+        <%= button_tag class: 'btn btn-sm btn-primary', data: { controller: 'element', action: 'click->service#start click->element#scrollTo', element_scroll_target: 'output-container' }, form: "form_#{job.lookup_code}" do %>
           Start <%= inline_svg('svg/caret-right', size: '14*18', class: 'mb-0.5') %>
         <% end %>
 

@@ -1,9 +1,12 @@
 .tag {
-  @apply text-xs inline-flex items-center font-bold px-3 py-1 rounded-full mb-1;
+  @apply text-xs inline-flex items-center font-bold px-3 rounded-full mb-1 border;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
   svg { @apply mr-1; }
-  &.tag-blue { @apply bg-blue-200 text-blue-700; }
-  &.tag-red { @apply bg-red-200 text-red-700; }
-  &.tag-green { @apply bg-green-200 text-green-700; }
-  &.tag-orange { @apply bg-orange-200 text-orange-700; }
-  &.tag-gray { @apply bg-gray-200 text-gray-700; }
+  &.tag-blue { @apply bg-blue-200 text-blue-700 border-blue-300; }
+  &.tag-red { @apply bg-red-200 text-red-700 border-red-300; }
+  &.tag-green { @apply bg-green-200 text-green-700  border-green-300; }
+  &.tag-orange { @apply bg-orange-200 text-orange-700 border-orange-300; }
+  &.tag-gray { @apply bg-gray-200 text-gray-700 border-gray-300; }
 }

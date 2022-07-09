@@ -1,0 +1,13 @@
+<%= t('stocks.pages.stocks') %>
+<% if @tag %>
+<small class="align-top">
+  <span class="tag tag-blue border border-blue-300 normal-case" style="padding: 0;">
+    <span style="padding: 4px 6px 4px 12px;"><%= @tag %></span>
+    <%= link_to stocks_path, class: 'inline-block pl-0.5 pr-0.5 pb-0.5 border-left border-l border-blue-300' do %>
+      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    <% end %>
+  </span>
+</small>
+<% end %>

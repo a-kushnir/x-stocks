@@ -1,5 +1,5 @@
 .tag {
-  @apply text-xs inline-flex items-center font-bold uppercase px-3 py-1 rounded-full mb-1;
+  @apply text-xs inline-flex items-center font-bold px-3 py-1 rounded-full mb-1;
   svg { @apply mr-1; }
   &.tag-blue { @apply bg-blue-200 text-blue-700; }
   &.tag-red { @apply bg-red-200 text-red-700; }

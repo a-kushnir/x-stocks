@@ -1,5 +1,4 @@
 <% if @stock.taxes.present? %>
-  <div>
   <% XStocks::Stock::Taxes::TAXES.each do |tax_code, tax_data| %>
     <% next unless @stock.taxes.include?(tax_code.to_s) %>
     <% tax_url, tax_svg, tax_style = tax_data %>
@@ -12,5 +11,4 @@
       <% end %>
     </div>
   <% end %>
-  </div>
 <% end %>

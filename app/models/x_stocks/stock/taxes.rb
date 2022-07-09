@@ -34,7 +34,7 @@ module XStocks
 
       def est_annual_dividend_taxed(user)
         after_tax_rate = after_tax_rate(user)
-        after_tax_rate ? ar_stock.est_annual_dividend * after_tax_rate : nil
+        after_tax_rate && ar_stock.est_annual_dividend ? ar_stock.est_annual_dividend * after_tax_rate : nil
       end
 
       def est_annual_dividend_taxed_pct(user)

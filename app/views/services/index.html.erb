@@ -1,11 +1,5 @@
 <div class="datatable">
-  <h2 class="text-2xl uppercase mb-6">Services</h2>
-
-<% if @tag %>
-  <span class="float-left text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1" style="margin-top: 6px;"><%= @tag %>
-    <a href="/services" class="pl-1 text-red-400">×</a>
-  </span>
-<% end %>
+  <h2 class="text-2xl uppercase mb-6"><%= render partial: 'header' %></h2>
 
   <div class="datatable-container">
     <div class="datatable-viewport">
@@ -31,7 +25,7 @@
       <td>
         <%= job.name %>
         <% job.tags.sort.each do |tag| %>
-          <%= link_to(tag, services_path(tag: tag), class: 'text-xs w-auto font-bold leading-sm uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full mb-1') %>
+          <%= link_to(tag, services_path(tag: tag), class: 'tag tag-blue mb-0', style: 'color: rgb(29, 78, 216)') %>
         <% end %>
       </td>
       <td><%= job.schedule %></td>

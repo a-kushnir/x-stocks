@@ -240,6 +240,8 @@ en:
       name: 'Name'
       stocks: 'Stocks'
   services:
+    pages:
+      services: 'Services'
     processing: 'Processing'
     processing_record: "Processing %{record} (%{index} out of %{count})"
     complete: 'Complete'

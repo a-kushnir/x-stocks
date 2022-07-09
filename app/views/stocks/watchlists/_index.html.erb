@@ -2,7 +2,7 @@
 <% if user_watchlists.any? %>
   <% watchlists = user_watchlists.select { |watchlist| (watchlist.symbols || []).include?(@stock.symbol) } %>
 
-  <turbo-frame id="<%= dom_id(@stock, :watchlists) %>" class="inline-block" data-controller="class event" data-action="click@window->class#set touchend@window->class#set">
+  <turbo-frame id="<%= dom_id(@stock, :watchlists) %>" class="inline-block" data-controller="class event" data-action="click@window->class#set">
     <a href="#" class="<%= class_names('text-amber-500': watchlists.any?, 'text-zinc-500': watchlists.none?) %>"
        data-action="click->class#toggle click->event#cancel">
       <%= inline_svg('svg/bookmark-star', size: '40*40') %>

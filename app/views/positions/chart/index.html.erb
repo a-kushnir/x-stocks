@@ -1,9 +1,8 @@
-<div class="w-full mx-auto bg-white shadow-md rounded px-2 md:px-8 pt-3 md:pt-6 pb-3">
+<div class="section">
   <div class="flex space-x-2 block relative float-right">
     <%= render partial: 'positions/formats', locals: { selected: 'chart' } %>
   </div>
-
-  <h2 class="text-2xl uppercase mb-6">My Positions</h2>
+  <h3><%= t('positions.pages.portfolio') %></h3>
 
   <div class="flex flex-col lg:flex-row justify-center space-x-0 lg:space-x-8 space-y-4 lg:space-y-0 mb-6">
     <div class="shrink grow-0">

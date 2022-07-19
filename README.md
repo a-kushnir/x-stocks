@@ -135,6 +135,16 @@ Learn more about environment variables:
 
 See [db/seeds/users.rb](https://github.com/a-kushnir/x-stocks/blob/main/db/seeds/users.rb) for default credentials.
 
+# Contributors
+
+[(Back to top)](#table-of-contents)
+
+<img src="https://user-images.githubusercontent.com/1454297/95297896-6a53ce00-0838-11eb-85b0-e7f4a2693991.png" align="left" alt="David's Photo" title="David's Photo" height="70" />
+
+**David Birukovich**<br>
+Design, QA<br>
+<br>
+
 # License
 
 [(Back to top)](#table-of-contents)

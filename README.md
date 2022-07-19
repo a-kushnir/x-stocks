@@ -38,24 +38,24 @@ xStock is a website that allows to gather and analyze stock information from mul
 ## Home
 News, vital market information with links to Sceeners and other important pages.
 
-![home-page](https://user-images.githubusercontent.com/1454297/92982276-a58df780-f45a-11ea-897a-34c22b7cb71f.png)
+![home-page](https://user-images.githubusercontent.com/1454297/179772085-f1a05356-bb7a-435d-afa4-c68b83e0317b.png)
 
 ## Stock
 All gathered information about a single stock.
 
-![stock-information](https://user-images.githubusercontent.com/1454297/109260607-b12c6b00-77bb-11eb-86e1-7c22afa8389c.png)
+![stock-information](https://user-images.githubusercontent.com/1454297/179772438-093d7d4e-693a-4994-96b7-a0423df9b2af.png)
 
 ## Portfolio
 All gathered information about user portfolio. Information can be presented in Table or Chart mode or exported to Excel format.
 
-![positions-table](https://user-images.githubusercontent.com/1454297/92982317-dff79480-f45a-11ea-83a3-55d0abec70e3.png)
-![positions-charts](https://user-images.githubusercontent.com/1454297/92982319-e259ee80-f45a-11ea-9744-69176ec46e09.png)
+![positions-table](https://user-images.githubusercontent.com/1454297/179772654-02b43282-c4b0-4028-a0bb-fb51cfc5bcf1.png)
+![positions-charts](https://user-images.githubusercontent.com/1454297/179772917-bcea44d1-aa35-480d-9f69-8a656b897f85.png)
 
 ## Dividends
 All gathered information about user dividends. Information can be presented in Table or Chart mode or exported to Excel format.
 
-![divident-table](https://user-images.githubusercontent.com/1454297/92982334-f30a6480-f45a-11ea-9ce7-9855bd6fd86a.png)
-![divident-charts](https://user-images.githubusercontent.com/1454297/92982335-f4d42800-f45a-11ea-86ca-3b1a607eefe9.png)
+![divident-table](https://user-images.githubusercontent.com/1454297/179773148-9be67d15-484b-4b19-8035-e8cc69b0a551.png)
+![divident-charts](https://user-images.githubusercontent.com/1454297/179773205-983cd219-2688-4d64-92cf-6854031ee897.png)
 
 ## API Documentation
 The project has API that allows retrieving information about stocks, exhanges, and user portfolio. API Key and the documentation are available at My Profile page.

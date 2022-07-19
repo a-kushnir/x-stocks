@@ -12,7 +12,7 @@ gem 'importmap-rails', '~> 1.0'
 gem 'net-http'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '>= 5.6.2'
-gem 'rails', '>= 7.0.2.2'
+gem 'rails', '>= 7.0.3'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'turbo-rails', '~> 1.0'
@@ -20,12 +20,12 @@ gem 'validates_serialized'
 gem 'view_component', '>= 2.50'
 
 group :development do
+  gem 'css_class_duplicates', require: false
   gem 'rubocop', require: false
   gem 'rubocop-flexport', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'css_class_duplicates', require: false
 end
 
 group :test do

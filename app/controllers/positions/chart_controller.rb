@@ -9,7 +9,7 @@ module Positions
       @positions = positions.to_a
       @stocks_by_id = XStocks::Stock.find_all(id: @positions.map(&:stock_id)).index_by(&:id)
 
-      @page_title = 'My Positions'
+      @page_title = t('positions.pages.portfolio')
       @page_menu_item = :positions
     end
 

@@ -15,7 +15,7 @@ module Dividends
       @positions = @positions.to_a
       @data, @summary = data(@positions)
 
-      @page_title = 'My Dividends'
+      @page_title = t('dividends.pages.dividends')
       @page_menu_item = :dividends
     end
 

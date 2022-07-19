@@ -41,18 +41,18 @@ News, vital market information with links to Sceeners and other important pages.
 ![home-page](https://user-images.githubusercontent.com/1454297/179772085-f1a05356-bb7a-435d-afa4-c68b83e0317b.png)
 
 ## Stock
-All gathered information about a single stock.
+Shows gathered information about a single stock.
 
 ![stock-information](https://user-images.githubusercontent.com/1454297/179772438-093d7d4e-693a-4994-96b7-a0423df9b2af.png)
 
 ## Portfolio
-All gathered information about user portfolio. Information can be presented in Table or Chart mode or exported to Excel format.
+Shows user's portfolio. Information can be presented in Table or Chart mode or exported to Excel format.
 
 ![positions-table](https://user-images.githubusercontent.com/1454297/179772654-02b43282-c4b0-4028-a0bb-fb51cfc5bcf1.png)
 ![positions-charts](https://user-images.githubusercontent.com/1454297/179774298-a2ddd4d4-0a5a-4805-96d8-daf1b9389aef.png)
 
 ## Dividends
-All gathered information about user dividends. Information can be presented in Table or Chart mode or exported to Excel format.
+Shows user's dividends. Information can be presented in Table or Chart mode or exported to Excel format.
 
 ![divident-table](https://user-images.githubusercontent.com/1454297/179773148-9be67d15-484b-4b19-8035-e8cc69b0a551.png)
 ![divident-charts](https://user-images.githubusercontent.com/1454297/179774247-30912439-e0bd-4829-bbc0-61496fce84f2.png)

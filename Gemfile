@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
 
-ruby '2.7.5'
+ruby '3.1.2'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'hashid-rails'
@@ -16,10 +16,12 @@ gem 'rails', '>= 7.0.3'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'turbo-rails', '~> 1.0'
+gem 'tzinfo-data'
 gem 'validates_serialized'
 gem 'view_component', '>= 2.50'
 
 group :development do
+  gem 'capistrano', '~> 3.17', require: false
   gem 'css_class_duplicates', require: false
   gem 'rubocop', require: false
   gem 'rubocop-flexport', require: false
@@ -47,7 +49,7 @@ gem 'inline_svg'
 gem 'nokogiri'
 gem 'pagy'
 
-gem 'grape'
+gem 'grape', '>= 1.6.2'
 gem 'grape-entity'
 gem 'grape-swagger'
 gem 'grape-swagger-entity'

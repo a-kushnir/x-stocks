@@ -23,6 +23,7 @@ gem 'view_component', '>= 2.50'
 group :development do
   gem 'capistrano', '~> 3.17', require: false
   gem 'capistrano-rvm', require: false
+  gem 'capistrano-rails', require: false
   gem 'css_class_duplicates', require: false
   gem 'rubocop', require: false
   gem 'rubocop-flexport', require: false

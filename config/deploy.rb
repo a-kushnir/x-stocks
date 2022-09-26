@@ -8,6 +8,14 @@ set :repo_url, 'https://github.com/a-kushnir/x-stocks'
 set :branch, :main
 set :deploy_to, '/var/www/x-stocks'
 
+# RVM
+set :rvm_ruby_string, :local
+
+# Migrations
+set :migration_role, :db
+set :migration_servers, -> { primary(fetch(:migration_role)) }
+set :migration_command, 'db:migrate'
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 

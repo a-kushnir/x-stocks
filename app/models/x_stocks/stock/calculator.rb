@@ -13,7 +13,7 @@ module XStocks
         ar_stock.price_change_pct = safe_exec { ar_stock.price_change / ar_stock.prev_close_price * 100 }
         ar_stock.market_capitalization = safe_exec { ar_stock.outstanding_shares * ar_stock.current_price }
         ar_stock.pe_ratio_ttm = safe_exec { ar_stock.current_price / ar_stock.eps_ttm }
-        ar_stock.yahoo_discount = safe_exec { (ar_stock.yahoo_fair_price / ar_stock.current_price - 1) * 100 }
+        ar_stock.yahoo_discount = safe_exec { ((ar_stock.yahoo_fair_price / ar_stock.current_price) - 1) * 100 }
 
         calculate_stock_dividends
       end

@@ -12,7 +12,7 @@ module XStocks
         XStocks::Stock::Lists::Watchlist
       ].freeze
 
-      INDEX = LISTS.map { |list| [list::TYPE, list] }.to_h.freeze
+      INDEX = LISTS.to_h { |list| [list::TYPE, list] }.freeze
 
       def name
         'Update stock list information'

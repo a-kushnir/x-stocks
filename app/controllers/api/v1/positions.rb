@@ -27,8 +27,8 @@ module API
           end
           portfolio.gain_loss_pct = begin
             (portfolio.gain_loss / portfolio.total_cost).round(4) * 100
-                                    rescue StandardError
-                                      nil
+          rescue StandardError
+            nil
           end
 
           present portfolio, with: API::Entities::Portfolio, market_value: portfolio.market_value

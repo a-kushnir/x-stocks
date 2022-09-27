@@ -25,7 +25,7 @@ module DataTable
 
       columns.each do |column|
         visible = params[:columns] ? params[:columns].include?(column.code) : column.default
-        column.instance_variable_set('@visible', visible)
+        column.instance_variable_set(:@visible, visible)
       end
 
       duplicates = columns.group_by(&:code).map { |code, columns| code if columns.size > 1 }.compact

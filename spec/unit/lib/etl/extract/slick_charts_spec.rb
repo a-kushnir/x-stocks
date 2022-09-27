@@ -17,7 +17,7 @@ describe Etl::Extract::SlickCharts do
     let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/slick_chart_sp500.html") }
 
     it 'returns an array' do
-      expect(extractor.sp500).to be_kind_of(Array)
+      expect(extractor.sp500).to be_a(Array)
     end
 
     it 'returns 505 items' do
@@ -39,7 +39,7 @@ describe Etl::Extract::SlickCharts do
     let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/slick_chart_nasdaq100.html") }
 
     it 'returns an array' do
-      expect(extractor.nasdaq100).to be_kind_of(Array)
+      expect(extractor.nasdaq100).to be_a(Array)
     end
 
     it 'returns 102 items' do
@@ -61,7 +61,7 @@ describe Etl::Extract::SlickCharts do
     let(:body_html) { File.read("#{File.dirname(__FILE__)}/examples/slick_chart_dowjones.html") }
 
     it 'returns an array' do
-      expect(extractor.dow_jones).to be_kind_of(Array)
+      expect(extractor.dow_jones).to be_a(Array)
     end
 
     it 'returns 30 items' do

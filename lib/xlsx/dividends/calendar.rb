@@ -23,7 +23,7 @@ module XLSX
           styles.generate(sheet)
 
           div = ::Dividend.new
-          months = Array.new(12, 0.to_d)
+          months = Array.new(12, BigDecimal('0'))
 
           sheet.add_row header_row(div.months), style: header_styles
 

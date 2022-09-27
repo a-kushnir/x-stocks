@@ -151,7 +151,7 @@ module Etl
 
         value = total = 0
         rec_details.each do |_, data|
-          value += 1 * data[0] + 2 * data[1] + 3 * data[2] + 4 * data[3] + 5 * data[4]
+          value += (1 * data[0]) + (2 * data[1]) + (3 * data[2]) + (4 * data[3]) + (5 * data[4])
           total += data[0] + data[1] + data[2] + data[3] + data[4]
         end
 

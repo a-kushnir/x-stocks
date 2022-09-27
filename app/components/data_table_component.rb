@@ -35,7 +35,7 @@ class DataTableComponent < ::ViewComponent::Base
 
   def request_path(params = {})
     uri = URI(request.path)
-    params = Hash[URI.decode_www_form(uri.query || '')].merge(params)
+    params = URI.decode_www_form(uri.query || '').to_h.merge(params)
     uri.query = URI.encode_www_form(params)
     uri.to_s
   end

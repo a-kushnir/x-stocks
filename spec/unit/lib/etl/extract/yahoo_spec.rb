@@ -29,7 +29,7 @@ describe Etl::Extract::Yahoo do
 
   describe '#summary' do
     it 'returns a hash' do
-      expect(extractor.summary(symbol)).to be_kind_of(Hash)
+      expect(extractor.summary(symbol)).to be_a(Hash)
     end
 
     it 'returns a hash with 2 keys' do

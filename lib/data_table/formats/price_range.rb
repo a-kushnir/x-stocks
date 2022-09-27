@@ -19,7 +19,7 @@ module DataTable
 
         points = [current, current - change].sort
         progress1 = Math.inv_lerp(min, max, points[0]) * 100
-        progress2 = Math.inv_lerp(min, max, points[1]) * 100 - progress1
+        progress2 = (Math.inv_lerp(min, max, points[1]) * 100) - progress1
         progress2 = 2 if progress2 < 2 # Min width is 2%
         css_class = change.negative? ? 'negative' : 'positive'
 

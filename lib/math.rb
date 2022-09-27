@@ -10,7 +10,7 @@ module Math
   def self.lerp(min, max, value)
     value = 0 if value.negative?
     value = 1 if value > 1
-    min + (max - min) * value.to_f
+    min + ((max - min) * value.to_f)
   end
 
   def self.inv_lerp(min, max, value)
@@ -26,6 +26,6 @@ module Math
   end
 
   def self.moving_average(array, length, precision)
-    array.each_cons(length).map { |e| e.reduce(&:+).fdiv(length).round(precision) }
+    array.each_cons(length).map { |e| e.sum.fdiv(length).round(precision) }
   end
 end

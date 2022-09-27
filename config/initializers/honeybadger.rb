@@ -6,5 +6,5 @@ require 'honeybadger'
   config.api_key = ENV['HONEYBADGER_API_KEY'].presence
   config.send_data_at_exit = false
   config.env = Rails.env
-  config.report_data = (config.api_key && Rails.env.production? ? true : false)
+  config.report_data = (config.api_key && Rails.env.production?)
 end

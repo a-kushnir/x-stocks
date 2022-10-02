@@ -2,7 +2,7 @@
 
 # bundle exec cap production deploy
 
-server 'xstocks.tk', user: 'deploy', roles: %w[app db web], my_property: :my_value
+server 'xstocks.tk', user: 'deploy', roles: %w[app db web]
 
 set :ssh_options, {
   forward_agent: false,

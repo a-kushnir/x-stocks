@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}" }
 ruby '3.1.2'
 
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'dotenv'
 gem 'hashid-rails'
 gem 'honeybadger', '~> 4.0'
 gem 'importmap-rails', '~> 1.0'

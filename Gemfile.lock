@@ -139,6 +139,7 @@ GEM
     diff-lcs (1.4.4)
     digest (3.1.0)
     docile (1.3.4)
+    dotenv (2.8.1)
     dry-container (0.11.0)
       concurrent-ruby (~> 1.0)
     dry-core (0.8.1)
@@ -403,6 +404,7 @@ DEPENDENCIES
   caxlsx (>= 3.1.0)
   css_class_duplicates
   devise
+  dotenv
   grape (>= 1.6.2)
   grape-entity
   grape-swagger

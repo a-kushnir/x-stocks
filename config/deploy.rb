@@ -17,7 +17,7 @@ set :migration_servers, -> { primary(fetch(:migration_role)) }
 set :migration_command, 'db:migrate'
 
 append :linked_files, 'config/credentials.yml.enc', 'config/database.yml', 'config/master.key', 'config/secrets.yml'
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"
+append :linked_dirs, 'tmp/pids', 'tmp/sockets'
 
 set :keep_releases, 5
 

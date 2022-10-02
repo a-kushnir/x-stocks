@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/a-kushnir/#{repo}" }
+git_source(:github) { |repo| "https://github.com/#{repo}" }
 
 ruby '3.1.2'
 
@@ -22,6 +22,7 @@ gem 'view_component', '>= 2.50'
 
 group :development do
   gem 'capistrano', '~> 3.17', require: false
+  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'css_class_duplicates', require: false
@@ -36,7 +37,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'rspec', require: false
   gem 'rspec-rails', require: false
-  gem 'scrutinizer-ocular', require: false, github: 'ocular.rb'
+  gem 'scrutinizer-ocular', require: false, github: 'a-kushnir/ocular.rb'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'
@@ -57,7 +58,7 @@ gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 
-gem 'swagger_ui_engine', github: 'swagger_ui_engine'
+gem 'swagger_ui_engine', github: 'a-kushnir/swagger_ui_engine'
 
 # NOTE: FFI is a required pre-requisite for Windows or posix_spawn support in the ChildProcess gem. Ensure the `ffi` gem is installed
 gem 'ffi' if RUBY_PLATFORM.match?(/x64-mingw32/i)

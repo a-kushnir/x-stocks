@@ -12,6 +12,15 @@ GIT
     swagger_ui_engine (1.1.4)
       rails (>= 7.0)
 
+GIT
+  remote: https://github.com/seuros/capistrano-puma
+  revision: 2061c837c3e991b48289820f24dd3795a04d9fd8
+  specs:
+    capistrano3-puma (6.0.0.alpha.2)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (>= 5.1, < 6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -389,6 +398,7 @@ DEPENDENCIES
   capistrano (~> 3.17)
   capistrano-rails
   capistrano-rvm
+  capistrano3-puma!
   capybara (>= 2.15)
   caxlsx (>= 3.1.0)
   css_class_duplicates

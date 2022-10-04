@@ -2,6 +2,7 @@
 
 module Positions
   # Table representation of user portfolio positions
+  # rubocop:disable Metrics/ClassLength
   class TableController < ApplicationController
     memorize_params :datatable_positions, only: [:index] do
       params.permit(:items, columns: [])
@@ -97,6 +98,7 @@ module Positions
       @table.footers << footer(summary)
     end
 
+    # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     def row(stock, position, div_suspended, total_market_value)
       diversity = position.market_value && total_market_value ? (position.market_value / total_market_value * 100).round(2) : nil
       flag = CountryFlag.new
@@ -147,6 +149,7 @@ module Positions
         [stock.metascore, stock.meta_score_details]
       ]
     end
+    # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     def footer(summary)
       [
@@ -245,4 +248,5 @@ module Positions
                     })
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

@@ -52,7 +52,7 @@ module API
           stock = XStocks::Stock.find_by_symbol(params[:symbol])
           error!('Unknown Symbol', 404) unless stock
           begin
-            Etl::Refresh::Finnhub.new.hourly_one_stock!(stock)
+            Etl::Refresh::Finnhub.new(nil).hourly_one_stock!(stock)
           rescue StandardError
             nil
           end

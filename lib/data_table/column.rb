@@ -4,11 +4,13 @@ module DataTable
   # Represent a data table column
   class Column
     ALIGNS = %w[left center right].freeze
+    # rubocop:disable Style/MapToHash
     FORMATS = DataTable::Formats
               .constants
               .map { |const| DataTable::Formats.const_get(const) }
               .to_h { |const| [const.name.demodulize.underscore, const.new] }
               .freeze
+    # rubocop:enable Style/MapToHash
 
     attr_reader :code, :label, :align, :sorting, :default, :formatter, :visible
 

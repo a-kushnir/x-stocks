@@ -20,10 +20,11 @@ module XStocks
             user_tax = user_taxes[tax_code.to_s].presence
             user_tax.to_f if stock_taxes.include?(tax_code.to_s) && user_tax
           end.compact
-          return nil if taxes.blank?
 
-          avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
-          avg_taxes / 100
+          if taxes.present?
+            avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
+            avg_taxes / 100
+          end
         end
       end
 

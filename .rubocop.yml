@@ -27,3 +27,8 @@ Style/Documentation:
   Exclude:
     - db/migrate/*
     - test/**/*
+
+Style/OpenStructUse:
+  Exclude:
+    - spec/**/*
+    - test/**/*

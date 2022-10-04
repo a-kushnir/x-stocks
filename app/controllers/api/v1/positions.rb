@@ -15,7 +15,7 @@ module API
                { code: 401, message: 'Unauthorized' }
              ]
         get do
-          portfolio = OpenStruct.new(total_cost: 0, market_value: 0, gain_loss: 0, gain_loss_pct: 0, est_annual_income: 0, positions: [])
+          portfolio = Struct.new(:total_cost, :market_value, :gain_loss, :gain_loss_pct, :est_annual_income, :positions).new(0, 0, 0, 0, 0, [])
 
           positions = XStocks::AR::Position.where(user: current_user).where.not(shares: nil).all
           positions.each do |position|

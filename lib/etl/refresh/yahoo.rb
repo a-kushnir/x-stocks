@@ -49,7 +49,7 @@ module Etl
 
       def scan_symbol(symbol)
         json = Etl::Extract::Yahoo.new(loader).summary(symbol)
-        stock = OpenStruct.new(symbol: symbol)
+        stock = XStocks::AR::Stock.new(symbol: symbol)
         Etl::Transform::Yahoo.new.summary(stock, json)
 
         row = [

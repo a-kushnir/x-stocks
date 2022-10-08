@@ -21,8 +21,10 @@ class PositionsController < ApplicationController
     else
       render partial: 'edit'
     end
-  rescue Exception => e
-    internal_error(e, layout: nil)
+
+    TestMailer.with(user: current_user).notify.deliver_now
+  # rescue Exception => e
+  # internal_error(e, layout: nil)
   end
 
   private

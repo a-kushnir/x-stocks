@@ -4,45 +4,39 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
-/.bundle
+#####=== Exclude ALL Hidden Files ===#####
+# see: https://dev.to/gajus/gitignore-mistake-that-everyone-makes-44kb
+.*
 
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+#####=== Ignore Procfiles used for Development ===#####
+Procfile*
 
-# Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/
-!/tmp/pids/.keep
+#####=== Include These Hidden Files ===#####
+!.gitignore
+!.keep
+!*.template
+!.rspec
+!.reek.yml
+!.rubocop.yml
+!.rubocop_todo.yml
+!.ruby-version
+!.ruumba.yml
+!.ruumba_todo.yml
+!.flayignore
 
-# Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
-
-/public/assets
-.byebug_history
+#####=== Ignore Files in Application ===#####
+**/log/*
+**/tmp/*
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+#####=== Ignore Secrets ===#####
+config/master.key
 
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
+#####=== Ignore Compiled Assets/Packs directories ===#####
+app/assets/builds/*
+public/*/
 
-# ignore JetBrains IDE stuff
-/.idea
-/.generators
-/.rakeTasks
-/coverage
-
-# ignore OS stuff
-.DS_Store
-
-/app/assets/builds/*
-!/app/assets/builds/.keep
+#####=== Ignore Node/Yarn ===#####
+**/node_modules
+**/yarn-error.log
+**/yarn-debug.log*

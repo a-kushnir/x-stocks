@@ -95,4 +95,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   MailerConfig.new.configure(config.action_mailer)
+  config.action_mailer.delivery_method = :smtp
 end

@@ -45,8 +45,7 @@ class MailerConfig
       domain: env['SMTP_DOMAIN'],
       authentication: :plain,
       user_name: env['SMTP_USER'],
-      password: env['SMTP_PASSWORD'],
-      enable_starttls_auto: true
+      password: env['SMTP_PASSWORD']
     }
   end
 

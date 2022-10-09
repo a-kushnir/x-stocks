@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     @layout = layout
 
     respond_to do |format|
+      format.turbo_stream { render template: '/errors/404', layout: nil, status: 404 }
       format.html { render template: '/errors/404', layout: layout, status: 404 }
       format.xlsx { render template: '/errors/404', layout: layout, status: 404, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 404 }
@@ -41,6 +42,7 @@ class ApplicationController < ActionController::Base
     @layout = layout
 
     respond_to do |format|
+      format.turbo_stream { render template: '/errors/500', layout: nil, status: 500 }
       format.html { render template: '/errors/500', layout: layout, status: 500 }
       format.xlsx { render template: '/errors/500', layout: layout, status: 500, formats: [:html], content_type: Mime[:html] }
       format.xml  { head 500 }

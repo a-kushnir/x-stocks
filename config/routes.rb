@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
   post '/data/refresh', to: 'data#refresh', as: 'data_refresh_url'
 
-  authenticate :user, lambda { |u| u.present? } do
+  authenticate :user, ->(u) { u.present? } do
     require 'sidekiq/web'
     require 'sidekiq/cron/web'
     mount Sidekiq::Web => '/sidekiq', as: :sidekiq

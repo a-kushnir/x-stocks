@@ -1,4 +1,4 @@
-<a href="http://x-stocks.herokuapp.com/">
+<a href="http://xstocks.tk/">
     <img src="https://raw.githubusercontent.com/a-kushnir/x-stocks/main/app/assets/images/favicon/favicon.svg" alt="xStocks logo" title="xStocks" align="right" height="60" />
 </a>
 
@@ -12,7 +12,7 @@
 [![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/a-kushnir/x-stocks/main)](https://img.shields.io/scrutinizer/coverage/g/a-kushnir/x-stocks/main)
 [![License](https://img.shields.io/github/license/a-kushnir/x-stocks)](https://img.shields.io/github/license/a-kushnir/x-stocks)
 
-[xStocks](http://x-stocks.herokuapp.com/) is a Stock Data Aggregator website
+[xStocks](http://xstocks.tk/) is a Stock Data Aggregator website
 
 # Table of contents
 
@@ -127,9 +127,7 @@ $ rails s
 
 ### Environment variables
 
-Learn more about environment variables:
-* [RubyMine](https://www.jetbrains.com/help/objc/add-environment-variables-and-program-arguments.html)
-* [Heroku](https://devcenter.heroku.com/articles/config-vars)
+Rename `.env.template` to `.env` and update its content, see [dotenv gem](https://github.com/bkeepers/dotenv) for more details
 
 ## Users
 
@@ -155,6 +153,6 @@ xStocks is under the MIT license. See the [LICENSE](https://github.com/a-kushnir
 
 [(Back to top)](#table-of-contents)
 
-* [Live version](http://x-stocks.herokuapp.com/) on Heroku
-* [API Documentation](http://x-stocks.herokuapp.com/api_docs) on Heroku
+* [Live version](http://xstocks.tk/)
+* [API Documentation](http://xstocks.tk/api_docs)
 * [Source code](https://github.com/a-kushnir/x-stocks)

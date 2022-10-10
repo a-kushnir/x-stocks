@@ -1,0 +1,5 @@
+x_stocks_demo_job:
+  cron: "*/5 * * * *" # every 5 minutes
+  class: "XStocks::DemoJob"
+  args:
+    1

@@ -19,12 +19,10 @@ class PositionsController < ApplicationController
     if XStocks::Position.new.save(@position)
       redirect_to action: 'show'
     else
-      render partial: 'edit'
+      render action: 'edit'
     end
 
-    TestMailer.with(user: current_user).notify.deliver_now
-  # rescue Exception => e
-  # internal_error(e, layout: nil)
+    XStocks::DemoJob.perform_async(current_user.id)
   end
 
   private

@@ -1,0 +1,88 @@
+<%
+  div_suspended = @stock.div_suspended?
+  div_change_pct = @stock.div_change_pct
+  prev_div_amount = @stock.prev_div_amount
+  next_div_amount = @stock.next_div_amount2
+  right_table = []
+
+  right_table << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(div_change_pct)}#{number_to_percentage(div_change_pct, precision: 1) } (#{number_to_currency(prev_div_amount, precision: dividend_precision(prev_div_amount))} &#8594 #{number_to_currency(next_div_amount, precision: dividend_precision(next_div_amount))})".html_safe, class: delta_class(div_change_pct) } if div_change_pct
+  if div_suspended
+    right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: t('stocks.summary.suspended'), class: 'text-danger' }
+  else
+    if @stock.est_annual_dividend_taxed(@user)
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield_bt'), value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield_at'), value: "#{number_to_currency(@stock.est_annual_dividend_taxed(@user))} (#{number_to_percentage(@stock.est_annual_dividend_taxed_pct(@user), precision: 2) })"}
+    else
+      right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend
+    end
+    right_table << { label: t('stocks.summary.dividend_growth_3y'), value: "#{change_icon(@stock.dividend_growth_3y)}#{number_to_percentage(@stock.dividend_growth_3y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_3y)} if @stock.dividend_growth_3y
+    right_table << { label: t('stocks.summary.dividend_growth_5y'), value: "#{change_icon(@stock.dividend_growth_5y)}#{number_to_percentage(@stock.dividend_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.dividend_growth_5y)} if @stock.dividend_growth_5y
+    right_table << { label: t('stocks.summary.years_of_dividend_growth'), value: @stock.dividend_growth_years } if @stock.dividend_growth_years
+  end
+  right_table << { label: t('stocks.summary.dividend_safety'), value: "#{number_with_precision(@stock.dividend_rating, precision: 1) } (#{safety_human(@stock.dividend_rating)})" } if @stock.dividend_rating
+  right_table << { label: t('stocks.summary.payout'), value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
+%>
+
+<table class="section-table mb-4">
+  <% right_table.each do |row| %>
+  <tr>
+    <td>
+      <%= row[:label] %>:
+      <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<% if @position&.shares.present? %>
+  <h3>Position</h3>
+  <table class="section-table mb-4">
+    <tr>
+      <td>
+        Shares:
+        <strong><%= number_with_precision(@position.shares, delimiter: ',', strip_insignificant_zeros: true) %></strong>
+      </td>
+    </tr>
+    <% if @position.est_annual_income %>
+      <tr>
+        <td>
+          <%= t('positions.attributes.annual_dividend') %>:
+          <strong class="<%= delta_class(div_change_pct) %>"><%= number_to_currency(@position.est_annual_income / next_div_amount * prev_div_amount) %> &#8594 <%= number_to_currency(@position.est_annual_income) %></strong>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<h3>Dividend History</h3>
+  <% if @stock.dividend_details.present? %>
+  <table class="section-table mb-4">
+    <thead>
+      <tr>
+        <th class="text-left">Pay Date</th>
+        <th class="text-left">Declared</th>
+        <th class="text-left">Ex-Date</th>
+        <th class="text-right">Amount</th>
+      </tr>
+    </thead>
+    <% @stock.dividend_details.reverse.first(12).each do |dividend| %>
+      <% payment_date, declared_date, ex_date, amount = dividend.values_at('payment_date', 'declared_date', 'ex_date', 'amount') %>
+      <tr>
+        <td>
+          <%= Date.parse(payment_date).strftime("%Y-%m-%d") if payment_date %>
+        </td>
+        <td>
+          <%= Date.parse(declared_date).strftime("%Y-%m-%d") if declared_date %>
+        </td>
+        <td>
+          <%= Date.parse(ex_date).strftime("%Y-%m-%d") if ex_date %>
+        </td>
+        <td class="text-right">
+          <%= number_to_currency(amount, precision: dividend_precision(amount)) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<a href="<%= stock_url(@stock.symbol) %>">Open <%= @stock.symbol %> on xStocks</a><br>

@@ -57,6 +57,24 @@ module XStocks
         true
       end
 
+      def prev_div_amount
+        details = periodic_dividend_details
+        size = details.size
+        return 0 if size < 2
+
+        details.dig(size - 2, 'amount')
+      end
+
+      def next_div_amount2
+        return 0 if div_suspended?
+
+        details = periodic_dividend_details
+        size = details.size
+        return 0 if size < 1
+
+        details.dig(size - 1, 'amount')
+      end
+
       def div_change_pct
         if div_suspended?
           -100

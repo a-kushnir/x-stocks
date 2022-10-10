@@ -42,11 +42,15 @@ a {
 .footer a { color: #9CA3AF; }
 .footer a:hover { color: #4B5563; }
 
+/* Colors */
 .bg-gray-200 { background-color: #E5E7EB; }
 .bg-white { background-color: #FFFFFF; }
 .text-blue-500 { color: #3B82F6; }
 .text-gray-300 { color: #D1D5DB; }
 .text-gray-400 { color: #9CA3AF; }
+.text-positive { color: #16A34A; }
+.text-neutral { color: #6B7280; }
+.text-negative { color: #DC2626; }
 
 .max-w-md { max-width: 28rem; /* 448px */ }
 
@@ -73,3 +77,18 @@ a {
 .align-middle { vertical-align: middle; }
 .text-center { text-align: center; }
 .float-right { float: right; }
+
+/* Table */
+table.section-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.section-table tr {
+  border-width: 0;
+  border-top-width: 1px;
+  border-color: #D1D5DB;
+  border-style: solid;
+}
+table.section-table tr:first-child { border-style: none; }
+table.section-table tr td { padding: 0.25rem; }
+table.section-table tr td strong { float: right; }

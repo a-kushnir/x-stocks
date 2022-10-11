@@ -4,77 +4,48 @@ module Etl
   module Transform
     # Transforms data extracted from polygon.io
     class Polygon
-      def initialize(stock_ar_class: XStocks::AR::Stock,
-                     dividend_frequencies: XStocks::Stock::Dividends::DIVIDEND_FREQUENCIES)
-        @stock_ar_class = stock_ar_class
-        @dividend_frequencies = dividend_frequencies
-      end
+      UNIQUE_KEY = %i[stock_id pay_date amount].freeze
 
       def dividends(stock, json)
         return if json&.dig('status') != 'OK'
 
-        details = json['results'].map do |row|
+        rows = json['results'].map do |row|
           {
-            'ex_date' => row['exDate'],
-            'payment_date' => row['paymentDate'],
-            'record_date' => row['recordDate'],
-            'declared_date' => row['declaredDate'],
-            'amount' => row['amount'].to_d
+            stock_id: stock.id,
+            declaration_date: date(row['declaration_date']),
+            ex_dividend_date: date(row['ex_dividend_date']),
+            record_date: date(row['record_date']),
+            pay_date: date(row['pay_date']),
+            dividend_type: dividend_type(row['dividend_type']),
+            amount: amount(row['cash_amount']),
+            frequency: row['frequency']
           }
         end
-        detect_div_frequency(details)
 
-        stock.dividend_details ||= []
-        stock.dividend_details += details
-        stock.dividend_details.uniq! { |row| row['payment_date'] }
-        stock.dividend_details.sort_by! { |row| row['payment_date'] }
-        stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
-        stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
-
-        last_div = stock.periodic_dividend_details.last
-        stock.dividend_frequency = last_div&.dig('frequency')
-        stock.dividend_frequency_num = dividend_frequencies[(stock.dividend_frequency || '').downcase]
-        stock.dividend_amount = last_div&.dig('amount')
-        stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
-
-        # TODO: Calc Next Div
-
-        stock.save
+        rows = filter_existing(stock, rows)
+        rows.map { |attributes| XStocks::AR::Dividend.create(attributes) }.any?
+        # TODO: Update Stock
       end
 
-      private
-
-      def detect_div_frequency(details)
-        dates = details.map { |detail| detail['ex_date'] }
-        periods = dates.each_cons(2).map { |a, b| (Date.parse(a) - Date.parse(b)).to_i }
-
-        frequencies = periods.map do |period|
-          dividend_frequencies.detect do |_name, freq|
-            range(365 / freq, 7).include?(period)
-          end&.first
-        end
-
-        frequency = frequencies.compact.group_by { |freq| freq }.max_by { |_, freq| freq.size }&.first
-
-        frequencies.each_with_index do |freq, index|
-          if freq == frequency
-            details[index]['frequency'] = freq
-            details[index + 1]['frequency'] = freq
-          end
-        end
-
-        details.each do |detail|
-          detail['frequency'] ||= 'unspecified'
-        end
-
-        details
+      def filter_existing(stock, rows)
+        existing_rows = XStocks::AR::Dividend.where(stock_id: stock.id).pluck(*UNIQUE_KEY)
+        rows.reject { |row| existing_rows.include?(row.values_at(*UNIQUE_KEY)) }
       end
 
-      def range(base, delta)
-        (base - delta)..(base + delta)
+      def date(value)
+        Date.parse(value)
       end
 
-      attr_reader :stock_ar_class, :dividend_frequencies
+      def dividend_type(value)
+        {
+          'CD' => XStocks::Dividends::DividendType::REGULAR,
+          'SC' => XStocks::Dividends::DividendType::SPECIAL
+        }.fetch(value)
+      end
+
+      def amount(value)
+        value.to_f.round(4)
+      end
     end
   end
 end

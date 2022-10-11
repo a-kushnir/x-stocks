@@ -15,9 +15,9 @@ module XStocks
 
       div_change_pct = @stock.div_change_pct
       @subject =
-        if div_change_pct < 0
+        if div_change_pct.negative?
           "Dividend Cut (#{@stock.symbol})"
-        elsif div_change_pct > 0
+        elsif div_change_pct.positive?
           "Dividend Hike (#{@stock.symbol})"
         else
           "Declared Dividend (#{@stock.symbol})"

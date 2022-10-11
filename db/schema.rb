@@ -10,16 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_10_203753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "configs", force: :cascade do |t|
     t.string "key", null: false
     t.text "value"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_configs_on_key", unique: true
+  end
+
+  create_table "dividends", force: :cascade do |t|
+    t.bigint "stock_id", null: false
+    t.date "declaration_date"
+    t.date "ex_dividend_date"
+    t.date "record_date"
+    t.date "pay_date"
+    t.string "dividend_type", limit: 16
+    t.decimal "amount", precision: 12, scale: 4
+    t.integer "frequency"
+    t.datetime "created_at", null: false
+    t.index ["stock_id", "pay_date"], name: "index_dividends_on_stock_id_and_pay_date"
   end
 
   create_table "exchanges", force: :cascade do |t|
@@ -31,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
     t.string "finnhub_code"
     t.string "tradingview_code"
     t.string "dividend_code"
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
   end
 
   create_table "positions", force: :cascade do |t|
@@ -49,15 +62,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
     t.integer "metascore"
     t.string "metascore_details"
     t.string "note"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "stop_loss_base", precision: 10, scale: 2
     t.decimal "stop_loss", precision: 10, scale: 2
     t.decimal "stop_loss_pct", precision: 10, scale: 2
     t.decimal "stop_loss_value", precision: 10, scale: 2
     t.decimal "stop_loss_gain_loss", precision: 10, scale: 2
     t.decimal "stop_loss_gain_loss_pct", precision: 10, scale: 2
-    t.datetime "remind_at", precision: nil
+    t.datetime "remind_at"
     t.index ["stock_id"], name: "index_positions_on_stock_id"
     t.index ["updated_at"], name: "index_positions_on_updated_at"
     t.index ["user_id", "stock_id"], name: "index_positions_on_user_id_and_stock_id", unique: true
@@ -66,8 +79,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
 
   create_table "services", force: :cascade do |t|
     t.string "key", null: false
-    t.datetime "locked_at", precision: nil
-    t.datetime "last_run_at", precision: nil
+    t.datetime "locked_at"
+    t.datetime "last_run_at"
     t.string "error"
     t.string "log"
     t.string "file_name"
@@ -148,8 +161,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
     t.boolean "dowjones"
     t.integer "metascore"
     t.string "metascore_details"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "yahoo_price_target"
     t.string "financials_yearly"
     t.string "financials_quarterly"
@@ -174,7 +187,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
     t.bigint "stock_id", null: false
     t.string "key", null: false
     t.string "name", null: false
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
     t.index ["key", "name", "stock_id"], name: "index_tags_on_key_and_name_and_stock_id", unique: true
     t.index ["stock_id"], name: "index_tags_on_stock_id"
   end
@@ -183,17 +196,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_045253) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at", precision: nil
-    t.datetime "last_sign_in_at", precision: nil
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "api_key"
     t.string "taxes"
+    t.boolean "dividend_notifications"
     t.index ["api_key"], name: "index_users_on_api_key", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

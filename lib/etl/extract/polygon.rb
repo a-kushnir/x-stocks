@@ -20,7 +20,7 @@ module Etl
       private
 
       def dividends_url(symbol)
-        "#{BASE_URL}/v2/reference/dividends/#{cgi.escape(symbol)}?apiKey=#{token}"
+        "#{BASE_URL}/v3/reference/dividends?ticker=#{cgi.escape(symbol)}&apiKey=#{token}"
       end
 
       attr_reader :data_loader, :token, :cgi

@@ -20,19 +20,22 @@ module Etl
       def try_token
         load_tokens!
 
+        result = nil
         success = false
         token = random_token!
+
         while token && !success
           begin
             result = yield token
             success = true
-            result
           rescue Exception
             disable_token(token)
             token = random_token!
             kernel.sleep(PAUSE)
           end
         end
+
+        result
       end
 
       def random_token

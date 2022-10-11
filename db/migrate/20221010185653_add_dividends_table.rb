@@ -9,6 +9,7 @@ class AddDividendsTable < ActiveRecord::Migration[7.0]
       t.date :record_date
       t.date :pay_date
       t.string :dividend_type, limit: 16
+      t.string :currency, limit: 3
       t.decimal :amount, precision: 12, scale: 4
       t.integer :frequency
       t.datetime :created_at, null: false

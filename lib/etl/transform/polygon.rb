@@ -6,7 +6,11 @@ module Etl
     class Polygon
       UNIQUE_KEY = %i[stock_id pay_date amount].freeze
 
-      def dividends(stock, json)
+      def initialize(stock)
+        @stock = stock
+      end
+
+      def dividends(json)
         return if json&.dig('status') != 'OK'
 
         rows = json['results'].map do |row|
@@ -17,19 +21,26 @@ module Etl
             record_date: date(row['record_date']),
             pay_date: date(row['pay_date']),
             dividend_type: dividend_type(row['dividend_type']),
+            currency: row['currency'],
             amount: amount(row['cash_amount']),
             frequency: row['frequency']
           }
         end
 
-        rows = filter_existing(stock, rows)
-        rows.map { |attributes| XStocks::AR::Dividend.create(attributes) }.any?
+        new_rows, existing_rows = filter(rows)
+        new_rows.map { |attributes| XStocks::AR::Dividend.create(attributes) }.any?
+
         # TODO: Update Stock
+
+        [new_rows, existing_rows]
       end
 
-      def filter_existing(stock, rows)
-        existing_rows = XStocks::AR::Dividend.where(stock_id: stock.id).pluck(*UNIQUE_KEY)
-        rows.reject { |row| existing_rows.include?(row.values_at(*UNIQUE_KEY)) }
+      def filter(rows)
+        rows.partition { |row| !existing_rows.include?(row.values_at(*UNIQUE_KEY)) }
+      end
+
+      def existing_rows
+        @existing_rows ||= XStocks::AR::Dividend.where(stock_id: stock.id).pluck(*UNIQUE_KEY)
       end
 
       def date(value)
@@ -46,6 +57,8 @@ module Etl
       def amount(value)
         value.to_f.round(4)
       end
+
+      attr_reader :stock
     end
   end
 end

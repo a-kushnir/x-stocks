@@ -10,26 +10,34 @@ module XStocks
 
     def perform(stock_symbol = random_stock_symbol)
       stock = XStocks::AR::Stock.find_by(symbol: stock_symbol)
-      updates = receive_update(stock)
-      notify(stock) if updates
+      dividends = receive_updates(stock)
+
+      ActiveRecord::Base.transaction do
+        dividends.each(&:save!)
+        update(stock) # TODO: Add to save callbacks
+        stock.save!
+      end
+
+      notify(stock) if dividends.any?
     end
 
-    def receive_update(stock)
-      updates = false
+    def receive_updates(stock)
+      updates = []
 
       token_store = Etl::Extract::TokenStore.new(Etl::Extract::Polygon::TOKEN_KEY, nil)
       transform = Etl::Transform::Polygon.new(stock)
 
       json = first_page(stock, token_store)
       new_rows, existing_rows = transform.dividends(json)
-      return updates if new_rows.nil?
+      return [] unless new_rows
 
-      updates = new_rows.any?
+      updates.concat(new_rows)
+
       while existing_rows.none? && (json = next_page(json, token_store))
         new_rows, existing_rows = transform.dividends(json)
-        return updates if new_rows.nil?
+        return [] unless new_rows
 
-        updates ||= new_rows.any?
+        updates.concat(new_rows)
       end
 
       updates
@@ -56,6 +64,15 @@ module XStocks
 
     def random_stock_symbol
       XStocks::AR::Stock.pluck(:symbol).sample
+    end
+
+    def update(stock)
+      recent_div = stock.dividends.regular.first
+      stock.dividend_frequency_num = recent_div&.frequency
+      stock.next_div_ex_date = recent_div&.ex_dividend_date
+      stock.next_div_payment_date = recent_div&.pay_date
+      stock.dividend_amount = recent_div&.amount
+      stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
     end
 
     def notify(stock)

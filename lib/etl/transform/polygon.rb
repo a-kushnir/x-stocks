@@ -28,9 +28,7 @@ module Etl
         end
 
         new_rows, existing_rows = filter(rows)
-        new_rows.map { |attributes| XStocks::AR::Dividend.create(attributes) }.any?
-
-        # TODO: Update Stock
+        new_rows.map! { |attributes| XStocks::AR::Dividend.new(attributes) }
 
         [new_rows, existing_rows]
       end

@@ -55,34 +55,25 @@
 <% end %>
 
 <h3>Dividend History</h3>
-  <% if @stock.dividend_details.present? %>
-  <table class="section-table mb-4">
-    <thead>
-      <tr>
-        <th class="text-left">Pay Date</th>
-        <th class="text-left">Declared</th>
-        <th class="text-left">Ex-Date</th>
-        <th class="text-right">Amount</th>
-      </tr>
-    </thead>
-    <% @stock.dividend_details.reverse.first(12).each do |dividend| %>
-      <% payment_date, declared_date, ex_date, amount = dividend.values_at('payment_date', 'declared_date', 'ex_date', 'amount') %>
-      <tr>
-        <td>
-          <%= Date.parse(payment_date).strftime("%Y-%m-%d") if payment_date %>
-        </td>
-        <td>
-          <%= Date.parse(declared_date).strftime("%Y-%m-%d") if declared_date %>
-        </td>
-        <td>
-          <%= Date.parse(ex_date).strftime("%Y-%m-%d") if ex_date %>
-        </td>
-        <td class="text-right">
-          <%= number_to_currency(amount, precision: dividend_precision(amount)) %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+<table class="section-table mb-4">
+  <thead>
+    <tr>
+      <th class="text-left">Pay Date</th>
+      <th class="text-left">Declared</th>
+      <th class="text-left">Ex-Date</th>
+      <th class="text-right">Amount</th>
+    </tr>
+  </thead>
+  <% @stock.dividends.first(12).each do |dividend| %>
+    <tr>
+      <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
+      <td><%= dividend.declaration_date&.strftime("%Y-%m-%d") %></td>
+      <td><%= dividend.ex_dividend_date&.strftime("%Y-%m-%d") %></td>
+      <td class="text-right">
+        <%= number_to_currency(dividend.amount, precision: dividend_precision(dividend.amount)) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 
 <a href="<%= stock_url(@stock.symbol) %>">Open <%= @stock.symbol %> on xStocks</a><br>

@@ -14,6 +14,8 @@ module Etl
         return if json&.dig('status') != 'OK'
 
         rows = json['results'].map do |row|
+          next unless row['pay_date']
+
           {
             stock_id: stock.id,
             declaration_date: date(row['declaration_date']),
@@ -25,7 +27,7 @@ module Etl
             amount: amount(row['cash_amount']),
             frequency: row['frequency']
           }
-        end
+        end.compact
 
         new_rows, existing_rows = filter(rows)
         new_rows.map! { |attributes| XStocks::AR::Dividend.new(attributes) }

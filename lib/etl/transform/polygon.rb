@@ -4,7 +4,7 @@ module Etl
   module Transform
     # Transforms data extracted from polygon.io
     class Polygon
-      UNIQUE_KEY = %i[stock_id pay_date amount].freeze
+      UNIQUE_KEY = %i[stock_id dividend_type ex_dividend_date amount].freeze
 
       def initialize(stock)
         @stock = stock

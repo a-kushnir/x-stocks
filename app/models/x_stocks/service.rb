@@ -9,7 +9,6 @@ module XStocks
     SLOW_UPDATE_JOBS = [
       XStocks::Jobs::YahooStockAll,
       XStocks::Jobs::FinnhubStockAll,
-      XStocks::Jobs::IexapisDividendsAll,
       XStocks::Jobs::DividendStockAll
     ].freeze
 

@@ -33,7 +33,7 @@
   right_table << { label: t('stocks.summary.eps_ttm'), value: number_with_precision(@stock.eps_ttm, precision: 2) } if @stock.eps_ttm
   right_table << { label: t('stocks.summary.eps_growth_5y'), value: "#{change_icon(@stock.eps_growth_5y)}#{number_to_percentage(@stock.eps_growth_5y, precision: 2) }".html_safe, class: delta_class(@stock.eps_growth_5y) } if @stock.eps_growth_5y
   if div_suspended
-    right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: t('stocks.summary.suspended'), class: 'text-danger' }
+    right_table << { label: t('stocks.summary.forward_dividend_and_yield'), value: t('stocks.summary.suspended'), class: 'text-negative' }
   else
     if @stock.est_annual_dividend_taxed(current_user)
       right_table << { label: t('stocks.summary.forward_dividend_and_yield_bt'), value: "#{number_to_currency(@stock.est_annual_dividend)} (#{number_to_percentage(@stock.est_annual_dividend_pct, precision: 2) })"} if @stock.est_annual_dividend

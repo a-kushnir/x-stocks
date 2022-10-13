@@ -30,7 +30,7 @@ module ApplicationHelper
     if number.blank? || number !~ /[1-9]/i
       nil
     elsif /-/i.match?(number)
-      inline_svg('svg/caret-down', size: size, style: 'vertical-align: -0.125em;', class: 'text-danger inline-block')
+      inline_svg('svg/caret-down', size: size, style: 'vertical-align: -0.125em;', class: 'text-negative inline-block')
     else
       inline_svg('svg/caret-up', size: size, style: 'vertical-align: -0.125em;', class: 'text-success inline-block')
     end

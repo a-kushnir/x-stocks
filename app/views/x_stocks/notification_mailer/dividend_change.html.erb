@@ -1,3 +1,10 @@
+<p class="pl-1">
+  <strong>
+    <%= @notification.company_name %>
+    <%= change_icon(@notification.price_change) %><span class="<%= delta_class(@notification.price_change) %>"><%= number_to_percentage(@notification.price_change_pct, precision: 2) %></span>
+  </strong>
+</p>
+
 <%
   rows = []
   rows << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(@notification.div_change_pct)}#{number_to_percentage(@notification.div_change_pct, precision: 1) } (#{number_to_currency(@notification.prev_div_amount, precision: dividend_precision(@notification.prev_div_amount))} &#8594 #{number_to_currency(@notification.next_div_amount, precision: dividend_precision(@notification.next_div_amount))})".html_safe, class: delta_class(@notification.div_change_pct) } if @notification.div_change_pct

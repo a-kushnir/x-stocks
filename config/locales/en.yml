@@ -252,3 +252,18 @@ en:
       last_run: 'Last Run'
       arguments: 'Arguments'
       actions: 'Actions'
+  notifications:
+    dividend_change:
+      a_new_dividend: 'A new %{dividend_type} Dividend in the amount of %{amount} %{currency} has been declared for the stock which was recently trading around %{current_price}'
+      summary: 'Summary'
+      position: 'Position'
+      dividend_history: 'Dividend History'
+      ex_date: 'Ex-Date'
+      pay_date: 'Pay Date'
+      type: 'Type'
+      amount: 'Amount'
+      dividend_types:
+        regular: 'Regular'
+        special: 'Special'
+        long_term: 'Long-Term'
+        short_term: 'Short-Term'

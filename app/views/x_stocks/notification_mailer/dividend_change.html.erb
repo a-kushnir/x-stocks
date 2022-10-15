@@ -4,7 +4,14 @@
     <%= change_icon(@notification.price_change) %><span class="<%= delta_class(@notification.price_change) %>"><%= number_to_percentage(@notification.price_change_pct, precision: 2) %></span>
   </strong>
 </p>
-
+<% dividend = @notification.dividends.first %>
+<p class="pl-1">
+  <%= t('notifications.dividend_change.a_new_dividend',
+        dividend_type: t("notifications.dividend_change.dividend_types.#{dividend.dividend_type}"),
+        amount: number_with_precision(dividend.amount, precision: dividend_precision(dividend.amount)),
+        currency: dividend.currency,
+        current_price: number_to_currency(@notification.current_price)) %>
+</p>
 <%
   rows = []
   rows << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(@notification.div_change_pct)}#{number_to_percentage(@notification.div_change_pct, precision: 1) } (#{number_to_currency(@notification.prev_div_amount, precision: dividend_precision(@notification.prev_div_amount))} &#8594 #{number_to_currency(@notification.next_div_amount, precision: dividend_precision(@notification.next_div_amount))})".html_safe, class: delta_class(@notification.div_change_pct) } if @notification.div_change_pct
@@ -24,6 +31,7 @@
   rows << { label: t('stocks.summary.dividend_safety'), value: "#{number_with_precision(@notification.dividend_rating, precision: 1) } (#{safety_human(@notification.dividend_rating)})" } if @notification.dividend_rating
   rows << { label: t('stocks.summary.payout'), value: number_to_percentage(@notification.payout_ratio, precision: 2) } unless @notification.payout_ratio.to_f.zero?
 %>
+<h4><%= t('notifications.dividend_change.summary') %></h4>
 <table class="section-table mb-4">
   <% rows.each do |row| %>
   <tr>
@@ -36,7 +44,7 @@
 </table>
 
 <% if @notification.position? %>
-  <h3>Position</h3>
+  <h4><%= t('notifications.dividend_change.position') %></h4>
   <table class="section-table mb-4">
     <tr>
       <td>
@@ -55,21 +63,21 @@
   </table>
 <% end %>
 
-<h3>Dividend History</h3>
+<h4><%= t('notifications.dividend_change.dividend_history') %></h4>
 <table class="section-table mb-4">
   <thead>
     <tr>
-      <th class="text-left">Pay Date</th>
-      <th class="text-left">Declared</th>
-      <th class="text-left">Ex-Date</th>
-      <th class="text-right">Amount</th>
+      <th class="text-left"><%= t('notifications.dividend_change.ex_date') %></th>
+      <th class="text-left"><%= t('notifications.dividend_change.pay_date') %></th>
+      <th class="text-left"><%= t('notifications.dividend_change.type') %></th>
+      <th class="text-right"><%= t('notifications.dividend_change.amount') %></th>
     </tr>
   </thead>
   <% @notification.dividends.first(12).each do |dividend| %>
     <tr>
-      <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
-      <td><%= dividend.declaration_date&.strftime("%Y-%m-%d") %></td>
       <td><%= dividend.ex_dividend_date&.strftime("%Y-%m-%d") %></td>
+      <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
+      <td><%= t("notifications.dividend_change.dividend_types.#{dividend.dividend_type}") %></td>
       <td class="text-right">
         <%= number_to_currency(dividend.amount, precision: dividend_precision(dividend.amount)) %>
       </td>

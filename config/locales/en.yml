@@ -103,7 +103,7 @@ en:
       yahoo_rec: 'Yahoo Rec.'
       finnhub_rec: 'Finnhub Rec.'
       div_safety: 'Div. Safety'
-      ex_date: 'Ex-Date'
+      ex_dividend_date: 'Ex-Date'
   stocks:
     pages:
       stocks: 'Stocks'
@@ -173,8 +173,8 @@ en:
       amount: 'Amount'
       est_amount: 'Est. Amount'
       change: 'Change'
-      ex_date: 'Ex Date'
-      payment_date: 'Payment Date'
+      ex_dividend_date: 'Ex Date'
+      pay_date: 'Pay Date'
     next_earnings:
       estimated_eps: 'Estimated EPS'
       date: 'Date'
@@ -188,8 +188,8 @@ en:
       6m_estimate: '6m Estimate'
       month: 'Month'
       amount: 'Amount'
-      ex_date: 'Ex Date'
-      payment_data: 'Payment Date'
+      ex_dividend_date: 'Ex Date'
+      pay_date: 'Payment Date'
     financials:
       yearly: 'Yearly'
       quarterly: 'Quarterly'
@@ -221,7 +221,7 @@ en:
       yahoo_rec: 'Yahoo Rec.'
       finnhub_rec: 'Finnhub Rec.'
       div_safety: 'Div. Safety'
-      ex_date: 'Ex-Date'
+      ex_dividend_date: 'Ex-Date'
   taxes:
     foreign_tax: 'Foreign Tax'
     schedule_k1: 'Schedule K-1 (Form 1065)'

@@ -72,7 +72,7 @@ module Positions
         columns << DataTable::Column.new(code: 'yrc', label: t('positions.columns.yahoo_rec'), formatter: 'recommendation', sorting: 'stocks.yahoo_rec')
         columns << DataTable::Column.new(code: 'frc', label: t('positions.columns.finnhub_rec'), formatter: 'recommendation', sorting: 'stocks.finnhub_rec')
         columns << DataTable::Column.new(code: 'dsf', label: t('positions.columns.div_safety'), formatter: 'safety_badge', sorting: 'stocks.dividend_rating')
-        columns << DataTable::Column.new(code: 'exd', label: t('positions.columns.ex_date'), formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
+        columns << DataTable::Column.new(code: 'exd', label: t('positions.columns.ex_dividend_date'), formatter: 'future_date', sorting: 'stocks.next_div_ex_date')
       end
     end
 

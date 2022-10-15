@@ -33,13 +33,13 @@
     </tr>
     <tr>
       <td>
-        <%= t('stocks.next_dividend.ex_date') %>:
+        <%= t('stocks.next_dividend.ex_dividend_date') %>:
         <strong><%= next_div_ex_date.strftime('%b, %d %Y') %></strong>
       </td>
     </tr>
     <tr>
       <td>
-        <%= t('stocks.next_dividend.payment_date') %>:
+        <%= t('stocks.next_dividend.pay_date') %>:
         <strong><%= @stock.next_div_payment_date&.strftime('%b, %d %Y') %></strong>
       </td>
     </tr>

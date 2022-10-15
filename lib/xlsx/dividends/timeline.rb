@@ -69,8 +69,8 @@ module XLSX
           stock.company_name,
           stock.est_annual_dividend_pct ? stock.est_annual_dividend_pct / 100 : nil,
           stock.dividend_rating ? (stock.dividend_rating * 20).to_i : nil,
-          data[:payment_date],
-          data[:ex_date],
+          data[:pay_date],
+          data[:ex_dividend_date],
           position.shares,
           data[:amount],
           data[:amount] * position.shares

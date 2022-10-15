@@ -23,9 +23,6 @@ module API
         expose :est_annual_dividend_pct, as: :est_annual_amount_pct
         expose :payout_ratio
         expose :dividend_rating, as: :safety
-        expose :dividend_details, as: :details, format_with: lambda { |details|
-          details.each { |detail| detail['amount'] = detail['amount'].round(6) }
-        }, documentation: { type: :object }
       end
     end
   end

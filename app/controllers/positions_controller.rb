@@ -21,10 +21,6 @@ class PositionsController < ApplicationController
     else
       render action: 'edit'
     end
-
-    XStocks::UpdateDividendsJob.new.perform(@position.stock.symbol)
-    # XStocks::UpdateDividendsJob.perform_async(@position.stock.symbol)
-    # XStocks::NotificationMailer.with(user_id: current_user.id, stock_symbol: @position.stock.symbol).dividend_change.deliver_now
   end
 
   private

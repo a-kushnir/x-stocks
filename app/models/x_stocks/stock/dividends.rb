@@ -41,7 +41,7 @@ module XStocks
 
       def div_suspended?
         (ar_stock.dividend_amount || ar_stock.est_annual_dividend || ar_stock.dividend_frequency_num || ar_stock.dividend_growth_3y || ar_stock.dividend_growth_5y) &&
-          (ar_stock.next_div_ex_date.nil? || next_div_ex_date_overdue?) && last_dividend_details_overdue?
+          (ar_stock.next_div_ex_date.nil? || next_div_ex_date_overdue?) && last_dividend_overdue?
       end
 
       def next_div_ex_date_overdue?
@@ -50,51 +50,32 @@ module XStocks
         true
       end
 
-      def last_dividend_details_overdue?
-        last_div = ar_stock.dividend_details&.last
-        last_div.nil? || (last_div['ex_date'] < (1.5 * DAYS_IN_YEAR / ar_stock.dividend_frequency_num).days.ago)
+      def last_dividend_overdue?
+        last_div = ar_stock.dividends.regular.first
+        last_div.nil? || (last_div.ex_dividend_date < (1.5 * DAYS_IN_YEAR / last_div.frequency).days.ago)
       rescue StandardError
         true
       end
 
       def prev_div_amount
-        details = periodic_dividend_details
-        size = details.size
-        return 0 if size < 2
-
-        details.dig(size - 2, 'amount')
+        _, prev = dividends.regular.first(2)
+        prev&.amount || 0
       end
 
       def next_div_amount2
         return 0 if div_suspended?
 
-        details = periodic_dividend_details
-        size = details.size
-        return 0 if size < 1
-
-        details.dig(size - 1, 'amount')
+        last, = dividends.regular.first(2)
+        last&.amount || 0
       end
 
       def div_change_pct
-        if div_suspended?
-          -100
-        else
-          details = periodic_dividend_details
-          size = details.size
-          last = details[size - 1]
-          prev = details[size - 2]
-          if last && prev
-            begin
-              100 * ((last['amount'] - prev['amount']) / prev['amount']).round(4)
-            rescue StandardError
-              nil
-            end
-          end
-        end
-      end
+        return -100 if div_suspended?
 
-      def periodic_dividend_details
-        (ar_stock.dividend_details || []).select { |detail| DIVIDEND_FREQUENCIES[(detail['frequency'] || '').downcase] }
+        last, prev = ar_stock.dividends.regular.first(2)
+        return 100 unless prev
+
+        100 * ((last.amount - prev.amount) / prev.amount).round(4) if last && prev
       end
     end
   end

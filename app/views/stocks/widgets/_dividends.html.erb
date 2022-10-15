@@ -21,17 +21,17 @@
       <% end %>
     </tr>
     <tr>
-      <td text="text-nowrap"><%= t('stocks.dividends.ex_date') %></td>
+      <td class="text-nowrap"><%= t('stocks.dividends.ex_dividend_date') %></td>
       <% est.each do |month_est| %>
-        <% ex_date = month_est[:ex_date] %>
-        <td class="text-right text-nowrap"><%= ex_date.strftime("%b, %d") if ex_date %></td>
+        <% ex_dividend_date = month_est[:ex_dividend_date] %>
+        <td class="text-right text-nowrap"><%= ex_dividend_date.strftime("%b, %d") if ex_dividend_date %></td>
       <% end %>
     </tr>
     <tr>
-      <td class="text-nowrap"><%= t('stocks.dividends.payment_data') %></td>
+      <td class="text-nowrap"><%= t('stocks.dividends.pay_date') %></td>
       <% est.each do |month_est| %>
-        <% payment_date = month_est[:payment_date] %>
-        <td class="text-right text-nowrap"><%= payment_date.strftime("%b, %d") if payment_date %></td>
+        <% pay_date = month_est[:pay_date] %>
+        <td class="text-right text-nowrap"><%= pay_date.strftime("%b, %d") if pay_date %></td>
       <% end %>
     </tr>
     </tbody>
@@ -42,8 +42,8 @@
       <tr>
         <th class="w-1/4 text-left"><%= t('stocks.dividends.month') %></th>
         <th class="w-1/4 text-right"><%= t('stocks.dividends.amount') %></th>
-        <th class="w-1/4 text-right"><%= t('stocks.dividends.ex_date') %></th>
-        <th class="w-1/4 text-right"><%= t('stocks.dividends.payment_data') %></th>
+        <th class="w-1/4 text-right"><%= t('stocks.dividends.ex_dividend_date') %></th>
+        <th class="w-1/4 text-right"><%= t('stocks.dividends.pay_date') %></th>
       </tr>
       <% div.months.each_with_index do |month| %>
       <% months_est = est.detect { |e| e[:month] == month } %>
@@ -52,8 +52,8 @@
         <tr>
           <td class="text-left"><%= month.strftime("%b'%y") %></td>
           <td class="text-right"><%= number_to_currency(amount, precision: dividend_precision(amount)) %></td>
-          <td class="text-right"><%= months_est&.dig(:ex_date).strftime("%b, %d") if months_est&.dig(:ex_date) %></td>
-          <td class="text-right"><%= months_est&.dig(:payment_date).strftime("%b, %d") if months_est&.dig(:payment_date) %></td>
+          <td class="text-right"><%= months_est&.dig(:ex_dividend_date).strftime("%b, %d") if months_est&.dig(:ex_dividend_date) %></td>
+          <td class="text-right"><%= months_est&.dig(:pay_date).strftime("%b, %d") if months_est&.dig(:pay_date) %></td>
         </tr>
       <% end %>
       <% end %>

@@ -41,14 +41,13 @@ module Etl
         yield message('Update stock information [Yahoo]', 50) if block_given?
         safe_exec { Etl::Refresh::Yahoo.new(logger).daily_one_stock(stock) }
 
-        yield message('Update stock dividends [IEX Cloud]', 70) if block_given?
-        safe_exec { Etl::Refresh::Iexapis.new(logger).weekly_one_stock(stock, token_store: iexapis_ts, immediate: true) }
-
         yield message('Update stock dividends [Dividend.com]', 80) if block_given?
         safe_exec { Etl::Refresh::Dividend.new(logger).weekly_one_stock(stock) }
 
         yield message('S&P 500, Nasdaq 100 and Dow Jones [SlickCharts]', 90) if block_given?
         safe_exec { Etl::Refresh::SlickCharts.new(logger).all_stocks }
+
+        XStocks::UpdateDividendsJob.perform_async(stock.symbol)
 
         yield completed_message if block_given?
       end

@@ -7,11 +7,9 @@ module Etl
     # Transforms data extracted from cloud.iexapis.com
     class Iexapis
       def initialize(exchange_class: XStocks::Exchange,
-                     tag_class: XStocks::Tag,
-                     dividend_frequencies: XStocks::Stock::Dividends::DIVIDEND_FREQUENCIES)
+                     tag_class: XStocks::Tag)
         @exchange_class = exchange_class
         @tag_class = tag_class
-        @dividend_frequencies = dividend_frequencies
       end
 
       def company(stock, json)
@@ -56,52 +54,9 @@ module Etl
         stock.company_name.present? && stock.company_name.strip =~ /\s+L[. ]*P\.?$/i
       end
 
-      def dividends(stock, json)
-        return unless json
-
-        json = Array(json)
-
-        json = json.map do |row|
-          {
-            'ex_date' => row['exDate'],
-            'payment_date' => row['paymentDate'],
-            'record_date' => row['recordDate'],
-            'declared_date' => row['declaredDate'],
-            'amount' => row['amount'].to_d,
-            'frequency' => row['frequency']
-          }
-        end
-
-        stock.dividend_details ||= []
-        stock.dividend_details += json
-        stock.dividend_details.uniq! { |row| row['payment_date'] }
-        stock.dividend_details.sort_by! { |row| row['payment_date'] }
-        stock.dividend_details.reject! { |row| row['amount'].blank? || row['amount'].to_f.zero? }
-        stock.dividend_details.each { |row| row['amount'] = row['amount'].to_f }
-
-        last_div = stock.periodic_dividend_details.last
-        stock.dividend_frequency = last_div&.dig('frequency')
-        stock.dividend_frequency_num = dividend_frequencies[(stock.dividend_frequency || '').downcase]
-        stock.dividend_amount = last_div&.dig('amount')
-        stock.est_annual_dividend = (stock.dividend_frequency_num * stock.dividend_amount if stock.dividend_frequency_num && stock.dividend_amount)
-
-        stock.save
-      end
-
-      def next_dividend(stock, json)
-        return if json.blank?
-
-        json = json.first if json.is_a?(Array)
-        stock.next_div_ex_date = json&.dig('exDate')
-        stock.next_div_payment_date = json&.dig('paymentDate')
-        stock.next_div_amount = json&.dig('amount')
-
-        stock.save
-      end
-
       private
 
-      attr_reader :exchange_class, :tag_class, :dividend_frequencies
+      attr_reader :exchange_class, :tag_class
     end
   end
 end

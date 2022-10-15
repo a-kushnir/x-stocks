@@ -50,6 +50,6 @@ class CountryFlag
 
   def link(country, size:)
     code = code(country)
-    "/img/flags-iso/flat/#{size}/#{code}.png" if code
+    "flags-iso/flat/#{size}/#{code}.png" if code
   end
 end

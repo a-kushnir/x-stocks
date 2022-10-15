@@ -24,3 +24,4 @@ set :keep_releases, 5
 before 'deploy:assets:precompile', 'deploy:yarn:build'
 
 set :puma_service_unit_name, "puma_#{fetch(:application)}_#{fetch(:stage)}"
+set :sidekiq_service_unit_name, "sidekiq_#{fetch(:application)}_#{fetch(:stage)}"

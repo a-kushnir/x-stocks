@@ -50,7 +50,9 @@ module Etl
       def dividend_type(value)
         {
           'CD' => XStocks::Dividends::DividendType::REGULAR,
-          'SC' => XStocks::Dividends::DividendType::SPECIAL
+          'SC' => XStocks::Dividends::DividendType::SPECIAL,
+          'LT' => XStocks::Dividends::DividendType::LONG_TERM,
+          'ST' => XStocks::Dividends::DividendType::SHORT_TERM
         }.fetch(value)
       end
 

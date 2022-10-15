@@ -9,6 +9,7 @@ Sidekiq.configure_server do |config|
     config.redis = { url: job_redis_url }
     # Load sidekiq-cron schedule using the configured redis connection
     require 'sidekiq-cron'
+    Sidekiq::Cron::Job.all.each(&:destroy)
   end
 end
 

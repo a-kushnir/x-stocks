@@ -14,7 +14,7 @@ module Etl
         return if json&.dig('status') != 'OK'
 
         rows = json['results'].map do |row|
-          next unless row['pay_date']
+          next if row.values_at('declaration_date', 'ex_dividend_date', 'record_date', 'pay_date', 'cash_amount').any?(&:blank?)
 
           {
             stock_id: stock.id,
@@ -25,7 +25,7 @@ module Etl
             dividend_type: dividend_type(row['dividend_type']),
             currency: row['currency'],
             amount: amount(row['cash_amount']),
-            frequency: row['frequency']
+            frequency: row['frequency'].to_i
           }
         end.compact
 

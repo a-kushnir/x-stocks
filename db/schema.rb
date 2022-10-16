@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_16_020130) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_024030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,7 +111,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_020130) do
     t.string "country"
     t.string "phone"
     t.date "ipo"
-    t.string "logo"
     t.string "peers"
     t.decimal "outstanding_shares", precision: 16
     t.decimal "market_capitalization", precision: 20

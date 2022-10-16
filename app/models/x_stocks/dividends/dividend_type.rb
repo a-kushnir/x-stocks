@@ -2,6 +2,7 @@
 
 module XStocks
   module Dividends
+    # Dividend Type
     class DividendType
       REGULAR = 'regular' # Consistent Schedule Dividends
       SPECIAL = 'special' # Special Cash Dividends

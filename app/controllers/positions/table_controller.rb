@@ -63,7 +63,7 @@ module Positions
         columns << DataTable::Column.new(code: 'srg', label: t('positions.columns.short_term'), formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
         columns << DataTable::Column.new(code: 'mrg', label: t('positions.columns.mid_term'), formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
         columns << DataTable::Column.new(code: 'lrg', label: t('positions.columns.long_term'), formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
-        columns << DataTable::Column.new(code: 'dvf', label: t('positions.columns.div_frequency'), formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+        columns << DataTable::Column.new(code: 'dvf', label: t('positions.columns.div_frequency'), formatter: 'string', align: 'right', sorting: 'stocks.dividend_frequency_num')
         columns << DataTable::Column.new(code: 'ead', label: t('positions.columns.est_annual_div'), formatter: 'currency_or_warning')
         columns << DataTable::Column.new(code: 'eyp', label: t('positions.columns.est_yield_pct'), formatter: 'percent_or_warning2')
         columns << DataTable::Column.new(code: 'dcp', label: t('positions.columns.div_change_pct'), formatter: 'percent_delta1')
@@ -136,7 +136,7 @@ module Positions
         stock.yahoo_short_direction,
         stock.yahoo_medium_direction,
         stock.yahoo_long_direction,
-        stock.dividend_frequency&.titleize,
+        XStocks::Dividends::Frequency.humanize(stock.dividend_frequency_num),
         value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
         value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),
         stock.div_change_pct&.round(1),

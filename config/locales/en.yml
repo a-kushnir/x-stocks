@@ -190,6 +190,12 @@ en:
       amount: 'Amount'
       ex_dividend_date: 'Ex Date'
       pay_date: 'Payment Date'
+      frequency:
+        one_time: 'One-Time'
+        annually: 'Annually'
+        bi_annually: 'Bi-Annually'
+        quarterly: 'Quarterly'
+        monthly: 'Monthly'
     financials:
       yearly: 'Yearly'
       quarterly: 'Quarterly'

@@ -9,7 +9,6 @@ module API
 
       with_options(format_with: :float, documentation: { type: :float }) do
         expose :div_suspended?, as: :suspended, format_with: :bool, documentation: { type: :boolean }
-        expose :dividend_frequency, as: :frequency, format_with: nil, documentation: { type: :string }
         expose :dividend_frequency_num, as: :frequency_num
         expose :dividend_growth_3y, as: :growth_3y
         expose :dividend_growth_5y, as: :growth_5y

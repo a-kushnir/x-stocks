@@ -20,7 +20,7 @@ module StocksControllerConcern
       columns << DataTable::Column.new(code: 'srg', label: t('stocks.columns.short_term'), formatter: 'direction', sorting: 'stocks.yahoo_short_direction')
       columns << DataTable::Column.new(code: 'mrg', label: t('stocks.columns.mid_term'), formatter: 'direction', sorting: 'stocks.yahoo_medium_direction')
       columns << DataTable::Column.new(code: 'lrg', label: t('stocks.columns.long_term'), formatter: 'direction', sorting: 'stocks.yahoo_long_direction')
-      columns << DataTable::Column.new(code: 'dvf', label: t('stocks.columns.div_frequency'), formatter: 'string', sorting: 'stocks.dividend_frequency_num')
+      columns << DataTable::Column.new(code: 'dvf', label: t('stocks.columns.div_frequency'), formatter: 'string', align: 'right', sorting: 'stocks.dividend_frequency_num')
       columns << DataTable::Column.new(code: 'ndv', label: t('stocks.columns.next_div'), formatter: 'currency_or_warning4', sorting: 'stocks.next_div_amount')
       columns << DataTable::Column.new(code: 'ead', label: t('stocks.columns.est_annual_div'), formatter: 'currency_or_warning', default: true)
       columns << DataTable::Column.new(code: 'eyp', label: t('stocks.columns.est_annual_div'), formatter: 'percent_or_warning2', default: true)
@@ -51,7 +51,7 @@ module StocksControllerConcern
       stock.yahoo_short_direction,
       stock.yahoo_medium_direction,
       stock.yahoo_long_direction,
-      stock.dividend_frequency&.titleize,
+      XStocks::Dividends::Frequency.humanize(stock.dividend_frequency_num),
       stock.next_div_amount&.to_f,
       value_or_warning(div_suspended, stock.est_annual_dividend&.to_f),
       value_or_warning(div_suspended, stock.est_annual_dividend_pct&.to_f),

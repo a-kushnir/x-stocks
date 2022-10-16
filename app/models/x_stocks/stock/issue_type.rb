@@ -35,15 +35,6 @@ module XStocks
       def issue_type_name
         ISSUE_TYPES.fetch(ar_stock.issue_type, 'Unknown')
       end
-
-      def logo_url
-        return ar_stock.logo if ar_stock.logo.present?
-        return '/img/adr-logo.png' if adr?
-        return '/img/etf-logo.png' if etf?
-        return '/img/cs-logo.png' if common_stock?
-
-        nil
-      end
     end
   end
 end

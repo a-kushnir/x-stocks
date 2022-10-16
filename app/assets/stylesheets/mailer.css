@@ -29,11 +29,55 @@ a {
   cursor: pointer;
 }
 
+.tag {
+  margin-bottom: 0.25rem; /* 4px */
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding-left: 0.75rem; /* 12px */
+  padding-right: 0.75rem; /* 12px */
+  /* text-xs */
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  font-weight: 700; /* font-bold */
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.tag svg {
+  margin-right: 0.25rem;
+}
+.tag.tag-blue {
+  border-color: #93C5FD;
+  background-color: #BFDBFE;
+  color: #1D4ED8;
+}
+.tag.tag-red {
+  border-color: #FCA5A5;
+  background-color: #FECACA;
+  color: #B91C1C;
+}
+.tag.tag-green {
+  border-color: #86EFAC;
+  background-color: #BBF7D0;
+  color: #15803D;
+}
+.tag.tag-orange {
+  border-color: #FDBA74;
+  background-color: #FED7AA;
+  color: #C2410C;
+}
+.tag.tag-gray {
+  border-color: #D1D5DB;
+  background-color: #E5E7EB;
+  color: #374151;
+}
+
 .top-menu {
-  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   --tw-gradient-from: #1f2937;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(31 41 55 / 0));
   --tw-gradient-to: #111827;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(31 41 55 / 0));
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   padding: 0;
 }
 

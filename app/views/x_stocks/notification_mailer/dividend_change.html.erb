@@ -12,6 +12,19 @@
         currency: dividend.currency,
         current_price: number_to_currency(@notification.current_price)) %>
 </p>
+
+<div style="margin-bottom: 12px;">
+<% if @notification.taxes.present? %>
+  <% XStocks::Stock::Taxes::TAXES.each do |tax_code, tax_data| %>
+    <% next unless @notification.taxes.include?(tax_code.to_s) %>
+    <% _, tax_svg, tax_style = tax_data %>
+    <div class="<%= tax_style %>">
+      <%= inline_svg(tax_svg, size: '16*16') %> <%= t("taxes.#{tax_code}") %>
+    </div>
+  <% end %>
+<% end %>
+</div>
+
 <%
   rows = []
   rows << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(@notification.div_change_pct)}#{number_to_percentage(@notification.div_change_pct, precision: 1) } (#{number_to_currency(@notification.prev_div_amount, precision: dividend_precision(@notification.prev_div_amount))} &#8594 #{number_to_currency(@notification.next_div_amount, precision: dividend_precision(@notification.next_div_amount))})".html_safe, class: delta_class(@notification.div_change_pct) } if @notification.div_change_pct

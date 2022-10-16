@@ -53,7 +53,7 @@ module XStocks
 
       delegate :symbol, :company_name, :exchange, :current_price, :price_change, :price_change_pct,
                :dividends, :dividend_growth_3y, :dividend_growth_5y, :dividend_growth_years, :dividend_rating,
-               :payout_ratio, :est_annual_dividend, :est_annual_dividend_pct, :prev_div_amount, to: :stock
+               :payout_ratio, :est_annual_dividend, :est_annual_dividend_pct, :prev_div_amount, :taxes, to: :stock
       delegate :est_annual_income, :shares, to: :position
       attr_reader :user, :position, :stock
     end

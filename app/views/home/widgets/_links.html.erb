@@ -2,7 +2,7 @@
   <h3><%= t('home.sections.links') %></h3>
 
   <nav>
-    <ul class="m-0">
+    <ul class="my-0" style="margin-left: -8px; margin-right: -8px;">
       <% [
            ['https://finance.yahoo.com/', 'Yahoo Finance'],
            ['https://www.dividend.com/', 'Dividend.com'],
@@ -11,7 +11,7 @@
            ['https://etfdb.com/', 'ETF Database']
          ].sort_by(&:last).each do |link| %>
         <li>
-          <a class="block h-8 hover:no-underline py-1 text-blue-500" href="<%= link[0] %>" target="_blank">
+          <a class="block h-8 hover:no-underline py-1 text-blue-500 hover:bg-blue-50 px-2" href="<%= link[0] %>" target="_blank">
             <%= link[1] %> <%= inline_svg('svg/external-link.svg', size: '16*16') %>
           </a>
         </li>

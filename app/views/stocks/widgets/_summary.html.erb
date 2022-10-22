@@ -62,7 +62,7 @@
         <%= row[:label] %>: <strong class="float-right <%= row[:class] %>"><%= row[:value] %></strong>
         <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
-            <div class="tooltip right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
+            <div class="tooltip tooltip-right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'mb-1') %>
           </div>
         <% end %>
@@ -75,7 +75,7 @@
         <%= row[:label] %>: <strong class="<%= row[:class] %>"><%= row[:value] %></strong>
         <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
-            <div class="tooltip right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
+            <div class="tooltip tooltip-right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
             <%= inline_svg('svg/question-circle', size: '16*16', class: 'mb-1') %>
           </div>
         <% end %>

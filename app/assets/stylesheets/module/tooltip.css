@@ -16,7 +16,7 @@
       @apply absolute border border-gray-400 border-b-0 border-l-0 w-2.5 h-2.5;
     }
 
-    &.top {
+    &.tooltip-top {
       @apply top-0 left-1/2;
       transform: translate(-50%, calc(-100% - 10px));
       &::after {
@@ -24,7 +24,7 @@
         transform: translate(-50%, calc(100% - 4px)) rotate(135deg);
       }
     }
-    &.bottom {
+    &.tooltip-bottom {
       @apply bottom-0 left-1/2;
       transform: translate(-50%, calc(100% + 10px));
       &::after {
@@ -32,7 +32,7 @@
         transform: translate(-50%, calc(-100% + 5px)) rotate(-45deg);
       }
     }
-    &.right {
+    &.tooltip-right {
       @apply top-1/2 right-0;
       transform: translate(calc(100% + 10px), -50%);
       &::after {
@@ -40,7 +40,7 @@
         transform: translate(calc(-100% + 5px), -50%) rotate(-135deg);
       }
     }
-    &.left {
+    &.tooltip-left {
       @apply top-1/2 left-0;
       transform: translate(calc(-100% - 10px), -50%);
       &::after {

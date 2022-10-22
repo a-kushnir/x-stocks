@@ -1,7 +1,7 @@
 <% earnings = XStocks::Charts::Earnings.new(@stock.earnings) %>
 <% if earnings.data? %>
   <div class="section">
-    <h3><%= t('stocks.sections.earnings') %> <small class="text-gray-500"><%= provider %></small></h3>
+    <h3><%= t('stocks.sections.earnings') %></h3>
 
     <div class="mx-auto" style="width: 280px; height: 220px;">
       <%= earnings.render(width: 280, height: 220) %>

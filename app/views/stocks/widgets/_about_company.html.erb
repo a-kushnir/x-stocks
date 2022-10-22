@@ -1,4 +1,4 @@
-<% if @stock.description.present? %>
+<% if @stock.attributes.values_at(*%w[country website employees industry description]).compact_blank.present? %>
   <div class="mb-6">
     <h3><%= t('stocks.sections.company_profile') %></h3>
 
@@ -17,8 +17,10 @@
       <% end %>
       <strong><%= t('stocks.company_profile.issue_type') %>:</strong> <%= @stock.issue_type_name %>
     </p>
-    <p class="text-sm">
-      <%= @stock.description %>
-    </p>
+    <% if @stock.description.present? %>
+      <p class="text-sm">
+        <%= @stock.description %>
+      </p>
+    <% end %>
   </div>
 <% end %>

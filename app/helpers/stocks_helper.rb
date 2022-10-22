@@ -74,7 +74,7 @@ module StocksHelper
   def country_flag_img_tag(country, options)
     size = options.delete(:size) || 64
     link = CountryFlag.new.link(country, size: size)
-    image_tag(link, options) if link
+    image_tag(link, { height: size, width: size }.merge(options)) if link
   end
 
   def up_down_tag(direction, size: '16*16')

@@ -73,6 +73,7 @@ module XStocks
         return -100 if div_suspended?
 
         last, prev = ar_stock.dividends.regular.first(2)
+        return nil unless last
         return 100 unless prev
 
         100 * ((last.amount - prev.amount) / prev.amount).round(4) if last && prev

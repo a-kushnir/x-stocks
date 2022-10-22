@@ -3,17 +3,23 @@
 
   <%= render partial: 'stocks/widgets/taxes' %>
 
+  <% any_tag = false -%>
   <% VirtualTag.all.select { |tag| tag.eligible?(@position) }.each do |tag| %>
+    <% any_tag = true -%>
     <%= link_to url_for({ controller: 'stocks', action: 'index', tag: tag.name }), class: 'tag tag-blue' do %>
       <%= inline_svg(tag.svg_image, size: '16*16') %> <%= tag.name %>
     <% end %>
-  <% end %><br>
+  <% end %>
+  <%= '<br>'.html_safe if any_tag %>
 
+  <% any_tag = false -%>
   <% [:company_tag, :dividend_tag, :safe_dividend_tag, :dividend_growth_tag].each do |key| %>
     <% @stock.tags.by_key(key).each do |tag| %>
+      <% any_tag = true -%>
       <%= link_to tag.name, url_for({controller: 'stocks', action: 'index', tag: tag.name}), class: 'tag tag-blue' %>
     <% end %>
-  <% end %><br>
+  <% end %>
+  <%= '<br>'.html_safe if any_tag %>
 
   <% peers = stock_peers %>
   <% if peers.present? %>

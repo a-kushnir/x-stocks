@@ -5,9 +5,11 @@ module StocksHelper
   def link_to_website(url)
     return unless url
 
-    label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '').split('/').first
+    label = url.strip.sub(%r{^https?://}, '').sub(%r{^www.}, '').sub(%r{/$}, '').split('/').first
+    url = "http://#{url}" unless url.include?('://')
+
     link_to(url, class: 'text-blue-500 no-underline', target: '_blank') do
-      "#{inline_svg('svg/external-link.svg', size: '24*24')} #{label}".html_safe
+      "#{label} #{inline_svg('svg/external-link.svg', size: '16*16')}".html_safe
     end
   end
 

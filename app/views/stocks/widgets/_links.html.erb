@@ -1,18 +1,18 @@
-<div class="section pb-4">
+<div class="section">
   <h3><%= t('stocks.sections.links') %></h3>
 
   <nav>
     <ul class="m-0">
       <% [
-           ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance (#{@stock.symbol})"],
-           ["https://www.dividend.com/search?q=#{@stock.symbol}", "Dividend.com (#{@stock.symbol})"],
-           ["https://seekingalpha.com/symbol/#{@stock.symbol}", "Seeking Alpha (#{@stock.symbol})"],
-           @stock.exchange&.tradingview_code ? ["https://www.tradingview.com/symbols/#{@stock.exchange&.tradingview_code}-#{@stock.symbol.downcase}", "TradingView (#{@stock.symbol})"] : nil,
-           @stock.etf? ? ["https://etfdb.com/etf/#{@stock.symbol.downcase}", "ETF Database (#{@stock.symbol})"] : nil,
+           ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance - #{@stock.symbol}"],
+           ["https://www.dividend.com/search?q=#{@stock.symbol}", "Dividend.com - #{@stock.symbol}"],
+           ["https://seekingalpha.com/symbol/#{@stock.symbol}", "Seeking Alpha - #{@stock.symbol}"],
+           @stock.exchange&.tradingview_code ? ["https://www.tradingview.com/symbols/#{@stock.exchange&.tradingview_code}-#{@stock.symbol.downcase}", "TradingView - #{@stock.symbol}"] : nil,
+           @stock.etf? ? ["https://etfdb.com/etf/#{@stock.symbol.downcase}", "ETF Database - #{@stock.symbol}"] : nil,
          ].compact.sort_by(&:last).each do |link| %>
         <li>
-          <a class="block h-10 hover:no-underline py-2 text-blue-500" href="<%= link[0] %>" target="_blank">
-            <%= inline_svg('svg/external-link.svg', size: '24*24') %> <%= link[1] %>
+          <a class="block h-8 hover:no-underline py-1 text-blue-500" href="<%= link[0] %>" target="_blank">
+            <%= link[1] %> <%= inline_svg('svg/external-link.svg', size: '16*16') %>
           </a>
         </li>
       <% end %>

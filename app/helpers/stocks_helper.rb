@@ -3,8 +3,12 @@
 # Helper methods for StocksController
 module StocksHelper
   def link_to_website(url)
-    label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '')
-    link_to label, url, class: 'text-blue-500 no-underline' if url
+    return unless url
+
+    label = url.sub(%r{^https?://(www.)?}, '').sub(%r{/$}, '').split('/').first
+    link_to(url, class: 'text-blue-500 no-underline', target: '_blank') do
+      "#{inline_svg('svg/external-link.svg', size: '24*24')} #{label}".html_safe
+    end
   end
 
   def stock_peers

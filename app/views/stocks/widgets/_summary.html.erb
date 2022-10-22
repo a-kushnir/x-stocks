@@ -49,6 +49,8 @@
   right_table << { label: t('stocks.summary.dividend_change'), value: "#{change_icon(div_change_pct)}#{number_to_percentage(div_change_pct, precision: 1) }".html_safe, class: delta_class(div_change_pct) } if div_change_pct
   right_table << { label: t('stocks.summary.dividend_safety'), value: "#{number_with_precision(@stock.dividend_rating, precision: 1) } (#{safety_human(@stock.dividend_rating)})" } if @stock.dividend_rating
   right_table << { label: t('stocks.summary.payout'), value: number_to_percentage(@stock.payout_ratio, precision: 2) } unless @stock.payout_ratio.to_f.zero?
+  right_table << { label: t('stocks.summary.segment'), value: @stock.segment } if @stock.segment
+  right_table << { label: t('stocks.summary.expense_ratio'), value: number_to_percentage(@stock.expense_ratio, precision: 2) } if @stock.expense_ratio
 %>
 
 <table class="section-table hidden sm:table mb-6">

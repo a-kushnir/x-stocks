@@ -1,4 +1,4 @@
-<div class="section pb-3">
+<div class="section pb-4">
   <h3><%= t('stocks.sections.links') %></h3>
 
   <nav>
@@ -7,9 +7,8 @@
            ["https://finance.yahoo.com/quote/#{@stock.symbol}", "Yahoo Finance (#{@stock.symbol})"],
            ["https://www.dividend.com/search?q=#{@stock.symbol}", "Dividend.com (#{@stock.symbol})"],
            ["https://seekingalpha.com/symbol/#{@stock.symbol}", "Seeking Alpha (#{@stock.symbol})"],
-           ["https://robinhood.com/stocks/#{@stock.symbol}", "Robinhood (#{@stock.symbol})"],
-           @stock.exchange&.webull_code ? ["https://www.webull.com/quote/#{@stock.exchange&.webull_code}-#{@stock.symbol.downcase}", "Webull (#{@stock.symbol})"] : nil,
            @stock.exchange&.tradingview_code ? ["https://www.tradingview.com/symbols/#{@stock.exchange&.tradingview_code}-#{@stock.symbol.downcase}", "TradingView (#{@stock.symbol})"] : nil,
+           @stock.etf? ? ["https://etfdb.com/etf/#{@stock.symbol.downcase}", "ETF Database (#{@stock.symbol})"] : nil,
          ].compact.sort_by(&:last).each do |link| %>
         <li>
           <a class="block h-10 hover:no-underline py-2 text-blue-500" href="<%= link[0] %>" target="_blank">

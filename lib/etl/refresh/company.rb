@@ -41,6 +41,12 @@ module Etl
         yield message('Update stock information [Yahoo]', 50) if block_given?
         safe_exec { Etl::Refresh::Yahoo.new(logger).daily_one_stock(stock) }
 
+        yield message('Loading ETF Data [VettaFi]', 70) if block_given?
+        safe_exec do
+          attributes = Etl::Extract::VettaFi.new(loader).etf_data(stock)
+          Etl::Transform::VettaFi.new.etf_data(stock, attributes)
+        end
+
         yield message('Update stock dividends [Dividend.com]', 80) if block_given?
         safe_exec { Etl::Refresh::Dividend.new(logger).weekly_one_stock(stock) }
 

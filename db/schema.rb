@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_16_024030) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_22_002230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -176,6 +176,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_024030) do
     t.decimal "yahoo_resistance", precision: 10, scale: 4
     t.decimal "yahoo_stop_loss", precision: 10, scale: 4
     t.string "taxes"
+    t.decimal "expense_ratio", precision: 5, scale: 2
+    t.string "segment"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
     t.index ["updated_at"], name: "index_stocks_on_updated_at"

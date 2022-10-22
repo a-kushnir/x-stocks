@@ -163,6 +163,8 @@ en:
       dividend_change: 'Dividend Change'
       dividend_safety: 'Dividend Safety'
       payout: 'Payout'
+      segment: 'Segment'
+      expense_ratio: 'Expense Ratio'
     company_profile:
       headquarters: 'Headquarters'
       website: 'Website'

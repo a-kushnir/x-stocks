@@ -2,7 +2,7 @@
   <% XStocks::Stock::Taxes::TAXES.each do |tax_code, tax_data| %>
     <% next unless @stock.taxes.include?(tax_code.to_s) %>
     <% tax_url, tax_svg, tax_style = tax_data %>
-    <div class="<%= tax_style %>">
+    <div class="<%= tax_style %> align-bottom">
       <%= inline_svg(tax_svg, size: '16*16') %>
       <% if tax_url %>
         <%= link_to t("taxes.#{tax_code}"), tax_url, class: 'no-underline', target: '_blank' if tax_url %>

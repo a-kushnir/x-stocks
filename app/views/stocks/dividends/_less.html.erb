@@ -1,4 +1,4 @@
-<% change_view_link = link_to stock_dividends_path(@stock.symbol, more: true), class: 'ml-2', data: { turbo_frame: dom_id(@stock, :dividends) } do %>
+<% change_view_link = link_to stock_dividends_path(@stock.symbol, more: true), class: 'pl-2', data: { turbo_frame: dom_id(@stock, :dividends) } do %>
   <%= inline_svg('svg/unfold-less-horizontal.svg', size: '24*24') %>
 <% end -%>
 <% dividends = DividendCalculator.new.estimate(@stock, est_records: 2, history_records: 5) -%>

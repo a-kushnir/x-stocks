@@ -84,7 +84,7 @@ module Dividends
       end
 
       summary = {
-        month_amounts: month_amounts,
+        month_amounts: month_amounts.map { |value| value.zero? ? nil : value },
         total_amount: month_amounts.sum,
         dividend_rating: avg_dividend_rating.value
       }

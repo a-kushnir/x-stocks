@@ -28,7 +28,7 @@ class DividendCalculator
   def estimate(stock, est_records: nil, history_records: nil, date_range: nil)
     estimates = est_dividends(stock)
 
-    results = est_records ? estimates.reverse.last(est_records) : estimates.reverse
+    results = est_records ? estimates.last(est_records) : estimates
     results += history_records ? stock.dividends.first(history_records) : stock.dividends
 
     if date_range
@@ -103,16 +103,16 @@ class DividendCalculator
       raise "Unknown dividend frequency (#{last_div.frequency}) for #{stock.symbol}"
     end
 
-    estimates
+    estimates.reverse
   end
 
   def new_est_dividend(template, declaration_date, ex_dividend_date, pay_date, amount)
-    template.stock.dividends.new(
+    XStocks::AR::Dividend.new(
       declaration_date: declaration_date,
       ex_dividend_date: ex_dividend_date,
       pay_date: pay_date,
       amount: amount,
-      **template.slice(:dividend_type, :currency, :frequency)
+      **template.slice(:stock, :dividend_type, :currency, :frequency)
     )
   end
 

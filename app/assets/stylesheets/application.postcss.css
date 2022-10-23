@@ -11,6 +11,7 @@
 @import "module/pagy";
 @import "module/price_range";
 @import "module/section";
+@import "module/segmented_button";
 @import "module/table";
 @import "module/tag";
 @import "module/tooltip";

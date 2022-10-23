@@ -29,12 +29,15 @@ class VirtualTag
     @ruby_expression.call(position)
   end
 
-  ALL = [
+  DIVIDENDS = [
     VirtualTag.new('Dividend Achiever', '≥ 10 years of Dividend Growth', ->(position) { position.stock.dividend_growth_years && position.stock.dividend_growth_years >= 10 }, ->(_user) { XStocks::AR::Stock.where('dividend_growth_years >= 10') }, 'svg/finance'),
     VirtualTag.new('Dividend Contender', '10-24 years of Dividend Growth', ->(position) { position.stock.dividend_growth_years && position.stock.dividend_growth_years >= 10 && position.stock.dividend_growth_years < 25 }, ->(_user) { XStocks::AR::Stock.where('dividend_growth_years >= 10 and dividend_growth_years < 25') }, 'svg/finance'),
     VirtualTag.new('Dividend Champion', '≥ 25 years of Dividend Growth', ->(position) { position.stock.dividend_growth_years && position.stock.dividend_growth_years >= 25 }, ->(_user) { XStocks::AR::Stock.where('dividend_growth_years >= 25') }, 'svg/finance'),
     VirtualTag.new('High Dividend Growth', '3Y or 5Y Dividend Growth ≥ 5.0%', ->(position) { position.stock.dividend_growth_3y.to_f >= 5.0 || position.stock.dividend_growth_5y.to_f >= 5.0 }, ->(_user) { XStocks::AR::Stock.where('dividend_growth_3y >= 5.0 or dividend_growth_5y >= 5.0') }, 'svg/finance'),
-    VirtualTag.new('Safe Dividend', 'Dividend Safety ≥ 4.0', ->(position) { position.stock.dividend_rating && position.stock.dividend_rating >= 4.0 }, ->(_user) { XStocks::AR::Stock.where('dividend_rating >= 4.0') }, 'svg/shield-check-outline', '21-desc'),
+    VirtualTag.new('Safe Dividend', 'Dividend Safety ≥ 4.0', ->(position) { position.stock.dividend_rating && position.stock.dividend_rating >= 4.0 }, ->(_user) { XStocks::AR::Stock.where('dividend_rating >= 4.0') }, 'svg/shield-check-outline', '21-desc')
+  ].freeze
+
+  ALL = DIVIDENDS + [
     VirtualTag.new('S&P 500', 'S&P 500 Index', ->(position) { position.stock.sp500 }, ->(_user) { XStocks::AR::Stock.where(sp500: true) }, 'svg/format-list-bulleted-square'),
     VirtualTag.new('Nasdaq 100', 'Nasdaq 100 Index', ->(position) { position.stock.nasdaq100 }, ->(_user) { XStocks::AR::Stock.where(nasdaq100: true) }, 'svg/format-list-bulleted-square'),
     VirtualTag.new('Dow Jones', 'Dow Jones Industrial Average', ->(position) { position.stock.dowjones }, ->(_user) { XStocks::AR::Stock.where(dowjones: true) }, 'svg/format-list-bulleted-square'),

@@ -63,8 +63,6 @@ class DividendCalculator
         pay_date = pay_date >> 1
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
-    else
-      # Do nothing
     end
 
     results = est_records ? estimates.reverse.last(est_records) : estimates.reverse

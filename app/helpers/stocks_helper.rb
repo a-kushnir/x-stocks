@@ -5,7 +5,7 @@ module StocksHelper
   def link_to_website(url)
     return unless url
 
-    label = url.strip.sub(%r{^https?://}, '').sub(%r{^www.}, '').sub(%r{/$}, '').split('/').first
+    label = url.strip.sub(%r{^https?://}, '').sub(/^www./, '').sub(%r{/$}, '').split('/').first
     url = "http://#{url}" unless url.include?('://')
 
     link_to(url, class: 'text-blue-500 no-underline', target: '_blank') do

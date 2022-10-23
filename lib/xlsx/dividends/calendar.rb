@@ -80,7 +80,7 @@ module XLSX
         end
 
         row += amounts
-        row << amounts.map(&:to_d).sum
+        row << amounts.sum(&:to_d)
 
         row
       end

@@ -141,7 +141,7 @@ module Dividends
     def month_dividends(estimates, div_suspended, position, month)
       return nil if div_suspended
 
-      amount = estimates&.select { |e| e.pay_date.at_beginning_of_month == month }.sum(&:amount)
+      amount = estimates&.select { |e| e.pay_date.at_beginning_of_month == month }&.sum(&:amount)
       (amount * position.shares).round(2).to_f unless amount.zero?
     end
 

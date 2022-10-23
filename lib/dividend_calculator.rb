@@ -30,7 +30,8 @@ class DividendCalculator
     return [] unless last_div
     return [] if stock.div_suspended?
 
-    declaration_date, ex_dividend_date, pay_date, amount = last_div.values_at(:declaration_date, :ex_dividend_date, :pay_date, :amount)
+    declaration_date, ex_dividend_date, pay_date = last_div.values_at(:declaration_date, :ex_dividend_date, :pay_date, :amount)
+    amount = est_amount(stock)
 
     estimates = []
 
@@ -85,6 +86,16 @@ class DividendCalculator
   end
 
   private
+
+  def est_amount(stock, sample: 12, same: 3)
+    last12 = stock.dividends.regular.first(sample)
+    stable = last12.size.times.any? do |index|
+      amounts = last12[index, same].map(&:amount)
+      amounts.size == same && amounts.uniq.size == 1
+    end
+
+    stable ? last12.first.amount : (last12.sum(&:amount) / last12.size).round(4)
+  end
 
   def new_est_dividend(template, declaration_date, ex_dividend_date, pay_date, amount)
     template.stock.dividends.new(

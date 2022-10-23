@@ -24,6 +24,16 @@ en:
       total_return_pct: 'Total Return %'
       diversity_pct: 'Diversity %'
       total: 'Total'
+      declaration_date: 'Declared'
+      ex_dividend_date: 'Ex-Date'
+      pay_date: 'Pay Date'
+      dividend_type: 'Type'
+      amount: 'Amount'
+    dividend_types:
+      regular: 'Regular'
+      special: 'Special'
+      long_term: 'Long-Term'
+      short_term: 'Short-Term'
   home:
     pages:
       home: 'Home'
@@ -266,12 +276,3 @@ en:
       summary: 'Summary'
       position: 'Position'
       dividend_history: 'Dividend History'
-      ex_date: 'Ex-Date'
-      pay_date: 'Pay Date'
-      type: 'Type'
-      amount: 'Amount'
-      dividend_types:
-        regular: 'Regular'
-        special: 'Special'
-        long_term: 'Long-Term'
-        short_term: 'Short-Term'

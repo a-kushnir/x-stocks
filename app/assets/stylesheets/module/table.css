@@ -1,7 +1,7 @@
 table.section-table {
   @apply w-full;
   tr {
-    @apply border-t first:border-none border-gray-300;
+    @apply border-t first:border-none border-gray-300 hover:bg-gray-50;
     td {
       @apply p-1;
       strong { @apply float-right; }

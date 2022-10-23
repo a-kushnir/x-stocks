@@ -80,17 +80,17 @@
 <table class="section-table mb-4">
   <thead>
     <tr>
-      <th class="text-left"><%= t('notifications.dividend_change.ex_date') %></th>
-      <th class="text-left"><%= t('notifications.dividend_change.pay_date') %></th>
-      <th class="text-left"><%= t('notifications.dividend_change.type') %></th>
-      <th class="text-right"><%= t('notifications.dividend_change.amount') %></th>
+      <th class="text-left"><%= t('dividends.columns.ex_dividend_date') %></th>
+      <th class="text-left"><%= t('dividends.columns.pay_date') %></th>
+      <th class="text-left"><%= t('dividends.columns.dividend_type') %></th>
+      <th class="text-right"><%= t('dividends.columns.amount') %></th>
     </tr>
   </thead>
   <% @notification.dividends.first(12).each do |dividend| %>
     <tr>
       <td><%= dividend.ex_dividend_date&.strftime("%Y-%m-%d") %></td>
       <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
-      <td><%= t("notifications.dividend_change.dividend_types.#{dividend.dividend_type}") %></td>
+      <td><%= t("dividends.dividend_types.#{dividend.dividend_type}") %></td>
       <td class="text-right">
         <%= number_to_currency(dividend.amount, precision: dividend_precision(dividend.amount)) %>
       </td>

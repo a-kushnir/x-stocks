@@ -28,7 +28,7 @@ module Dividends
 
     def month_names
       @month_names ||=
-        ::Dividend.new.months.each_with_index.map do |month, index|
+        DividendCalculator.new.months.each_with_index.map do |month, index|
           (index.zero? || index == 11 ? month.strftime("%b'%y") : month.strftime('%b'))
         end
     end
@@ -59,7 +59,7 @@ module Dividends
     end
 
     def populate_data(positions)
-      dividend = ::Dividend.new
+      dividend = DividendCalculator.new
       months = dividend.months
 
       stocks = XStocks::Stock.find_all(id: positions.map(&:stock_id))
@@ -72,7 +72,7 @@ module Dividends
       positions.each do |position|
         stock = @stocks_by_id[position.stock_id]
         div_suspended = stock.div_suspended?
-        estimates = dividend.estimate(stock)
+        estimates = dividend.estimate(stock, date_range: dividend.date_range)
         avg_dividend_rating.add(stock.dividend_rating, div_suspended, position.market_value)
 
         months.each_with_index do |month, index|
@@ -141,8 +141,8 @@ module Dividends
     def month_dividends(estimates, div_suspended, position, month)
       return nil if div_suspended
 
-      amount = estimates&.detect { |e| e[:month] == month }&.dig(:amount)
-      (amount * position.shares).round(2).to_f if amount
+      amount = estimates&.select { |e| e.pay_date.at_beginning_of_month == month }.sum(&:amount)
+      (amount * position.shares).round(2).to_f unless amount.zero?
     end
 
     def annual_dividends(estimates, div_suspended, position)

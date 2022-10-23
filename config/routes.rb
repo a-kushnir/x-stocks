@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get :initializing
       get :processing
     end
+    resources :dividends, only: [:index], module: :stocks
     resources :watchlists, only: [:create], module: :stocks
   end
 

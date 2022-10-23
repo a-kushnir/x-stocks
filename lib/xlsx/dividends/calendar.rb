@@ -22,13 +22,11 @@ module XLSX
           freeze.generate(sheet, row: 1)
           styles.generate(sheet)
 
-          div = ::Dividend.new
+          sheet.add_row header_row(DividendCalculator.new.months), style: header_styles
+
           months = Array.new(12, BigDecimal('0'))
-
-          sheet.add_row header_row(div.months), style: header_styles
-
           positions.each do |position|
-            sheet.add_row data_row(div, months, position), style: data_styles
+            sheet.add_row data_row(months, position), style: data_styles
           end
 
           sheet.add_row footer_row(months), style: footer_styles
@@ -61,10 +59,12 @@ module XLSX
         styles[[:header] * 2, [:header_right] * 15]
       end
 
-      def data_row(div, months, position)
+      def data_row(months, position)
         stock = XStocks::Stock.new(position.stock)
         div_suspended = stock.div_suspended?
-        estimate = div.estimate(stock)
+
+        calculator = DividendCalculator.new
+        estimate = calculator.estimate(stock, date_range: calculator.date_range)
 
         row = [
           stock.symbol,
@@ -73,13 +73,14 @@ module XLSX
           dividend_rating(stock)
         ]
 
-        div.months.each_with_index do |month, index|
-          amount = amount(estimate, month, position)
+        amounts = calculator.months.map.with_index do |month, index|
+          amount = amount(estimate, month, position)&.round(2)
           months[index] += amount if amount
-          row << amount
+          amount
         end
 
-        row << (estimate ? estimate.sum { |e| e[:amount] } * position.shares : nil)
+        row += amounts
+        row << amounts.map(&:to_d).sum
 
         row
       end
@@ -99,10 +100,8 @@ module XLSX
       def amount(estimate, month, position)
         return unless estimate
 
-        month_est = estimate.detect { |e| e[:month] == month }
-        return unless month_est
-
-        month_est[:amount] * position.shares
+        amount = estimate.select { |e| e.pay_date.at_beginning_of_month == month }.sum(&:amount)
+        amount * position.shares unless amount.zero?
       end
 
       def data_styles

@@ -90,7 +90,7 @@
     <tr>
       <td><%= dividend.ex_dividend_date&.strftime("%Y-%m-%d") %></td>
       <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
-      <td><%= t("dividends.dividend_types.#{dividend.dividend_type}") %></td>
+      <td><%= dividend.regular? ? XStocks::Dividends::Frequency.humanize(dividend.frequency) : t("dividends.dividend_types.#{dividend.dividend_type}") %></td>
       <td class="text-right">
         <%= number_to_currency(dividend.amount, precision: dividend_precision(dividend.amount)) %>
       </td>

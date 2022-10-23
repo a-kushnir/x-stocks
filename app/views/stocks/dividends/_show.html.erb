@@ -1,0 +1,48 @@
+<% if dividends.any? %>
+  <%= turbo_frame_tag dom_id(@stock, :dividends) do %>
+    <div class="float-right">
+      <span class="hidden sm:inline-block">
+        <%= inline_svg('svg/clock-outline.svg', size: '24*24', class: 'text-yellow-400 ml-3 mb-1') %> Estimated
+        <%= inline_svg('svg/bullhorn.svg', size: '24*24', class: 'text-green-500 ml-3 mb-1') %> Declared
+        <%= inline_svg('svg/gift.svg', size: '24*24', class: 'text-blue-500 ml-3 mb-1') %> Recorded
+        <%= inline_svg('svg/gift-open-outline.svg', size: '24*24', class: 'text-gray-300 ml-3 mb-1') %> Paid
+      </span>
+      <%= change_view_link %>
+    </div>
+    <h3 class="text-2xl uppercase mb-2"><%= t('stocks.sections.dividends') %> <small class="text-gray-500"></small></h3>
+    <table class="table section-table mb-6">
+      <tbody>
+      <thead>
+      <tr>
+        <th class="w-1"></th>
+        <th class="text-left w-1/4"><%= t('dividends.columns.declaration_date') %></th>
+        <th class="text-left w-1/4"><%= t('dividends.columns.ex_dividend_date') %></th>
+        <th class="text-left w-1/4"><%= t('dividends.columns.pay_date') %></th>
+        <th class="text-left"><%= t('dividends.columns.dividend_type') %></th>
+        <th class="text-right w-1/5"><%= t('dividends.columns.amount') %></th>
+      </tr>
+      </thead>
+      <% dividends.each do |dividend| %>
+        <%
+          if dividend.id.blank?
+            icon = inline_svg('svg/clock-outline.svg', size: '24*24', class: 'text-yellow-400')
+          elsif dividend.ex_dividend_date >= Date.today
+            icon = inline_svg('svg/bullhorn.svg', size: '24*24', class: 'text-green-500')
+          elsif dividend.pay_date >= Date.today
+            icon = inline_svg('svg/gift.svg', size: '24*24', class: 'text-blue-500')
+          else
+            icon = inline_svg('svg/gift-open-outline.svg', size: '24*24', class: 'text-gray-300')
+          end
+        %>
+        <tr>
+          <td><%= icon %></td>
+          <td><%= dividend.declaration_date&.strftime("%Y-%m-%d") %></td>
+          <td><%= dividend.ex_dividend_date&.strftime("%Y-%m-%d") %></td>
+          <td><%= dividend.pay_date&.strftime("%Y-%m-%d") %></td>
+          <td><%= dividend.regular? ? XStocks::Dividends::Frequency.humanize(dividend.frequency) : t("dividends.dividend_types.#{dividend.dividend_type}") %></td>
+          <td class="text-right"><%= number_to_currency(dividend.amount, precision: dividend_precision(dividend.amount)) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+<% end %>

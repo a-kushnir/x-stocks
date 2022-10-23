@@ -20,7 +20,7 @@ module XLSX
           freeze.generate(sheet, row: 1)
           styles.generate(sheet)
 
-          div = ::Dividend.new
+          div = DividendCalculator.new
           timeline = div.timeline(positions)
 
           sheet.add_row header_row, style: header_styles
@@ -39,7 +39,7 @@ module XLSX
       private
 
       def position(data)
-        positions[data[:stock].id]
+        positions[data.stock_id]
       end
 
       def header_row
@@ -73,7 +73,7 @@ module XLSX
           data[:ex_dividend_date],
           position.shares,
           data[:amount],
-          data[:amount] * position.shares
+          (data[:amount] * position.shares).round(2)
         ]
       end
 
@@ -82,7 +82,7 @@ module XLSX
       end
 
       def footer_row(timeline)
-        total_amount = timeline.sum { |data| data[:amount] * position(data).shares }
+        total_amount = timeline.sum { |data| (data[:amount] * position(data).shares).round(2) }
         [[nil] * 7, 'Total', total_amount].flatten
       end
 

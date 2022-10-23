@@ -26,9 +26,44 @@ class DividendCalculator
   end
 
   def estimate(stock, est_records: nil, history_records: nil, date_range: nil)
+    estimates = est_dividends(stock)
+
+    results = est_records ? estimates.reverse.last(est_records) : estimates.reverse
+    results += history_records ? stock.dividends.first(history_records) : stock.dividends
+
+    if date_range
+      from_date, to_date = date_range
+      results.select! do |row|
+        row.pay_date >= from_date &&
+          row.pay_date <= to_date
+      end
+    end
+
+    results
+  end
+
+  def timeline(positions)
+    estimates = positions.map { |position| estimate(XStocks::Stock.new(position.stock), date_range: date_range) }.compact.flatten
+    estimates.sort_by(&:pay_date)
+  end
+
+  private
+
+  def est_amount(stock, sample: 12, same: 3)
+    last12 = stock.dividends.regular.first(sample)
+    stable = last12.size.times.any? do |index|
+      amounts = last12[index, same].map(&:amount)
+      amounts.size == same && amounts.uniq.size == 1
+    end
+
+    stable ? last12.first.amount : (last12.sum(&:amount) / last12.size).round(4)
+  end
+
+  def est_dividends(stock)
+    return [] if stock.div_suspended?
+
     last_div = stock.dividends.regular.first
     return [] unless last_div
-    return [] if stock.div_suspended?
 
     declaration_date, ex_dividend_date, pay_date = last_div.values_at(:declaration_date, :ex_dividend_date, :pay_date, :amount)
     amount = est_amount(stock)
@@ -65,36 +100,6 @@ class DividendCalculator
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
     end
-
-    results = est_records ? estimates.reverse.last(est_records) : estimates.reverse
-    results += history_records ? stock.dividends.first(history_records) : stock.dividends
-
-    if date_range
-      from_date, to_date = date_range
-      results.select! do |row|
-        row.pay_date >= from_date &&
-          row.pay_date <= to_date
-      end
-    end
-
-    results
-  end
-
-  def timeline(positions)
-    estimates = positions.map { |position| estimate(XStocks::Stock.new(position.stock), date_range: date_range) }.compact.flatten
-    estimates.sort_by(&:pay_date)
-  end
-
-  private
-
-  def est_amount(stock, sample: 12, same: 3)
-    last12 = stock.dividends.regular.first(sample)
-    stable = last12.size.times.any? do |index|
-      amounts = last12[index, same].map(&:amount)
-      amounts.size == same && amounts.uniq.size == 1
-    end
-
-    stable ? last12.first.amount : (last12.sum(&:amount) / last12.size).round(4)
   end
 
   def new_est_dividend(template, declaration_date, ex_dividend_date, pay_date, amount)

@@ -11,7 +11,7 @@ module XStocks
 
       user = XStocks::AR::User.find_by(id: user_id)
       stock = XStocks::AR::Stock.find_by(symbol: stock_symbol)
-      position = XStocks::AR::Position.find_by(user_id: user&.id, stock_id: stock&.id)
+      position = XStocks::AR::Position.find_or_initialize_by(user_id: user&.id, stock_id: stock&.id)
 
       @notification = XStocks::Notifications::DividendChange.new(user, stock, position)
 

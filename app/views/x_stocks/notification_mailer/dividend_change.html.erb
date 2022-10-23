@@ -7,7 +7,7 @@
 <% dividend = @notification.dividends.first %>
 <p class="pl-1">
   <%= t('notifications.dividend_change.a_new_dividend',
-        dividend_type: t("notifications.dividend_change.dividend_types.#{dividend.dividend_type}"),
+        dividend_type: t("dividends.dividend_types.#{dividend.dividend_type}"),
         amount: number_with_precision(dividend.amount, precision: dividend_precision(dividend.amount)),
         currency: dividend.currency,
         current_price: number_to_currency(@notification.current_price)) %>
@@ -21,6 +21,11 @@
     <div class="<%= tax_style %>">
       <%= inline_svg(tax_svg, size: '16*16') %> <%= t("taxes.#{tax_code}") %>
     </div>
+  <% end %>
+<% end %>
+<% VirtualTag::DIVIDENDS.select { |tag| tag.eligible?(@notification.position) }.each do |tag| %>
+  <%= link_to url_for({ controller: 'stocks', action: 'index', tag: tag.name }), class: 'tag tag-blue' do %>
+    <%= inline_svg(tag.svg_image, size: '16*16') %> <%= tag.name %>
   <% end %>
 <% end %>
 </div>

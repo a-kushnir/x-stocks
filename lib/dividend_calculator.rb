@@ -99,7 +99,11 @@ class DividendCalculator
         pay_date = pay_date >> 1
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
+    else
+      raise "Unknown dividend frequency (#{last_div.frequency}) for #{stock.symbol}"
     end
+
+    estimates
   end
 
   def new_est_dividend(template, declaration_date, ex_dividend_date, pay_date, amount)

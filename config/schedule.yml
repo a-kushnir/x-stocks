@@ -1,3 +1,6 @@
 x_stocks_update_dividends_job:
   cron: "*/5 * * * *" # every 5 minutes
   class: "XStocks::UpdateDividendsJob"
+x_stocks_update_financials_job:
+  cron: "*/5 * * * *" # every 5 minutes
+  class: "XStocks::UpdateFinancialsJob"

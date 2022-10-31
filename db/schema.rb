@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_22_002230) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_30_225100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_002230) do
     t.string "tradingview_code"
     t.string "dividend_code"
     t.datetime "created_at", null: false
+  end
+
+  create_table "financials", force: :cascade do |t|
+    t.bigint "stock_id", null: false
+    t.string "cik"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "fiscal_year"
+    t.string "fiscal_period", limit: 2
+    t.bigint "common_stock_shares_outstanding"
+    t.datetime "created_at", null: false
+    t.index ["stock_id", "end_date"], name: "index_financials_on_stock_id_and_end_date"
   end
 
   create_table "positions", force: :cascade do |t|

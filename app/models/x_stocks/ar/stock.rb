@@ -8,6 +8,7 @@ module XStocks
 
       belongs_to :exchange, optional: true
       has_many :dividends, dependent: :destroy
+      has_many :financials, dependent: :destroy
       has_many :positions
       has_many :tags, dependent: :destroy do
         def by_key(key)

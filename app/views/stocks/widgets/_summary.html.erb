@@ -24,6 +24,7 @@
   left_table << { label: t('stocks.summary.52_week_range'), value: render_range(@stock.week_52_low, @stock.week_52_high, @stock.current_price, @stock.price_change) } if @stock.week_52_low && @stock.week_52_high
   left_table << { label: t('stocks.summary.pe_ratio_ttm'), value: number_with_precision(@stock.pe_ratio_ttm, precision: 2) } if @stock.week_52_low && @stock.pe_ratio_ttm
   left_table << { label: t('stocks.summary.outstanding_shares'), value: number_with_precision(@stock.outstanding_shares, delimiter: ',', strip_insignificant_zeros: true) } if @stock.outstanding_shares
+  left_table << { label: t('stocks.summary.buyback_yield'), value: "#{change_icon(@stock.buyback_yield)}#{number_to_percentage(@stock.buyback_yield, precision: 2)}".html_safe, class: delta_class(@stock.buyback_yield) } if @stock.buyback_yield
   left_table << { label: t('stocks.summary.market_cap'), value: number_to_currency(number_to_human(@stock.market_capitalization)) } if @stock.market_capitalization
   left_table << { label: t('stocks.summary.fair_price'), value: number_to_currency(@stock.yahoo_fair_price), help: t('stocks.summary.fair_price_help') } if @stock.yahoo_fair_price
   left_table << { label: t('stocks.summary.fair_value'), value: "#{delta_number(number_to_percentage(@stock.yahoo_discount, precision: 0))} (#{@stock.yahoo_discount.to_i > 0 ? t('stocks.summary.undervalued') : t('stocks.summary.overvalued')})", class: delta_class(@stock.yahoo_discount.to_i) } if @stock.yahoo_discount

@@ -149,6 +149,7 @@ en:
       52_week_range: '52 Week Range'
       pe_ratio_ttm: 'P/E Ratio (TTM)'
       outstanding_shares: 'Outstanding Shares'
+      buyback_yield: 'Buyback Yield'
       market_cap: 'Market Cap'
       fair_price: 'Fair Price'
       fair_price_help: |

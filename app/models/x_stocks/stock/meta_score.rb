@@ -6,6 +6,19 @@ module XStocks
   class Stock
     # Calculates stock score using multiple parameters
     module MetaScore
+      def buyback_yield
+        @buyback_yield ||= begin
+          return if financials.blank?
+
+          records = financials.last(4)
+          first = records.first
+          last = records.last
+          return if last.common_stock_shares_outstanding.blank? || first.common_stock_shares_outstanding.blank?
+
+          (last.common_stock_shares_outstanding - first.common_stock_shares_outstanding).to_f / last.common_stock_shares_outstanding
+        end
+      end
+
       def calculate_meta_score
         details = {}
 

@@ -29,13 +29,13 @@ module XStocks
 
       json = first_page(stock, token_store)
       new_rows, existing_rows = transform.dividends(json)
-      return [] unless new_rows
+      return updates unless new_rows
 
       updates.concat(new_rows)
 
       while existing_rows.none? && (json = next_page(json, token_store))
         new_rows, existing_rows = transform.dividends(json)
-        return [] unless new_rows
+        return updates unless new_rows
 
         updates.concat(new_rows)
       end

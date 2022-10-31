@@ -6,7 +6,7 @@ module XStocks
     include Sidekiq::Job
     sidekiq_options retry: false
 
-    PAUSE = 60 / 2.5 # Limit up to 5 request per minute (2 sub-requests per a request)
+    PAUSE = 60 / 5 # Limit up to 5 request per minute (2 sub-requests per a request)
 
     def perform(stock_symbol = random_stock_symbol)
       stock = XStocks::AR::Stock.find_by(symbol: stock_symbol)
@@ -28,13 +28,13 @@ module XStocks
 
       json = first_page(stock, token_store)
       new_rows, existing_rows = transform.financials(json) { |node| source_filing_file(node, token_store) }
-      return [] unless new_rows
+      return updates unless new_rows
 
       updates.concat(new_rows)
 
       while existing_rows.none? && (json = next_page(json, token_store))
         new_rows, existing_rows = transform.financials(json) { |node| source_filing_file(node, token_store) }
-        return [] unless new_rows
+        return updates unless new_rows
 
         updates.concat(new_rows)
       end

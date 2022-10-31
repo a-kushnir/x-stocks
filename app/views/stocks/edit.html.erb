@@ -26,7 +26,7 @@
             <%= check_box_tag('x_stocks_ar_stock[taxes][]', tax_code, (@stock.taxes || []).include?(tax_code.to_s), id: id) %> <%= t("taxes.#{tax_code}") %>
           <% end %>
           <% tax_url = tax_data.first %>
-          <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
+          <%= link_to inline_svg('svg/help-circle-outline', size: '16*16', class: 'mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
         </li>
       <% end %>
       </ul>

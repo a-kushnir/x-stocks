@@ -8,7 +8,7 @@
       <% tax_error = resource.errors.detect { |error| error.attribute == :taxes && error.options[:value] == tax_value }&.message %>
       <div class="field mb-4">
         <%= label_tag "user[taxes][#{tax_code}]", class: class_names('block text-gray-700 font-bold mb-2', field_with_errors: tax_error) do %>
-          <%= t("taxes.#{tax_code}") %> <%= link_to inline_svg('svg/question-circle', size: '16*16', class: 'mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
+          <%= t("taxes.#{tax_code}") %> <%= link_to inline_svg('svg/help-circle-outline', size: '16*16', class: 'mb-1').html_safe, tax_url, class: 'text-gray-400 hover:text-blue-600 no-underline', target: '_blank' if tax_url %>
         <% end %>
         <%= content_tag(:div, class: class_names('relative flex w-full text-gray-800', field_with_errors: tax_error)) do %>
           <%= text_field_tag "user[taxes][#{tax_code}]", tax_value, class: 'rounded-l w-full border-gray-400', placeholder: t("taxes.#{tax_code}") %>

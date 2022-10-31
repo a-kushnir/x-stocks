@@ -64,7 +64,7 @@
         <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
             <div class="tooltip tooltip-right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
-            <%= inline_svg('svg/question-circle', size: '16*16', class: 'mb-1') %>
+            <%= inline_svg('svg/help-circle-outline', size: '16*16', class: 'mb-1 text-gray-400 hover:text-blue-600') %>
           </div>
         <% end %>
       <% end %>
@@ -77,7 +77,7 @@
         <% if (help = row[:help]).present? %>
           <div class="show-tooltip inline-block">
             <div class="tooltip tooltip-right whitespace-nowrap"><%= help.split("\n").join("<br>").html_safe %></div>
-            <%= inline_svg('svg/question-circle', size: '16*16', class: 'mb-1') %>
+            <%= inline_svg('svg/help-circle-outline', size: '16*16', class: 'mb-1 text-gray-400 hover:text-blue-600') %>
           </div>
         <% end %>
       <% end %>

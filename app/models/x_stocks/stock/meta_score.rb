@@ -10,12 +10,12 @@ module XStocks
         @buyback_yield ||= begin
           return if financials.blank?
 
-          records = financials.last(4)
+          records = financials.first(4)
           first = records.first
           last = records.last
           return if last.common_stock_shares_outstanding.blank? || first.common_stock_shares_outstanding.blank?
 
-          (last.common_stock_shares_outstanding - first.common_stock_shares_outstanding).to_f / last.common_stock_shares_outstanding
+          100 * (last.common_stock_shares_outstanding - first.common_stock_shares_outstanding).to_f / last.common_stock_shares_outstanding
         end
       end
 

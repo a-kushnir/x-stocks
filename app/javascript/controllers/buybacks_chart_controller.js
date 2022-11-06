@@ -1,6 +1,5 @@
 import ApplicationController from 'controllers/application_controller';
-import { destroyChart, commarize, diff } from 'helpers';
-import { diffPct } from '../helpers/array_helper';
+import { destroyChart, commarize, diffPct } from 'helpers';
 
 export default class extends ApplicationController {
   connect() {

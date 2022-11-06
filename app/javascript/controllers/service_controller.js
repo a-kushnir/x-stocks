@@ -1,5 +1,11 @@
-import ApplicationController from "controllers/application_controller";
-import { runEventSource, submitEventSource, setProgressValue, setProgressColor, escapeHTML } from "helpers";
+import ApplicationController from 'controllers/application_controller';
+import {
+  runEventSource,
+  submitEventSource,
+  setProgressValue,
+  setProgressColor,
+  escapeHTML,
+} from 'helpers';
 
 export default class extends ApplicationController {
   static values = {
@@ -7,9 +13,9 @@ export default class extends ApplicationController {
     params: String,
     outputContainer: String,
     outputProgress: String,
-    outputMessage: String
-  }
-  static targets = [ 'output', 'form' ]
+    outputMessage: String,
+  };
+  static targets = ['output', 'form'];
 
   start(event) {
     const form = event.currentTarget.form || this.formTarget;
@@ -29,34 +35,36 @@ export default class extends ApplicationController {
 
     let success = false;
     outputContainer.esComponent = submitEventSource(form, {
-      message: function(data) {
+      message: function (data) {
         setProgressValue(outputProgress, data.percent);
         outputMessage.textContent = data.message;
         success = true;
       },
-      redirect: function(location) {
+      redirect: function (location) {
         window.location.replace(location);
       },
-      error: function(data) {
+      error: function (data) {
         console.error(data);
         outputMessage.textContent = `Error ${escapeHTML(data.message)}`;
         setProgressColor(outputProgress, 'bg-red-600', ['bg-blue-600']);
       },
-      open: function() {
-        outputMessage.textContent = 'Retrieving information...'
+      open: function () {
+        outputMessage.textContent = 'Retrieving information...';
       },
-      closed: function() {
+      closed: function () {
         if (success) {
           outputContainer.classList.add('hidden');
         } else {
           // ??
         }
-      }
-    })
+      },
+    });
   }
 
   stop() {
-    if (!this.element.esComponent) { return; }
+    if (!this.element.esComponent) {
+      return;
+    }
 
     if (confirm('Are you sure you want to stop the service?')) {
       this.stopNoConfirm();
@@ -64,7 +72,9 @@ export default class extends ApplicationController {
   }
 
   stopNoConfirm() {
-    if (!this.element.esComponent) { return; }
+    if (!this.element.esComponent) {
+      return;
+    }
 
     this.element.esComponent.close();
     this.element.esComponent = null;
@@ -83,18 +93,18 @@ export default class extends ApplicationController {
 
     runEventSource(`/services/${this.codeValue}/run`, {
       data: this.hasParamsValue ? JSON.parse(this.paramsValue) : {},
-      message: function(data) {
+      message: function (data) {
         output.textContent = `Updating... ${data.percent}%`;
       },
-      closed: function() {
+      closed: function () {
         output.textContent = 'Reloading...';
         location.reload();
       },
       error: function (data) {
         console.error(data);
         output.textContent = `Error ${escapeHTML(data.message)}`;
-      }
-    })
+      },
+    });
   }
 
   updateStocks() {
@@ -102,13 +112,13 @@ export default class extends ApplicationController {
     output.textContent = 'Updating...';
 
     runEventSource('/services/run', {
-      closed: function() {
+      closed: function () {
         output.textContent = 'Updated';
       },
       error: function (data) {
         console.error(data);
         output.textContent = `Error ${escapeHTML(data.message)}`;
-      }
-    })
+      },
+    });
   }
 }

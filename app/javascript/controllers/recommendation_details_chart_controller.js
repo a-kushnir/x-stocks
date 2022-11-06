@@ -1,5 +1,5 @@
-import ApplicationController from "controllers/application_controller";
-import { destroyChart } from "helpers";
+import ApplicationController from 'controllers/application_controller';
+import { destroyChart } from 'helpers';
 
 export default class extends ApplicationController {
   connect() {
@@ -21,38 +21,42 @@ export default class extends ApplicationController {
       type: 'bar',
       data: {
         labels: labels,
-        datasets: datasets
+        datasets: datasets,
       },
       options: {
         scales: {
-          xAxes: [{
-            stacked: true
-          }],
-          yAxes: [{
-            ticks: { stepSize: min <= 1 ? 1 : null },
-            stacked: true,
-          }]
+          xAxes: [
+            {
+              stacked: true,
+            },
+          ],
+          yAxes: [
+            {
+              ticks: { stepSize: min <= 1 ? 1 : null },
+              stacked: true,
+            },
+          ],
         },
         legend: {
           position: 'right',
           reverse: true,
           labels: {
-            boxWidth: 12
-          }
+            boxWidth: 12,
+          },
         },
         plugins: {
           datalabels: {
             display: true,
             color: 'white',
             font: {
-              weight: 'bold'
+              weight: 'bold',
             },
-            formatter: function(value) {
+            formatter: function (value) {
               return value >= min && value > 0 ? Math.round(value) : null;
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     };
 
     new Chart(this.element, config);

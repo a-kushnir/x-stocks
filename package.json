@@ -8,7 +8,7 @@
     "build:js": "esbuild vendor/javascript_prebuild/*.js vendor/javascript_prebuild/**/*.js --format=esm --minify-whitespace --bundle --outdir=vendor/javascript --outbase=vendor/javascript_prebuild",
     "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
     "build:css:watch": "TAILWIND_MODE=watch yarn build:css --watch --verbose",
-    "lint": "eslint app/javascript spec/javascript",
+    "lint": "eslint app/javascript",
     "lint:fix": "eslint app/javascript spec/javascript --fix",
     "lint:watch": "esw app/javascript spec/javascript --watch"
   },
@@ -32,10 +32,20 @@
     "tailwindcss": "^3.0.23"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-private-methods": "^7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^27.0.2",
+    "babel-plugin-macros": "^3.1.0",
     "esbuild": "^0.14.14",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-watch": "^8.0.0"
+    "eslint-watch": "^8.0.0",
+    "prettier": "^2.0.2"
   }
 }

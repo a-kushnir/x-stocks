@@ -8,7 +8,10 @@ export default class extends ApplicationController {
 
   initialize() {
     if (this.hasShortcutTarget) {
-      this.shortcutTarget.innerHTML = this.shortcutTarget.textContent.replace('Control+', '^');
+      this.shortcutTarget.innerHTML = this.shortcutTarget.textContent.replace(
+        'Control+',
+        '^'
+      );
     }
   }
 

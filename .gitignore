@@ -12,17 +12,19 @@
 Procfile*
 
 #####=== Include These Hidden Files ===#####
-!.gitignore
-!.keep
 !*.template
-!.rspec
+!.eslintrc.js
+!.flayignore
+!.gitignore
+!.gitkeep
+!.keep
 !.reek.yml
+!.rspec
 !.rubocop.yml
 !.rubocop_todo.yml
 !.ruby-version
 !.ruumba.yml
 !.ruumba_todo.yml
-!.flayignore
 
 #####=== Ignore Files in Application ===#####
 **/log/*

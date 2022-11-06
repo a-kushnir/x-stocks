@@ -1,13 +1,16 @@
-import ApplicationController from "controllers/application_controller";
+import ApplicationController from 'controllers/application_controller';
+import { padStart } from 'helpers';
 
 export default class extends ApplicationController {
-  static values = { datetime: String, handle: Number }
-  static targets = [ "days", "hours", "minutes", "seconds" ]
+  static values = { datetime: String, handle: Number };
+  static targets = ['days', 'hours', 'minutes', 'seconds'];
 
   connect() {
     this.disconnect();
     this.update();
-    this.handleValue = setInterval(() => { this.update() }, 1000);
+    this.handleValue = setInterval(() => {
+      this.update();
+    }, 1000);
   }
 
   disconnect() {
@@ -33,8 +36,8 @@ export default class extends ApplicationController {
     const days = Math.floor(diff / (60 * 60 * 24));
 
     if (this.hasDaysTarget) this.daysTarget.innerHTML = days;
-    if (this.hasHoursTarget) this.hoursTarget.innerHTML = hours.toString().padStart(2, '0');
-    if (this.hasMinutesTarget) this.minutesTarget.innerHTML = minutes.toString().padStart(2, '0');
-    if (this.hasSecondsTarget) this.secondsTarget.innerHTML = seconds.toString().padStart(2, '0');
+    if (this.hasHoursTarget) this.hoursTarget.innerHTML = padStart(hours);
+    if (this.hasMinutesTarget) this.minutesTarget.innerHTML = padStart(minutes);
+    if (this.hasSecondsTarget) this.secondsTarget.innerHTML = padStart(seconds);
   }
 }

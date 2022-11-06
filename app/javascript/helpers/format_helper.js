@@ -5,3 +5,7 @@ export function formatCurrency(value) {
   });
   return formatter.format(value);
 }
+
+export function padStart(number, maxLength = 2, fillString = '0') {
+  return number.toString().padStart(maxLength, fillString);
+}

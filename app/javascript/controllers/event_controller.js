@@ -1,5 +1,5 @@
-import ApplicationController from "controllers/application_controller";
-import { cancel, cancelImmediate } from "helpers";
+import ApplicationController from 'controllers/application_controller';
+import { cancel, cancelImmediate } from 'helpers';
 
 export default class extends ApplicationController {
   cancel(event) {

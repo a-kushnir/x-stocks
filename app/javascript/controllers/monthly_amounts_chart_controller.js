@@ -1,5 +1,5 @@
-import ApplicationController from "controllers/application_controller";
-import { destroyChart, formatCurrency } from "helpers";
+import ApplicationController from 'controllers/application_controller';
+import { destroyChart, formatCurrency } from 'helpers';
 
 export default class extends ApplicationController {
   connect() {
@@ -23,22 +23,26 @@ export default class extends ApplicationController {
           display: false,
         },
         tooltips: {
-          enabled: false
+          enabled: false,
         },
         scales: {
-          yAxes: [{
-            gridLines: {
-              lineWidth: 0,
+          yAxes: [
+            {
+              gridLines: {
+                lineWidth: 0,
+              },
             },
-          }],
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              callback: function (value) {
-                return formatCurrency(value);
-              }
+          ],
+          xAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                callback: function (value) {
+                  return formatCurrency(value);
+                },
+              },
             },
-          }]
+          ],
         },
         plugins: {
           datalabels: {
@@ -47,10 +51,10 @@ export default class extends ApplicationController {
             color: '#111111',
             formatter: function (value) {
               return value > 0 ? formatCurrency(value) : null;
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     };
 
     new Chart(this.element, config);

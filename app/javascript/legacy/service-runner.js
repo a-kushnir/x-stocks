@@ -6,7 +6,7 @@ function htmlEscape(value) {
   return $('<div>').text(value).html();
 }
 
-window.runService = function(form) {
+window.runService = function (form) {
   if (esRunning) return;
   esRunning = true;
 
@@ -15,9 +15,12 @@ window.runService = function(form) {
   setMessage('Connecting to server...');
   setProgress(0, true);
   control.slideDown();
-  $('html, body').animate({
-    scrollTop: control.offset().top
-  }, 2000);
+  $('html, body').animate(
+    {
+      scrollTop: control.offset().top,
+    },
+    2000
+  );
 
   if ($(form).children('input[type=file]').length > 0) {
     setMessage('Uploading file...');
@@ -28,49 +31,57 @@ window.runService = function(form) {
   esError = false;
   let messageReceived = false;
   esComponent = submitEventSource(form, {
-    message: function(data) {
+    message: function (data) {
       messageReceived = true;
       setProgress(data.percent, true);
       setMessage(data.message);
     },
-    error: function(data) {
+    error: function (data) {
       console.error(data);
       setProgress(null, false);
-      const backtrace = data.backtrace.map(line => htmlEscape(line)).join('<br>');
+      const backtrace = data.backtrace
+        .map((line) => htmlEscape(line))
+        .join('<br>');
       setMessage(`Error: ${htmlEscape(data.message)}
                     <a href="#" onclick="$('#backtrace').toggle(); return false">(more)</a>
                     <div id='backtrace' style="display: none">${backtrace}<div>`);
       esError = true;
     },
-    open: function() {
+    open: function () {
       setMessage('Retrieving information...');
     },
-    closed: function() {
+    closed: function () {
       serviceStopped(messageReceived);
-    }
-  })
-}
+    },
+  });
+};
 
-window.stopService = function() {
+window.stopService = function () {
   if (esComponent && confirm('Are you sure you want to stop the service?')) {
     esComponent.close();
     serviceStopped();
     setProgress(null, false);
     setMessage('Cancelled');
   }
-}
+};
 
 function serviceStopped(messageReceived) {
   if (!esError) {
     const control = $('#service-runner');
     control.delay(3000).slideUp();
     if (messageReceived) {
-      if (typeof(onServiceRunSuccess) === 'function') { onServiceRunSuccess(); }
+      if (typeof onServiceRunSuccess === 'function') {
+        onServiceRunSuccess();
+      }
     } else {
-      if (typeof(onServiceRunFailed) === 'function') { onServiceRunFailed(); }
+      if (typeof onServiceRunFailed === 'function') {
+        onServiceRunFailed();
+      }
     }
   } else {
-    if (typeof(onServiceRunFailed) === 'function') { onServiceRunFailed(); }
+    if (typeof onServiceRunFailed === 'function') {
+      onServiceRunFailed();
+    }
   }
   esRunning = false;
   esComponent = null;
@@ -80,7 +91,7 @@ function setProgress(percent, valid) {
   const control = $('#service-runner #output-progress .progress-bar');
   if (Number.isInteger(percent)) {
     control
-      .css({width: `${percent}%`})
+      .css({ width: `${percent}%` })
       .attr('aria-valuenow', percent)
       .html(`${percent}%`);
 

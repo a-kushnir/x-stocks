@@ -14,12 +14,21 @@ module XStocks
         ar_stock.market_capitalization = safe_exec { ar_stock.outstanding_shares * ar_stock.current_price }
         ar_stock.pe_ratio_ttm = safe_exec { ar_stock.current_price / ar_stock.eps_ttm }
         ar_stock.yahoo_discount = safe_exec { ((ar_stock.yahoo_fair_price / ar_stock.current_price) - 1) * 100 }
-
-        calculate_stock_dividends
       end
 
       def calculate_stock_dividends
-        ar_stock.est_annual_dividend_pct = safe_exec { ar_stock.est_annual_dividend / ar_stock.current_price * 100 }
+        regular_div = ar_stock.dividends.regular.first
+        next_div = ar_stock.dividends.future_ex_dividend_date.last
+
+        ar_stock.dividend_frequency_num = regular_div&.frequency
+        ar_stock.dividend_amount = next_div&.amount
+        ar_stock.next_div_ex_date = next_div&.ex_dividend_date
+        ar_stock.next_div_payment_date = next_div&.pay_date
+        ar_stock.next_div_amount = next_div&.amount
+
+        amount = (DividendCalculator.est_amount(ar_stock) if ar_stock.dividend_frequency_num)
+        ar_stock.est_annual_dividend = (ar_stock.dividend_frequency_num * amount if ar_stock.dividend_frequency_num && amount)
+        ar_stock.est_annual_dividend_pct = (ar_stock.est_annual_dividend / ar_stock.current_price * 100 if ar_stock.est_annual_dividend && ar_stock.current_price)
       end
 
       private

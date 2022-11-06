@@ -14,8 +14,7 @@ module XStocks
 
       ActiveRecord::Base.transaction do
         dividends.each(&:save!)
-        update(stock)
-        stock.save!
+        XStocks::Stock.new(stock).save!
       end
 
       notify(stock) if dividends.any?
@@ -64,22 +63,6 @@ module XStocks
 
     def random_stock_symbol
       XStocks::AR::Stock.pluck(:symbol).sample
-    end
-
-    def update(stock)
-      next_div = stock.dividends.regular.first
-      stock.dividend_frequency_num = next_div&.frequency
-      stock.dividend_amount = next_div&.amount
-      stock.next_div_ex_date = next_div&.ex_dividend_date
-      stock.next_div_payment_date = next_div&.pay_date
-      stock.next_div_amount = next_div&.amount
-      stock.est_annual_dividend = (stock.dividend_frequency_num * stock.next_div_amount if stock.dividend_frequency_num && stock.dividend_amount)
-      stock.est_annual_dividend_pct = (stock.est_annual_dividend / stock.current_price * 100 if stock.est_annual_dividend && stock.current_price)
-
-      position_ar_class = XStocks::AR::Position
-      relation = position_ar_class.where(stock: stock)
-      relation.update_all(est_annual_dividend: XStocks::Stock.new(stock).div_suspended? ? nil : stock.est_annual_dividend)
-      relation.update_all('est_annual_income = est_annual_dividend * shares')
     end
 
     def notify(stock)

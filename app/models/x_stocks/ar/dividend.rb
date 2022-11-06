@@ -15,6 +15,7 @@ module XStocks
 
       default_scope { order(pay_date: :desc) }
       scope :regular, -> { where(dividend_type: XStocks::Dividends::DividendType::REGULAR) }
+      scope :future_ex_dividend_date, -> { where('ex_dividend_date >= :date', date: XStocks::Stock::Dividends.future_ex_date) }
 
       def regular?
         dividend_type == XStocks::Dividends::DividendType::REGULAR

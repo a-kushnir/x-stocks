@@ -18,6 +18,10 @@ module XStocks
         true
       end
 
+      def save!
+        save || raise(ActiveRecord::RecordNotSaved)
+      end
+
       def destroyable?
         !ar_stock.positions.exists?
       end

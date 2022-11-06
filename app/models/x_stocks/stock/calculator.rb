@@ -21,6 +21,7 @@ module XStocks
         next_div = ar_stock.dividends.future_ex_dividend_date.last
 
         ar_stock.dividend_frequency_num = regular_div&.frequency
+        ar_stock.next_dividend = next_div
         ar_stock.next_div_ex_date = next_div&.ex_dividend_date
         ar_stock.next_div_payment_date = next_div&.pay_date
         ar_stock.next_div_amount = next_div&.amount

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_30_225100) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_06_040001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -143,7 +143,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_30_225100) do
     t.date "next_div_ex_date"
     t.date "next_div_payment_date"
     t.decimal "next_div_amount", precision: 12, scale: 4
-    t.decimal "dividend_amount", precision: 12, scale: 4
     t.decimal "est_annual_dividend", precision: 12, scale: 4
     t.decimal "est_annual_dividend_pct", precision: 10, scale: 2
     t.decimal "dividend_growth_5y", precision: 12, scale: 4
@@ -190,6 +189,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_30_225100) do
     t.string "taxes"
     t.decimal "expense_ratio", precision: 5, scale: 2
     t.string "segment"
+    t.bigint "next_dividend_id"
     t.index ["exchange_id"], name: "index_stocks_on_exchange_id"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
     t.index ["updated_at"], name: "index_stocks_on_updated_at"

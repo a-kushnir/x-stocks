@@ -16,7 +16,6 @@ module API
         expose :next_div_ex_date, as: :next_ex_date, format_with: nil, documentation: { type: :string }
         expose :next_div_payment_date, as: :next_payment_date, format_with: nil, documentation: { type: :string }
         expose :next_div_amount, as: :next_amount
-        expose :dividend_amount, as: :prev_amount
         expose :current_price
         expose :est_annual_dividend, as: :est_annual_amount
         expose :est_annual_dividend_pct, as: :est_annual_amount_pct

@@ -1,7 +1,8 @@
 <% next_div_ex_date = @stock.next_div_ex_date if @stock.next_div_ex_date && @stock.next_div_ex_date >= Date.today %>
 <% if next_div_ex_date %>
 <div class="section">
-  <h3><%= t('stocks.sections.next_dividend') %></h3>
+  <% dividend = @stock.dividends.future_ex_dividend_date.last -%>
+  <h3><%= t('stocks.sections.next_dividend') %> <small class="text-gray-500"><%= dividend.regular? ? XStocks::Dividends::Frequency.humanize(dividend.frequency) : t("dividends.dividend_types.#{dividend.dividend_type}") %></small></h3>
 
   <%= render(CountdownComponent.new(datetime: next_div_ex_date + 6.hours)) %>
   <%
@@ -24,6 +25,7 @@
       </td>
     </tr>
     <% end %>
+    <% if dividend.regular? %>
     <tr>
       <td>
         <%= t('stocks.next_dividend.change') %>:
@@ -31,6 +33,7 @@
         <strong class="<%= delta_class(div_change_pct) %>"><%= change_icon(div_change_pct) %> <%= number_to_percentage(div_change_pct, precision: 1) %></strong>
       </td>
     </tr>
+    <% end %>
     <tr>
       <td>
         <%= t('stocks.next_dividend.ex_dividend_date') %>:

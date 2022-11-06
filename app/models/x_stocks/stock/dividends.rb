@@ -40,7 +40,7 @@ module XStocks
       end
 
       def div_suspended?
-        (ar_stock.dividend_amount || ar_stock.est_annual_dividend || ar_stock.dividend_frequency_num || ar_stock.dividend_growth_3y || ar_stock.dividend_growth_5y) &&
+        (ar_stock.est_annual_dividend || ar_stock.dividend_frequency_num || ar_stock.dividend_growth_3y || ar_stock.dividend_growth_5y) &&
           (ar_stock.next_div_ex_date.nil? || next_div_ex_date_overdue?) && last_dividend_overdue?
       end
 

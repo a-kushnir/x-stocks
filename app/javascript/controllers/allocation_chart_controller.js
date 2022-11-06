@@ -1,7 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { destroyChart } from "helpers/chart_helper";
-import { truncate } from "helpers/string_helper";
-import { formatCurrency } from "helpers/format_helper";
+import { destroyChart, truncate, formatCurrency } from "helpers";
 
 const chart_office_colors = [
   '#4472C4', '#ED7D31', '#A5A5A5', '#FFC000', '#5B9BD5', '#70AD47',

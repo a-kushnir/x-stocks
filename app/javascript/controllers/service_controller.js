@@ -1,7 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { runEventSource, submitEventSource } from "helpers/event_source_helper";
-import { setProgressValue, setProgressColor } from "helpers/progress_bar_helper"
-import { escapeHTML } from "helpers/string_helper"
+import { runEventSource, submitEventSource, setProgressValue, setProgressColor, escapeHTML } from "helpers";
 
 export default class extends ApplicationController {
   static values = {

@@ -1,6 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { generateId } from "helpers/string_helper";
-import { isDarkTheme } from "helpers/theme_helper";
+import { generateId, isDarkTheme } from "helpers";
 
 export default class extends ApplicationController {
   static values = { symbol: String }

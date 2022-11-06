@@ -1,6 +1,5 @@
 import ApplicationController from "controllers/application_controller";
-import { destroyChart } from "helpers/chart_helper";
-import { commarize } from "helpers/string_helper";
+import { destroyChart, commarize } from "helpers";
 
 export default class extends ApplicationController {
   connect() {

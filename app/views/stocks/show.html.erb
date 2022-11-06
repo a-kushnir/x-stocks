@@ -35,6 +35,7 @@
     <%= render partial: 'stocks/widgets/earnings', locals: { provider: 'Yahoo' } %>
     <%= render partial: 'stocks/widgets/financials', locals: { provider: t('stocks.financials.yearly'), details: @stock.financials_yearly } %>
     <%= render partial: 'stocks/widgets/financials', locals: { provider: t('stocks.financials.quarterly'), details: @stock.financials_quarterly } %>
+    <%= render partial: 'stocks/widgets/buybacks' %>
     <%= render partial: 'stocks/widgets/tradingview_tech' %>
   </div>
 </div>

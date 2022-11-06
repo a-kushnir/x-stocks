@@ -1,0 +1,10 @@
+<% buybacks = XStocks::Charts::Buybacks.new(@stock.financials) %>
+<% if buybacks.data? %>
+  <div class="section">
+    <h3><%= t('stocks.sections.buybacks') %></h3>
+
+    <div class="mx-auto" style="width: 280px; height: 220px;">
+      <%= buybacks.render(width: 280, height: 220) %>
+    </div>
+  </div>
+<% end %>

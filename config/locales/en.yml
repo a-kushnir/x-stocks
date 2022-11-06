@@ -135,6 +135,7 @@ en:
       price_targets: 'Price Targets'
       earnings: 'Earnings'
       financials: 'Financials'
+      buybacks: 'Buybacks'
     technical_analysis:
       short_term: 'Short Term'
       2w_6w: '2W - 6W'

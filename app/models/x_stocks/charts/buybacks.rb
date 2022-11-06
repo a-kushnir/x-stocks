@@ -9,7 +9,7 @@ module XStocks
       end
 
       def data?
-        financials.any?
+        financials.count > 2
       end
 
       def data

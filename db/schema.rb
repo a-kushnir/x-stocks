@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_06_040001) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_13_111155) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,6 +100,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_040001) do
     t.string "file_type"
     t.string "file_content"
     t.index ["key"], name: "index_services_on_key", unique: true
+  end
+
+  create_table "signals", force: :cascade do |t|
+    t.bigint "stock_id", null: false
+    t.datetime "timestamp"
+    t.string "detection_method"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.index ["timestamp"], name: "index_signals_on_timestamp"
   end
 
   create_table "stocks", force: :cascade do |t|

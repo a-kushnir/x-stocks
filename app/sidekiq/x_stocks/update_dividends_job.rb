@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module XStocks
-  # Demo Job
+  # Updates dividends and generates emails
   class UpdateDividendsJob
     include Sidekiq::Job
     sidekiq_options retry: false

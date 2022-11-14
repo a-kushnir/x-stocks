@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module XStocks
-  # Demo Job
+  # Updates total amount of shares from financial reports
   class UpdateFinancialsJob
     include Sidekiq::Job
     sidekiq_options retry: false

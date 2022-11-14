@@ -55,6 +55,11 @@ module Etl
         data_loader.get_json(tech_indicator_url(stock.symbol, resolution))
       end
 
+      def indicator(stock, resolution:, from:, to:, indicator:, **options)
+        options = options.merge(resolution: resolution, from: from, to: to, indicator: indicator)
+        data_loader.get_json(indicator_url(stock.symbol, options))
+      end
+
       private
 
       def download_logo(json)
@@ -100,6 +105,10 @@ module Etl
 
       def tech_indicator_url(symbol, resolution)
         "#{BASE_URL}/scan/technical-indicator?symbol=#{cgi.escape(symbol)}&resolution=#{resolution}&token=#{token}"
+      end
+
+      def indicator_url(symbol, options)
+        "#{BASE_URL}/indicator?symbol=#{cgi.escape(symbol)}&#{options.to_query}&token=#{token}"
       end
 
       attr_reader :data_loader, :token, :cgi

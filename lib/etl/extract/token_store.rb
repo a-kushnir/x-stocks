@@ -30,7 +30,8 @@ module Etl
             success = true
           rescue Exception
             disable_token(token)
-            token = random_token!
+            token = random_token
+            raise unless token
             kernel.sleep(PAUSE)
           end
         end

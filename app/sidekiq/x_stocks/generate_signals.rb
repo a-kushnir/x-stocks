@@ -6,7 +6,7 @@ module XStocks
     include Sidekiq::Job
     sidekiq_options retry: false
 
-    PAUSE = 2 # Limit up to 1 request per 2 seconds
+    PAUSE = 3 # Limit up to 20 request per minute
 
     def perform
       signals = []
@@ -17,6 +17,7 @@ module XStocks
 
       signals.each do |signal|
         XStocks::Jobs::FinnhubPriceOne.new(nil).perform(symbol: signal.stock.symbol) { nil }
+        sleep(PAUSE)
       end
 
       notify(signals.map(&:id)) if signals.any?

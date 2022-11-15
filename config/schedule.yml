@@ -4,3 +4,6 @@ x_stocks_update_dividends_job:
 x_stocks_update_financials_job:
   cron: "*/5 * * * *" # every 5 minutes
   class: "XStocks::UpdateFinancialsJob"
+x_stocks_generate_signals_job:
+  cron: "30 10 * * 1-5" # 3:30am MT every business day
+  class: "XStocks::GenerateSignals"

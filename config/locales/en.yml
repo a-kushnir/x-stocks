@@ -278,3 +278,13 @@ en:
       summary: 'Summary'
       position: 'Position'
       dividend_history: 'Dividend History'
+    signals_detected:
+      buy_n_sell_signals: 'Buy & Sell Signals'
+      definition: 'Trading signal is a alert that is based on technical indicators, that it is a good time to buy or sell a particular security.'
+      symbol: 'Symbol'
+      method: 'Method'
+      signal: 'Signal'
+      change: 'Change'
+      shares: 'Shares'
+      buy: 'Buy'
+      sell: 'Sell'

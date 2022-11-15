@@ -15,6 +15,10 @@ module XStocks
       end
       signals.compact!
 
+      signals.each do |signal|
+        XStocks::Jobs::FinnhubPriceOne.new(nil).perform(symbol: signal.stock.symbol) { nil }
+      end
+
       notify(signals.map(&:id)) if signals.any?
     end
 

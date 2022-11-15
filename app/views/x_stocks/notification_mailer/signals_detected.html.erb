@@ -1,0 +1,25 @@
+<p><%= t('notifications.signals_detected.definition') %></p>
+
+<table class="section-table mb-4">
+  <thead>
+  <tr>
+    <th class="text-left"><%= t('notifications.signals_detected.symbol') %></th>
+    <th class="text-left"><%= t('notifications.signals_detected.method') %></th>
+    <th class="text-left"><%= t('notifications.signals_detected.signal') %></th>
+    <th class="text-right"><%= t('notifications.signals_detected.change') %></th>
+    <th class="text-right"><%= t('notifications.signals_detected.shares') %></th>
+  </tr>
+  </thead>
+  <% @notification.signals.each do |signal| %>
+    <% position = @notification.positions[signal.stock_id] -%>
+    <tr>
+      <td>
+        <a href="<%= stock_url(signal.stock.symbol) %>"><%= signal.stock.symbol %></a>
+      </td>
+      <td><%= signal.detection_method %></td>
+      <td><%= change_icon(signal.value == 'buy' ? 1 : -1) %> <%= t("notifications.signals_detected.#{signal.value}") %></td>
+      <td class="text-right <%= delta_class(signal.stock.price_change) %>"><%= number_to_percentage(signal.stock.price_change_pct, precision: 2) %></td>
+      <td class="text-right"><%= position&.shares.to_i.zero? ? '-' : number_with_precision(position.shares, delimiter: ',', strip_insignificant_zeros: true) %></td>
+    </tr>
+  <% end %>
+</table>

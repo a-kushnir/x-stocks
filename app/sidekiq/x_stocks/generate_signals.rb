@@ -11,16 +11,27 @@ module XStocks
     def perform
       signals = []
       XStocks::AR::Stock.random.each do |stock|
-        signals << Sma50xSma200.new(stock).detect
+        safe_exec(stock) do
+          signals << Sma50xSma200.new(stock).detect
+        end
       end
       signals.compact!
 
       signals.each do |signal|
-        XStocks::Jobs::FinnhubPriceOne.new(nil).perform(symbol: signal.stock.symbol) { nil }
-        sleep(PAUSE)
+        safe_exec(signal.stock) do
+          update_price(signal.stock)
+        end
       end
 
       notify(signals.map(&:id)) if signals.any?
+    end
+
+    def safe_exec(stock)
+      yield
+    rescue Exception => error
+      Honeybadger.notify(error, context: {
+        symbol: stock&.symbol
+      })
     end
 
     class Sma50xSma200
@@ -49,7 +60,7 @@ module XStocks
       # Returns the simple moving average (SMA) values
       def sma(days)
         to = DateTime.now
-        from = to - (days * 1.5) # Business days -> Calendar days
+        from = to - (days * 1.5 + 10) # Business days -> Calendar days
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).indicator(stock, resolution: 'D', from: from.to_i, to: to.to_i, indicator: 'sma', timeperiod: days)
@@ -68,6 +79,11 @@ module XStocks
       end
 
       attr_reader :stock
+    end
+
+    def update_price(stock)
+      XStocks::Jobs::FinnhubPriceOne.new(nil).perform(symbol: stock.symbol) { nil }
+      sleep(PAUSE)
     end
 
     def notify(signal_ids)

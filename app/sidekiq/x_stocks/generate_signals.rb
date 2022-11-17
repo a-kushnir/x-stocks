@@ -4,7 +4,9 @@ module XStocks
   # Generates SMA 50 x SMA 200 Signals
   class GenerateSignals
     include Sidekiq::Job
-    sidekiq_options retry: false
+
+    sidekiq_options retry: false,
+                    lock: :until_executed
 
     PAUSE = 3 # Limit up to 20 request per minute
 

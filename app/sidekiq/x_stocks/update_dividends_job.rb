@@ -4,7 +4,9 @@ module XStocks
   # Updates dividends and generates emails
   class UpdateDividendsJob
     include Sidekiq::Job
-    sidekiq_options retry: false
+
+    sidekiq_options retry: false,
+                    lock: :until_executing
 
     PAUSE = 60 / 5 # Limit up to 5 request per minute
 

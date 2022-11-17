@@ -4,7 +4,9 @@ module XStocks
   # Updates total amount of shares from financial reports
   class UpdateFinancialsJob
     include Sidekiq::Job
-    sidekiq_options retry: false
+
+    sidekiq_options retry: false,
+                    lock: :until_executing
 
     PAUSE = 60 / 5 # Limit up to 5 request per minute (2 sub-requests per a request)
 

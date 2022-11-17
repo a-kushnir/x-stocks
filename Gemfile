@@ -27,6 +27,7 @@ gem 'puma', '>= 5.6.2'
 gem 'rails', '>= 7.0.3'
 gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-cron', '~> 1.8', require: false
+gem 'sidekiq-unique-jobs', '~> 7.1', require: false
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.0'
 gem 'swagger_ui_engine', github: 'a-kushnir/swagger_ui_engine'

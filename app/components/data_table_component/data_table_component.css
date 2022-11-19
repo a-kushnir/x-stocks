@@ -1,22 +1,22 @@
 .datatable {
-  @apply w-full mx-auto bg-white shadow-md md:rounded px-2 md:px-8 py-3 md:py-6 mb-3;
+  @apply w-full mx-auto bg-white md:rounded px-2 md:px-8 py-3 md:py-6 mb-3;
 
   .datatable-container {
-    @apply px-1 py-1 overflow-x-auto mb-3;
+    @apply overflow-x-auto mb-3;
 
     .datatable-viewport {
-      @apply inline-block min-w-full shadow-sm rounded-lg overflow-hidden;
+      @apply inline-block min-w-full overflow-hidden;
 
       table {
         @apply min-w-full leading-normal;
 
         thead th, tfoot th {
-          @apply border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap text-left;
+          @apply border-y border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider p-1 whitespace-nowrap text-left;
           a { @apply no-underline inline-block w-full; }
         }
 
         tbody tr {
-          @apply hover:bg-gray-100;
+          @apply hover:bg-gray-50;
           td { @apply px-1 border-b border-gray-200 p-1 whitespace-nowrap; };
         }
 
@@ -25,6 +25,7 @@
           &.right { @apply text-right; }
           &.warning { @apply text-red-600 font-bold; }
         }
+        th { @apply first:pl-1.5 last:pr-1.5; }
         td {
           &.link a { @apply text-blue-500 no-underline inline-block; }
         }

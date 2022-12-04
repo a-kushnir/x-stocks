@@ -67,7 +67,7 @@ module XStocks
       # Returns the simple moving average (SMA) values
       def sma(days)
         to = DateTime.now
-        from = to - (days * 1.5 + 10) # Business days -> Calendar days
+        from = to - (days * 1.5 + 15) # Business days -> Calendar days
 
         token_store.try_token do |token|
           json = Etl::Extract::Finnhub.new(data_loader, token).indicator(stock, resolution: 'D', from: from.to_i, to: to.to_i, indicator: 'sma', timeperiod: days)

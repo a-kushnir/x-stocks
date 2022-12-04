@@ -19,6 +19,10 @@ module XStocks
       end
       signals.compact!
 
+      signals.reject! do |signal|
+        XStocks::AR::Signal.exists?(signal.slice(:stock_id, :timestamp, :detection_method))
+      end
+
       signals.each do |signal|
         safe_exec(signal.stock) do
           update_price(signal.stock)

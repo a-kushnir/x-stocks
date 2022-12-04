@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'x_stocks/signals'
+
 module XStocks
   # Generates SMA 50 x SMA 200 Signals
   class GenerateSignals
@@ -13,8 +15,10 @@ module XStocks
     def perform
       signals = []
       XStocks::AR::Stock.random.each do |stock|
-        safe_exec(stock) do
-          signals << Sma50xSma200.new(stock).detect
+        XStocks::Signals.all.each do |detector|
+          safe_exec(stock) do
+            signals << detector.new(stock).detect
+          end
         end
       end
       signals.compact!
@@ -37,58 +41,6 @@ module XStocks
     rescue StandardError => e
       options = { context: { symbol: stock&.symbol } }
       Honeybadger.notify(e, options)
-    end
-
-    # Detects intersection SMA 50 and SMA 200
-    class Sma50xSma200
-      def initialize(stock)
-        @stock = stock
-      end
-
-      def detect
-        sma50_old, sma50_new, price, timestamp = sma(50)
-        return nil unless sma50_old
-
-        sma200_old, sma200_new = sma(200)
-        return nil unless sma200_old
-
-        old_state = sma50_old > sma200_old ? :buy : :sell
-        new_state = sma50_new > sma200_new ? :buy : :sell
-        return nil if old_state == new_state
-
-        XStocks::AR::Signal.create(
-          stock: stock,
-          timestamp: Time.at(timestamp).to_datetime,
-          detection_method: self.class.name.demodulize,
-          value: new_state,
-          price: price
-        )
-      end
-
-      private
-
-      # Returns the simple moving average (SMA) values
-      def sma(days)
-        to = DateTime.now
-        from = to - ((days * 1.5) + 15) # Business days -> Calendar days
-
-        token_store.try_token do |token|
-          json = Etl::Extract::Finnhub.new(data_loader, token).indicator(stock, resolution: 'D', from: from.to_i, to: to.to_i, indicator: 'sma', timeperiod: days)
-          sleep(PAUSE)
-
-          [*json['sma']&.last(2), json['c']&.last, json['t']&.last]
-        end
-      end
-
-      def token_store
-        @token_store ||= Etl::Extract::TokenStore.new(Etl::Extract::Finnhub::TOKEN_KEY)
-      end
-
-      def data_loader
-        @data_loader ||= Etl::Extract::DataLoader.new
-      end
-
-      attr_reader :stock
     end
 
     def update_price(stock)

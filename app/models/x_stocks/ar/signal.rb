@@ -6,7 +6,7 @@ module XStocks
     class Signal < ApplicationRecord
       belongs_to :stock
 
-      validates :timestamp, :detection_method, :value, presence: true
+      validates :timestamp, :detection_method, :value, :price, presence: true
 
       default_scope { order(timestamp: :desc) }
     end

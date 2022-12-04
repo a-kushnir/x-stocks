@@ -42,7 +42,7 @@ module XStocks
       end
 
       def detect
-        sma50_old, sma50_new, timestamp = sma(50)
+        sma50_old, sma50_new, price, timestamp = sma(50)
         sma200_old, sma200_new = sma(200)
 
         old_state = sma50_old > sma200_old ? :buy : :sell
@@ -53,7 +53,8 @@ module XStocks
           stock: stock,
           timestamp: Time.at(timestamp).to_datetime,
           detection_method: self.class.name.demodulize,
-          value: new_state
+          value: new_state,
+          price: price
         )
       end
 
@@ -68,7 +69,7 @@ module XStocks
           json = Etl::Extract::Finnhub.new(data_loader, token).indicator(stock, resolution: 'D', from: from.to_i, to: to.to_i, indicator: 'sma', timeperiod: days)
           sleep(PAUSE)
 
-          [*json['sma'].last(2), json['t'].last]
+          [*json['sma'].last(2), json['c'].last, json['t'].last]
         end
       end
 

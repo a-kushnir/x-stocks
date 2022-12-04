@@ -5,7 +5,7 @@ module Etl
     # Transforms data extracted from polygon.io
     class Polygon
       DIVIDENDS_UNIQUE_KEY = %i[stock_id dividend_type ex_dividend_date amount].freeze
-      FINANCIALS_UNIQUE_KEY = %i[cik fiscal_year fiscal_period]
+      FINANCIALS_UNIQUE_KEY = %i[cik fiscal_year fiscal_period].freeze
 
       def initialize(stock)
         @stock = stock
@@ -40,17 +40,17 @@ module Etl
         return if json&.dig('status') != 'OK'
 
         fields = {
-          common_stock_shares_outstanding: ->(html) { html.scan(%r{<dei:EntityCommonStockSharesOutstanding[^>]+>([^>]+)<\/dei:EntityCommonStockSharesOutstanding>})&.dig(0, 0)&.to_i },
+          common_stock_shares_outstanding: ->(html) { html.scan(%r{<dei:EntityCommonStockSharesOutstanding[^>]+>([^>]+)</dei:EntityCommonStockSharesOutstanding>})&.dig(0, 0)&.to_i }
         }.freeze
 
         rows = json['results'].map do |row|
-          next if row.values_at(*%w(cik start_date end_date fiscal_year fiscal_period)).any?(&:blank?)
+          next if row.values_at(*%w[cik start_date end_date fiscal_year fiscal_period]).any?(&:blank?)
 
           xml = yield row
 
-          row.slice(*%w(cik start_date end_date fiscal_year fiscal_period common_stock_shares_outstanding))
-            .merge(fields.to_h { |key,proc| [key.to_s, proc.call(xml)] })
-            .merge(stock_id: stock.id)
+          row.slice(*%w[cik start_date end_date fiscal_year fiscal_period common_stock_shares_outstanding])
+             .merge(fields.to_h { |key, proc| [key.to_s, proc.call(xml)] })
+             .merge(stock_id: stock.id)
         end.compact
 
         new_rows, existing_rows = filter_financials(rows)

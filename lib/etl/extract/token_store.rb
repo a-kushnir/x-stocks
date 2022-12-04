@@ -32,6 +32,7 @@ module Etl
             disable_token(token)
             token = random_token
             raise unless token
+
             kernel.sleep(PAUSE)
           end
         end

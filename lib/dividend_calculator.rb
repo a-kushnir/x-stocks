@@ -74,28 +74,28 @@ class DividendCalculator
     case last_div.frequency
     when XStocks::Dividends::Frequency::ANNUALLY
       (2 * 1).times do |index|
-        (declaration_date = declaration_date >> declaration_pattern) if (index * 12) % declaration_pattern == 0
+        (declaration_date = declaration_date >> declaration_pattern) if ((index * 12) % declaration_pattern).zero?
         ex_dividend_date = ex_dividend_date >> 12
         pay_date = pay_date >> 12
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
     when XStocks::Dividends::Frequency::BI_ANNUALLY
       (2 * 2).times do |index|
-        (declaration_date = declaration_date >> declaration_pattern) if (index * 6) % declaration_pattern == 0
+        (declaration_date = declaration_date >> declaration_pattern) if ((index * 6) % declaration_pattern).zero?
         ex_dividend_date = ex_dividend_date >> 6
         pay_date = pay_date >> 6
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
     when XStocks::Dividends::Frequency::QUARTERLY
       (2 * 4).times do |index|
-        (declaration_date = declaration_date >> declaration_pattern) if (index * 3) % declaration_pattern == 0
+        (declaration_date = declaration_date >> declaration_pattern) if ((index * 3) % declaration_pattern).zero?
         ex_dividend_date = ex_dividend_date >> 3
         pay_date = pay_date >> 3
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)
       end
     when XStocks::Dividends::Frequency::MONTHLY
       (2 * 12).times do |index|
-        (declaration_date = declaration_date >> declaration_pattern) if index % declaration_pattern == 0
+        (declaration_date = declaration_date >> declaration_pattern) if (index % declaration_pattern).zero?
         ex_dividend_date = ex_dividend_date >> 1
         pay_date = pay_date >> 1
         estimates << new_est_dividend(last_div, declaration_date, ex_dividend_date, pay_date, amount)

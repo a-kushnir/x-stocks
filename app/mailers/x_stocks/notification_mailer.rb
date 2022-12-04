@@ -25,7 +25,7 @@ module XStocks
       signals = XStocks::AR::Signal.where(id: signal_ids).all.sort_by { |signal| signal.stock.symbol }
       positions = XStocks::AR::Position.where(user_id: user.id).index_by(&:stock_id)
 
-      @notification = OpenStruct.new(subject: t('notifications.signals_detected.buy_n_sell_signals'), signals: signals, positions: positions)
+      @notification = Struct.new(:subject, :signals, :positions).new(t('notifications.signals_detected.buy_n_sell_signals'), signals, positions)
 
       mail(to: user.email, subject: @notification.subject)
     end

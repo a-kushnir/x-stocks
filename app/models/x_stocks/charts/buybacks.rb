@@ -15,7 +15,7 @@ module XStocks
       def data
         {
           labels: financials.map { |f| "#{f.fiscal_period} #{f.fiscal_year}" },
-          values: financials.map { |f| f.common_stock_shares_outstanding }
+          values: financials.map(&:common_stock_shares_outstanding)
         }
       end
 

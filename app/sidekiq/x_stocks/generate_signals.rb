@@ -22,6 +22,7 @@ module XStocks
         end
       end
       signals.compact!
+      signals.sort_by! { |signal| signal.stock.symbol }
 
       signals.each do |signal|
         safe_exec(signal.stock) do

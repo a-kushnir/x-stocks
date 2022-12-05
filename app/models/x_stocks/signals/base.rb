@@ -21,13 +21,16 @@ module XStocks
       end
 
       def create_signal(timestamp, value, price)
-        XStocks::AR::Signal.create(
+        signal = XStocks::AR::Signal.new(
           stock: stock,
           timestamp: Time.at(timestamp).to_datetime,
           detection_method: self.class.name.demodulize,
           value: value,
           price: price
         )
+        return nil if XStocks::AR::Signal.exists?(signal.slice(:stock_id, :timestamp, :detection_method))
+
+        signal.tap(&:save!)
       end
     end
   end

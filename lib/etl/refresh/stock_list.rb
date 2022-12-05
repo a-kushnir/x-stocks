@@ -25,11 +25,6 @@ module Etl
               Etl::Refresh::Dividend.new(logger).weekly_one_stock(stock)
               yield stock, step.percent, index
             end
-
-            steps.step(weight: 4) do |step|
-              Etl::Refresh::Iexapis.new(logger).weekly_one_stock(stock, immediate: true)
-              yield stock, step.percent, index
-            end
           end
         end
       end

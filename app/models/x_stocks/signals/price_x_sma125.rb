@@ -11,7 +11,7 @@ module XStocks
         return nil if [sma125_old, sma125_new, price_old, price_new, timestamp].any?(&:blank?)
 
         signal = intersection(price_old, price_new, sma125_old, sma125_new)
-        create_signal(timestamp, signal, price_new)
+        create_signal(timestamp, signal, price_new) if signal
       end
 
       private

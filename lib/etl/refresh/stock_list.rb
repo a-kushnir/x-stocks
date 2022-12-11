@@ -26,6 +26,9 @@ module Etl
               yield stock, step.percent, index
             end
           end
+
+          XStocks::UpdateDividendsJob.perform_async(stock.symbol)
+          XStocks::UpdateFinancialsJob.perform_async(stock.symbol)
         end
       end
     end

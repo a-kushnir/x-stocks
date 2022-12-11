@@ -1,0 +1,25 @@
+<% signals = @stock.signals.last(20) -%>
+<% if signals.any? %>
+  <div class="section">
+    <h3>Signals</h3>
+
+    <table class="section-table">
+      <tbody>
+      <% signals.each do |signal| %>
+        <tr>
+          <td>
+            <%= signal.timestamp.strftime('%b, %d %Y') %>
+            <strong class="<%= delta_class(signal.buy? ? 1 : -1) %>">
+              <span class="text-xs font-normal text-neutral">
+                <%= signal.detection_method %>
+              </span>
+              <%= change_icon(signal.buy? ? 1 : -1, size: '16*16') %>
+              <%= number_to_currency(signal.price) %>
+            </strong>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

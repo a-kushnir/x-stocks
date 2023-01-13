@@ -24,6 +24,8 @@ module XStocks
           if taxes.present?
             avg_taxes = taxes.sum / taxes.count # Tax weight isn't supported yet; If both tax forms are present, they are estimated to have equal weight
             avg_taxes / 100
+          elsif user_taxes.values.map(&:to_f).all?(0)
+            0
           end
         end
       end

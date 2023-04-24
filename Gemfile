@@ -25,7 +25,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'premailer-rails'
 gem 'puma', '>= 5.6.2'
 gem 'rails', '>= 7.0.3'
-gem 'sidekiq', '~> 6.5'
+gem 'sidekiq', '~> 7.0'
 gem 'sidekiq-cron', '~> 1.8', require: false
 gem 'sidekiq-unique-jobs', '~> 7.1', require: false
 gem 'sprockets-rails', '~> 3.4'
